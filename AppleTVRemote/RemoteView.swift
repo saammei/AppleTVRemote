@@ -74,13 +74,39 @@ struct RemoteView: View {
             }
             Spacer()
             Button {
-                openSettings()
+                toggleSettings()
             } label: {
                 Image(systemName: "gearshape")
             }
             .buttonStyle(.plain)
-            .help("设置")
+            .help("显示/隐藏设置")
         }
+    }
+
+    /// 设置窗口开关：点一下显示并置顶，再点一下隐藏。
+    /// openSettings 在 MenuBarExtra(LSUIElement)应用里不会自动把窗口带到最前，
+    /// 需要手动激活应用并 makeKeyAndOrderFront。
+    private func toggleSettings() {
+        if let window = settingsWindow() {
+            if window.isVisible {
+                window.orderOut(nil)
+            } else {
+                NSApp.activate(ignoringOtherApps: true)
+                window.makeKeyAndOrderFront(nil)
+            }
+        } else {
+            openSettings()
+            // openSettings 异步创建窗口，等一拍再置顶
+            DispatchQueue.main.async {
+                NSApp.activate(ignoringOtherApps: true)
+                self.settingsWindow()?.makeKeyAndOrderFront(nil)
+            }
+        }
+    }
+
+    /// 设置窗口是标准 NSWindow；菜单栏弹窗是 NSPanel，排除之。
+    private func settingsWindow() -> NSWindow? {
+        NSApp.windows.first { !$0.isKind(of: NSPanel.self) && $0.canBecomeKey }
     }
 
     private var statusColor: Color {
