@@ -42,6 +42,8 @@ enum RemoteKey: String {
     case topMenu = "top_menu"
     case volumeUp = "volume_up"
     case volumeDown = "volume_down"
+    case skipForward = "skip_forward"
+    case skipBackward = "skip_backward"
 
     var symbol: String {
         switch self {
@@ -58,6 +60,8 @@ enum RemoteKey: String {
         case .topMenu: "menucard"
         case .volumeUp: "speaker.plus.fill"
         case .volumeDown: "speaker.minus.fill"
+        case .skipForward: "goforward.10"
+        case .skipBackward: "gobackward.10"
         }
     }
 }

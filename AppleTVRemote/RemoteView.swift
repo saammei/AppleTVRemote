@@ -24,7 +24,7 @@ struct RemoteView: View {
             }
             Divider()
             HStack {
-                Text("首次使用：打开设置 → 扫描 → 配对\n键盘：方向键移动 · 回车确认 · Esc 返回")
+                Text("首次使用：打开设置 → 扫描 → 配对\n键盘：方向键移动 · 回车确认 · Esc 返回\n空格播放/暂停 · ⌘↑↓音量 · ⌘←→切歌 · ⌥←→快进退")
                     .font(.caption2)
                     .foregroundStyle(.secondary)
                 Spacer()
@@ -193,17 +193,17 @@ struct RemoteView: View {
     private var actionRow: some View {
         HStack(spacing: 8) {
             keyButton(.menu, label: "菜单")
-            iconButton("house.fill", help: "主屏幕", action: { Task { await bridge.sendKey(.home) } })
-            iconButton("backward.end.fill", help: "上一个", action: { Task { await bridge.sendKey(.previous) } })
-            iconButton("playpause.fill", help: "播放/暂停", action: { Task { await bridge.sendKey(.playPause) } })
-            iconButton("forward.end.fill", help: "下一个", action: { Task { await bridge.sendKey(.next) } })
+            iconButton("house.fill", key: .home, help: "主屏幕", action: { Task { await bridge.sendKey(.home) } })
+            iconButton("backward.end.fill", key: .previous, help: "上一个", action: { Task { await bridge.sendKey(.previous) } })
+            iconButton("playpause.fill", key: .playPause, help: "播放/暂停", action: { Task { await bridge.sendKey(.playPause) } })
+            iconButton("forward.end.fill", key: .next, help: "下一个", action: { Task { await bridge.sendKey(.next) } })
         }
     }
 
     private var volumeAndUtilityRow: some View {
         HStack(spacing: 8) {
-            iconButton("speaker.minus.fill", help: "音量减", action: { Task { await bridge.volume("down") } })
-            iconButton("speaker.plus.fill", help: "音量加", action: { Task { await bridge.volume("up") } })
+            iconButton("speaker.minus.fill", key: .volumeDown, help: "音量减", action: { Task { await bridge.volume("down") } })
+            iconButton("speaker.plus.fill", key: .volumeUp, help: "音量加", action: { Task { await bridge.volume("up") } })
 
             Menu {
                 if bridge.apps.isEmpty {
@@ -280,7 +280,7 @@ struct RemoteView: View {
         .help(key.rawValue)
     }
 
-    private func iconButton(_ symbol: String, help: String, action: @escaping () -> Void) -> some View {
+    private func iconButton(_ symbol: String, key: RemoteKey, help: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Image(systemName: symbol)
                 .frame(maxWidth: .infinity)
@@ -288,7 +288,7 @@ struct RemoteView: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: 8))
+        .background(keyBackground(key), in: RoundedRectangle(cornerRadius: 8))
         .help(help)
     }
 }
@@ -318,19 +318,41 @@ final class PanelKeyMonitor {
         // 仅当焦点在菜单栏弹窗(类为 NSPanel)时拦截；设置窗口里的输入框不受影响。
         guard NSApp.keyWindow?.isKind(of: NSPanel.self) == true,
               // 忽略自动重复：桥接后端请求会排队，按住不放会造成按键堆积、松手后还在动。
-              !event.isARepeat,
-              event.modifierFlags.intersection([.command, .control, .option]).isEmpty
+              !event.isARepeat
         else { return false }
 
-        let key: RemoteKey? = switch event.keyCode {
-        case 123: .left
-        case 124: .right
-        case 125: .down
-        case 126: .up
-        case 36, 76: .select   // 回车 / 小键盘回车
-        case 53: .menu         // Esc = 返回
-        default: nil
+        let flags = event.modifierFlags
+        let key: RemoteKey?
+
+        if flags.intersection([.command, .control, .option]).isEmpty {
+            key = switch event.keyCode {
+            case 49: .playPause        // 空格 = 播放/暂停
+            case 123: .left
+            case 124: .right
+            case 125: .down
+            case 126: .up
+            case 36, 76: .select       // 回车 / 小键盘回车
+            case 53: .menu             // Esc = 返回
+            default: nil
+            }
+        } else if flags.contains(.command), flags.intersection([.control, .option]).isEmpty {
+            key = switch event.keyCode {
+            case 123: .previous        // ⌘← = 上一首
+            case 124: .next            // ⌘→ = 下一首
+            case 125: .volumeDown      // ⌘↓ = 音量减
+            case 126: .volumeUp        // ⌘↑ = 音量加
+            default: nil
+            }
+        } else if flags.contains(.option), flags.intersection([.command, .control]).isEmpty {
+            key = switch event.keyCode {
+            case 123: .skipBackward    // ⌥← = 快退 10 秒
+            case 124: .skipForward     // ⌥→ = 快进 10 秒
+            default: nil
+            }
+        } else {
+            key = nil
         }
+
         guard let key else { return false }
         onKey(key)
         return true
