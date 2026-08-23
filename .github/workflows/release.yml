@@ -12,8 +12,9 @@ jobs:
   build:
     runs-on: macos-15
     env:
-      # python-build-standalone 版本(与 astral-sh 的 release tag 一致)
-      PYTHON_TAG: "3.12.14+20260814"
+      # python-build-standalone:release 的 tag 与文件名里的版本号是分开的
+      PYTHON_RELEASE: "20260814"
+      PYTHON_VERSION: "3.12.14+20260814"
 
     steps:
       - uses: actions/checkout@v4
@@ -38,7 +39,7 @@ jobs:
       - name: 内嵌 Python 运行时 (arm64)
         run: |
           curl -fL -o /tmp/python-arm64.tar.gz \
-            "https://github.com/astral-sh/python-build-standalone/releases/download/${PYTHON_TAG}/cpython-${PYTHON_TAG}-aarch64-apple-darwin-install_only.tar.gz"
+            "https://github.com/astral-sh/python-build-standalone/releases/download/${PYTHON_RELEASE}/cpython-${PYTHON_VERSION}-aarch64-apple-darwin-install_only.tar.gz"
           mkdir -p /tmp/python-arm64
           tar -xzf /tmp/python-arm64.tar.gz -C /tmp/python-arm64
           mv /tmp/python-arm64/python "$RUNNER_TEMP/AppleTVRemote.app/Contents/Resources/python-arm64"
@@ -46,7 +47,7 @@ jobs:
       - name: 内嵌 Python 运行时 (x86_64)
         run: |
           curl -fL -o /tmp/python-x86_64.tar.gz \
-            "https://github.com/astral-sh/python-build-standalone/releases/download/${PYTHON_TAG}/cpython-${PYTHON_TAG}-x86_64-apple-darwin-install_only.tar.gz"
+            "https://github.com/astral-sh/python-build-standalone/releases/download/${PYTHON_RELEASE}/cpython-${PYTHON_VERSION}-x86_64-apple-darwin-install_only.tar.gz"
           mkdir -p /tmp/python-x86_64
           tar -xzf /tmp/python-x86_64.tar.gz -C /tmp/python-x86_64
           mv /tmp/python-x86_64/python "$RUNNER_TEMP/AppleTVRemote.app/Contents/Resources/python-x86_64"
