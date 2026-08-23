@@ -54,8 +54,9 @@ jobs:
 
       - name: 安装 pyatv 依赖
         run: |
-          "$RUNNER_TEMP/AppleTVRemote.app/Contents/Resources/python-arm64/bin/python3" -m pip install --no-cache-dir -r requirements.txt
-          "$RUNNER_TEMP/AppleTVRemote.app/Contents/Resources/python-x86_64/bin/python3" -m pip install --no-cache-dir -r requirements.txt
+          # 只接受预编译轮子:runner 上没有 OpenSSL 等编译环境,缺轮子时应快速失败
+          "$RUNNER_TEMP/AppleTVRemote.app/Contents/Resources/python-arm64/bin/python3" -m pip install --no-cache-dir --only-binary=:all: -r requirements.txt
+          "$RUNNER_TEMP/AppleTVRemote.app/Contents/Resources/python-x86_64/bin/python3" -m pip install --no-cache-dir --only-binary=:all: -r requirements.txt
 
       - name: 签名 (ad-hoc)
         run: codesign --force --deep --sign - "$RUNNER_TEMP/AppleTVRemote.app"
