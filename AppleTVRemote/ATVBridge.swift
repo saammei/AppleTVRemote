@@ -95,14 +95,14 @@ final class ATVBridge: ObservableObject {
     func start() {
         guard process == nil else { return }
         shouldKeepRunning = true
-        bridgeState = .starting
+        DispatchQueue.main.async { self.bridgeState = .starting }
 
         guard FileManager.default.isExecutableFile(atPath: pythonPath) else {
-            bridgeState = .failed("未找到 Python 环境：\(pythonPath)\n请运行 scripts/setup.sh")
+            DispatchQueue.main.async { self.bridgeState = .failed("未找到 Python 环境：\(self.pythonPath)\n请运行 scripts/setup.sh") }
             return
         }
         guard let script = scriptURL() else {
-            bridgeState = .failed("找不到 bridge.py 资源")
+            DispatchQueue.main.async { self.bridgeState = .failed("找不到 bridge.py 资源") }
             return
         }
 
@@ -110,7 +110,7 @@ final class ATVBridge: ObservableObject {
             try FileManager.default.createDirectory(at: appSupportURL, withIntermediateDirectories: true)
             try launch(python: pythonPath, script: script)
         } catch {
-            bridgeState = .failed("启动失败：\(error.localizedDescription)")
+            DispatchQueue.main.async { self.bridgeState = .failed("启动失败：\(error.localizedDescription)") }
         }
     }
 
@@ -122,7 +122,7 @@ final class ATVBridge: ObservableObject {
         old?.waitUntilExit()
         failAllPending("后端已重启")
         shouldKeepRunning = true
-        bridgeState = .stopped
+        DispatchQueue.main.async { self.bridgeState = .stopped }
         start()
     }
 
@@ -365,8 +365,8 @@ final class ATVBridge: ObservableObject {
     // MARK: - High-level operations
 
     func scanDevices() async {
-        isScanning = true
-        defer { isScanning = false }
+        DispatchQueue.main.async { self.isScanning = true }
+        defer { DispatchQueue.main.async { self.isScanning = false } }
         do {
             guard let result = try await request("scan", params: ["timeout": 6], timeout: 25) else { return }
             let found = try Self.decode([ATVDevice].self, from: result)
@@ -377,7 +377,7 @@ final class ATVBridge: ObservableObject {
     }
 
     func pairBegin(device: ATVDevice) async {
-        isPairing = true
+        DispatchQueue.main.async { self.isPairing = true }
         do {
             _ = try await request("pair_begin", params: ["identifier": device.identifier])
             DispatchQueue.main.async { self.pairingAwaitingPin = true }
@@ -404,7 +404,7 @@ final class ATVBridge: ObservableObject {
     }
 
     func connect(device: ATVDevice) async {
-        connectionState = .connecting
+        DispatchQueue.main.async { self.connectionState = .connecting }
         do {
             try await performConnect(identifier: device.identifier)
         } catch {
@@ -413,7 +413,7 @@ final class ATVBridge: ObservableObject {
     }
 
     func connect(identifier: String) async {
-        connectionState = .connecting
+        DispatchQueue.main.async { self.connectionState = .connecting }
         do {
             try await performConnect(identifier: identifier)
         } catch {
