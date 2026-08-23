@@ -27,11 +27,11 @@ jobs:
             echo "VERSION=dev" >> "$GITHUB_ENV"
           fi
 
-      - name: 构建通用二进制 (Release)
+      - name: 构建应用 (arm64, Release)
         run: |
           xcodebuild -project AppleTVRemote.xcodeproj -scheme AppleTVRemote \
             -configuration Release -derivedDataPath DerivedData \
-            ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO \
+            ARCHS=arm64 ONLY_ACTIVE_ARCH=NO \
             CODE_SIGN_IDENTITY="-" MARKETING_VERSION="$VERSION" \
             build
           cp -R DerivedData/Build/Products/Release/AppleTVRemote.app "$RUNNER_TEMP/AppleTVRemote.app"
@@ -44,19 +44,18 @@ jobs:
           tar -xzf /tmp/python-arm64.tar.gz -C /tmp/python-arm64
           mv /tmp/python-arm64/python "$RUNNER_TEMP/AppleTVRemote.app/Contents/Resources/python-arm64"
 
-      - name: 内嵌 Python 运行时 (x86_64)
-        run: |
-          curl -fL -o /tmp/python-x86_64.tar.gz \
-            "https://github.com/astral-sh/python-build-standalone/releases/download/${PYTHON_RELEASE}/cpython-${PYTHON_VERSION}-x86_64-apple-darwin-install_only.tar.gz"
-          mkdir -p /tmp/python-x86_64
-          tar -xzf /tmp/python-x86_64.tar.gz -C /tmp/python-x86_64
-          mv /tmp/python-x86_64/python "$RUNNER_TEMP/AppleTVRemote.app/Contents/Resources/python-x86_64"
-
       - name: 安装 pyatv 依赖
         run: |
           # 只接受预编译轮子:runner 上没有 OpenSSL 等编译环境,缺轮子时应快速失败
           "$RUNNER_TEMP/AppleTVRemote.app/Contents/Resources/python-arm64/bin/python3" -m pip install --no-cache-dir --only-binary=:all: -r requirements.txt
-          "$RUNNER_TEMP/AppleTVRemote.app/Contents/Resources/python-x86_64/bin/python3" -m pip install --no-cache-dir --only-binary=:all: -r requirements.txt
+
+      - name: 精简运行时
+        run: bash scripts/trim_python.sh "$RUNNER_TEMP/AppleTVRemote.app/Contents/Resources/python-arm64"
+
+      - name: 运行时冒烟测试
+        run: |
+          "$RUNNER_TEMP/AppleTVRemote.app/Contents/Resources/python-arm64/bin/python3" -c \
+            "import pyatv, cryptography, aiohttp, zeroconf, pydantic; print('deps ok', pyatv.const.__version__)"
 
       - name: 签名 (ad-hoc)
         run: codesign --force --deep --sign - "$RUNNER_TEMP/AppleTVRemote.app"

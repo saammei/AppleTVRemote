@@ -15,6 +15,8 @@
 
 ## 安装
 
+需要 Apple Silicon 芯片的 Mac(M1 及更新;Intel 机型暂不支持)。
+
 1. 到 [Releases](../../releases/latest) 下载最新版 `AppleTVRemote-*.dmg`
 2. 打开 DMG，把 `AppleTVRemote` 拖进「应用程序」
 3. 首次打开：因为应用未使用 Apple 开发者签名（免费发布），macOS 会拦截。
@@ -64,7 +66,7 @@
 
 应用本身不直接实现 Apple TV 协议，而是把按键、配对等操作翻译成 JSON 请求发给
 `AppleTVRemote/Backend/bridge.py`，由 pyatv 完成实际的网络协议。发布包内嵌
-独立的 Python 运行时（Intel 与 Apple Silicon 各一份），用户无需安装 Python。
+精简过的 Python 运行时（pip/无用标准库已剔除），用户无需安装 Python。
 
 ## 从源码构建
 
@@ -93,8 +95,8 @@ git tag v1.1.0
 git push origin v1.1.0
 ```
 
-CI(.github/workflows/release.yml)会自动:构建通用二进制(Intel + Apple Silicon)→ 内嵌双架构 Python 运行时 →
-打包 DMG → 发布 GitHub Release。
+CI(.github/workflows/release.yml)会自动:构建 arm64 应用 → 内嵌并精简
+Python 运行时(scripts/trim_python.sh)→ 打包 DMG → 发布 GitHub Release。
 
 ## 常见问题
 
