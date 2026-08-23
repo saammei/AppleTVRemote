@@ -78,7 +78,7 @@ struct RemoteView: View {
             } label: {
                 Image(systemName: "gearshape")
             }
-            .buttonStyle(.plain)
+            .buttonStyle(PressScaleButtonStyle())
             .help("显示/隐藏设置")
         }
     }
@@ -231,22 +231,22 @@ struct RemoteView: View {
                 Image(systemName: "power")
                     .frame(width: 40, height: 34)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(PressScaleButtonStyle())
             .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: 8))
             .help("电源")
         }
     }
 
-    /// 键盘按键时短暂高亮对应按钮，提供视觉反馈。
+    /// 键盘按键时短暂高亮并缩小对应按钮，提供视觉反馈。
     private func flashPressed(_ key: RemoteKey) {
         pressedKey = key
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.18) {
             if pressedKey == key { pressedKey = nil }
         }
     }
 
     private func keyBackground(_ key: RemoteKey) -> Color {
-        pressedKey == key ? Color.accentColor.opacity(0.3) : Color.secondary.opacity(0.08)
+        pressedKey == key ? Color.accentColor.opacity(0.45) : Color.secondary.opacity(0.08)
     }
 
     private func keyButton(_ key: RemoteKey) -> some View {
@@ -258,8 +258,10 @@ struct RemoteView: View {
                 .frame(width: 46, height: 46)
                 .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(PressScaleButtonStyle())
         .background(keyBackground(key), in: RoundedRectangle(cornerRadius: 8))
+        .scaleEffect(pressedKey == key ? 0.88 : 1.0)
+        .animation(.easeOut(duration: 0.1), value: pressedKey)
         .help(key.rawValue)
     }
 
@@ -275,8 +277,10 @@ struct RemoteView: View {
             .frame(height: 34)
             .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(PressScaleButtonStyle())
         .background(keyBackground(key), in: RoundedRectangle(cornerRadius: 8))
+        .scaleEffect(pressedKey == key ? 0.88 : 1.0)
+        .animation(.easeOut(duration: 0.1), value: pressedKey)
         .help(key.rawValue)
     }
 
@@ -287,8 +291,10 @@ struct RemoteView: View {
                 .frame(height: 34)
                 .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(PressScaleButtonStyle())
         .background(keyBackground(key), in: RoundedRectangle(cornerRadius: 8))
+        .scaleEffect(pressedKey == key ? 0.88 : 1.0)
+        .animation(.easeOut(duration: 0.1), value: pressedKey)
         .help(help)
     }
 }
@@ -356,5 +362,14 @@ final class PanelKeyMonitor {
         guard let key else { return false }
         onKey(key)
         return true
+    }
+}
+
+/// 按下时轻微缩小的按钮样式，让鼠标点击也有按压反馈。
+struct PressScaleButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.88 : 1.0)
+            .animation(.easeOut(duration: 0.1), value: configuration.isPressed)
     }
 }
