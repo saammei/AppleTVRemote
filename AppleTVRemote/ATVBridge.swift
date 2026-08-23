@@ -75,12 +75,29 @@ final class ATVBridge: ObservableObject {
         appSupportURL.appendingPathComponent("pyatv.json")
     }
 
-    private var defaultPythonPath: String {
+    /// 发布版 app 包内自带 Python（Resources/python-arm64|python-x86_64/），
+    /// 按当前进程架构选择，用户无需自行安装环境。
+    private var bundledPythonPath: String? {
+        let dir: String
+        #if arch(arm64)
+        dir = "python-arm64"
+        #else
+        dir = "python-x86_64"
+        #endif
+        guard let url = Bundle.main.resourceURL?
+            .appendingPathComponent(dir)
+            .appendingPathComponent("bin/python3") else { return nil }
+        return FileManager.default.isExecutableFile(atPath: url.path) ? url.path : nil
+    }
+
+    private var appSupportPythonPath: String {
         appSupportURL.appendingPathComponent("venv/bin/python3").path
     }
 
     var pythonPath: String {
-        ProcessInfo.processInfo.environment["ATV_BRIDGE_PYTHON"] ?? defaultPythonPath
+        ProcessInfo.processInfo.environment["ATV_BRIDGE_PYTHON"]
+            ?? bundledPythonPath
+            ?? appSupportPythonPath
     }
 
     private func scriptURL() -> URL? {
