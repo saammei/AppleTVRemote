@@ -176,9 +176,20 @@ public final class CompanionProtocol: CompanionConnectionListener {
         guard let (value, _) = OPACK.unpack(payload), let dict = value as? [String: Any] else { return }
 
         if isAuthFrame(frameType) {
-            pending.remove(.auth(frameType))?.resume(returning: dict)
+            resume(pending.remove(.auth(frameType)), with: dict)
         } else {
             handleOpack(dict)
+        }
+    }
+
+    /// 恢复一个待响应请求。响应带 `_em` 字段表示设备报错(pyatv 抛 ProtocolError)。
+    private func resume(_ request: PendingRequest?, with dict: [String: Any]) {
+        guard let request else { return }
+        if let errorMessage = dict["_em"] {
+            let text = (errorMessage as? String) ?? String(describing: errorMessage)
+            request.resume(throwing: CompanionError.protocolError(text))
+        } else {
+            request.resume(returning: dict)
         }
     }
 
@@ -194,7 +205,7 @@ public final class CompanionProtocol: CompanionConnectionListener {
             }
         case .response:
             guard let responseXid = data["_x"] as? Int64 else { return }
-            pending.remove(.opack(Int(responseXid)))?.resume(returning: data)
+            resume(pending.remove(.opack(Int(responseXid))), with: data)
         case .request:
             // 设备发起的请求(如按键查询),Phase 3 再处理。
             break

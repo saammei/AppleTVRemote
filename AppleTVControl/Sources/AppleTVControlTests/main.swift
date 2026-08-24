@@ -14,6 +14,7 @@ runDiscoveryTests()
 runCryptoTests()
 runOPACKTests()
 await runCompanionTests()
+await runCompanionAPITests()
 
 if testFailures.isEmpty {
     print("✅ All tests passed")

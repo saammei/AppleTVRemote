@@ -7,6 +7,7 @@
 
 import Foundation
 import CryptoKit
+import os
 
 public enum FrameType: UInt8 {
     case unknown = 0
@@ -29,11 +30,14 @@ public enum FrameType: UInt8 {
 }
 
 /// 连接层加密:out/in 两个独立递增的 12 字节小端计数器 nonce。
+/// 计数器的读写用 os_unfair_lock 保护,使发送/接收可跨线程安全调用。
 public final class CompanionCipher {
     private let outKey: Data
     private let inKey: Data
     private var outCounter: UInt64 = 0
     private var inCounter: UInt64 = 0
+    private var outLock = os_unfair_lock()
+    private var inLock = os_unfair_lock()
 
     public init(outKey: Data, inKey: Data) {
         self.outKey = outKey
@@ -41,14 +45,18 @@ public final class CompanionCipher {
     }
 
     public func encrypt(_ data: Data, aad: Data) throws -> Data {
+        os_unfair_lock_lock(&outLock)
         let nonce = ChaCha20Poly1305.nonceCounter(outCounter)
         outCounter += 1
+        os_unfair_lock_unlock(&outLock)
         return try ChaCha20Poly1305.seal(data, key: outKey, nonce: nonce, aad: aad)
     }
 
     public func decrypt(_ data: Data, aad: Data) throws -> Data {
+        os_unfair_lock_lock(&inLock)
         let nonce = ChaCha20Poly1305.nonceCounter(inCounter)
         inCounter += 1
+        os_unfair_lock_unlock(&inLock)
         return try ChaCha20Poly1305.open(data, key: inKey, nonce: nonce, aad: aad)
     }
 }
