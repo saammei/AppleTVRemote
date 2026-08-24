@@ -8,6 +8,7 @@ import AppleTVControl
 //   ...
 
 runDiscoveryTests()
+runCryptoTests()
 
 if testFailures.isEmpty {
     print("✅ All tests passed")
