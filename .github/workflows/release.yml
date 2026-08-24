@@ -11,10 +11,6 @@ permissions:
 jobs:
   build:
     runs-on: macos-15
-    env:
-      # python-build-standalone:release 的 tag 与文件名里的版本号是分开的
-      PYTHON_RELEASE: "20260814"
-      PYTHON_VERSION: "3.12.14+20260814"
 
     steps:
       - uses: actions/checkout@v4
@@ -27,6 +23,11 @@ jobs:
             echo "VERSION=dev" >> "$GITHUB_ENV"
           fi
 
+      - name: 协议栈自测
+        run: |
+          cd AppleTVControl
+          swift run AppleTVControlTests
+
       - name: 构建应用 (arm64, Release)
         run: |
           xcodebuild -project AppleTVRemote.xcodeproj -scheme AppleTVRemote \
@@ -35,27 +36,6 @@ jobs:
             CODE_SIGN_IDENTITY="-" MARKETING_VERSION="$VERSION" \
             build
           cp -R DerivedData/Build/Products/Release/AppleTVRemote.app "$RUNNER_TEMP/AppleTVRemote.app"
-
-      - name: 内嵌 Python 运行时 (arm64)
-        run: |
-          curl -fL -o /tmp/python-arm64.tar.gz \
-            "https://github.com/astral-sh/python-build-standalone/releases/download/${PYTHON_RELEASE}/cpython-${PYTHON_VERSION}-aarch64-apple-darwin-install_only.tar.gz"
-          mkdir -p /tmp/python-arm64
-          tar -xzf /tmp/python-arm64.tar.gz -C /tmp/python-arm64
-          mv /tmp/python-arm64/python "$RUNNER_TEMP/AppleTVRemote.app/Contents/Resources/python-arm64"
-
-      - name: 安装 pyatv 依赖
-        run: |
-          # 只接受预编译轮子:runner 上没有 OpenSSL 等编译环境,缺轮子时应快速失败
-          "$RUNNER_TEMP/AppleTVRemote.app/Contents/Resources/python-arm64/bin/python3" -m pip install --no-cache-dir --only-binary=:all: -r requirements.txt
-
-      - name: 精简运行时
-        run: bash scripts/trim_python.sh "$RUNNER_TEMP/AppleTVRemote.app/Contents/Resources/python-arm64"
-
-      - name: 运行时冒烟测试
-        run: |
-          "$RUNNER_TEMP/AppleTVRemote.app/Contents/Resources/python-arm64/bin/python3" -c \
-            "import pyatv, cryptography, aiohttp, zeroconf, pydantic; print('deps ok', pyatv.const.__version__)"
 
       - name: 签名 (ad-hoc)
         run: codesign --force --deep --sign - "$RUNNER_TEMP/AppleTVRemote.app"
@@ -67,6 +47,7 @@ jobs:
           ln -s /Applications "$RUNNER_TEMP/dmg/Applications"
           hdiutil create -volname "AppleTVRemote" -srcfolder "$RUNNER_TEMP/dmg" \
             -ov -format UDZO "AppleTVRemote-${VERSION}.dmg"
+          echo "== DMG 体积 =="
           ls -lh AppleTVRemote-*.dmg
 
       - name: 上传构建产物 (手动触发)
