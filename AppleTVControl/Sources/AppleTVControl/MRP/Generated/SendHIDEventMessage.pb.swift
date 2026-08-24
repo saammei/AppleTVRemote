@@ -25,7 +25,7 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct SendHIDEventMessage: Sendable {
+public nonisolated struct SendHIDEventMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -60,18 +60,18 @@ nonisolated struct SendHIDEventMessage: Sendable {
   /// bytes is a timestamp (mach AbsoluteTime). It's a bit tricky to derive but
   /// tvOS seems to accept old timestamps here. So it's probably fine to send
   /// anything.
-  var hidEventData: Data {
+  public var hidEventData: Data {
     get {_hidEventData ?? Data()}
     set {_hidEventData = newValue}
   }
   /// Returns true if `hidEventData` has been explicitly set.
-  var hasHidEventData: Bool {self._hidEventData != nil}
+  public var hasHidEventData: Bool {self._hidEventData != nil}
   /// Clears the value of `hidEventData`. Subsequent reads from it will return its default value.
-  mutating func clearHidEventData() {self._hidEventData = nil}
+  public mutating func clearHidEventData() {self._hidEventData = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _hidEventData: Data? = nil
 }
@@ -87,18 +87,18 @@ nonisolated struct SendHIDEventMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var sendHideventMessage: SendHIDEventMessage {
+  public var sendHideventMessage: SendHIDEventMessage {
     get {return getExtensionValue(ext: Extensions_sendHIDEventMessage) ?? SendHIDEventMessage()}
     set {setExtensionValue(ext: Extensions_sendHIDEventMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_sendHIDEventMessage`
   /// has been explicitly set.
-  var hasSendHideventMessage: Bool {
+  public var hasSendHideventMessage: Bool {
     return hasExtensionValue(ext: Extensions_sendHIDEventMessage)
   }
   /// Clears the value of extension `Extensions_sendHIDEventMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearSendHideventMessage() {
+  public mutating func clearSendHideventMessage() {
     clearExtensionValue(ext: Extensions_sendHIDEventMessage)
   }
 
@@ -110,7 +110,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let SendHideventMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let SendHideventMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_sendHIDEventMessage
 ]
 
@@ -118,7 +118,7 @@ nonisolated let SendHideventMessage_Extensions: SwiftProtobuf.SimpleExtensionMap
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_sendHIDEventMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SendHIDEventMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_sendHIDEventMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SendHIDEventMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 13,
   fieldName: "sendHIDEventMessage"
 )
@@ -126,10 +126,10 @@ nonisolated let Extensions_sendHIDEventMessage = SwiftProtobuf.MessageExtension<
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension SendHIDEventMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SendHIDEventMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}hidEventData\0")
+  public static let protoMessageName: String = "SendHIDEventMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}hidEventData\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -141,7 +141,7 @@ nonisolated extension SendHIDEventMessage: SwiftProtobuf.Message, SwiftProtobuf.
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -152,7 +152,7 @@ nonisolated extension SendHIDEventMessage: SwiftProtobuf.Message, SwiftProtobuf.
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SendHIDEventMessage, rhs: SendHIDEventMessage) -> Bool {
+  public static func ==(lhs: SendHIDEventMessage, rhs: SendHIDEventMessage) -> Bool {
     if lhs._hidEventData != rhs._hidEventData {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

@@ -20,41 +20,41 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct VolumeControlCapabilitiesDidChangeMessage: Sendable {
+public nonisolated struct VolumeControlCapabilitiesDidChangeMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var capabilities: VolumeControlAvailabilityMessage {
+  public var capabilities: VolumeControlAvailabilityMessage {
     get {_capabilities ?? VolumeControlAvailabilityMessage()}
     set {_capabilities = newValue}
   }
   /// Returns true if `capabilities` has been explicitly set.
-  var hasCapabilities: Bool {self._capabilities != nil}
+  public var hasCapabilities: Bool {self._capabilities != nil}
   /// Clears the value of `capabilities`. Subsequent reads from it will return its default value.
-  mutating func clearCapabilities() {self._capabilities = nil}
+  public mutating func clearCapabilities() {self._capabilities = nil}
 
-  var endpointUid: String {
+  public var endpointUid: String {
     get {_endpointUid ?? String()}
     set {_endpointUid = newValue}
   }
   /// Returns true if `endpointUid` has been explicitly set.
-  var hasEndpointUid: Bool {self._endpointUid != nil}
+  public var hasEndpointUid: Bool {self._endpointUid != nil}
   /// Clears the value of `endpointUid`. Subsequent reads from it will return its default value.
-  mutating func clearEndpointUid() {self._endpointUid = nil}
+  public mutating func clearEndpointUid() {self._endpointUid = nil}
 
-  var outputDeviceUid: String {
+  public var outputDeviceUid: String {
     get {_outputDeviceUid ?? String()}
     set {_outputDeviceUid = newValue}
   }
   /// Returns true if `outputDeviceUid` has been explicitly set.
-  var hasOutputDeviceUid: Bool {self._outputDeviceUid != nil}
+  public var hasOutputDeviceUid: Bool {self._outputDeviceUid != nil}
   /// Clears the value of `outputDeviceUid`. Subsequent reads from it will return its default value.
-  mutating func clearOutputDeviceUid() {self._outputDeviceUid = nil}
+  public mutating func clearOutputDeviceUid() {self._outputDeviceUid = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _capabilities: VolumeControlAvailabilityMessage? = nil
   fileprivate var _endpointUid: String? = nil
@@ -72,18 +72,18 @@ nonisolated struct VolumeControlCapabilitiesDidChangeMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var volumeControlCapabilitiesDidChangeMessage: VolumeControlCapabilitiesDidChangeMessage {
+  public var volumeControlCapabilitiesDidChangeMessage: VolumeControlCapabilitiesDidChangeMessage {
     get {return getExtensionValue(ext: Extensions_volumeControlCapabilitiesDidChangeMessage) ?? VolumeControlCapabilitiesDidChangeMessage()}
     set {setExtensionValue(ext: Extensions_volumeControlCapabilitiesDidChangeMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_volumeControlCapabilitiesDidChangeMessage`
   /// has been explicitly set.
-  var hasVolumeControlCapabilitiesDidChangeMessage: Bool {
+  public var hasVolumeControlCapabilitiesDidChangeMessage: Bool {
     return hasExtensionValue(ext: Extensions_volumeControlCapabilitiesDidChangeMessage)
   }
   /// Clears the value of extension `Extensions_volumeControlCapabilitiesDidChangeMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearVolumeControlCapabilitiesDidChangeMessage() {
+  public mutating func clearVolumeControlCapabilitiesDidChangeMessage() {
     clearExtensionValue(ext: Extensions_volumeControlCapabilitiesDidChangeMessage)
   }
 
@@ -95,7 +95,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let VolumeControlCapabilitiesDidChangeMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let VolumeControlCapabilitiesDidChangeMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_volumeControlCapabilitiesDidChangeMessage
 ]
 
@@ -103,7 +103,7 @@ nonisolated let VolumeControlCapabilitiesDidChangeMessage_Extensions: SwiftProto
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_volumeControlCapabilitiesDidChangeMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<VolumeControlCapabilitiesDidChangeMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_volumeControlCapabilitiesDidChangeMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<VolumeControlCapabilitiesDidChangeMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 68,
   fieldName: "volumeControlCapabilitiesDidChangeMessage"
 )
@@ -111,10 +111,10 @@ nonisolated let Extensions_volumeControlCapabilitiesDidChangeMessage = SwiftProt
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension VolumeControlCapabilitiesDidChangeMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "VolumeControlCapabilitiesDidChangeMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}capabilities\0\u{2}\u{2}endpointUID\0\u{1}outputDeviceUID\0")
+  public static let protoMessageName: String = "VolumeControlCapabilitiesDidChangeMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}capabilities\0\u{2}\u{2}endpointUID\0\u{1}outputDeviceUID\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -128,7 +128,7 @@ nonisolated extension VolumeControlCapabilitiesDidChangeMessage: SwiftProtobuf.M
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -145,7 +145,7 @@ nonisolated extension VolumeControlCapabilitiesDidChangeMessage: SwiftProtobuf.M
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: VolumeControlCapabilitiesDidChangeMessage, rhs: VolumeControlCapabilitiesDidChangeMessage) -> Bool {
+  public static func ==(lhs: VolumeControlCapabilitiesDidChangeMessage, rhs: VolumeControlCapabilitiesDidChangeMessage) -> Bool {
     if lhs._capabilities != rhs._capabilities {return false}
     if lhs._endpointUid != rhs._endpointUid {return false}
     if lhs._outputDeviceUid != rhs._outputDeviceUid {return false}

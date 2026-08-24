@@ -25,23 +25,23 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct SetArtworkMessage: Sendable {
+public nonisolated struct SetArtworkMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var jpegData: Data {
+  public var jpegData: Data {
     get {_jpegData ?? Data()}
     set {_jpegData = newValue}
   }
   /// Returns true if `jpegData` has been explicitly set.
-  var hasJpegData: Bool {self._jpegData != nil}
+  public var hasJpegData: Bool {self._jpegData != nil}
   /// Clears the value of `jpegData`. Subsequent reads from it will return its default value.
-  mutating func clearJpegData() {self._jpegData = nil}
+  public mutating func clearJpegData() {self._jpegData = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _jpegData: Data? = nil
 }
@@ -57,18 +57,18 @@ nonisolated struct SetArtworkMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var setArtworkMessage: SetArtworkMessage {
+  public var setArtworkMessage: SetArtworkMessage {
     get {return getExtensionValue(ext: Extensions_setArtworkMessage) ?? SetArtworkMessage()}
     set {setExtensionValue(ext: Extensions_setArtworkMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_setArtworkMessage`
   /// has been explicitly set.
-  var hasSetArtworkMessage: Bool {
+  public var hasSetArtworkMessage: Bool {
     return hasExtensionValue(ext: Extensions_setArtworkMessage)
   }
   /// Clears the value of extension `Extensions_setArtworkMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearSetArtworkMessage() {
+  public mutating func clearSetArtworkMessage() {
     clearExtensionValue(ext: Extensions_setArtworkMessage)
   }
 
@@ -80,7 +80,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let SetArtworkMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let SetArtworkMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_setArtworkMessage
 ]
 
@@ -88,7 +88,7 @@ nonisolated let SetArtworkMessage_Extensions: SwiftProtobuf.SimpleExtensionMap =
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_setArtworkMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SetArtworkMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_setArtworkMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SetArtworkMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 10,
   fieldName: "setArtworkMessage"
 )
@@ -96,10 +96,10 @@ nonisolated let Extensions_setArtworkMessage = SwiftProtobuf.MessageExtension<Sw
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension SetArtworkMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SetArtworkMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}jpegData\0")
+  public static let protoMessageName: String = "SetArtworkMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}jpegData\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -111,7 +111,7 @@ nonisolated extension SetArtworkMessage: SwiftProtobuf.Message, SwiftProtobuf._M
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -122,7 +122,7 @@ nonisolated extension SetArtworkMessage: SwiftProtobuf.Message, SwiftProtobuf._M
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SetArtworkMessage, rhs: SetArtworkMessage) -> Bool {
+  public static func ==(lhs: SetArtworkMessage, rhs: SetArtworkMessage) -> Bool {
     if lhs._jpegData != rhs._jpegData {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

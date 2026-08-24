@@ -25,284 +25,284 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct CommandOptions: @unchecked Sendable {
+public nonisolated struct CommandOptions: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var sourceID: String {
+  public var sourceID: String {
     get {_storage._sourceID ?? String()}
     set {_uniqueStorage()._sourceID = newValue}
   }
   /// Returns true if `sourceID` has been explicitly set.
-  var hasSourceID: Bool {_storage._sourceID != nil}
+  public var hasSourceID: Bool {_storage._sourceID != nil}
   /// Clears the value of `sourceID`. Subsequent reads from it will return its default value.
-  mutating func clearSourceID() {_uniqueStorage()._sourceID = nil}
+  public mutating func clearSourceID() {_uniqueStorage()._sourceID = nil}
 
-  var mediaType: String {
+  public var mediaType: String {
     get {_storage._mediaType ?? String()}
     set {_uniqueStorage()._mediaType = newValue}
   }
   /// Returns true if `mediaType` has been explicitly set.
-  var hasMediaType: Bool {_storage._mediaType != nil}
+  public var hasMediaType: Bool {_storage._mediaType != nil}
   /// Clears the value of `mediaType`. Subsequent reads from it will return its default value.
-  mutating func clearMediaType() {_uniqueStorage()._mediaType = nil}
+  public mutating func clearMediaType() {_uniqueStorage()._mediaType = nil}
 
-  var externalPlayerCommand: Bool {
+  public var externalPlayerCommand: Bool {
     get {_storage._externalPlayerCommand ?? false}
     set {_uniqueStorage()._externalPlayerCommand = newValue}
   }
   /// Returns true if `externalPlayerCommand` has been explicitly set.
-  var hasExternalPlayerCommand: Bool {_storage._externalPlayerCommand != nil}
+  public var hasExternalPlayerCommand: Bool {_storage._externalPlayerCommand != nil}
   /// Clears the value of `externalPlayerCommand`. Subsequent reads from it will return its default value.
-  mutating func clearExternalPlayerCommand() {_uniqueStorage()._externalPlayerCommand = nil}
+  public mutating func clearExternalPlayerCommand() {_uniqueStorage()._externalPlayerCommand = nil}
 
-  var skipInterval: Float {
+  public var skipInterval: Float {
     get {_storage._skipInterval ?? 0}
     set {_uniqueStorage()._skipInterval = newValue}
   }
   /// Returns true if `skipInterval` has been explicitly set.
-  var hasSkipInterval: Bool {_storage._skipInterval != nil}
+  public var hasSkipInterval: Bool {_storage._skipInterval != nil}
   /// Clears the value of `skipInterval`. Subsequent reads from it will return its default value.
-  mutating func clearSkipInterval() {_uniqueStorage()._skipInterval = nil}
+  public mutating func clearSkipInterval() {_uniqueStorage()._skipInterval = nil}
 
-  var playbackRate: Float {
+  public var playbackRate: Float {
     get {_storage._playbackRate ?? 0}
     set {_uniqueStorage()._playbackRate = newValue}
   }
   /// Returns true if `playbackRate` has been explicitly set.
-  var hasPlaybackRate: Bool {_storage._playbackRate != nil}
+  public var hasPlaybackRate: Bool {_storage._playbackRate != nil}
   /// Clears the value of `playbackRate`. Subsequent reads from it will return its default value.
-  mutating func clearPlaybackRate() {_uniqueStorage()._playbackRate = nil}
+  public mutating func clearPlaybackRate() {_uniqueStorage()._playbackRate = nil}
 
-  var rating: Float {
+  public var rating: Float {
     get {_storage._rating ?? 0}
     set {_uniqueStorage()._rating = newValue}
   }
   /// Returns true if `rating` has been explicitly set.
-  var hasRating: Bool {_storage._rating != nil}
+  public var hasRating: Bool {_storage._rating != nil}
   /// Clears the value of `rating`. Subsequent reads from it will return its default value.
-  mutating func clearRating() {_uniqueStorage()._rating = nil}
+  public mutating func clearRating() {_uniqueStorage()._rating = nil}
 
-  var negative: Bool {
+  public var negative: Bool {
     get {_storage._negative ?? false}
     set {_uniqueStorage()._negative = newValue}
   }
   /// Returns true if `negative` has been explicitly set.
-  var hasNegative: Bool {_storage._negative != nil}
+  public var hasNegative: Bool {_storage._negative != nil}
   /// Clears the value of `negative`. Subsequent reads from it will return its default value.
-  mutating func clearNegative() {_uniqueStorage()._negative = nil}
+  public mutating func clearNegative() {_uniqueStorage()._negative = nil}
 
-  var playbackPosition: Double {
+  public var playbackPosition: Double {
     get {_storage._playbackPosition ?? 0}
     set {_uniqueStorage()._playbackPosition = newValue}
   }
   /// Returns true if `playbackPosition` has been explicitly set.
-  var hasPlaybackPosition: Bool {_storage._playbackPosition != nil}
+  public var hasPlaybackPosition: Bool {_storage._playbackPosition != nil}
   /// Clears the value of `playbackPosition`. Subsequent reads from it will return its default value.
-  mutating func clearPlaybackPosition() {_uniqueStorage()._playbackPosition = nil}
+  public mutating func clearPlaybackPosition() {_uniqueStorage()._playbackPosition = nil}
 
-  var repeatMode: RepeatMode.Enum {
+  public var repeatMode: RepeatMode.Enum {
     get {_storage._repeatMode ?? .unknown}
     set {_uniqueStorage()._repeatMode = newValue}
   }
   /// Returns true if `repeatMode` has been explicitly set.
-  var hasRepeatMode: Bool {_storage._repeatMode != nil}
+  public var hasRepeatMode: Bool {_storage._repeatMode != nil}
   /// Clears the value of `repeatMode`. Subsequent reads from it will return its default value.
-  mutating func clearRepeatMode() {_uniqueStorage()._repeatMode = nil}
+  public mutating func clearRepeatMode() {_uniqueStorage()._repeatMode = nil}
 
-  var shuffleMode: ShuffleMode.Enum {
+  public var shuffleMode: ShuffleMode.Enum {
     get {_storage._shuffleMode ?? .unknown}
     set {_uniqueStorage()._shuffleMode = newValue}
   }
   /// Returns true if `shuffleMode` has been explicitly set.
-  var hasShuffleMode: Bool {_storage._shuffleMode != nil}
+  public var hasShuffleMode: Bool {_storage._shuffleMode != nil}
   /// Clears the value of `shuffleMode`. Subsequent reads from it will return its default value.
-  mutating func clearShuffleMode() {_uniqueStorage()._shuffleMode = nil}
+  public mutating func clearShuffleMode() {_uniqueStorage()._shuffleMode = nil}
 
-  var trackID: UInt64 {
+  public var trackID: UInt64 {
     get {_storage._trackID ?? 0}
     set {_uniqueStorage()._trackID = newValue}
   }
   /// Returns true if `trackID` has been explicitly set.
-  var hasTrackID: Bool {_storage._trackID != nil}
+  public var hasTrackID: Bool {_storage._trackID != nil}
   /// Clears the value of `trackID`. Subsequent reads from it will return its default value.
-  mutating func clearTrackID() {_uniqueStorage()._trackID = nil}
+  public mutating func clearTrackID() {_uniqueStorage()._trackID = nil}
 
-  var radioStationID: Int64 {
+  public var radioStationID: Int64 {
     get {_storage._radioStationID ?? 0}
     set {_uniqueStorage()._radioStationID = newValue}
   }
   /// Returns true if `radioStationID` has been explicitly set.
-  var hasRadioStationID: Bool {_storage._radioStationID != nil}
+  public var hasRadioStationID: Bool {_storage._radioStationID != nil}
   /// Clears the value of `radioStationID`. Subsequent reads from it will return its default value.
-  mutating func clearRadioStationID() {_uniqueStorage()._radioStationID = nil}
+  public mutating func clearRadioStationID() {_uniqueStorage()._radioStationID = nil}
 
-  var radioStationHash: String {
+  public var radioStationHash: String {
     get {_storage._radioStationHash ?? String()}
     set {_uniqueStorage()._radioStationHash = newValue}
   }
   /// Returns true if `radioStationHash` has been explicitly set.
-  var hasRadioStationHash: Bool {_storage._radioStationHash != nil}
+  public var hasRadioStationHash: Bool {_storage._radioStationHash != nil}
   /// Clears the value of `radioStationHash`. Subsequent reads from it will return its default value.
-  mutating func clearRadioStationHash() {_uniqueStorage()._radioStationHash = nil}
+  public mutating func clearRadioStationHash() {_uniqueStorage()._radioStationHash = nil}
 
-  var systemAppPlaybackQueueData: Data {
+  public var systemAppPlaybackQueueData: Data {
     get {_storage._systemAppPlaybackQueueData ?? Data()}
     set {_uniqueStorage()._systemAppPlaybackQueueData = newValue}
   }
   /// Returns true if `systemAppPlaybackQueueData` has been explicitly set.
-  var hasSystemAppPlaybackQueueData: Bool {_storage._systemAppPlaybackQueueData != nil}
+  public var hasSystemAppPlaybackQueueData: Bool {_storage._systemAppPlaybackQueueData != nil}
   /// Clears the value of `systemAppPlaybackQueueData`. Subsequent reads from it will return its default value.
-  mutating func clearSystemAppPlaybackQueueData() {_uniqueStorage()._systemAppPlaybackQueueData = nil}
+  public mutating func clearSystemAppPlaybackQueueData() {_uniqueStorage()._systemAppPlaybackQueueData = nil}
 
-  var destinationAppDisplayID: String {
+  public var destinationAppDisplayID: String {
     get {_storage._destinationAppDisplayID ?? String()}
     set {_uniqueStorage()._destinationAppDisplayID = newValue}
   }
   /// Returns true if `destinationAppDisplayID` has been explicitly set.
-  var hasDestinationAppDisplayID: Bool {_storage._destinationAppDisplayID != nil}
+  public var hasDestinationAppDisplayID: Bool {_storage._destinationAppDisplayID != nil}
   /// Clears the value of `destinationAppDisplayID`. Subsequent reads from it will return its default value.
-  mutating func clearDestinationAppDisplayID() {_uniqueStorage()._destinationAppDisplayID = nil}
+  public mutating func clearDestinationAppDisplayID() {_uniqueStorage()._destinationAppDisplayID = nil}
 
-  var sendOptions: UInt32 {
+  public var sendOptions: UInt32 {
     get {_storage._sendOptions ?? 0}
     set {_uniqueStorage()._sendOptions = newValue}
   }
   /// Returns true if `sendOptions` has been explicitly set.
-  var hasSendOptions: Bool {_storage._sendOptions != nil}
+  public var hasSendOptions: Bool {_storage._sendOptions != nil}
   /// Clears the value of `sendOptions`. Subsequent reads from it will return its default value.
-  mutating func clearSendOptions() {_uniqueStorage()._sendOptions = nil}
+  public mutating func clearSendOptions() {_uniqueStorage()._sendOptions = nil}
 
-  var requestDefermentToPlaybackQueuePosition: Bool {
+  public var requestDefermentToPlaybackQueuePosition: Bool {
     get {_storage._requestDefermentToPlaybackQueuePosition ?? false}
     set {_uniqueStorage()._requestDefermentToPlaybackQueuePosition = newValue}
   }
   /// Returns true if `requestDefermentToPlaybackQueuePosition` has been explicitly set.
-  var hasRequestDefermentToPlaybackQueuePosition: Bool {_storage._requestDefermentToPlaybackQueuePosition != nil}
+  public var hasRequestDefermentToPlaybackQueuePosition: Bool {_storage._requestDefermentToPlaybackQueuePosition != nil}
   /// Clears the value of `requestDefermentToPlaybackQueuePosition`. Subsequent reads from it will return its default value.
-  mutating func clearRequestDefermentToPlaybackQueuePosition() {_uniqueStorage()._requestDefermentToPlaybackQueuePosition = nil}
+  public mutating func clearRequestDefermentToPlaybackQueuePosition() {_uniqueStorage()._requestDefermentToPlaybackQueuePosition = nil}
 
-  var contextID: String {
+  public var contextID: String {
     get {_storage._contextID ?? String()}
     set {_uniqueStorage()._contextID = newValue}
   }
   /// Returns true if `contextID` has been explicitly set.
-  var hasContextID: Bool {_storage._contextID != nil}
+  public var hasContextID: Bool {_storage._contextID != nil}
   /// Clears the value of `contextID`. Subsequent reads from it will return its default value.
-  mutating func clearContextID() {_uniqueStorage()._contextID = nil}
+  public mutating func clearContextID() {_uniqueStorage()._contextID = nil}
 
-  var shouldOverrideManuallyCuratedQueue: Bool {
+  public var shouldOverrideManuallyCuratedQueue: Bool {
     get {_storage._shouldOverrideManuallyCuratedQueue ?? false}
     set {_uniqueStorage()._shouldOverrideManuallyCuratedQueue = newValue}
   }
   /// Returns true if `shouldOverrideManuallyCuratedQueue` has been explicitly set.
-  var hasShouldOverrideManuallyCuratedQueue: Bool {_storage._shouldOverrideManuallyCuratedQueue != nil}
+  public var hasShouldOverrideManuallyCuratedQueue: Bool {_storage._shouldOverrideManuallyCuratedQueue != nil}
   /// Clears the value of `shouldOverrideManuallyCuratedQueue`. Subsequent reads from it will return its default value.
-  mutating func clearShouldOverrideManuallyCuratedQueue() {_uniqueStorage()._shouldOverrideManuallyCuratedQueue = nil}
+  public mutating func clearShouldOverrideManuallyCuratedQueue() {_uniqueStorage()._shouldOverrideManuallyCuratedQueue = nil}
 
-  var stationURL: String {
+  public var stationURL: String {
     get {_storage._stationURL ?? String()}
     set {_uniqueStorage()._stationURL = newValue}
   }
   /// Returns true if `stationURL` has been explicitly set.
-  var hasStationURL: Bool {_storage._stationURL != nil}
+  public var hasStationURL: Bool {_storage._stationURL != nil}
   /// Clears the value of `stationURL`. Subsequent reads from it will return its default value.
-  mutating func clearStationURL() {_uniqueStorage()._stationURL = nil}
+  public mutating func clearStationURL() {_uniqueStorage()._stationURL = nil}
 
-  var shouldBeginRadioPlayback: Bool {
+  public var shouldBeginRadioPlayback: Bool {
     get {_storage._shouldBeginRadioPlayback ?? false}
     set {_uniqueStorage()._shouldBeginRadioPlayback = newValue}
   }
   /// Returns true if `shouldBeginRadioPlayback` has been explicitly set.
-  var hasShouldBeginRadioPlayback: Bool {_storage._shouldBeginRadioPlayback != nil}
+  public var hasShouldBeginRadioPlayback: Bool {_storage._shouldBeginRadioPlayback != nil}
   /// Clears the value of `shouldBeginRadioPlayback`. Subsequent reads from it will return its default value.
-  mutating func clearShouldBeginRadioPlayback() {_uniqueStorage()._shouldBeginRadioPlayback = nil}
+  public mutating func clearShouldBeginRadioPlayback() {_uniqueStorage()._shouldBeginRadioPlayback = nil}
 
-  var playbackQueueInsertionPosition: Int32 {
+  public var playbackQueueInsertionPosition: Int32 {
     get {_storage._playbackQueueInsertionPosition ?? 0}
     set {_uniqueStorage()._playbackQueueInsertionPosition = newValue}
   }
   /// Returns true if `playbackQueueInsertionPosition` has been explicitly set.
-  var hasPlaybackQueueInsertionPosition: Bool {_storage._playbackQueueInsertionPosition != nil}
+  public var hasPlaybackQueueInsertionPosition: Bool {_storage._playbackQueueInsertionPosition != nil}
   /// Clears the value of `playbackQueueInsertionPosition`. Subsequent reads from it will return its default value.
-  mutating func clearPlaybackQueueInsertionPosition() {_uniqueStorage()._playbackQueueInsertionPosition = nil}
+  public mutating func clearPlaybackQueueInsertionPosition() {_uniqueStorage()._playbackQueueInsertionPosition = nil}
 
-  var contentItemID: String {
+  public var contentItemID: String {
     get {_storage._contentItemID ?? String()}
     set {_uniqueStorage()._contentItemID = newValue}
   }
   /// Returns true if `contentItemID` has been explicitly set.
-  var hasContentItemID: Bool {_storage._contentItemID != nil}
+  public var hasContentItemID: Bool {_storage._contentItemID != nil}
   /// Clears the value of `contentItemID`. Subsequent reads from it will return its default value.
-  mutating func clearContentItemID() {_uniqueStorage()._contentItemID = nil}
+  public mutating func clearContentItemID() {_uniqueStorage()._contentItemID = nil}
 
-  var playbackQueueOffset: Int32 {
+  public var playbackQueueOffset: Int32 {
     get {_storage._playbackQueueOffset ?? 0}
     set {_uniqueStorage()._playbackQueueOffset = newValue}
   }
   /// Returns true if `playbackQueueOffset` has been explicitly set.
-  var hasPlaybackQueueOffset: Bool {_storage._playbackQueueOffset != nil}
+  public var hasPlaybackQueueOffset: Bool {_storage._playbackQueueOffset != nil}
   /// Clears the value of `playbackQueueOffset`. Subsequent reads from it will return its default value.
-  mutating func clearPlaybackQueueOffset() {_uniqueStorage()._playbackQueueOffset = nil}
+  public mutating func clearPlaybackQueueOffset() {_uniqueStorage()._playbackQueueOffset = nil}
 
-  var playbackQueueDestinationOffset: Int32 {
+  public var playbackQueueDestinationOffset: Int32 {
     get {_storage._playbackQueueDestinationOffset ?? 0}
     set {_uniqueStorage()._playbackQueueDestinationOffset = newValue}
   }
   /// Returns true if `playbackQueueDestinationOffset` has been explicitly set.
-  var hasPlaybackQueueDestinationOffset: Bool {_storage._playbackQueueDestinationOffset != nil}
+  public var hasPlaybackQueueDestinationOffset: Bool {_storage._playbackQueueDestinationOffset != nil}
   /// Clears the value of `playbackQueueDestinationOffset`. Subsequent reads from it will return its default value.
-  mutating func clearPlaybackQueueDestinationOffset() {_uniqueStorage()._playbackQueueDestinationOffset = nil}
+  public mutating func clearPlaybackQueueDestinationOffset() {_uniqueStorage()._playbackQueueDestinationOffset = nil}
 
-  var languageOption: Data {
+  public var languageOption: Data {
     get {_storage._languageOption ?? Data()}
     set {_uniqueStorage()._languageOption = newValue}
   }
   /// Returns true if `languageOption` has been explicitly set.
-  var hasLanguageOption: Bool {_storage._languageOption != nil}
+  public var hasLanguageOption: Bool {_storage._languageOption != nil}
   /// Clears the value of `languageOption`. Subsequent reads from it will return its default value.
-  mutating func clearLanguageOption() {_uniqueStorage()._languageOption = nil}
+  public mutating func clearLanguageOption() {_uniqueStorage()._languageOption = nil}
 
-  var playbackQueueContext: Data {
+  public var playbackQueueContext: Data {
     get {_storage._playbackQueueContext ?? Data()}
     set {_uniqueStorage()._playbackQueueContext = newValue}
   }
   /// Returns true if `playbackQueueContext` has been explicitly set.
-  var hasPlaybackQueueContext: Bool {_storage._playbackQueueContext != nil}
+  public var hasPlaybackQueueContext: Bool {_storage._playbackQueueContext != nil}
   /// Clears the value of `playbackQueueContext`. Subsequent reads from it will return its default value.
-  mutating func clearPlaybackQueueContext() {_uniqueStorage()._playbackQueueContext = nil}
+  public mutating func clearPlaybackQueueContext() {_uniqueStorage()._playbackQueueContext = nil}
 
-  var insertAfterContentItemID: String {
+  public var insertAfterContentItemID: String {
     get {_storage._insertAfterContentItemID ?? String()}
     set {_uniqueStorage()._insertAfterContentItemID = newValue}
   }
   /// Returns true if `insertAfterContentItemID` has been explicitly set.
-  var hasInsertAfterContentItemID: Bool {_storage._insertAfterContentItemID != nil}
+  public var hasInsertAfterContentItemID: Bool {_storage._insertAfterContentItemID != nil}
   /// Clears the value of `insertAfterContentItemID`. Subsequent reads from it will return its default value.
-  mutating func clearInsertAfterContentItemID() {_uniqueStorage()._insertAfterContentItemID = nil}
+  public mutating func clearInsertAfterContentItemID() {_uniqueStorage()._insertAfterContentItemID = nil}
 
-  var nowPlayingContentItemID: String {
+  public var nowPlayingContentItemID: String {
     get {_storage._nowPlayingContentItemID ?? String()}
     set {_uniqueStorage()._nowPlayingContentItemID = newValue}
   }
   /// Returns true if `nowPlayingContentItemID` has been explicitly set.
-  var hasNowPlayingContentItemID: Bool {_storage._nowPlayingContentItemID != nil}
+  public var hasNowPlayingContentItemID: Bool {_storage._nowPlayingContentItemID != nil}
   /// Clears the value of `nowPlayingContentItemID`. Subsequent reads from it will return its default value.
-  mutating func clearNowPlayingContentItemID() {_uniqueStorage()._nowPlayingContentItemID = nil}
+  public mutating func clearNowPlayingContentItemID() {_uniqueStorage()._nowPlayingContentItemID = nil}
 
-  var replaceIntent: Int32 {
+  public var replaceIntent: Int32 {
     get {_storage._replaceIntent ?? 0}
     set {_uniqueStorage()._replaceIntent = newValue}
   }
   /// Returns true if `replaceIntent` has been explicitly set.
-  var hasReplaceIntent: Bool {_storage._replaceIntent != nil}
+  public var hasReplaceIntent: Bool {_storage._replaceIntent != nil}
   /// Clears the value of `replaceIntent`. Subsequent reads from it will return its default value.
-  mutating func clearReplaceIntent() {_uniqueStorage()._replaceIntent = nil}
+  public mutating func clearReplaceIntent() {_uniqueStorage()._replaceIntent = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
 }
@@ -310,8 +310,8 @@ nonisolated struct CommandOptions: @unchecked Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension CommandOptions: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "CommandOptions"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\u{2}sourceId\0\u{1}mediaType\0\u{1}externalPlayerCommand\0\u{1}skipInterval\0\u{1}playbackRate\0\u{1}rating\0\u{1}negative\0\u{1}playbackPosition\0\u{1}repeatMode\0\u{1}shuffleMode\0\u{1}trackID\0\u{1}radioStationID\0\u{1}radioStationHash\0\u{1}systemAppPlaybackQueueData\0\u{1}destinationAppDisplayID\0\u{1}sendOptions\0\u{1}requestDefermentToPlaybackQueuePosition\0\u{1}contextID\0\u{1}shouldOverrideManuallyCuratedQueue\0\u{1}stationURL\0\u{1}shouldBeginRadioPlayback\0\u{1}playbackQueueInsertionPosition\0\u{1}contentItemID\0\u{1}playbackQueueOffset\0\u{1}playbackQueueDestinationOffset\0\u{1}languageOption\0\u{1}playbackQueueContext\0\u{1}insertAfterContentItemID\0\u{1}nowPlayingContentItemID\0\u{1}replaceIntent\0")
+  public static let protoMessageName: String = "CommandOptions"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\u{2}sourceId\0\u{1}mediaType\0\u{1}externalPlayerCommand\0\u{1}skipInterval\0\u{1}playbackRate\0\u{1}rating\0\u{1}negative\0\u{1}playbackPosition\0\u{1}repeatMode\0\u{1}shuffleMode\0\u{1}trackID\0\u{1}radioStationID\0\u{1}radioStationHash\0\u{1}systemAppPlaybackQueueData\0\u{1}destinationAppDisplayID\0\u{1}sendOptions\0\u{1}requestDefermentToPlaybackQueuePosition\0\u{1}contextID\0\u{1}shouldOverrideManuallyCuratedQueue\0\u{1}stationURL\0\u{1}shouldBeginRadioPlayback\0\u{1}playbackQueueInsertionPosition\0\u{1}contentItemID\0\u{1}playbackQueueOffset\0\u{1}playbackQueueDestinationOffset\0\u{1}languageOption\0\u{1}playbackQueueContext\0\u{1}insertAfterContentItemID\0\u{1}nowPlayingContentItemID\0\u{1}replaceIntent\0")
 
   fileprivate class _StorageClass {
     var _sourceID: String? = nil
@@ -394,7 +394,7 @@ nonisolated extension CommandOptions: SwiftProtobuf.Message, SwiftProtobuf._Mess
     return _storage
   }
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     _ = _uniqueStorage()
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       while let fieldNumber = try decoder.nextFieldNumber() {
@@ -438,7 +438,7 @@ nonisolated extension CommandOptions: SwiftProtobuf.Message, SwiftProtobuf._Mess
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every if/case branch local when no optimizations
@@ -538,7 +538,7 @@ nonisolated extension CommandOptions: SwiftProtobuf.Message, SwiftProtobuf._Mess
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: CommandOptions, rhs: CommandOptions) -> Bool {
+  public static func ==(lhs: CommandOptions, rhs: CommandOptions) -> Bool {
     if lhs._storage !== rhs._storage {
       let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
         let _storage = _args.0

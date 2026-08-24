@@ -20,23 +20,23 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct RegisterVoiceInputDeviceMessage: Sendable {
+public nonisolated struct RegisterVoiceInputDeviceMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var deviceDescriptor: VoiceInputDeviceDescriptor {
+  public var deviceDescriptor: VoiceInputDeviceDescriptor {
     get {_deviceDescriptor ?? VoiceInputDeviceDescriptor()}
     set {_deviceDescriptor = newValue}
   }
   /// Returns true if `deviceDescriptor` has been explicitly set.
-  var hasDeviceDescriptor: Bool {self._deviceDescriptor != nil}
+  public var hasDeviceDescriptor: Bool {self._deviceDescriptor != nil}
   /// Clears the value of `deviceDescriptor`. Subsequent reads from it will return its default value.
-  mutating func clearDeviceDescriptor() {self._deviceDescriptor = nil}
+  public mutating func clearDeviceDescriptor() {self._deviceDescriptor = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _deviceDescriptor: VoiceInputDeviceDescriptor? = nil
 }
@@ -52,18 +52,18 @@ nonisolated struct RegisterVoiceInputDeviceMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var registerVoiceInputDeviceMessage: RegisterVoiceInputDeviceMessage {
+  public var registerVoiceInputDeviceMessage: RegisterVoiceInputDeviceMessage {
     get {return getExtensionValue(ext: Extensions_registerVoiceInputDeviceMessage) ?? RegisterVoiceInputDeviceMessage()}
     set {setExtensionValue(ext: Extensions_registerVoiceInputDeviceMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_registerVoiceInputDeviceMessage`
   /// has been explicitly set.
-  var hasRegisterVoiceInputDeviceMessage: Bool {
+  public var hasRegisterVoiceInputDeviceMessage: Bool {
     return hasExtensionValue(ext: Extensions_registerVoiceInputDeviceMessage)
   }
   /// Clears the value of extension `Extensions_registerVoiceInputDeviceMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearRegisterVoiceInputDeviceMessage() {
+  public mutating func clearRegisterVoiceInputDeviceMessage() {
     clearExtensionValue(ext: Extensions_registerVoiceInputDeviceMessage)
   }
 
@@ -75,7 +75,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let RegisterVoiceInputDeviceMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let RegisterVoiceInputDeviceMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_registerVoiceInputDeviceMessage
 ]
 
@@ -83,7 +83,7 @@ nonisolated let RegisterVoiceInputDeviceMessage_Extensions: SwiftProtobuf.Simple
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_registerVoiceInputDeviceMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<RegisterVoiceInputDeviceMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_registerVoiceInputDeviceMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<RegisterVoiceInputDeviceMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 33,
   fieldName: "registerVoiceInputDeviceMessage"
 )
@@ -91,10 +91,10 @@ nonisolated let Extensions_registerVoiceInputDeviceMessage = SwiftProtobuf.Messa
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension RegisterVoiceInputDeviceMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "RegisterVoiceInputDeviceMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}deviceDescriptor\0")
+  public static let protoMessageName: String = "RegisterVoiceInputDeviceMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}deviceDescriptor\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -106,7 +106,7 @@ nonisolated extension RegisterVoiceInputDeviceMessage: SwiftProtobuf.Message, Sw
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -117,7 +117,7 @@ nonisolated extension RegisterVoiceInputDeviceMessage: SwiftProtobuf.Message, Sw
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: RegisterVoiceInputDeviceMessage, rhs: RegisterVoiceInputDeviceMessage) -> Bool {
+  public static func ==(lhs: RegisterVoiceInputDeviceMessage, rhs: RegisterVoiceInputDeviceMessage) -> Bool {
     if lhs._deviceDescriptor != rhs._deviceDescriptor {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

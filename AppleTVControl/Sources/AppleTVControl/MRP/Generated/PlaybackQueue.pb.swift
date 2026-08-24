@@ -20,70 +20,70 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct PlaybackQueue: Sendable {
+public nonisolated struct PlaybackQueue: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var location: Int32 {
+  public var location: Int32 {
     get {_location ?? 0}
     set {_location = newValue}
   }
   /// Returns true if `location` has been explicitly set.
-  var hasLocation: Bool {self._location != nil}
+  public var hasLocation: Bool {self._location != nil}
   /// Clears the value of `location`. Subsequent reads from it will return its default value.
-  mutating func clearLocation() {self._location = nil}
+  public mutating func clearLocation() {self._location = nil}
 
-  var contentItems: [ContentItem] = []
+  public var contentItems: [ContentItem] = []
 
-  var context: PlaybackQueueContext {
+  public var context: PlaybackQueueContext {
     get {_context ?? PlaybackQueueContext()}
     set {_context = newValue}
   }
   /// Returns true if `context` has been explicitly set.
-  var hasContext: Bool {self._context != nil}
+  public var hasContext: Bool {self._context != nil}
   /// Clears the value of `context`. Subsequent reads from it will return its default value.
-  mutating func clearContext() {self._context = nil}
+  public mutating func clearContext() {self._context = nil}
 
-  var requestID: String {
+  public var requestID: String {
     get {_requestID ?? String()}
     set {_requestID = newValue}
   }
   /// Returns true if `requestID` has been explicitly set.
-  var hasRequestID: Bool {self._requestID != nil}
+  public var hasRequestID: Bool {self._requestID != nil}
   /// Clears the value of `requestID`. Subsequent reads from it will return its default value.
-  mutating func clearRequestID() {self._requestID = nil}
+  public mutating func clearRequestID() {self._requestID = nil}
 
-  var resolvedPlayerPath: PlayerPath {
+  public var resolvedPlayerPath: PlayerPath {
     get {_resolvedPlayerPath ?? PlayerPath()}
     set {_resolvedPlayerPath = newValue}
   }
   /// Returns true if `resolvedPlayerPath` has been explicitly set.
-  var hasResolvedPlayerPath: Bool {self._resolvedPlayerPath != nil}
+  public var hasResolvedPlayerPath: Bool {self._resolvedPlayerPath != nil}
   /// Clears the value of `resolvedPlayerPath`. Subsequent reads from it will return its default value.
-  mutating func clearResolvedPlayerPath() {self._resolvedPlayerPath = nil}
+  public mutating func clearResolvedPlayerPath() {self._resolvedPlayerPath = nil}
 
-  var sendingPlaybackQueueTransaction: Bool {
+  public var sendingPlaybackQueueTransaction: Bool {
     get {_sendingPlaybackQueueTransaction ?? false}
     set {_sendingPlaybackQueueTransaction = newValue}
   }
   /// Returns true if `sendingPlaybackQueueTransaction` has been explicitly set.
-  var hasSendingPlaybackQueueTransaction: Bool {self._sendingPlaybackQueueTransaction != nil}
+  public var hasSendingPlaybackQueueTransaction: Bool {self._sendingPlaybackQueueTransaction != nil}
   /// Clears the value of `sendingPlaybackQueueTransaction`. Subsequent reads from it will return its default value.
-  mutating func clearSendingPlaybackQueueTransaction() {self._sendingPlaybackQueueTransaction = nil}
+  public mutating func clearSendingPlaybackQueueTransaction() {self._sendingPlaybackQueueTransaction = nil}
 
-  var queueIdentifier: String {
+  public var queueIdentifier: String {
     get {_queueIdentifier ?? String()}
     set {_queueIdentifier = newValue}
   }
   /// Returns true if `queueIdentifier` has been explicitly set.
-  var hasQueueIdentifier: Bool {self._queueIdentifier != nil}
+  public var hasQueueIdentifier: Bool {self._queueIdentifier != nil}
   /// Clears the value of `queueIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearQueueIdentifier() {self._queueIdentifier = nil}
+  public mutating func clearQueueIdentifier() {self._queueIdentifier = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _location: Int32? = nil
   fileprivate var _context: PlaybackQueueContext? = nil
@@ -96,15 +96,15 @@ nonisolated struct PlaybackQueue: Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension PlaybackQueue: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PlaybackQueue"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}location\0\u{1}contentItems\0\u{1}context\0\u{1}requestId\0\u{1}resolvedPlayerPath\0\u{1}sendingPlaybackQueueTransaction\0\u{1}queueIdentifier\0")
+  public static let protoMessageName: String = "PlaybackQueue"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}location\0\u{1}contentItems\0\u{1}context\0\u{1}requestId\0\u{1}resolvedPlayerPath\0\u{1}sendingPlaybackQueueTransaction\0\u{1}queueIdentifier\0")
 
   public var isInitialized: Bool {
     if let v = self._resolvedPlayerPath, !v.isInitialized {return false}
     return true
   }
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -122,7 +122,7 @@ nonisolated extension PlaybackQueue: SwiftProtobuf.Message, SwiftProtobuf._Messa
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -151,7 +151,7 @@ nonisolated extension PlaybackQueue: SwiftProtobuf.Message, SwiftProtobuf._Messa
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PlaybackQueue, rhs: PlaybackQueue) -> Bool {
+  public static func ==(lhs: PlaybackQueue, rhs: PlaybackQueue) -> Bool {
     if lhs._location != rhs._location {return false}
     if lhs.contentItems != rhs.contentItems {return false}
     if lhs._context != rhs._context {return false}

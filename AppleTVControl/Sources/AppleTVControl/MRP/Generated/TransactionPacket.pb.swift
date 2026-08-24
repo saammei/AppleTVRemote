@@ -25,59 +25,59 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct TransactionPacket: Sendable {
+public nonisolated struct TransactionPacket: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var key: TransactionKey {
+  public var key: TransactionKey {
     get {_key ?? TransactionKey()}
     set {_key = newValue}
   }
   /// Returns true if `key` has been explicitly set.
-  var hasKey: Bool {self._key != nil}
+  public var hasKey: Bool {self._key != nil}
   /// Clears the value of `key`. Subsequent reads from it will return its default value.
-  mutating func clearKey() {self._key = nil}
+  public mutating func clearKey() {self._key = nil}
 
-  var packetData: Data {
+  public var packetData: Data {
     get {_packetData ?? Data()}
     set {_packetData = newValue}
   }
   /// Returns true if `packetData` has been explicitly set.
-  var hasPacketData: Bool {self._packetData != nil}
+  public var hasPacketData: Bool {self._packetData != nil}
   /// Clears the value of `packetData`. Subsequent reads from it will return its default value.
-  mutating func clearPacketData() {self._packetData = nil}
+  public mutating func clearPacketData() {self._packetData = nil}
 
-  var identifier: String {
+  public var identifier: String {
     get {_identifier ?? String()}
     set {_identifier = newValue}
   }
   /// Returns true if `identifier` has been explicitly set.
-  var hasIdentifier: Bool {self._identifier != nil}
+  public var hasIdentifier: Bool {self._identifier != nil}
   /// Clears the value of `identifier`. Subsequent reads from it will return its default value.
-  mutating func clearIdentifier() {self._identifier = nil}
+  public mutating func clearIdentifier() {self._identifier = nil}
 
-  var totalLength: UInt64 {
+  public var totalLength: UInt64 {
     get {_totalLength ?? 0}
     set {_totalLength = newValue}
   }
   /// Returns true if `totalLength` has been explicitly set.
-  var hasTotalLength: Bool {self._totalLength != nil}
+  public var hasTotalLength: Bool {self._totalLength != nil}
   /// Clears the value of `totalLength`. Subsequent reads from it will return its default value.
-  mutating func clearTotalLength() {self._totalLength = nil}
+  public mutating func clearTotalLength() {self._totalLength = nil}
 
-  var totalWritePosition: UInt64 {
+  public var totalWritePosition: UInt64 {
     get {_totalWritePosition ?? 0}
     set {_totalWritePosition = newValue}
   }
   /// Returns true if `totalWritePosition` has been explicitly set.
-  var hasTotalWritePosition: Bool {self._totalWritePosition != nil}
+  public var hasTotalWritePosition: Bool {self._totalWritePosition != nil}
   /// Clears the value of `totalWritePosition`. Subsequent reads from it will return its default value.
-  mutating func clearTotalWritePosition() {self._totalWritePosition = nil}
+  public mutating func clearTotalWritePosition() {self._totalWritePosition = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _key: TransactionKey? = nil
   fileprivate var _packetData: Data? = nil
@@ -89,10 +89,10 @@ nonisolated struct TransactionPacket: Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension TransactionPacket: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "TransactionPacket"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}key\0\u{1}packetData\0\u{1}identifier\0\u{1}totalLength\0\u{1}totalWritePosition\0")
+  public static let protoMessageName: String = "TransactionPacket"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}key\0\u{1}packetData\0\u{1}identifier\0\u{1}totalLength\0\u{1}totalWritePosition\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -108,7 +108,7 @@ nonisolated extension TransactionPacket: SwiftProtobuf.Message, SwiftProtobuf._M
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -131,7 +131,7 @@ nonisolated extension TransactionPacket: SwiftProtobuf.Message, SwiftProtobuf._M
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: TransactionPacket, rhs: TransactionPacket) -> Bool {
+  public static func ==(lhs: TransactionPacket, rhs: TransactionPacket) -> Bool {
     if lhs._key != rhs._key {return false}
     if lhs._packetData != rhs._packetData {return false}
     if lhs._identifier != rhs._identifier {return false}

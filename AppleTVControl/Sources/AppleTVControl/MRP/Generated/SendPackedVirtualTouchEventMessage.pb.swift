@@ -25,7 +25,7 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct SendPackedVirtualTouchEventMessage: Sendable {
+public nonisolated struct SendPackedVirtualTouchEventMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -33,32 +33,32 @@ nonisolated struct SendPackedVirtualTouchEventMessage: Sendable {
   /// The packed version of VirtualTouchEvent contains X, Y, phase, deviceID
   /// and finger stored as a byte array. Each value is written as 16bit little
   /// endian integers.
-  var data: Data {
+  public var data: Data {
     get {_data ?? Data()}
     set {_data = newValue}
   }
   /// Returns true if `data` has been explicitly set.
-  var hasData: Bool {self._data != nil}
+  public var hasData: Bool {self._data != nil}
   /// Clears the value of `data`. Subsequent reads from it will return its default value.
-  mutating func clearData() {self._data = nil}
+  public mutating func clearData() {self._data = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   /// Corresponds to "phase" in data
-  nonisolated enum Phase: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Phase: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case began = 1
     case moved = 2
     case stationary = 3
     case ended = 4
     case cancelled = 5
 
-    init() {
+    public init() {
       self = .began
     }
 
   }
 
-  init() {}
+  public init() {}
 
   fileprivate var _data: Data? = nil
 }
@@ -74,18 +74,18 @@ nonisolated struct SendPackedVirtualTouchEventMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var sendPackedVirtualTouchEventMessage: SendPackedVirtualTouchEventMessage {
+  public var sendPackedVirtualTouchEventMessage: SendPackedVirtualTouchEventMessage {
     get {return getExtensionValue(ext: Extensions_sendPackedVirtualTouchEventMessage) ?? SendPackedVirtualTouchEventMessage()}
     set {setExtensionValue(ext: Extensions_sendPackedVirtualTouchEventMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_sendPackedVirtualTouchEventMessage`
   /// has been explicitly set.
-  var hasSendPackedVirtualTouchEventMessage: Bool {
+  public var hasSendPackedVirtualTouchEventMessage: Bool {
     return hasExtensionValue(ext: Extensions_sendPackedVirtualTouchEventMessage)
   }
   /// Clears the value of extension `Extensions_sendPackedVirtualTouchEventMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearSendPackedVirtualTouchEventMessage() {
+  public mutating func clearSendPackedVirtualTouchEventMessage() {
     clearExtensionValue(ext: Extensions_sendPackedVirtualTouchEventMessage)
   }
 
@@ -97,7 +97,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let SendPackedVirtualTouchEventMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let SendPackedVirtualTouchEventMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_sendPackedVirtualTouchEventMessage
 ]
 
@@ -105,7 +105,7 @@ nonisolated let SendPackedVirtualTouchEventMessage_Extensions: SwiftProtobuf.Sim
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_sendPackedVirtualTouchEventMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SendPackedVirtualTouchEventMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_sendPackedVirtualTouchEventMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SendPackedVirtualTouchEventMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 47,
   fieldName: "sendPackedVirtualTouchEventMessage"
 )
@@ -113,10 +113,10 @@ nonisolated let Extensions_sendPackedVirtualTouchEventMessage = SwiftProtobuf.Me
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension SendPackedVirtualTouchEventMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SendPackedVirtualTouchEventMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}data\0")
+  public static let protoMessageName: String = "SendPackedVirtualTouchEventMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}data\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -128,7 +128,7 @@ nonisolated extension SendPackedVirtualTouchEventMessage: SwiftProtobuf.Message,
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -139,7 +139,7 @@ nonisolated extension SendPackedVirtualTouchEventMessage: SwiftProtobuf.Message,
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SendPackedVirtualTouchEventMessage, rhs: SendPackedVirtualTouchEventMessage) -> Bool {
+  public static func ==(lhs: SendPackedVirtualTouchEventMessage, rhs: SendPackedVirtualTouchEventMessage) -> Bool {
     if lhs._data != rhs._data {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -147,5 +147,5 @@ nonisolated extension SendPackedVirtualTouchEventMessage: SwiftProtobuf.Message,
 }
 
 nonisolated extension SendPackedVirtualTouchEventMessage.Phase: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}Began\0\u{1}Moved\0\u{1}Stationary\0\u{1}Ended\0\u{1}Cancelled\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}Began\0\u{1}Moved\0\u{1}Stationary\0\u{1}Ended\0\u{1}Cancelled\0")
 }

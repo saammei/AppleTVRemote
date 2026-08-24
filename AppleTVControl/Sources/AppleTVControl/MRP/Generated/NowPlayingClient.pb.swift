@@ -20,71 +20,71 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct NowPlayingClient: Sendable {
+public nonisolated struct NowPlayingClient: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var processIdentifier: Int32 {
+  public var processIdentifier: Int32 {
     get {_processIdentifier ?? 0}
     set {_processIdentifier = newValue}
   }
   /// Returns true if `processIdentifier` has been explicitly set.
-  var hasProcessIdentifier: Bool {self._processIdentifier != nil}
+  public var hasProcessIdentifier: Bool {self._processIdentifier != nil}
   /// Clears the value of `processIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearProcessIdentifier() {self._processIdentifier = nil}
+  public mutating func clearProcessIdentifier() {self._processIdentifier = nil}
 
-  var bundleIdentifier: String {
+  public var bundleIdentifier: String {
     get {_bundleIdentifier ?? String()}
     set {_bundleIdentifier = newValue}
   }
   /// Returns true if `bundleIdentifier` has been explicitly set.
-  var hasBundleIdentifier: Bool {self._bundleIdentifier != nil}
+  public var hasBundleIdentifier: Bool {self._bundleIdentifier != nil}
   /// Clears the value of `bundleIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearBundleIdentifier() {self._bundleIdentifier = nil}
+  public mutating func clearBundleIdentifier() {self._bundleIdentifier = nil}
 
-  var parentApplicationBundleIdentifier: String {
+  public var parentApplicationBundleIdentifier: String {
     get {_parentApplicationBundleIdentifier ?? String()}
     set {_parentApplicationBundleIdentifier = newValue}
   }
   /// Returns true if `parentApplicationBundleIdentifier` has been explicitly set.
-  var hasParentApplicationBundleIdentifier: Bool {self._parentApplicationBundleIdentifier != nil}
+  public var hasParentApplicationBundleIdentifier: Bool {self._parentApplicationBundleIdentifier != nil}
   /// Clears the value of `parentApplicationBundleIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearParentApplicationBundleIdentifier() {self._parentApplicationBundleIdentifier = nil}
+  public mutating func clearParentApplicationBundleIdentifier() {self._parentApplicationBundleIdentifier = nil}
 
-  var processUserIdentifier: Int32 {
+  public var processUserIdentifier: Int32 {
     get {_processUserIdentifier ?? 0}
     set {_processUserIdentifier = newValue}
   }
   /// Returns true if `processUserIdentifier` has been explicitly set.
-  var hasProcessUserIdentifier: Bool {self._processUserIdentifier != nil}
+  public var hasProcessUserIdentifier: Bool {self._processUserIdentifier != nil}
   /// Clears the value of `processUserIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearProcessUserIdentifier() {self._processUserIdentifier = nil}
+  public mutating func clearProcessUserIdentifier() {self._processUserIdentifier = nil}
 
-  var nowPlayingVisibility: Int32 {
+  public var nowPlayingVisibility: Int32 {
     get {_nowPlayingVisibility ?? 0}
     set {_nowPlayingVisibility = newValue}
   }
   /// Returns true if `nowPlayingVisibility` has been explicitly set.
-  var hasNowPlayingVisibility: Bool {self._nowPlayingVisibility != nil}
+  public var hasNowPlayingVisibility: Bool {self._nowPlayingVisibility != nil}
   /// Clears the value of `nowPlayingVisibility`. Subsequent reads from it will return its default value.
-  mutating func clearNowPlayingVisibility() {self._nowPlayingVisibility = nil}
+  public mutating func clearNowPlayingVisibility() {self._nowPlayingVisibility = nil}
 
   ///    optional TintColor tintColor = 6;
-  var displayName: String {
+  public var displayName: String {
     get {_displayName ?? String()}
     set {_displayName = newValue}
   }
   /// Returns true if `displayName` has been explicitly set.
-  var hasDisplayName: Bool {self._displayName != nil}
+  public var hasDisplayName: Bool {self._displayName != nil}
   /// Clears the value of `displayName`. Subsequent reads from it will return its default value.
-  mutating func clearDisplayName() {self._displayName = nil}
+  public mutating func clearDisplayName() {self._displayName = nil}
 
-  var bundleIdentifierHierarchys: [String] = []
+  public var bundleIdentifierHierarchys: [String] = []
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _processIdentifier: Int32? = nil
   fileprivate var _bundleIdentifier: String? = nil
@@ -97,10 +97,10 @@ nonisolated struct NowPlayingClient: Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension NowPlayingClient: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "NowPlayingClient"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}processIdentifier\0\u{1}bundleIdentifier\0\u{1}parentApplicationBundleIdentifier\0\u{1}processUserIdentifier\0\u{1}nowPlayingVisibility\0\u{2}\u{2}displayName\0\u{1}bundleIdentifierHierarchys\0")
+  public static let protoMessageName: String = "NowPlayingClient"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}processIdentifier\0\u{1}bundleIdentifier\0\u{1}parentApplicationBundleIdentifier\0\u{1}processUserIdentifier\0\u{1}nowPlayingVisibility\0\u{2}\u{2}displayName\0\u{1}bundleIdentifierHierarchys\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -118,7 +118,7 @@ nonisolated extension NowPlayingClient: SwiftProtobuf.Message, SwiftProtobuf._Me
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -147,7 +147,7 @@ nonisolated extension NowPlayingClient: SwiftProtobuf.Message, SwiftProtobuf._Me
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: NowPlayingClient, rhs: NowPlayingClient) -> Bool {
+  public static func ==(lhs: NowPlayingClient, rhs: NowPlayingClient) -> Bool {
     if lhs._processIdentifier != rhs._processIdentifier {return false}
     if lhs._bundleIdentifier != rhs._bundleIdentifier {return false}
     if lhs._parentApplicationBundleIdentifier != rhs._parentApplicationBundleIdentifier {return false}

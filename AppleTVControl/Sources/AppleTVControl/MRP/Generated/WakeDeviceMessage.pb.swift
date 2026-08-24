@@ -20,14 +20,14 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct WakeDeviceMessage: Sendable {
+public nonisolated struct WakeDeviceMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 }
 
 // MARK: - Extension support defined in WakeDeviceMessage.proto.
@@ -41,18 +41,18 @@ nonisolated struct WakeDeviceMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var wakeDeviceMessage: WakeDeviceMessage {
+  public var wakeDeviceMessage: WakeDeviceMessage {
     get {return getExtensionValue(ext: Extensions_wakeDeviceMessage) ?? WakeDeviceMessage()}
     set {setExtensionValue(ext: Extensions_wakeDeviceMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_wakeDeviceMessage`
   /// has been explicitly set.
-  var hasWakeDeviceMessage: Bool {
+  public var hasWakeDeviceMessage: Bool {
     return hasExtensionValue(ext: Extensions_wakeDeviceMessage)
   }
   /// Clears the value of extension `Extensions_wakeDeviceMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearWakeDeviceMessage() {
+  public mutating func clearWakeDeviceMessage() {
     clearExtensionValue(ext: Extensions_wakeDeviceMessage)
   }
 
@@ -64,7 +64,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let WakeDeviceMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let WakeDeviceMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_wakeDeviceMessage
 ]
 
@@ -72,7 +72,7 @@ nonisolated let WakeDeviceMessage_Extensions: SwiftProtobuf.SimpleExtensionMap =
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_wakeDeviceMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<WakeDeviceMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_wakeDeviceMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<WakeDeviceMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 45,
   fieldName: "wakeDeviceMessage"
 )
@@ -80,19 +80,19 @@ nonisolated let Extensions_wakeDeviceMessage = SwiftProtobuf.MessageExtension<Sw
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension WakeDeviceMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "WakeDeviceMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "WakeDeviceMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: WakeDeviceMessage, rhs: WakeDeviceMessage) -> Bool {
+  public static func ==(lhs: WakeDeviceMessage, rhs: WakeDeviceMessage) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

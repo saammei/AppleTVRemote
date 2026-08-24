@@ -20,80 +20,80 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct AVEndpointDescriptor: Sendable {
+public nonisolated struct AVEndpointDescriptor: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var name: String {
+  public var name: String {
     get {_name ?? String()}
     set {_name = newValue}
   }
   /// Returns true if `name` has been explicitly set.
-  var hasName: Bool {self._name != nil}
+  public var hasName: Bool {self._name != nil}
   /// Clears the value of `name`. Subsequent reads from it will return its default value.
-  mutating func clearName() {self._name = nil}
+  public mutating func clearName() {self._name = nil}
 
-  var uniqueIdentifier: String {
+  public var uniqueIdentifier: String {
     get {_uniqueIdentifier ?? String()}
     set {_uniqueIdentifier = newValue}
   }
   /// Returns true if `uniqueIdentifier` has been explicitly set.
-  var hasUniqueIdentifier: Bool {self._uniqueIdentifier != nil}
+  public var hasUniqueIdentifier: Bool {self._uniqueIdentifier != nil}
   /// Clears the value of `uniqueIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearUniqueIdentifier() {self._uniqueIdentifier = nil}
+  public mutating func clearUniqueIdentifier() {self._uniqueIdentifier = nil}
 
   /// repeated ... outputDevices = 3;
   /// optional ... designatedGroupLeader = 4;
-  var isLocalEndpoint: Bool {
+  public var isLocalEndpoint: Bool {
     get {_isLocalEndpoint ?? false}
     set {_isLocalEndpoint = newValue}
   }
   /// Returns true if `isLocalEndpoint` has been explicitly set.
-  var hasIsLocalEndpoint: Bool {self._isLocalEndpoint != nil}
+  public var hasIsLocalEndpoint: Bool {self._isLocalEndpoint != nil}
   /// Clears the value of `isLocalEndpoint`. Subsequent reads from it will return its default value.
-  mutating func clearIsLocalEndpoint() {self._isLocalEndpoint = nil}
+  public mutating func clearIsLocalEndpoint() {self._isLocalEndpoint = nil}
 
-  var instanceIdentifier: String {
+  public var instanceIdentifier: String {
     get {_instanceIdentifier ?? String()}
     set {_instanceIdentifier = newValue}
   }
   /// Returns true if `instanceIdentifier` has been explicitly set.
-  var hasInstanceIdentifier: Bool {self._instanceIdentifier != nil}
+  public var hasInstanceIdentifier: Bool {self._instanceIdentifier != nil}
   /// Clears the value of `instanceIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearInstanceIdentifier() {self._instanceIdentifier = nil}
+  public mutating func clearInstanceIdentifier() {self._instanceIdentifier = nil}
 
-  var isProxyGroupPlayer: Bool {
+  public var isProxyGroupPlayer: Bool {
     get {_isProxyGroupPlayer ?? false}
     set {_isProxyGroupPlayer = newValue}
   }
   /// Returns true if `isProxyGroupPlayer` has been explicitly set.
-  var hasIsProxyGroupPlayer: Bool {self._isProxyGroupPlayer != nil}
+  public var hasIsProxyGroupPlayer: Bool {self._isProxyGroupPlayer != nil}
   /// Clears the value of `isProxyGroupPlayer`. Subsequent reads from it will return its default value.
-  mutating func clearIsProxyGroupPlayer() {self._isProxyGroupPlayer = nil}
+  public mutating func clearIsProxyGroupPlayer() {self._isProxyGroupPlayer = nil}
 
-  var connectionType: Int32 {
+  public var connectionType: Int32 {
     get {_connectionType ?? 0}
     set {_connectionType = newValue}
   }
   /// Returns true if `connectionType` has been explicitly set.
-  var hasConnectionType: Bool {self._connectionType != nil}
+  public var hasConnectionType: Bool {self._connectionType != nil}
   /// Clears the value of `connectionType`. Subsequent reads from it will return its default value.
-  mutating func clearConnectionType() {self._connectionType = nil}
+  public mutating func clearConnectionType() {self._connectionType = nil}
 
   /// repeated ... _personalOutputDevices = 10;
-  var canModifyGroupMembership: Bool {
+  public var canModifyGroupMembership: Bool {
     get {_canModifyGroupMembership ?? false}
     set {_canModifyGroupMembership = newValue}
   }
   /// Returns true if `canModifyGroupMembership` has been explicitly set.
-  var hasCanModifyGroupMembership: Bool {self._canModifyGroupMembership != nil}
+  public var hasCanModifyGroupMembership: Bool {self._canModifyGroupMembership != nil}
   /// Clears the value of `canModifyGroupMembership`. Subsequent reads from it will return its default value.
-  mutating func clearCanModifyGroupMembership() {self._canModifyGroupMembership = nil}
+  public mutating func clearCanModifyGroupMembership() {self._canModifyGroupMembership = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _name: String? = nil
   fileprivate var _uniqueIdentifier: String? = nil
@@ -104,32 +104,32 @@ nonisolated struct AVEndpointDescriptor: Sendable {
   fileprivate var _canModifyGroupMembership: Bool? = nil
 }
 
-nonisolated struct UpdateEndPointsMessage: Sendable {
+public nonisolated struct UpdateEndPointsMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var endpoints: AVEndpointDescriptor {
+  public var endpoints: AVEndpointDescriptor {
     get {_endpoints ?? AVEndpointDescriptor()}
     set {_endpoints = newValue}
   }
   /// Returns true if `endpoints` has been explicitly set.
-  var hasEndpoints: Bool {self._endpoints != nil}
+  public var hasEndpoints: Bool {self._endpoints != nil}
   /// Clears the value of `endpoints`. Subsequent reads from it will return its default value.
-  mutating func clearEndpoints() {self._endpoints = nil}
+  public mutating func clearEndpoints() {self._endpoints = nil}
 
-  var endpointFeatures: Int32 {
+  public var endpointFeatures: Int32 {
     get {_endpointFeatures ?? 0}
     set {_endpointFeatures = newValue}
   }
   /// Returns true if `endpointFeatures` has been explicitly set.
-  var hasEndpointFeatures: Bool {self._endpointFeatures != nil}
+  public var hasEndpointFeatures: Bool {self._endpointFeatures != nil}
   /// Clears the value of `endpointFeatures`. Subsequent reads from it will return its default value.
-  mutating func clearEndpointFeatures() {self._endpointFeatures = nil}
+  public mutating func clearEndpointFeatures() {self._endpointFeatures = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _endpoints: AVEndpointDescriptor? = nil
   fileprivate var _endpointFeatures: Int32? = nil
@@ -146,18 +146,18 @@ nonisolated struct UpdateEndPointsMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var updateEndPointsMessage: UpdateEndPointsMessage {
+  public var updateEndPointsMessage: UpdateEndPointsMessage {
     get {return getExtensionValue(ext: Extensions_updateEndPointsMessage) ?? UpdateEndPointsMessage()}
     set {setExtensionValue(ext: Extensions_updateEndPointsMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_updateEndPointsMessage`
   /// has been explicitly set.
-  var hasUpdateEndPointsMessage: Bool {
+  public var hasUpdateEndPointsMessage: Bool {
     return hasExtensionValue(ext: Extensions_updateEndPointsMessage)
   }
   /// Clears the value of extension `Extensions_updateEndPointsMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearUpdateEndPointsMessage() {
+  public mutating func clearUpdateEndPointsMessage() {
     clearExtensionValue(ext: Extensions_updateEndPointsMessage)
   }
 
@@ -169,7 +169,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let UpdateEndPointsMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let UpdateEndPointsMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_updateEndPointsMessage
 ]
 
@@ -177,7 +177,7 @@ nonisolated let UpdateEndPointsMessage_Extensions: SwiftProtobuf.SimpleExtension
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_updateEndPointsMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<UpdateEndPointsMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_updateEndPointsMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<UpdateEndPointsMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 83,
   fieldName: "updateEndPointsMessage"
 )
@@ -185,10 +185,10 @@ nonisolated let Extensions_updateEndPointsMessage = SwiftProtobuf.MessageExtensi
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension AVEndpointDescriptor: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "AVEndpointDescriptor"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}uniqueIdentifier\0\u{2}\u{3}isLocalEndpoint\0\u{1}instanceIdentifier\0\u{1}isProxyGroupPlayer\0\u{1}connectionType\0\u{1}canModifyGroupMembership\0")
+  public static let protoMessageName: String = "AVEndpointDescriptor"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}uniqueIdentifier\0\u{2}\u{3}isLocalEndpoint\0\u{1}instanceIdentifier\0\u{1}isProxyGroupPlayer\0\u{1}connectionType\0\u{1}canModifyGroupMembership\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -206,7 +206,7 @@ nonisolated extension AVEndpointDescriptor: SwiftProtobuf.Message, SwiftProtobuf
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -235,7 +235,7 @@ nonisolated extension AVEndpointDescriptor: SwiftProtobuf.Message, SwiftProtobuf
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: AVEndpointDescriptor, rhs: AVEndpointDescriptor) -> Bool {
+  public static func ==(lhs: AVEndpointDescriptor, rhs: AVEndpointDescriptor) -> Bool {
     if lhs._name != rhs._name {return false}
     if lhs._uniqueIdentifier != rhs._uniqueIdentifier {return false}
     if lhs._isLocalEndpoint != rhs._isLocalEndpoint {return false}
@@ -249,10 +249,10 @@ nonisolated extension AVEndpointDescriptor: SwiftProtobuf.Message, SwiftProtobuf
 }
 
 nonisolated extension UpdateEndPointsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "UpdateEndPointsMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}endpoints\0\u{1}endpointFeatures\0")
+  public static let protoMessageName: String = "UpdateEndPointsMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}endpoints\0\u{1}endpointFeatures\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -265,7 +265,7 @@ nonisolated extension UpdateEndPointsMessage: SwiftProtobuf.Message, SwiftProtob
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -279,7 +279,7 @@ nonisolated extension UpdateEndPointsMessage: SwiftProtobuf.Message, SwiftProtob
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: UpdateEndPointsMessage, rhs: UpdateEndPointsMessage) -> Bool {
+  public static func ==(lhs: UpdateEndPointsMessage, rhs: UpdateEndPointsMessage) -> Bool {
     if lhs._endpoints != rhs._endpoints {return false}
     if lhs._endpointFeatures != rhs._endpointFeatures {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

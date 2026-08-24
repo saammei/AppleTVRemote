@@ -20,32 +20,32 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct RegisterHIDDeviceResultMessage: Sendable {
+public nonisolated struct RegisterHIDDeviceResultMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var errorCode: Int32 {
+  public var errorCode: Int32 {
     get {_errorCode ?? 0}
     set {_errorCode = newValue}
   }
   /// Returns true if `errorCode` has been explicitly set.
-  var hasErrorCode: Bool {self._errorCode != nil}
+  public var hasErrorCode: Bool {self._errorCode != nil}
   /// Clears the value of `errorCode`. Subsequent reads from it will return its default value.
-  mutating func clearErrorCode() {self._errorCode = nil}
+  public mutating func clearErrorCode() {self._errorCode = nil}
 
-  var deviceIdentifier: Int32 {
+  public var deviceIdentifier: Int32 {
     get {_deviceIdentifier ?? 0}
     set {_deviceIdentifier = newValue}
   }
   /// Returns true if `deviceIdentifier` has been explicitly set.
-  var hasDeviceIdentifier: Bool {self._deviceIdentifier != nil}
+  public var hasDeviceIdentifier: Bool {self._deviceIdentifier != nil}
   /// Clears the value of `deviceIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearDeviceIdentifier() {self._deviceIdentifier = nil}
+  public mutating func clearDeviceIdentifier() {self._deviceIdentifier = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _errorCode: Int32? = nil
   fileprivate var _deviceIdentifier: Int32? = nil
@@ -62,18 +62,18 @@ nonisolated struct RegisterHIDDeviceResultMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var registerHiddeviceResultMessage: RegisterHIDDeviceResultMessage {
+  public var registerHiddeviceResultMessage: RegisterHIDDeviceResultMessage {
     get {return getExtensionValue(ext: Extensions_registerHIDDeviceResultMessage) ?? RegisterHIDDeviceResultMessage()}
     set {setExtensionValue(ext: Extensions_registerHIDDeviceResultMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_registerHIDDeviceResultMessage`
   /// has been explicitly set.
-  var hasRegisterHiddeviceResultMessage: Bool {
+  public var hasRegisterHiddeviceResultMessage: Bool {
     return hasExtensionValue(ext: Extensions_registerHIDDeviceResultMessage)
   }
   /// Clears the value of extension `Extensions_registerHIDDeviceResultMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearRegisterHiddeviceResultMessage() {
+  public mutating func clearRegisterHiddeviceResultMessage() {
     clearExtensionValue(ext: Extensions_registerHIDDeviceResultMessage)
   }
 
@@ -85,7 +85,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let RegisterHiddeviceResultMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let RegisterHiddeviceResultMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_registerHIDDeviceResultMessage
 ]
 
@@ -93,7 +93,7 @@ nonisolated let RegisterHiddeviceResultMessage_Extensions: SwiftProtobuf.SimpleE
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_registerHIDDeviceResultMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<RegisterHIDDeviceResultMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_registerHIDDeviceResultMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<RegisterHIDDeviceResultMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 12,
   fieldName: "registerHIDDeviceResultMessage"
 )
@@ -101,10 +101,10 @@ nonisolated let Extensions_registerHIDDeviceResultMessage = SwiftProtobuf.Messag
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension RegisterHIDDeviceResultMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "RegisterHIDDeviceResultMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}errorCode\0\u{1}deviceIdentifier\0")
+  public static let protoMessageName: String = "RegisterHIDDeviceResultMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}errorCode\0\u{1}deviceIdentifier\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -117,7 +117,7 @@ nonisolated extension RegisterHIDDeviceResultMessage: SwiftProtobuf.Message, Swi
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -131,7 +131,7 @@ nonisolated extension RegisterHIDDeviceResultMessage: SwiftProtobuf.Message, Swi
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: RegisterHIDDeviceResultMessage, rhs: RegisterHIDDeviceResultMessage) -> Bool {
+  public static func ==(lhs: RegisterHIDDeviceResultMessage, rhs: RegisterHIDDeviceResultMessage) -> Bool {
     if lhs._errorCode != rhs._errorCode {return false}
     if lhs._deviceIdentifier != rhs._deviceIdentifier {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

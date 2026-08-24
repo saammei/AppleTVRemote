@@ -20,70 +20,70 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct Origin: Sendable {
+public nonisolated struct Origin: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var type: Origin.TypeEnum {
+  public var type: Origin.TypeEnum {
     get {_type ?? .unknown}
     set {_type = newValue}
   }
   /// Returns true if `type` has been explicitly set.
-  var hasType: Bool {self._type != nil}
+  public var hasType: Bool {self._type != nil}
   /// Clears the value of `type`. Subsequent reads from it will return its default value.
-  mutating func clearType() {self._type = nil}
+  public mutating func clearType() {self._type = nil}
 
-  var displayName: String {
+  public var displayName: String {
     get {_displayName ?? String()}
     set {_displayName = newValue}
   }
   /// Returns true if `displayName` has been explicitly set.
-  var hasDisplayName: Bool {self._displayName != nil}
+  public var hasDisplayName: Bool {self._displayName != nil}
   /// Clears the value of `displayName`. Subsequent reads from it will return its default value.
-  mutating func clearDisplayName() {self._displayName = nil}
+  public mutating func clearDisplayName() {self._displayName = nil}
 
-  var identifier: Int32 {
+  public var identifier: Int32 {
     get {_identifier ?? 0}
     set {_identifier = newValue}
   }
   /// Returns true if `identifier` has been explicitly set.
-  var hasIdentifier: Bool {self._identifier != nil}
+  public var hasIdentifier: Bool {self._identifier != nil}
   /// Clears the value of `identifier`. Subsequent reads from it will return its default value.
-  mutating func clearIdentifier() {self._identifier = nil}
+  public mutating func clearIdentifier() {self._identifier = nil}
 
-  var deviceInfo: DeviceInfoMessage {
+  public var deviceInfo: DeviceInfoMessage {
     get {_deviceInfo ?? DeviceInfoMessage()}
     set {_deviceInfo = newValue}
   }
   /// Returns true if `deviceInfo` has been explicitly set.
-  var hasDeviceInfo: Bool {self._deviceInfo != nil}
+  public var hasDeviceInfo: Bool {self._deviceInfo != nil}
   /// Clears the value of `deviceInfo`. Subsequent reads from it will return its default value.
-  mutating func clearDeviceInfo() {self._deviceInfo = nil}
+  public mutating func clearDeviceInfo() {self._deviceInfo = nil}
 
-  var isLocallyHosted: Bool {
+  public var isLocallyHosted: Bool {
     get {_isLocallyHosted ?? false}
     set {_isLocallyHosted = newValue}
   }
   /// Returns true if `isLocallyHosted` has been explicitly set.
-  var hasIsLocallyHosted: Bool {self._isLocallyHosted != nil}
+  public var hasIsLocallyHosted: Bool {self._isLocallyHosted != nil}
   /// Clears the value of `isLocallyHosted`. Subsequent reads from it will return its default value.
-  mutating func clearIsLocallyHosted() {self._isLocallyHosted = nil}
+  public mutating func clearIsLocallyHosted() {self._isLocallyHosted = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum TypeEnum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum TypeEnum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case unknown = 0
     case local = 1
     case custom = 2
 
-    init() {
+    public init() {
       self = .unknown
     }
 
   }
 
-  init() {}
+  public init() {}
 
   fileprivate var _type: Origin.TypeEnum? = nil
   fileprivate var _displayName: String? = nil
@@ -95,15 +95,15 @@ nonisolated struct Origin: Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension Origin: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "Origin"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}type\0\u{1}displayName\0\u{1}identifier\0\u{1}deviceInfo\0\u{1}isLocallyHosted\0")
+  public static let protoMessageName: String = "Origin"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}type\0\u{1}displayName\0\u{1}identifier\0\u{1}deviceInfo\0\u{1}isLocallyHosted\0")
 
   public var isInitialized: Bool {
     if let v = self._deviceInfo, !v.isInitialized {return false}
     return true
   }
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -119,7 +119,7 @@ nonisolated extension Origin: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -142,7 +142,7 @@ nonisolated extension Origin: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Origin, rhs: Origin) -> Bool {
+  public static func ==(lhs: Origin, rhs: Origin) -> Bool {
     if lhs._type != rhs._type {return false}
     if lhs._displayName != rhs._displayName {return false}
     if lhs._identifier != rhs._identifier {return false}
@@ -154,5 +154,5 @@ nonisolated extension Origin: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
 }
 
 nonisolated extension Origin.TypeEnum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}Local\0\u{1}Custom\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}Local\0\u{1}Custom\0")
 }

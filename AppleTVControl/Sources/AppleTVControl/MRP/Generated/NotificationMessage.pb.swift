@@ -25,18 +25,18 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct NotificationMessage: Sendable {
+public nonisolated struct NotificationMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var notification: [String] = []
+  public var notification: [String] = []
 
-  var userInfo: [Data] = []
+  public var userInfo: [Data] = []
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 }
 
 // MARK: - Extension support defined in NotificationMessage.proto.
@@ -50,18 +50,18 @@ nonisolated struct NotificationMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var notificationMessage: NotificationMessage {
+  public var notificationMessage: NotificationMessage {
     get {return getExtensionValue(ext: Extensions_notificationMessage) ?? NotificationMessage()}
     set {setExtensionValue(ext: Extensions_notificationMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_notificationMessage`
   /// has been explicitly set.
-  var hasNotificationMessage: Bool {
+  public var hasNotificationMessage: Bool {
     return hasExtensionValue(ext: Extensions_notificationMessage)
   }
   /// Clears the value of extension `Extensions_notificationMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearNotificationMessage() {
+  public mutating func clearNotificationMessage() {
     clearExtensionValue(ext: Extensions_notificationMessage)
   }
 
@@ -73,7 +73,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let NotificationMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let NotificationMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_notificationMessage
 ]
 
@@ -81,7 +81,7 @@ nonisolated let NotificationMessage_Extensions: SwiftProtobuf.SimpleExtensionMap
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_notificationMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<NotificationMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_notificationMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<NotificationMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 16,
   fieldName: "notificationMessage"
 )
@@ -89,10 +89,10 @@ nonisolated let Extensions_notificationMessage = SwiftProtobuf.MessageExtension<
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension NotificationMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "NotificationMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}notification\0\u{1}userInfo\0")
+  public static let protoMessageName: String = "NotificationMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}notification\0\u{1}userInfo\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -105,7 +105,7 @@ nonisolated extension NotificationMessage: SwiftProtobuf.Message, SwiftProtobuf.
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if !self.notification.isEmpty {
       try visitor.visitRepeatedStringField(value: self.notification, fieldNumber: 1)
     }
@@ -115,7 +115,7 @@ nonisolated extension NotificationMessage: SwiftProtobuf.Message, SwiftProtobuf.
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: NotificationMessage, rhs: NotificationMessage) -> Bool {
+  public static func ==(lhs: NotificationMessage, rhs: NotificationMessage) -> Bool {
     if lhs.notification != rhs.notification {return false}
     if lhs.userInfo != rhs.userInfo {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

@@ -20,32 +20,32 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct PlayerClientPropertiesMessage: Sendable {
+public nonisolated struct PlayerClientPropertiesMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var playerPath: PlayerPath {
+  public var playerPath: PlayerPath {
     get {_playerPath ?? PlayerPath()}
     set {_playerPath = newValue}
   }
   /// Returns true if `playerPath` has been explicitly set.
-  var hasPlayerPath: Bool {self._playerPath != nil}
+  public var hasPlayerPath: Bool {self._playerPath != nil}
   /// Clears the value of `playerPath`. Subsequent reads from it will return its default value.
-  mutating func clearPlayerPath() {self._playerPath = nil}
+  public mutating func clearPlayerPath() {self._playerPath = nil}
 
-  var lastPlayingTimestamp: Double {
+  public var lastPlayingTimestamp: Double {
     get {_lastPlayingTimestamp ?? 0}
     set {_lastPlayingTimestamp = newValue}
   }
   /// Returns true if `lastPlayingTimestamp` has been explicitly set.
-  var hasLastPlayingTimestamp: Bool {self._lastPlayingTimestamp != nil}
+  public var hasLastPlayingTimestamp: Bool {self._lastPlayingTimestamp != nil}
   /// Clears the value of `lastPlayingTimestamp`. Subsequent reads from it will return its default value.
-  mutating func clearLastPlayingTimestamp() {self._lastPlayingTimestamp = nil}
+  public mutating func clearLastPlayingTimestamp() {self._lastPlayingTimestamp = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _playerPath: PlayerPath? = nil
   fileprivate var _lastPlayingTimestamp: Double? = nil
@@ -62,18 +62,18 @@ nonisolated struct PlayerClientPropertiesMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var playerClientPropertiesMessage: PlayerClientPropertiesMessage {
+  public var playerClientPropertiesMessage: PlayerClientPropertiesMessage {
     get {return getExtensionValue(ext: Extensions_playerClientPropertiesMessage) ?? PlayerClientPropertiesMessage()}
     set {setExtensionValue(ext: Extensions_playerClientPropertiesMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_playerClientPropertiesMessage`
   /// has been explicitly set.
-  var hasPlayerClientPropertiesMessage: Bool {
+  public var hasPlayerClientPropertiesMessage: Bool {
     return hasExtensionValue(ext: Extensions_playerClientPropertiesMessage)
   }
   /// Clears the value of extension `Extensions_playerClientPropertiesMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearPlayerClientPropertiesMessage() {
+  public mutating func clearPlayerClientPropertiesMessage() {
     clearExtensionValue(ext: Extensions_playerClientPropertiesMessage)
   }
 
@@ -85,7 +85,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let PlayerClientPropertiesMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let PlayerClientPropertiesMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_playerClientPropertiesMessage
 ]
 
@@ -93,7 +93,7 @@ nonisolated let PlayerClientPropertiesMessage_Extensions: SwiftProtobuf.SimpleEx
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_playerClientPropertiesMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<PlayerClientPropertiesMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_playerClientPropertiesMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<PlayerClientPropertiesMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 86,
   fieldName: "playerClientPropertiesMessage"
 )
@@ -101,15 +101,15 @@ nonisolated let Extensions_playerClientPropertiesMessage = SwiftProtobuf.Message
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension PlayerClientPropertiesMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PlayerClientPropertiesMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}playerPath\0\u{1}lastPlayingTimestamp\0")
+  public static let protoMessageName: String = "PlayerClientPropertiesMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}playerPath\0\u{1}lastPlayingTimestamp\0")
 
   public var isInitialized: Bool {
     if let v = self._playerPath, !v.isInitialized {return false}
     return true
   }
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -122,7 +122,7 @@ nonisolated extension PlayerClientPropertiesMessage: SwiftProtobuf.Message, Swif
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -136,7 +136,7 @@ nonisolated extension PlayerClientPropertiesMessage: SwiftProtobuf.Message, Swif
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PlayerClientPropertiesMessage, rhs: PlayerClientPropertiesMessage) -> Bool {
+  public static func ==(lhs: PlayerClientPropertiesMessage, rhs: PlayerClientPropertiesMessage) -> Bool {
     if lhs._playerPath != rhs._playerPath {return false}
     if lhs._lastPlayingTimestamp != rhs._lastPlayingTimestamp {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

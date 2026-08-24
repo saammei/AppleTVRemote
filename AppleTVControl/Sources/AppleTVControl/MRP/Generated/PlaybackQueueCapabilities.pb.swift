@@ -20,41 +20,41 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct PlaybackQueueCapabilities: Sendable {
+public nonisolated struct PlaybackQueueCapabilities: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var requestByRange: Bool {
+  public var requestByRange: Bool {
     get {_requestByRange ?? false}
     set {_requestByRange = newValue}
   }
   /// Returns true if `requestByRange` has been explicitly set.
-  var hasRequestByRange: Bool {self._requestByRange != nil}
+  public var hasRequestByRange: Bool {self._requestByRange != nil}
   /// Clears the value of `requestByRange`. Subsequent reads from it will return its default value.
-  mutating func clearRequestByRange() {self._requestByRange = nil}
+  public mutating func clearRequestByRange() {self._requestByRange = nil}
 
-  var requestByIdentifiers: Bool {
+  public var requestByIdentifiers: Bool {
     get {_requestByIdentifiers ?? false}
     set {_requestByIdentifiers = newValue}
   }
   /// Returns true if `requestByIdentifiers` has been explicitly set.
-  var hasRequestByIdentifiers: Bool {self._requestByIdentifiers != nil}
+  public var hasRequestByIdentifiers: Bool {self._requestByIdentifiers != nil}
   /// Clears the value of `requestByIdentifiers`. Subsequent reads from it will return its default value.
-  mutating func clearRequestByIdentifiers() {self._requestByIdentifiers = nil}
+  public mutating func clearRequestByIdentifiers() {self._requestByIdentifiers = nil}
 
-  var requestByRequest: Bool {
+  public var requestByRequest: Bool {
     get {_requestByRequest ?? false}
     set {_requestByRequest = newValue}
   }
   /// Returns true if `requestByRequest` has been explicitly set.
-  var hasRequestByRequest: Bool {self._requestByRequest != nil}
+  public var hasRequestByRequest: Bool {self._requestByRequest != nil}
   /// Clears the value of `requestByRequest`. Subsequent reads from it will return its default value.
-  mutating func clearRequestByRequest() {self._requestByRequest = nil}
+  public mutating func clearRequestByRequest() {self._requestByRequest = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _requestByRange: Bool? = nil
   fileprivate var _requestByIdentifiers: Bool? = nil
@@ -64,10 +64,10 @@ nonisolated struct PlaybackQueueCapabilities: Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension PlaybackQueueCapabilities: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PlaybackQueueCapabilities"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}requestByRange\0\u{1}requestByIdentifiers\0\u{1}requestByRequest\0")
+  public static let protoMessageName: String = "PlaybackQueueCapabilities"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}requestByRange\0\u{1}requestByIdentifiers\0\u{1}requestByRequest\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -81,7 +81,7 @@ nonisolated extension PlaybackQueueCapabilities: SwiftProtobuf.Message, SwiftPro
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -98,7 +98,7 @@ nonisolated extension PlaybackQueueCapabilities: SwiftProtobuf.Message, SwiftPro
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PlaybackQueueCapabilities, rhs: PlaybackQueueCapabilities) -> Bool {
+  public static func ==(lhs: PlaybackQueueCapabilities, rhs: PlaybackQueueCapabilities) -> Bool {
     if lhs._requestByRange != rhs._requestByRange {return false}
     if lhs._requestByIdentifiers != rhs._requestByIdentifiers {return false}
     if lhs._requestByRequest != rhs._requestByRequest {return false}

@@ -25,143 +25,143 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct LanguageOptionGroup: Sendable {
+public nonisolated struct LanguageOptionGroup: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var allowEmptySelection: Bool {
+  public var allowEmptySelection: Bool {
     get {_allowEmptySelection ?? false}
     set {_allowEmptySelection = newValue}
   }
   /// Returns true if `allowEmptySelection` has been explicitly set.
-  var hasAllowEmptySelection: Bool {self._allowEmptySelection != nil}
+  public var hasAllowEmptySelection: Bool {self._allowEmptySelection != nil}
   /// Clears the value of `allowEmptySelection`. Subsequent reads from it will return its default value.
-  mutating func clearAllowEmptySelection() {self._allowEmptySelection = nil}
+  public mutating func clearAllowEmptySelection() {self._allowEmptySelection = nil}
 
-  var defaultLanguageOption: LanguageOption {
+  public var defaultLanguageOption: LanguageOption {
     get {_defaultLanguageOption ?? LanguageOption()}
     set {_defaultLanguageOption = newValue}
   }
   /// Returns true if `defaultLanguageOption` has been explicitly set.
-  var hasDefaultLanguageOption: Bool {self._defaultLanguageOption != nil}
+  public var hasDefaultLanguageOption: Bool {self._defaultLanguageOption != nil}
   /// Clears the value of `defaultLanguageOption`. Subsequent reads from it will return its default value.
-  mutating func clearDefaultLanguageOption() {self._defaultLanguageOption = nil}
+  public mutating func clearDefaultLanguageOption() {self._defaultLanguageOption = nil}
 
-  var languageOptions: [LanguageOption] = []
+  public var languageOptions: [LanguageOption] = []
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _allowEmptySelection: Bool? = nil
   fileprivate var _defaultLanguageOption: LanguageOption? = nil
 }
 
-nonisolated struct ContentItem: Sendable {
+public nonisolated struct ContentItem: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var identifier: String {
+  public var identifier: String {
     get {_identifier ?? String()}
     set {_identifier = newValue}
   }
   /// Returns true if `identifier` has been explicitly set.
-  var hasIdentifier: Bool {self._identifier != nil}
+  public var hasIdentifier: Bool {self._identifier != nil}
   /// Clears the value of `identifier`. Subsequent reads from it will return its default value.
-  mutating func clearIdentifier() {self._identifier = nil}
+  public mutating func clearIdentifier() {self._identifier = nil}
 
-  var metadata: ContentItemMetadata {
+  public var metadata: ContentItemMetadata {
     get {_metadata ?? ContentItemMetadata()}
     set {_metadata = newValue}
   }
   /// Returns true if `metadata` has been explicitly set.
-  var hasMetadata: Bool {self._metadata != nil}
+  public var hasMetadata: Bool {self._metadata != nil}
   /// Clears the value of `metadata`. Subsequent reads from it will return its default value.
-  mutating func clearMetadata() {self._metadata = nil}
+  public mutating func clearMetadata() {self._metadata = nil}
 
-  var artworkData: Data {
+  public var artworkData: Data {
     get {_artworkData ?? Data()}
     set {_artworkData = newValue}
   }
   /// Returns true if `artworkData` has been explicitly set.
-  var hasArtworkData: Bool {self._artworkData != nil}
+  public var hasArtworkData: Bool {self._artworkData != nil}
   /// Clears the value of `artworkData`. Subsequent reads from it will return its default value.
-  mutating func clearArtworkData() {self._artworkData = nil}
+  public mutating func clearArtworkData() {self._artworkData = nil}
 
-  var info: String {
+  public var info: String {
     get {_info ?? String()}
     set {_info = newValue}
   }
   /// Returns true if `info` has been explicitly set.
-  var hasInfo: Bool {self._info != nil}
+  public var hasInfo: Bool {self._info != nil}
   /// Clears the value of `info`. Subsequent reads from it will return its default value.
-  mutating func clearInfo() {self._info = nil}
+  public mutating func clearInfo() {self._info = nil}
 
-  var availableLanguageOptions: [LanguageOptionGroup] = []
+  public var availableLanguageOptions: [LanguageOptionGroup] = []
 
-  var currentLanguageOptions: [LanguageOption] = []
+  public var currentLanguageOptions: [LanguageOption] = []
 
   ///  optional Lyrics lyrics = 7;
   ///  repeated Sections sections = 8;
-  var parentIdentifier: String {
+  public var parentIdentifier: String {
     get {_parentIdentifier ?? String()}
     set {_parentIdentifier = newValue}
   }
   /// Returns true if `parentIdentifier` has been explicitly set.
-  var hasParentIdentifier: Bool {self._parentIdentifier != nil}
+  public var hasParentIdentifier: Bool {self._parentIdentifier != nil}
   /// Clears the value of `parentIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearParentIdentifier() {self._parentIdentifier = nil}
+  public mutating func clearParentIdentifier() {self._parentIdentifier = nil}
 
-  var ancestorIdentifier: String {
+  public var ancestorIdentifier: String {
     get {_ancestorIdentifier ?? String()}
     set {_ancestorIdentifier = newValue}
   }
   /// Returns true if `ancestorIdentifier` has been explicitly set.
-  var hasAncestorIdentifier: Bool {self._ancestorIdentifier != nil}
+  public var hasAncestorIdentifier: Bool {self._ancestorIdentifier != nil}
   /// Clears the value of `ancestorIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearAncestorIdentifier() {self._ancestorIdentifier = nil}
+  public mutating func clearAncestorIdentifier() {self._ancestorIdentifier = nil}
 
-  var queueIdentifier: String {
+  public var queueIdentifier: String {
     get {_queueIdentifier ?? String()}
     set {_queueIdentifier = newValue}
   }
   /// Returns true if `queueIdentifier` has been explicitly set.
-  var hasQueueIdentifier: Bool {self._queueIdentifier != nil}
+  public var hasQueueIdentifier: Bool {self._queueIdentifier != nil}
   /// Clears the value of `queueIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearQueueIdentifier() {self._queueIdentifier = nil}
+  public mutating func clearQueueIdentifier() {self._queueIdentifier = nil}
 
-  var requestIdentifier: String {
+  public var requestIdentifier: String {
     get {_requestIdentifier ?? String()}
     set {_requestIdentifier = newValue}
   }
   /// Returns true if `requestIdentifier` has been explicitly set.
-  var hasRequestIdentifier: Bool {self._requestIdentifier != nil}
+  public var hasRequestIdentifier: Bool {self._requestIdentifier != nil}
   /// Clears the value of `requestIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearRequestIdentifier() {self._requestIdentifier = nil}
+  public mutating func clearRequestIdentifier() {self._requestIdentifier = nil}
 
-  var artworkDataWidth: Int32 {
+  public var artworkDataWidth: Int32 {
     get {_artworkDataWidth ?? 0}
     set {_artworkDataWidth = newValue}
   }
   /// Returns true if `artworkDataWidth` has been explicitly set.
-  var hasArtworkDataWidth: Bool {self._artworkDataWidth != nil}
+  public var hasArtworkDataWidth: Bool {self._artworkDataWidth != nil}
   /// Clears the value of `artworkDataWidth`. Subsequent reads from it will return its default value.
-  mutating func clearArtworkDataWidth() {self._artworkDataWidth = nil}
+  public mutating func clearArtworkDataWidth() {self._artworkDataWidth = nil}
 
-  var artworkDataHeight: Int32 {
+  public var artworkDataHeight: Int32 {
     get {_artworkDataHeight ?? 0}
     set {_artworkDataHeight = newValue}
   }
   /// Returns true if `artworkDataHeight` has been explicitly set.
-  var hasArtworkDataHeight: Bool {self._artworkDataHeight != nil}
+  public var hasArtworkDataHeight: Bool {self._artworkDataHeight != nil}
   /// Clears the value of `artworkDataHeight`. Subsequent reads from it will return its default value.
-  mutating func clearArtworkDataHeight() {self._artworkDataHeight = nil}
+  public mutating func clearArtworkDataHeight() {self._artworkDataHeight = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _identifier: String? = nil
   fileprivate var _metadata: ContentItemMetadata? = nil
@@ -178,10 +178,10 @@ nonisolated struct ContentItem: Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension LanguageOptionGroup: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "LanguageOptionGroup"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}allowEmptySelection\0\u{1}defaultLanguageOption\0\u{1}languageOptions\0")
+  public static let protoMessageName: String = "LanguageOptionGroup"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}allowEmptySelection\0\u{1}defaultLanguageOption\0\u{1}languageOptions\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -195,7 +195,7 @@ nonisolated extension LanguageOptionGroup: SwiftProtobuf.Message, SwiftProtobuf.
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -212,7 +212,7 @@ nonisolated extension LanguageOptionGroup: SwiftProtobuf.Message, SwiftProtobuf.
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: LanguageOptionGroup, rhs: LanguageOptionGroup) -> Bool {
+  public static func ==(lhs: LanguageOptionGroup, rhs: LanguageOptionGroup) -> Bool {
     if lhs._allowEmptySelection != rhs._allowEmptySelection {return false}
     if lhs._defaultLanguageOption != rhs._defaultLanguageOption {return false}
     if lhs.languageOptions != rhs.languageOptions {return false}
@@ -222,10 +222,10 @@ nonisolated extension LanguageOptionGroup: SwiftProtobuf.Message, SwiftProtobuf.
 }
 
 nonisolated extension ContentItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ContentItem"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}identifier\0\u{1}metadata\0\u{1}artworkData\0\u{1}info\0\u{1}availableLanguageOptions\0\u{1}currentLanguageOptions\0\u{2}\u{3}parentIdentifier\0\u{1}ancestorIdentifier\0\u{1}queueIdentifier\0\u{1}requestIdentifier\0\u{1}artworkDataWidth\0\u{1}artworkDataHeight\0")
+  public static let protoMessageName: String = "ContentItem"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}identifier\0\u{1}metadata\0\u{1}artworkData\0\u{1}info\0\u{1}availableLanguageOptions\0\u{1}currentLanguageOptions\0\u{2}\u{3}parentIdentifier\0\u{1}ancestorIdentifier\0\u{1}queueIdentifier\0\u{1}requestIdentifier\0\u{1}artworkDataWidth\0\u{1}artworkDataHeight\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -248,7 +248,7 @@ nonisolated extension ContentItem: SwiftProtobuf.Message, SwiftProtobuf._Message
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -292,7 +292,7 @@ nonisolated extension ContentItem: SwiftProtobuf.Message, SwiftProtobuf._Message
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ContentItem, rhs: ContentItem) -> Bool {
+  public static func ==(lhs: ContentItem, rhs: ContentItem) -> Bool {
     if lhs._identifier != rhs._identifier {return false}
     if lhs._metadata != rhs._metadata {return false}
     if lhs._artworkData != rhs._artworkData {return false}

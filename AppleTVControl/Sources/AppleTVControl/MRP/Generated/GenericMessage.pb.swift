@@ -25,32 +25,32 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct GenericMessage: Sendable {
+public nonisolated struct GenericMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var key: String {
+  public var key: String {
     get {_key ?? String()}
     set {_key = newValue}
   }
   /// Returns true if `key` has been explicitly set.
-  var hasKey: Bool {self._key != nil}
+  public var hasKey: Bool {self._key != nil}
   /// Clears the value of `key`. Subsequent reads from it will return its default value.
-  mutating func clearKey() {self._key = nil}
+  public mutating func clearKey() {self._key = nil}
 
-  var value: Data {
+  public var value: Data {
     get {_value ?? Data()}
     set {_value = newValue}
   }
   /// Returns true if `value` has been explicitly set.
-  var hasValue: Bool {self._value != nil}
+  public var hasValue: Bool {self._value != nil}
   /// Clears the value of `value`. Subsequent reads from it will return its default value.
-  mutating func clearValue() {self._value = nil}
+  public mutating func clearValue() {self._value = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _key: String? = nil
   fileprivate var _value: Data? = nil
@@ -67,18 +67,18 @@ nonisolated struct GenericMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var genericMessage: GenericMessage {
+  public var genericMessage: GenericMessage {
     get {return getExtensionValue(ext: Extensions_genericMessage) ?? GenericMessage()}
     set {setExtensionValue(ext: Extensions_genericMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_genericMessage`
   /// has been explicitly set.
-  var hasGenericMessage: Bool {
+  public var hasGenericMessage: Bool {
     return hasExtensionValue(ext: Extensions_genericMessage)
   }
   /// Clears the value of extension `Extensions_genericMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearGenericMessage() {
+  public mutating func clearGenericMessage() {
     clearExtensionValue(ext: Extensions_genericMessage)
   }
 
@@ -90,7 +90,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let GenericMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let GenericMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_genericMessage
 ]
 
@@ -98,7 +98,7 @@ nonisolated let GenericMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_genericMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<GenericMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_genericMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<GenericMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 46,
   fieldName: "genericMessage"
 )
@@ -106,10 +106,10 @@ nonisolated let Extensions_genericMessage = SwiftProtobuf.MessageExtension<Swift
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GenericMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}key\0\u{1}value\0")
+  public static let protoMessageName: String = "GenericMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}key\0\u{1}value\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -122,7 +122,7 @@ nonisolated extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._Mess
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -136,7 +136,7 @@ nonisolated extension GenericMessage: SwiftProtobuf.Message, SwiftProtobuf._Mess
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: GenericMessage, rhs: GenericMessage) -> Bool {
+  public static func ==(lhs: GenericMessage, rhs: GenericMessage) -> Bool {
     if lhs._key != rhs._key {return false}
     if lhs._value != rhs._value {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

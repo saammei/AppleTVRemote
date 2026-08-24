@@ -20,14 +20,14 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct GetKeyboardSessionMessage: Sendable {
+public nonisolated struct GetKeyboardSessionMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 }
 
 // MARK: - Extension support defined in GetKeyboardSessionMessage.proto.
@@ -41,18 +41,18 @@ nonisolated struct GetKeyboardSessionMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var getKeyboardSessionMessage: String {
+  public var getKeyboardSessionMessage: String {
     get {return getExtensionValue(ext: Extensions_getKeyboardSessionMessage) ?? String()}
     set {setExtensionValue(ext: Extensions_getKeyboardSessionMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_getKeyboardSessionMessage`
   /// has been explicitly set.
-  var hasGetKeyboardSessionMessage: Bool {
+  public var hasGetKeyboardSessionMessage: Bool {
     return hasExtensionValue(ext: Extensions_getKeyboardSessionMessage)
   }
   /// Clears the value of extension `Extensions_getKeyboardSessionMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearGetKeyboardSessionMessage() {
+  public mutating func clearGetKeyboardSessionMessage() {
     clearExtensionValue(ext: Extensions_getKeyboardSessionMessage)
   }
 
@@ -64,7 +64,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let GetKeyboardSessionMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let GetKeyboardSessionMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_getKeyboardSessionMessage
 ]
 
@@ -72,7 +72,7 @@ nonisolated let GetKeyboardSessionMessage_Extensions: SwiftProtobuf.SimpleExtens
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_getKeyboardSessionMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalExtensionField<SwiftProtobuf.ProtobufString>, ProtocolMessageMessage>(
+public nonisolated let Extensions_getKeyboardSessionMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalExtensionField<SwiftProtobuf.ProtobufString>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 29,
   fieldName: "getKeyboardSessionMessage"
 )
@@ -80,19 +80,19 @@ nonisolated let Extensions_getKeyboardSessionMessage = SwiftProtobuf.MessageExte
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension GetKeyboardSessionMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetKeyboardSessionMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "GetKeyboardSessionMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: GetKeyboardSessionMessage, rhs: GetKeyboardSessionMessage) -> Bool {
+  public static func ==(lhs: GetKeyboardSessionMessage, rhs: GetKeyboardSessionMessage) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

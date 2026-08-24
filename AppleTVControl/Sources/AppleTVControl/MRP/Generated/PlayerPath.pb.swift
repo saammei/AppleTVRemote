@@ -20,41 +20,41 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct PlayerPath: @unchecked Sendable {
+public nonisolated struct PlayerPath: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var origin: Origin {
+  public var origin: Origin {
     get {_storage._origin ?? Origin()}
     set {_uniqueStorage()._origin = newValue}
   }
   /// Returns true if `origin` has been explicitly set.
-  var hasOrigin: Bool {_storage._origin != nil}
+  public var hasOrigin: Bool {_storage._origin != nil}
   /// Clears the value of `origin`. Subsequent reads from it will return its default value.
-  mutating func clearOrigin() {_uniqueStorage()._origin = nil}
+  public mutating func clearOrigin() {_uniqueStorage()._origin = nil}
 
-  var client: NowPlayingClient {
+  public var client: NowPlayingClient {
     get {_storage._client ?? NowPlayingClient()}
     set {_uniqueStorage()._client = newValue}
   }
   /// Returns true if `client` has been explicitly set.
-  var hasClient: Bool {_storage._client != nil}
+  public var hasClient: Bool {_storage._client != nil}
   /// Clears the value of `client`. Subsequent reads from it will return its default value.
-  mutating func clearClient() {_uniqueStorage()._client = nil}
+  public mutating func clearClient() {_uniqueStorage()._client = nil}
 
-  var player: NowPlayingPlayer {
+  public var player: NowPlayingPlayer {
     get {_storage._player ?? NowPlayingPlayer()}
     set {_uniqueStorage()._player = newValue}
   }
   /// Returns true if `player` has been explicitly set.
-  var hasPlayer: Bool {_storage._player != nil}
+  public var hasPlayer: Bool {_storage._player != nil}
   /// Clears the value of `player`. Subsequent reads from it will return its default value.
-  mutating func clearPlayer() {_uniqueStorage()._player = nil}
+  public mutating func clearPlayer() {_uniqueStorage()._player = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
 }
@@ -62,8 +62,8 @@ nonisolated struct PlayerPath: @unchecked Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension PlayerPath: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PlayerPath"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}origin\0\u{1}client\0\u{1}player\0")
+  public static let protoMessageName: String = "PlayerPath"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}origin\0\u{1}client\0\u{1}player\0")
 
   fileprivate class _StorageClass {
     var _origin: Origin? = nil
@@ -99,7 +99,7 @@ nonisolated extension PlayerPath: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     }
   }
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     _ = _uniqueStorage()
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       while let fieldNumber = try decoder.nextFieldNumber() {
@@ -116,7 +116,7 @@ nonisolated extension PlayerPath: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every if/case branch local when no optimizations
@@ -135,7 +135,7 @@ nonisolated extension PlayerPath: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PlayerPath, rhs: PlayerPath) -> Bool {
+  public static func ==(lhs: PlayerPath, rhs: PlayerPath) -> Bool {
     if lhs._storage !== rhs._storage {
       let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
         let _storage = _args.0

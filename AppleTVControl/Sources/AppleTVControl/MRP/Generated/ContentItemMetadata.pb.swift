@@ -25,14 +25,14 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct AudioRouteType: Sendable {
+public nonisolated struct AudioRouteType: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case unknown = 0
     case devicesSpeaker = 1
     case lineOut = 2
@@ -44,87 +44,87 @@ nonisolated struct AudioRouteType: Sendable {
     case hdmi = 8
     case airPlay = 9
 
-    init() {
+    public init() {
       self = .unknown
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct AudioRoute: Sendable {
+public nonisolated struct AudioRoute: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var type: AudioRouteType {
+  public var type: AudioRouteType {
     get {_type ?? AudioRouteType()}
     set {_type = newValue}
   }
   /// Returns true if `type` has been explicitly set.
-  var hasType: Bool {self._type != nil}
+  public var hasType: Bool {self._type != nil}
   /// Clears the value of `type`. Subsequent reads from it will return its default value.
-  mutating func clearType() {self._type = nil}
+  public mutating func clearType() {self._type = nil}
 
-  var name: String {
+  public var name: String {
     get {_name ?? String()}
     set {_name = newValue}
   }
   /// Returns true if `name` has been explicitly set.
-  var hasName: Bool {self._name != nil}
+  public var hasName: Bool {self._name != nil}
   /// Clears the value of `name`. Subsequent reads from it will return its default value.
-  mutating func clearName() {self._name = nil}
+  public mutating func clearName() {self._name = nil}
 
-  var supportsSpatialization: Bool {
+  public var supportsSpatialization: Bool {
     get {_supportsSpatialization ?? false}
     set {_supportsSpatialization = newValue}
   }
   /// Returns true if `supportsSpatialization` has been explicitly set.
-  var hasSupportsSpatialization: Bool {self._supportsSpatialization != nil}
+  public var hasSupportsSpatialization: Bool {self._supportsSpatialization != nil}
   /// Clears the value of `supportsSpatialization`. Subsequent reads from it will return its default value.
-  mutating func clearSupportsSpatialization() {self._supportsSpatialization = nil}
+  public mutating func clearSupportsSpatialization() {self._supportsSpatialization = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _type: AudioRouteType? = nil
   fileprivate var _name: String? = nil
   fileprivate var _supportsSpatialization: Bool? = nil
 }
 
-nonisolated struct AudioTier: Sendable {
+public nonisolated struct AudioTier: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case lowBandwidthStereo = 1
     case highQualityStereo = 2
     case lossless = 3
     case highResolutionLossless = 4
     case spatial = 5
 
-    init() {
+    public init() {
       self = .lowBandwidthStereo
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct SongTraits: Sendable {
+public nonisolated struct SongTraits: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case none = 0
     case appleDigitialMaster = 1
     case lossless = 2
@@ -133,23 +133,23 @@ nonisolated struct SongTraits: Sendable {
     case atmos = 16
     case surround = 32
 
-    init() {
+    public init() {
       self = .none
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct AlbumTraits: Sendable {
+public nonisolated struct AlbumTraits: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case none = 0
     case appleDigitialMaster = 1
     case lossless = 2
@@ -158,45 +158,45 @@ nonisolated struct AlbumTraits: Sendable {
     case atmos = 16
     case surround = 32
 
-    init() {
+    public init() {
       self = .none
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct PlaylistTraits: Sendable {
+public nonisolated struct PlaylistTraits: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case none = 0
     case spatial = 8
     case atmos = 16
     case surround = 32
 
-    init() {
+    public init() {
       self = .none
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct ActiveFormatJustification: Sendable {
+public nonisolated struct ActiveFormatJustification: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case unknown = 0
     case unavailable = 1
     case userPreference = 100
@@ -205,145 +205,145 @@ nonisolated struct ActiveFormatJustification: Sendable {
     case routeUnknownCompatibility = 501
     case bandwidthInsufficient = 1000
 
-    init() {
+    public init() {
       self = .unknown
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct FormatTier: Sendable {
+public nonisolated struct FormatTier: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case lowBandwidthStereo = 1
     case highQualityStereo = 2
     case lossless = 4
     case highResolutionLossless = 8
     case spatial = 16
 
-    init() {
+    public init() {
       self = .lowBandwidthStereo
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct AudioFormat: Sendable {
+public nonisolated struct AudioFormat: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var tier: AudioTier.Enum {
+  public var tier: AudioTier.Enum {
     get {_tier ?? .lowBandwidthStereo}
     set {_tier = newValue}
   }
   /// Returns true if `tier` has been explicitly set.
-  var hasTier: Bool {self._tier != nil}
+  public var hasTier: Bool {self._tier != nil}
   /// Clears the value of `tier`. Subsequent reads from it will return its default value.
-  mutating func clearTier() {self._tier = nil}
+  public mutating func clearTier() {self._tier = nil}
 
-  var bitrate: Int64 {
+  public var bitrate: Int64 {
     get {_bitrate ?? 0}
     set {_bitrate = newValue}
   }
   /// Returns true if `bitrate` has been explicitly set.
-  var hasBitrate: Bool {self._bitrate != nil}
+  public var hasBitrate: Bool {self._bitrate != nil}
   /// Clears the value of `bitrate`. Subsequent reads from it will return its default value.
-  mutating func clearBitrate() {self._bitrate = nil}
+  public mutating func clearBitrate() {self._bitrate = nil}
 
-  var sampleRate: Int64 {
+  public var sampleRate: Int64 {
     get {_sampleRate ?? 0}
     set {_sampleRate = newValue}
   }
   /// Returns true if `sampleRate` has been explicitly set.
-  var hasSampleRate: Bool {self._sampleRate != nil}
+  public var hasSampleRate: Bool {self._sampleRate != nil}
   /// Clears the value of `sampleRate`. Subsequent reads from it will return its default value.
-  mutating func clearSampleRate() {self._sampleRate = nil}
+  public mutating func clearSampleRate() {self._sampleRate = nil}
 
-  var bitDepth: Int64 {
+  public var bitDepth: Int64 {
     get {_bitDepth ?? 0}
     set {_bitDepth = newValue}
   }
   /// Returns true if `bitDepth` has been explicitly set.
-  var hasBitDepth: Bool {self._bitDepth != nil}
+  public var hasBitDepth: Bool {self._bitDepth != nil}
   /// Clears the value of `bitDepth`. Subsequent reads from it will return its default value.
-  mutating func clearBitDepth() {self._bitDepth = nil}
+  public mutating func clearBitDepth() {self._bitDepth = nil}
 
-  var codec: UInt32 {
+  public var codec: UInt32 {
     get {_codec ?? 0}
     set {_codec = newValue}
   }
   /// Returns true if `codec` has been explicitly set.
-  var hasCodec: Bool {self._codec != nil}
+  public var hasCodec: Bool {self._codec != nil}
   /// Clears the value of `codec`. Subsequent reads from it will return its default value.
-  mutating func clearCodec() {self._codec = nil}
+  public mutating func clearCodec() {self._codec = nil}
 
-  var spatialized: Bool {
+  public var spatialized: Bool {
     get {_spatialized ?? false}
     set {_spatialized = newValue}
   }
   /// Returns true if `spatialized` has been explicitly set.
-  var hasSpatialized: Bool {self._spatialized != nil}
+  public var hasSpatialized: Bool {self._spatialized != nil}
   /// Clears the value of `spatialized`. Subsequent reads from it will return its default value.
-  mutating func clearSpatialized() {self._spatialized = nil}
+  public mutating func clearSpatialized() {self._spatialized = nil}
 
-  var multiChannel: Bool {
+  public var multiChannel: Bool {
     get {_multiChannel ?? false}
     set {_multiChannel = newValue}
   }
   /// Returns true if `multiChannel` has been explicitly set.
-  var hasMultiChannel: Bool {self._multiChannel != nil}
+  public var hasMultiChannel: Bool {self._multiChannel != nil}
   /// Clears the value of `multiChannel`. Subsequent reads from it will return its default value.
-  mutating func clearMultiChannel() {self._multiChannel = nil}
+  public mutating func clearMultiChannel() {self._multiChannel = nil}
 
-  var channelLayout: UInt32 {
+  public var channelLayout: UInt32 {
     get {_channelLayout ?? 0}
     set {_channelLayout = newValue}
   }
   /// Returns true if `channelLayout` has been explicitly set.
-  var hasChannelLayout: Bool {self._channelLayout != nil}
+  public var hasChannelLayout: Bool {self._channelLayout != nil}
   /// Clears the value of `channelLayout`. Subsequent reads from it will return its default value.
-  mutating func clearChannelLayout() {self._channelLayout = nil}
+  public mutating func clearChannelLayout() {self._channelLayout = nil}
 
-  var audioChannelLayoutDescription: String {
+  public var audioChannelLayoutDescription: String {
     get {_audioChannelLayoutDescription ?? String()}
     set {_audioChannelLayoutDescription = newValue}
   }
   /// Returns true if `audioChannelLayoutDescription` has been explicitly set.
-  var hasAudioChannelLayoutDescription: Bool {self._audioChannelLayoutDescription != nil}
+  public var hasAudioChannelLayoutDescription: Bool {self._audioChannelLayoutDescription != nil}
   /// Clears the value of `audioChannelLayoutDescription`. Subsequent reads from it will return its default value.
-  mutating func clearAudioChannelLayoutDescription() {self._audioChannelLayoutDescription = nil}
+  public mutating func clearAudioChannelLayoutDescription() {self._audioChannelLayoutDescription = nil}
 
-  var groupID: String {
+  public var groupID: String {
     get {_groupID ?? String()}
     set {_groupID = newValue}
   }
   /// Returns true if `groupID` has been explicitly set.
-  var hasGroupID: Bool {self._groupID != nil}
+  public var hasGroupID: Bool {self._groupID != nil}
   /// Clears the value of `groupID`. Subsequent reads from it will return its default value.
-  mutating func clearGroupID() {self._groupID = nil}
+  public mutating func clearGroupID() {self._groupID = nil}
 
-  var stableVariantID: String {
+  public var stableVariantID: String {
     get {_stableVariantID ?? String()}
     set {_stableVariantID = newValue}
   }
   /// Returns true if `stableVariantID` has been explicitly set.
-  var hasStableVariantID: Bool {self._stableVariantID != nil}
+  public var hasStableVariantID: Bool {self._stableVariantID != nil}
   /// Clears the value of `stableVariantID`. Subsequent reads from it will return its default value.
-  mutating func clearStableVariantID() {self._stableVariantID = nil}
+  public mutating func clearStableVariantID() {self._stableVariantID = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _tier: AudioTier.Enum? = nil
   fileprivate var _bitrate: Int64? = nil
@@ -358,853 +358,853 @@ nonisolated struct AudioFormat: Sendable {
   fileprivate var _stableVariantID: String? = nil
 }
 
-nonisolated struct ContentItemMetadata: @unchecked Sendable {
+public nonisolated struct ContentItemMetadata: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var title: String {
+  public var title: String {
     get {_storage._title ?? String()}
     set {_uniqueStorage()._title = newValue}
   }
   /// Returns true if `title` has been explicitly set.
-  var hasTitle: Bool {_storage._title != nil}
+  public var hasTitle: Bool {_storage._title != nil}
   /// Clears the value of `title`. Subsequent reads from it will return its default value.
-  mutating func clearTitle() {_uniqueStorage()._title = nil}
+  public mutating func clearTitle() {_uniqueStorage()._title = nil}
 
-  var subtitle: String {
+  public var subtitle: String {
     get {_storage._subtitle ?? String()}
     set {_uniqueStorage()._subtitle = newValue}
   }
   /// Returns true if `subtitle` has been explicitly set.
-  var hasSubtitle: Bool {_storage._subtitle != nil}
+  public var hasSubtitle: Bool {_storage._subtitle != nil}
   /// Clears the value of `subtitle`. Subsequent reads from it will return its default value.
-  mutating func clearSubtitle() {_uniqueStorage()._subtitle = nil}
+  public mutating func clearSubtitle() {_uniqueStorage()._subtitle = nil}
 
-  var isContainer: Bool {
+  public var isContainer: Bool {
     get {_storage._isContainer ?? false}
     set {_uniqueStorage()._isContainer = newValue}
   }
   /// Returns true if `isContainer` has been explicitly set.
-  var hasIsContainer: Bool {_storage._isContainer != nil}
+  public var hasIsContainer: Bool {_storage._isContainer != nil}
   /// Clears the value of `isContainer`. Subsequent reads from it will return its default value.
-  mutating func clearIsContainer() {_uniqueStorage()._isContainer = nil}
+  public mutating func clearIsContainer() {_uniqueStorage()._isContainer = nil}
 
-  var isPlayable: Bool {
+  public var isPlayable: Bool {
     get {_storage._isPlayable ?? false}
     set {_uniqueStorage()._isPlayable = newValue}
   }
   /// Returns true if `isPlayable` has been explicitly set.
-  var hasIsPlayable: Bool {_storage._isPlayable != nil}
+  public var hasIsPlayable: Bool {_storage._isPlayable != nil}
   /// Clears the value of `isPlayable`. Subsequent reads from it will return its default value.
-  mutating func clearIsPlayable() {_uniqueStorage()._isPlayable = nil}
+  public mutating func clearIsPlayable() {_uniqueStorage()._isPlayable = nil}
 
-  var playbackProgress: Float {
+  public var playbackProgress: Float {
     get {_storage._playbackProgress ?? 0}
     set {_uniqueStorage()._playbackProgress = newValue}
   }
   /// Returns true if `playbackProgress` has been explicitly set.
-  var hasPlaybackProgress: Bool {_storage._playbackProgress != nil}
+  public var hasPlaybackProgress: Bool {_storage._playbackProgress != nil}
   /// Clears the value of `playbackProgress`. Subsequent reads from it will return its default value.
-  mutating func clearPlaybackProgress() {_uniqueStorage()._playbackProgress = nil}
+  public mutating func clearPlaybackProgress() {_uniqueStorage()._playbackProgress = nil}
 
-  var albumName: String {
+  public var albumName: String {
     get {_storage._albumName ?? String()}
     set {_uniqueStorage()._albumName = newValue}
   }
   /// Returns true if `albumName` has been explicitly set.
-  var hasAlbumName: Bool {_storage._albumName != nil}
+  public var hasAlbumName: Bool {_storage._albumName != nil}
   /// Clears the value of `albumName`. Subsequent reads from it will return its default value.
-  mutating func clearAlbumName() {_uniqueStorage()._albumName = nil}
+  public mutating func clearAlbumName() {_uniqueStorage()._albumName = nil}
 
-  var trackArtistName: String {
+  public var trackArtistName: String {
     get {_storage._trackArtistName ?? String()}
     set {_uniqueStorage()._trackArtistName = newValue}
   }
   /// Returns true if `trackArtistName` has been explicitly set.
-  var hasTrackArtistName: Bool {_storage._trackArtistName != nil}
+  public var hasTrackArtistName: Bool {_storage._trackArtistName != nil}
   /// Clears the value of `trackArtistName`. Subsequent reads from it will return its default value.
-  mutating func clearTrackArtistName() {_uniqueStorage()._trackArtistName = nil}
+  public mutating func clearTrackArtistName() {_uniqueStorage()._trackArtistName = nil}
 
-  var albumArtistName: String {
+  public var albumArtistName: String {
     get {_storage._albumArtistName ?? String()}
     set {_uniqueStorage()._albumArtistName = newValue}
   }
   /// Returns true if `albumArtistName` has been explicitly set.
-  var hasAlbumArtistName: Bool {_storage._albumArtistName != nil}
+  public var hasAlbumArtistName: Bool {_storage._albumArtistName != nil}
   /// Clears the value of `albumArtistName`. Subsequent reads from it will return its default value.
-  mutating func clearAlbumArtistName() {_uniqueStorage()._albumArtistName = nil}
+  public mutating func clearAlbumArtistName() {_uniqueStorage()._albumArtistName = nil}
 
-  var directorName: String {
+  public var directorName: String {
     get {_storage._directorName ?? String()}
     set {_uniqueStorage()._directorName = newValue}
   }
   /// Returns true if `directorName` has been explicitly set.
-  var hasDirectorName: Bool {_storage._directorName != nil}
+  public var hasDirectorName: Bool {_storage._directorName != nil}
   /// Clears the value of `directorName`. Subsequent reads from it will return its default value.
-  mutating func clearDirectorName() {_uniqueStorage()._directorName = nil}
+  public mutating func clearDirectorName() {_uniqueStorage()._directorName = nil}
 
-  var seasonNumber: Int32 {
+  public var seasonNumber: Int32 {
     get {_storage._seasonNumber ?? 0}
     set {_uniqueStorage()._seasonNumber = newValue}
   }
   /// Returns true if `seasonNumber` has been explicitly set.
-  var hasSeasonNumber: Bool {_storage._seasonNumber != nil}
+  public var hasSeasonNumber: Bool {_storage._seasonNumber != nil}
   /// Clears the value of `seasonNumber`. Subsequent reads from it will return its default value.
-  mutating func clearSeasonNumber() {_uniqueStorage()._seasonNumber = nil}
+  public mutating func clearSeasonNumber() {_uniqueStorage()._seasonNumber = nil}
 
-  var episodeNumber: Int32 {
+  public var episodeNumber: Int32 {
     get {_storage._episodeNumber ?? 0}
     set {_uniqueStorage()._episodeNumber = newValue}
   }
   /// Returns true if `episodeNumber` has been explicitly set.
-  var hasEpisodeNumber: Bool {_storage._episodeNumber != nil}
+  public var hasEpisodeNumber: Bool {_storage._episodeNumber != nil}
   /// Clears the value of `episodeNumber`. Subsequent reads from it will return its default value.
-  mutating func clearEpisodeNumber() {_uniqueStorage()._episodeNumber = nil}
+  public mutating func clearEpisodeNumber() {_uniqueStorage()._episodeNumber = nil}
 
-  var releaseDate: Double {
+  public var releaseDate: Double {
     get {_storage._releaseDate ?? 0}
     set {_uniqueStorage()._releaseDate = newValue}
   }
   /// Returns true if `releaseDate` has been explicitly set.
-  var hasReleaseDate: Bool {_storage._releaseDate != nil}
+  public var hasReleaseDate: Bool {_storage._releaseDate != nil}
   /// Clears the value of `releaseDate`. Subsequent reads from it will return its default value.
-  mutating func clearReleaseDate() {_uniqueStorage()._releaseDate = nil}
+  public mutating func clearReleaseDate() {_uniqueStorage()._releaseDate = nil}
 
-  var playCount: Int32 {
+  public var playCount: Int32 {
     get {_storage._playCount ?? 0}
     set {_uniqueStorage()._playCount = newValue}
   }
   /// Returns true if `playCount` has been explicitly set.
-  var hasPlayCount: Bool {_storage._playCount != nil}
+  public var hasPlayCount: Bool {_storage._playCount != nil}
   /// Clears the value of `playCount`. Subsequent reads from it will return its default value.
-  mutating func clearPlayCount() {_uniqueStorage()._playCount = nil}
+  public mutating func clearPlayCount() {_uniqueStorage()._playCount = nil}
 
-  var duration: Double {
+  public var duration: Double {
     get {_storage._duration ?? 0}
     set {_uniqueStorage()._duration = newValue}
   }
   /// Returns true if `duration` has been explicitly set.
-  var hasDuration: Bool {_storage._duration != nil}
+  public var hasDuration: Bool {_storage._duration != nil}
   /// Clears the value of `duration`. Subsequent reads from it will return its default value.
-  mutating func clearDuration() {_uniqueStorage()._duration = nil}
+  public mutating func clearDuration() {_uniqueStorage()._duration = nil}
 
-  var localizedContentRating: String {
+  public var localizedContentRating: String {
     get {_storage._localizedContentRating ?? String()}
     set {_uniqueStorage()._localizedContentRating = newValue}
   }
   /// Returns true if `localizedContentRating` has been explicitly set.
-  var hasLocalizedContentRating: Bool {_storage._localizedContentRating != nil}
+  public var hasLocalizedContentRating: Bool {_storage._localizedContentRating != nil}
   /// Clears the value of `localizedContentRating`. Subsequent reads from it will return its default value.
-  mutating func clearLocalizedContentRating() {_uniqueStorage()._localizedContentRating = nil}
+  public mutating func clearLocalizedContentRating() {_uniqueStorage()._localizedContentRating = nil}
 
-  var isExplicitItem: Bool {
+  public var isExplicitItem: Bool {
     get {_storage._isExplicitItem ?? false}
     set {_uniqueStorage()._isExplicitItem = newValue}
   }
   /// Returns true if `isExplicitItem` has been explicitly set.
-  var hasIsExplicitItem: Bool {_storage._isExplicitItem != nil}
+  public var hasIsExplicitItem: Bool {_storage._isExplicitItem != nil}
   /// Clears the value of `isExplicitItem`. Subsequent reads from it will return its default value.
-  mutating func clearIsExplicitItem() {_uniqueStorage()._isExplicitItem = nil}
+  public mutating func clearIsExplicitItem() {_uniqueStorage()._isExplicitItem = nil}
 
-  var playlistType: Int32 {
+  public var playlistType: Int32 {
     get {_storage._playlistType ?? 0}
     set {_uniqueStorage()._playlistType = newValue}
   }
   /// Returns true if `playlistType` has been explicitly set.
-  var hasPlaylistType: Bool {_storage._playlistType != nil}
+  public var hasPlaylistType: Bool {_storage._playlistType != nil}
   /// Clears the value of `playlistType`. Subsequent reads from it will return its default value.
-  mutating func clearPlaylistType() {_uniqueStorage()._playlistType = nil}
+  public mutating func clearPlaylistType() {_uniqueStorage()._playlistType = nil}
 
-  var radioStationType: Int32 {
+  public var radioStationType: Int32 {
     get {_storage._radioStationType ?? 0}
     set {_uniqueStorage()._radioStationType = newValue}
   }
   /// Returns true if `radioStationType` has been explicitly set.
-  var hasRadioStationType: Bool {_storage._radioStationType != nil}
+  public var hasRadioStationType: Bool {_storage._radioStationType != nil}
   /// Clears the value of `radioStationType`. Subsequent reads from it will return its default value.
-  mutating func clearRadioStationType() {_uniqueStorage()._radioStationType = nil}
+  public mutating func clearRadioStationType() {_uniqueStorage()._radioStationType = nil}
 
-  var artworkAvailable: Bool {
+  public var artworkAvailable: Bool {
     get {_storage._artworkAvailable ?? false}
     set {_uniqueStorage()._artworkAvailable = newValue}
   }
   /// Returns true if `artworkAvailable` has been explicitly set.
-  var hasArtworkAvailable: Bool {_storage._artworkAvailable != nil}
+  public var hasArtworkAvailable: Bool {_storage._artworkAvailable != nil}
   /// Clears the value of `artworkAvailable`. Subsequent reads from it will return its default value.
-  mutating func clearArtworkAvailable() {_uniqueStorage()._artworkAvailable = nil}
+  public mutating func clearArtworkAvailable() {_uniqueStorage()._artworkAvailable = nil}
 
-  var infoAvailable: Bool {
+  public var infoAvailable: Bool {
     get {_storage._infoAvailable ?? false}
     set {_uniqueStorage()._infoAvailable = newValue}
   }
   /// Returns true if `infoAvailable` has been explicitly set.
-  var hasInfoAvailable: Bool {_storage._infoAvailable != nil}
+  public var hasInfoAvailable: Bool {_storage._infoAvailable != nil}
   /// Clears the value of `infoAvailable`. Subsequent reads from it will return its default value.
-  mutating func clearInfoAvailable() {_uniqueStorage()._infoAvailable = nil}
+  public mutating func clearInfoAvailable() {_uniqueStorage()._infoAvailable = nil}
 
-  var languageOptionsAvailable: Bool {
+  public var languageOptionsAvailable: Bool {
     get {_storage._languageOptionsAvailable ?? false}
     set {_uniqueStorage()._languageOptionsAvailable = newValue}
   }
   /// Returns true if `languageOptionsAvailable` has been explicitly set.
-  var hasLanguageOptionsAvailable: Bool {_storage._languageOptionsAvailable != nil}
+  public var hasLanguageOptionsAvailable: Bool {_storage._languageOptionsAvailable != nil}
   /// Clears the value of `languageOptionsAvailable`. Subsequent reads from it will return its default value.
-  mutating func clearLanguageOptionsAvailable() {_uniqueStorage()._languageOptionsAvailable = nil}
+  public mutating func clearLanguageOptionsAvailable() {_uniqueStorage()._languageOptionsAvailable = nil}
 
-  var numberOfSections: Int32 {
+  public var numberOfSections: Int32 {
     get {_storage._numberOfSections ?? 0}
     set {_uniqueStorage()._numberOfSections = newValue}
   }
   /// Returns true if `numberOfSections` has been explicitly set.
-  var hasNumberOfSections: Bool {_storage._numberOfSections != nil}
+  public var hasNumberOfSections: Bool {_storage._numberOfSections != nil}
   /// Clears the value of `numberOfSections`. Subsequent reads from it will return its default value.
-  mutating func clearNumberOfSections() {_uniqueStorage()._numberOfSections = nil}
+  public mutating func clearNumberOfSections() {_uniqueStorage()._numberOfSections = nil}
 
-  var lyricsAvailable: Bool {
+  public var lyricsAvailable: Bool {
     get {_storage._lyricsAvailable ?? false}
     set {_uniqueStorage()._lyricsAvailable = newValue}
   }
   /// Returns true if `lyricsAvailable` has been explicitly set.
-  var hasLyricsAvailable: Bool {_storage._lyricsAvailable != nil}
+  public var hasLyricsAvailable: Bool {_storage._lyricsAvailable != nil}
   /// Clears the value of `lyricsAvailable`. Subsequent reads from it will return its default value.
-  mutating func clearLyricsAvailable() {_uniqueStorage()._lyricsAvailable = nil}
+  public mutating func clearLyricsAvailable() {_uniqueStorage()._lyricsAvailable = nil}
 
-  var editingStyleFlags: Int32 {
+  public var editingStyleFlags: Int32 {
     get {_storage._editingStyleFlags ?? 0}
     set {_uniqueStorage()._editingStyleFlags = newValue}
   }
   /// Returns true if `editingStyleFlags` has been explicitly set.
-  var hasEditingStyleFlags: Bool {_storage._editingStyleFlags != nil}
+  public var hasEditingStyleFlags: Bool {_storage._editingStyleFlags != nil}
   /// Clears the value of `editingStyleFlags`. Subsequent reads from it will return its default value.
-  mutating func clearEditingStyleFlags() {_uniqueStorage()._editingStyleFlags = nil}
+  public mutating func clearEditingStyleFlags() {_uniqueStorage()._editingStyleFlags = nil}
 
-  var isStreamingContent: Bool {
+  public var isStreamingContent: Bool {
     get {_storage._isStreamingContent ?? false}
     set {_uniqueStorage()._isStreamingContent = newValue}
   }
   /// Returns true if `isStreamingContent` has been explicitly set.
-  var hasIsStreamingContent: Bool {_storage._isStreamingContent != nil}
+  public var hasIsStreamingContent: Bool {_storage._isStreamingContent != nil}
   /// Clears the value of `isStreamingContent`. Subsequent reads from it will return its default value.
-  mutating func clearIsStreamingContent() {_uniqueStorage()._isStreamingContent = nil}
+  public mutating func clearIsStreamingContent() {_uniqueStorage()._isStreamingContent = nil}
 
-  var isCurrentlyPlaying: Bool {
+  public var isCurrentlyPlaying: Bool {
     get {_storage._isCurrentlyPlaying ?? false}
     set {_uniqueStorage()._isCurrentlyPlaying = newValue}
   }
   /// Returns true if `isCurrentlyPlaying` has been explicitly set.
-  var hasIsCurrentlyPlaying: Bool {_storage._isCurrentlyPlaying != nil}
+  public var hasIsCurrentlyPlaying: Bool {_storage._isCurrentlyPlaying != nil}
   /// Clears the value of `isCurrentlyPlaying`. Subsequent reads from it will return its default value.
-  mutating func clearIsCurrentlyPlaying() {_uniqueStorage()._isCurrentlyPlaying = nil}
+  public mutating func clearIsCurrentlyPlaying() {_uniqueStorage()._isCurrentlyPlaying = nil}
 
-  var collectionIdentifier: String {
+  public var collectionIdentifier: String {
     get {_storage._collectionIdentifier ?? String()}
     set {_uniqueStorage()._collectionIdentifier = newValue}
   }
   /// Returns true if `collectionIdentifier` has been explicitly set.
-  var hasCollectionIdentifier: Bool {_storage._collectionIdentifier != nil}
+  public var hasCollectionIdentifier: Bool {_storage._collectionIdentifier != nil}
   /// Clears the value of `collectionIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearCollectionIdentifier() {_uniqueStorage()._collectionIdentifier = nil}
+  public mutating func clearCollectionIdentifier() {_uniqueStorage()._collectionIdentifier = nil}
 
-  var profileIdentifier: String {
+  public var profileIdentifier: String {
     get {_storage._profileIdentifier ?? String()}
     set {_uniqueStorage()._profileIdentifier = newValue}
   }
   /// Returns true if `profileIdentifier` has been explicitly set.
-  var hasProfileIdentifier: Bool {_storage._profileIdentifier != nil}
+  public var hasProfileIdentifier: Bool {_storage._profileIdentifier != nil}
   /// Clears the value of `profileIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearProfileIdentifier() {_uniqueStorage()._profileIdentifier = nil}
+  public mutating func clearProfileIdentifier() {_uniqueStorage()._profileIdentifier = nil}
 
-  var startTime: Double {
+  public var startTime: Double {
     get {_storage._startTime ?? 0}
     set {_uniqueStorage()._startTime = newValue}
   }
   /// Returns true if `startTime` has been explicitly set.
-  var hasStartTime: Bool {_storage._startTime != nil}
+  public var hasStartTime: Bool {_storage._startTime != nil}
   /// Clears the value of `startTime`. Subsequent reads from it will return its default value.
-  mutating func clearStartTime() {_uniqueStorage()._startTime = nil}
+  public mutating func clearStartTime() {_uniqueStorage()._startTime = nil}
 
-  var artworkMimetype: String {
+  public var artworkMimetype: String {
     get {_storage._artworkMimetype ?? String()}
     set {_uniqueStorage()._artworkMimetype = newValue}
   }
   /// Returns true if `artworkMimetype` has been explicitly set.
-  var hasArtworkMimetype: Bool {_storage._artworkMimetype != nil}
+  public var hasArtworkMimetype: Bool {_storage._artworkMimetype != nil}
   /// Clears the value of `artworkMimetype`. Subsequent reads from it will return its default value.
-  mutating func clearArtworkMimetype() {_uniqueStorage()._artworkMimetype = nil}
+  public mutating func clearArtworkMimetype() {_uniqueStorage()._artworkMimetype = nil}
 
-  var assetUrlstring: String {
+  public var assetUrlstring: String {
     get {_storage._assetUrlstring ?? String()}
     set {_uniqueStorage()._assetUrlstring = newValue}
   }
   /// Returns true if `assetUrlstring` has been explicitly set.
-  var hasAssetUrlstring: Bool {_storage._assetUrlstring != nil}
+  public var hasAssetUrlstring: Bool {_storage._assetUrlstring != nil}
   /// Clears the value of `assetUrlstring`. Subsequent reads from it will return its default value.
-  mutating func clearAssetUrlstring() {_uniqueStorage()._assetUrlstring = nil}
+  public mutating func clearAssetUrlstring() {_uniqueStorage()._assetUrlstring = nil}
 
-  var composer: String {
+  public var composer: String {
     get {_storage._composer ?? String()}
     set {_uniqueStorage()._composer = newValue}
   }
   /// Returns true if `composer` has been explicitly set.
-  var hasComposer: Bool {_storage._composer != nil}
+  public var hasComposer: Bool {_storage._composer != nil}
   /// Clears the value of `composer`. Subsequent reads from it will return its default value.
-  mutating func clearComposer() {_uniqueStorage()._composer = nil}
+  public mutating func clearComposer() {_uniqueStorage()._composer = nil}
 
-  var discNumber: Int32 {
+  public var discNumber: Int32 {
     get {_storage._discNumber ?? 0}
     set {_uniqueStorage()._discNumber = newValue}
   }
   /// Returns true if `discNumber` has been explicitly set.
-  var hasDiscNumber: Bool {_storage._discNumber != nil}
+  public var hasDiscNumber: Bool {_storage._discNumber != nil}
   /// Clears the value of `discNumber`. Subsequent reads from it will return its default value.
-  mutating func clearDiscNumber() {_uniqueStorage()._discNumber = nil}
+  public mutating func clearDiscNumber() {_uniqueStorage()._discNumber = nil}
 
-  var elapsedTime: Double {
+  public var elapsedTime: Double {
     get {_storage._elapsedTime ?? 0}
     set {_uniqueStorage()._elapsedTime = newValue}
   }
   /// Returns true if `elapsedTime` has been explicitly set.
-  var hasElapsedTime: Bool {_storage._elapsedTime != nil}
+  public var hasElapsedTime: Bool {_storage._elapsedTime != nil}
   /// Clears the value of `elapsedTime`. Subsequent reads from it will return its default value.
-  mutating func clearElapsedTime() {_uniqueStorage()._elapsedTime = nil}
+  public mutating func clearElapsedTime() {_uniqueStorage()._elapsedTime = nil}
 
-  var genre: String {
+  public var genre: String {
     get {_storage._genre ?? String()}
     set {_uniqueStorage()._genre = newValue}
   }
   /// Returns true if `genre` has been explicitly set.
-  var hasGenre: Bool {_storage._genre != nil}
+  public var hasGenre: Bool {_storage._genre != nil}
   /// Clears the value of `genre`. Subsequent reads from it will return its default value.
-  mutating func clearGenre() {_uniqueStorage()._genre = nil}
+  public mutating func clearGenre() {_uniqueStorage()._genre = nil}
 
-  var isAlwaysLive: Bool {
+  public var isAlwaysLive: Bool {
     get {_storage._isAlwaysLive ?? false}
     set {_uniqueStorage()._isAlwaysLive = newValue}
   }
   /// Returns true if `isAlwaysLive` has been explicitly set.
-  var hasIsAlwaysLive: Bool {_storage._isAlwaysLive != nil}
+  public var hasIsAlwaysLive: Bool {_storage._isAlwaysLive != nil}
   /// Clears the value of `isAlwaysLive`. Subsequent reads from it will return its default value.
-  mutating func clearIsAlwaysLive() {_uniqueStorage()._isAlwaysLive = nil}
+  public mutating func clearIsAlwaysLive() {_uniqueStorage()._isAlwaysLive = nil}
 
-  var playbackRate: Float {
+  public var playbackRate: Float {
     get {_storage._playbackRate ?? 0}
     set {_uniqueStorage()._playbackRate = newValue}
   }
   /// Returns true if `playbackRate` has been explicitly set.
-  var hasPlaybackRate: Bool {_storage._playbackRate != nil}
+  public var hasPlaybackRate: Bool {_storage._playbackRate != nil}
   /// Clears the value of `playbackRate`. Subsequent reads from it will return its default value.
-  mutating func clearPlaybackRate() {_uniqueStorage()._playbackRate = nil}
+  public mutating func clearPlaybackRate() {_uniqueStorage()._playbackRate = nil}
 
-  var chapterCount: Int32 {
+  public var chapterCount: Int32 {
     get {_storage._chapterCount ?? 0}
     set {_uniqueStorage()._chapterCount = newValue}
   }
   /// Returns true if `chapterCount` has been explicitly set.
-  var hasChapterCount: Bool {_storage._chapterCount != nil}
+  public var hasChapterCount: Bool {_storage._chapterCount != nil}
   /// Clears the value of `chapterCount`. Subsequent reads from it will return its default value.
-  mutating func clearChapterCount() {_uniqueStorage()._chapterCount = nil}
+  public mutating func clearChapterCount() {_uniqueStorage()._chapterCount = nil}
 
-  var totalDiscCount: Int32 {
+  public var totalDiscCount: Int32 {
     get {_storage._totalDiscCount ?? 0}
     set {_uniqueStorage()._totalDiscCount = newValue}
   }
   /// Returns true if `totalDiscCount` has been explicitly set.
-  var hasTotalDiscCount: Bool {_storage._totalDiscCount != nil}
+  public var hasTotalDiscCount: Bool {_storage._totalDiscCount != nil}
   /// Clears the value of `totalDiscCount`. Subsequent reads from it will return its default value.
-  mutating func clearTotalDiscCount() {_uniqueStorage()._totalDiscCount = nil}
+  public mutating func clearTotalDiscCount() {_uniqueStorage()._totalDiscCount = nil}
 
-  var totalTrackCount: Int32 {
+  public var totalTrackCount: Int32 {
     get {_storage._totalTrackCount ?? 0}
     set {_uniqueStorage()._totalTrackCount = newValue}
   }
   /// Returns true if `totalTrackCount` has been explicitly set.
-  var hasTotalTrackCount: Bool {_storage._totalTrackCount != nil}
+  public var hasTotalTrackCount: Bool {_storage._totalTrackCount != nil}
   /// Clears the value of `totalTrackCount`. Subsequent reads from it will return its default value.
-  mutating func clearTotalTrackCount() {_uniqueStorage()._totalTrackCount = nil}
+  public mutating func clearTotalTrackCount() {_uniqueStorage()._totalTrackCount = nil}
 
-  var trackNumber: Int32 {
+  public var trackNumber: Int32 {
     get {_storage._trackNumber ?? 0}
     set {_uniqueStorage()._trackNumber = newValue}
   }
   /// Returns true if `trackNumber` has been explicitly set.
-  var hasTrackNumber: Bool {_storage._trackNumber != nil}
+  public var hasTrackNumber: Bool {_storage._trackNumber != nil}
   /// Clears the value of `trackNumber`. Subsequent reads from it will return its default value.
-  mutating func clearTrackNumber() {_uniqueStorage()._trackNumber = nil}
+  public mutating func clearTrackNumber() {_uniqueStorage()._trackNumber = nil}
 
-  var contentIdentifier: String {
+  public var contentIdentifier: String {
     get {_storage._contentIdentifier ?? String()}
     set {_uniqueStorage()._contentIdentifier = newValue}
   }
   /// Returns true if `contentIdentifier` has been explicitly set.
-  var hasContentIdentifier: Bool {_storage._contentIdentifier != nil}
+  public var hasContentIdentifier: Bool {_storage._contentIdentifier != nil}
   /// Clears the value of `contentIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearContentIdentifier() {_uniqueStorage()._contentIdentifier = nil}
+  public mutating func clearContentIdentifier() {_uniqueStorage()._contentIdentifier = nil}
 
-  var isSharable: Bool {
+  public var isSharable: Bool {
     get {_storage._isSharable ?? false}
     set {_uniqueStorage()._isSharable = newValue}
   }
   /// Returns true if `isSharable` has been explicitly set.
-  var hasIsSharable: Bool {_storage._isSharable != nil}
+  public var hasIsSharable: Bool {_storage._isSharable != nil}
   /// Clears the value of `isSharable`. Subsequent reads from it will return its default value.
-  mutating func clearIsSharable() {_uniqueStorage()._isSharable = nil}
+  public mutating func clearIsSharable() {_uniqueStorage()._isSharable = nil}
 
-  var isLiked: Bool {
+  public var isLiked: Bool {
     get {_storage._isLiked ?? false}
     set {_uniqueStorage()._isLiked = newValue}
   }
   /// Returns true if `isLiked` has been explicitly set.
-  var hasIsLiked: Bool {_storage._isLiked != nil}
+  public var hasIsLiked: Bool {_storage._isLiked != nil}
   /// Clears the value of `isLiked`. Subsequent reads from it will return its default value.
-  mutating func clearIsLiked() {_uniqueStorage()._isLiked = nil}
+  public mutating func clearIsLiked() {_uniqueStorage()._isLiked = nil}
 
-  var isInWishList: Bool {
+  public var isInWishList: Bool {
     get {_storage._isInWishList ?? false}
     set {_uniqueStorage()._isInWishList = newValue}
   }
   /// Returns true if `isInWishList` has been explicitly set.
-  var hasIsInWishList: Bool {_storage._isInWishList != nil}
+  public var hasIsInWishList: Bool {_storage._isInWishList != nil}
   /// Clears the value of `isInWishList`. Subsequent reads from it will return its default value.
-  mutating func clearIsInWishList() {_uniqueStorage()._isInWishList = nil}
+  public mutating func clearIsInWishList() {_uniqueStorage()._isInWishList = nil}
 
-  var radioStationIdentifier: Int64 {
+  public var radioStationIdentifier: Int64 {
     get {_storage._radioStationIdentifier ?? 0}
     set {_uniqueStorage()._radioStationIdentifier = newValue}
   }
   /// Returns true if `radioStationIdentifier` has been explicitly set.
-  var hasRadioStationIdentifier: Bool {_storage._radioStationIdentifier != nil}
+  public var hasRadioStationIdentifier: Bool {_storage._radioStationIdentifier != nil}
   /// Clears the value of `radioStationIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearRadioStationIdentifier() {_uniqueStorage()._radioStationIdentifier = nil}
+  public mutating func clearRadioStationIdentifier() {_uniqueStorage()._radioStationIdentifier = nil}
 
-  var radioStationName: String {
+  public var radioStationName: String {
     get {_storage._radioStationName ?? String()}
     set {_uniqueStorage()._radioStationName = newValue}
   }
   /// Returns true if `radioStationName` has been explicitly set.
-  var hasRadioStationName: Bool {_storage._radioStationName != nil}
+  public var hasRadioStationName: Bool {_storage._radioStationName != nil}
   /// Clears the value of `radioStationName`. Subsequent reads from it will return its default value.
-  mutating func clearRadioStationName() {_uniqueStorage()._radioStationName = nil}
+  public mutating func clearRadioStationName() {_uniqueStorage()._radioStationName = nil}
 
-  var radioStationString: String {
+  public var radioStationString: String {
     get {_storage._radioStationString ?? String()}
     set {_uniqueStorage()._radioStationString = newValue}
   }
   /// Returns true if `radioStationString` has been explicitly set.
-  var hasRadioStationString: Bool {_storage._radioStationString != nil}
+  public var hasRadioStationString: Bool {_storage._radioStationString != nil}
   /// Clears the value of `radioStationString`. Subsequent reads from it will return its default value.
-  mutating func clearRadioStationString() {_uniqueStorage()._radioStationString = nil}
+  public mutating func clearRadioStationString() {_uniqueStorage()._radioStationString = nil}
 
-  var iTunesStoreIdentifier: Int64 {
+  public var iTunesStoreIdentifier: Int64 {
     get {_storage._iTunesStoreIdentifier ?? 0}
     set {_uniqueStorage()._iTunesStoreIdentifier = newValue}
   }
   /// Returns true if `iTunesStoreIdentifier` has been explicitly set.
-  var hasITunesStoreIdentifier: Bool {_storage._iTunesStoreIdentifier != nil}
+  public var hasITunesStoreIdentifier: Bool {_storage._iTunesStoreIdentifier != nil}
   /// Clears the value of `iTunesStoreIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearITunesStoreIdentifier() {_uniqueStorage()._iTunesStoreIdentifier = nil}
+  public mutating func clearITunesStoreIdentifier() {_uniqueStorage()._iTunesStoreIdentifier = nil}
 
-  var iTunesStoreSubscriptionIdentifier: Int64 {
+  public var iTunesStoreSubscriptionIdentifier: Int64 {
     get {_storage._iTunesStoreSubscriptionIdentifier ?? 0}
     set {_uniqueStorage()._iTunesStoreSubscriptionIdentifier = newValue}
   }
   /// Returns true if `iTunesStoreSubscriptionIdentifier` has been explicitly set.
-  var hasITunesStoreSubscriptionIdentifier: Bool {_storage._iTunesStoreSubscriptionIdentifier != nil}
+  public var hasITunesStoreSubscriptionIdentifier: Bool {_storage._iTunesStoreSubscriptionIdentifier != nil}
   /// Clears the value of `iTunesStoreSubscriptionIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearITunesStoreSubscriptionIdentifier() {_uniqueStorage()._iTunesStoreSubscriptionIdentifier = nil}
+  public mutating func clearITunesStoreSubscriptionIdentifier() {_uniqueStorage()._iTunesStoreSubscriptionIdentifier = nil}
 
-  var iTunesStoreArtistIdentifier: Int64 {
+  public var iTunesStoreArtistIdentifier: Int64 {
     get {_storage._iTunesStoreArtistIdentifier ?? 0}
     set {_uniqueStorage()._iTunesStoreArtistIdentifier = newValue}
   }
   /// Returns true if `iTunesStoreArtistIdentifier` has been explicitly set.
-  var hasITunesStoreArtistIdentifier: Bool {_storage._iTunesStoreArtistIdentifier != nil}
+  public var hasITunesStoreArtistIdentifier: Bool {_storage._iTunesStoreArtistIdentifier != nil}
   /// Clears the value of `iTunesStoreArtistIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearITunesStoreArtistIdentifier() {_uniqueStorage()._iTunesStoreArtistIdentifier = nil}
+  public mutating func clearITunesStoreArtistIdentifier() {_uniqueStorage()._iTunesStoreArtistIdentifier = nil}
 
-  var iTunesStoreAlbumIdentifier: Int64 {
+  public var iTunesStoreAlbumIdentifier: Int64 {
     get {_storage._iTunesStoreAlbumIdentifier ?? 0}
     set {_uniqueStorage()._iTunesStoreAlbumIdentifier = newValue}
   }
   /// Returns true if `iTunesStoreAlbumIdentifier` has been explicitly set.
-  var hasITunesStoreAlbumIdentifier: Bool {_storage._iTunesStoreAlbumIdentifier != nil}
+  public var hasITunesStoreAlbumIdentifier: Bool {_storage._iTunesStoreAlbumIdentifier != nil}
   /// Clears the value of `iTunesStoreAlbumIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearITunesStoreAlbumIdentifier() {_uniqueStorage()._iTunesStoreAlbumIdentifier = nil}
+  public mutating func clearITunesStoreAlbumIdentifier() {_uniqueStorage()._iTunesStoreAlbumIdentifier = nil}
 
-  var purchaseInfoData: Data {
+  public var purchaseInfoData: Data {
     get {_storage._purchaseInfoData ?? Data()}
     set {_uniqueStorage()._purchaseInfoData = newValue}
   }
   /// Returns true if `purchaseInfoData` has been explicitly set.
-  var hasPurchaseInfoData: Bool {_storage._purchaseInfoData != nil}
+  public var hasPurchaseInfoData: Bool {_storage._purchaseInfoData != nil}
   /// Clears the value of `purchaseInfoData`. Subsequent reads from it will return its default value.
-  mutating func clearPurchaseInfoData() {_uniqueStorage()._purchaseInfoData = nil}
+  public mutating func clearPurchaseInfoData() {_uniqueStorage()._purchaseInfoData = nil}
 
-  var defaultPlaybackRate: Float {
+  public var defaultPlaybackRate: Float {
     get {_storage._defaultPlaybackRate ?? 0}
     set {_uniqueStorage()._defaultPlaybackRate = newValue}
   }
   /// Returns true if `defaultPlaybackRate` has been explicitly set.
-  var hasDefaultPlaybackRate: Bool {_storage._defaultPlaybackRate != nil}
+  public var hasDefaultPlaybackRate: Bool {_storage._defaultPlaybackRate != nil}
   /// Clears the value of `defaultPlaybackRate`. Subsequent reads from it will return its default value.
-  mutating func clearDefaultPlaybackRate() {_uniqueStorage()._defaultPlaybackRate = nil}
+  public mutating func clearDefaultPlaybackRate() {_uniqueStorage()._defaultPlaybackRate = nil}
 
-  var downloadState: Int32 {
+  public var downloadState: Int32 {
     get {_storage._downloadState ?? 0}
     set {_uniqueStorage()._downloadState = newValue}
   }
   /// Returns true if `downloadState` has been explicitly set.
-  var hasDownloadState: Bool {_storage._downloadState != nil}
+  public var hasDownloadState: Bool {_storage._downloadState != nil}
   /// Clears the value of `downloadState`. Subsequent reads from it will return its default value.
-  mutating func clearDownloadState() {_uniqueStorage()._downloadState = nil}
+  public mutating func clearDownloadState() {_uniqueStorage()._downloadState = nil}
 
-  var downloadProgress: Float {
+  public var downloadProgress: Float {
     get {_storage._downloadProgress ?? 0}
     set {_uniqueStorage()._downloadProgress = newValue}
   }
   /// Returns true if `downloadProgress` has been explicitly set.
-  var hasDownloadProgress: Bool {_storage._downloadProgress != nil}
+  public var hasDownloadProgress: Bool {_storage._downloadProgress != nil}
   /// Clears the value of `downloadProgress`. Subsequent reads from it will return its default value.
-  mutating func clearDownloadProgress() {_uniqueStorage()._downloadProgress = nil}
+  public mutating func clearDownloadProgress() {_uniqueStorage()._downloadProgress = nil}
 
-  var appMetricsData: Data {
+  public var appMetricsData: Data {
     get {_storage._appMetricsData ?? Data()}
     set {_uniqueStorage()._appMetricsData = newValue}
   }
   /// Returns true if `appMetricsData` has been explicitly set.
-  var hasAppMetricsData: Bool {_storage._appMetricsData != nil}
+  public var hasAppMetricsData: Bool {_storage._appMetricsData != nil}
   /// Clears the value of `appMetricsData`. Subsequent reads from it will return its default value.
-  mutating func clearAppMetricsData() {_uniqueStorage()._appMetricsData = nil}
+  public mutating func clearAppMetricsData() {_uniqueStorage()._appMetricsData = nil}
 
-  var seriesName: String {
+  public var seriesName: String {
     get {_storage._seriesName ?? String()}
     set {_uniqueStorage()._seriesName = newValue}
   }
   /// Returns true if `seriesName` has been explicitly set.
-  var hasSeriesName: Bool {_storage._seriesName != nil}
+  public var hasSeriesName: Bool {_storage._seriesName != nil}
   /// Clears the value of `seriesName`. Subsequent reads from it will return its default value.
-  mutating func clearSeriesName() {_uniqueStorage()._seriesName = nil}
+  public mutating func clearSeriesName() {_uniqueStorage()._seriesName = nil}
 
-  var mediaType: ContentItemMetadata.MediaType {
+  public var mediaType: ContentItemMetadata.MediaType {
     get {_storage._mediaType ?? .unknownMediaType}
     set {_uniqueStorage()._mediaType = newValue}
   }
   /// Returns true if `mediaType` has been explicitly set.
-  var hasMediaType: Bool {_storage._mediaType != nil}
+  public var hasMediaType: Bool {_storage._mediaType != nil}
   /// Clears the value of `mediaType`. Subsequent reads from it will return its default value.
-  mutating func clearMediaType() {_uniqueStorage()._mediaType = nil}
+  public mutating func clearMediaType() {_uniqueStorage()._mediaType = nil}
 
-  var mediaSubType: ContentItemMetadata.MediaSubType {
+  public var mediaSubType: ContentItemMetadata.MediaSubType {
     get {_storage._mediaSubType ?? .unknownMediaSubType}
     set {_uniqueStorage()._mediaSubType = newValue}
   }
   /// Returns true if `mediaSubType` has been explicitly set.
-  var hasMediaSubType: Bool {_storage._mediaSubType != nil}
+  public var hasMediaSubType: Bool {_storage._mediaSubType != nil}
   /// Clears the value of `mediaSubType`. Subsequent reads from it will return its default value.
-  mutating func clearMediaSubType() {_uniqueStorage()._mediaSubType = nil}
+  public mutating func clearMediaSubType() {_uniqueStorage()._mediaSubType = nil}
 
-  var nowPlayingInfoData: Data {
+  public var nowPlayingInfoData: Data {
     get {_storage._nowPlayingInfoData ?? Data()}
     set {_uniqueStorage()._nowPlayingInfoData = newValue}
   }
   /// Returns true if `nowPlayingInfoData` has been explicitly set.
-  var hasNowPlayingInfoData: Bool {_storage._nowPlayingInfoData != nil}
+  public var hasNowPlayingInfoData: Bool {_storage._nowPlayingInfoData != nil}
   /// Clears the value of `nowPlayingInfoData`. Subsequent reads from it will return its default value.
-  mutating func clearNowPlayingInfoData() {_uniqueStorage()._nowPlayingInfoData = nil}
+  public mutating func clearNowPlayingInfoData() {_uniqueStorage()._nowPlayingInfoData = nil}
 
-  var userInfoData: Data {
+  public var userInfoData: Data {
     get {_storage._userInfoData ?? Data()}
     set {_uniqueStorage()._userInfoData = newValue}
   }
   /// Returns true if `userInfoData` has been explicitly set.
-  var hasUserInfoData: Bool {_storage._userInfoData != nil}
+  public var hasUserInfoData: Bool {_storage._userInfoData != nil}
   /// Clears the value of `userInfoData`. Subsequent reads from it will return its default value.
-  mutating func clearUserInfoData() {_uniqueStorage()._userInfoData = nil}
+  public mutating func clearUserInfoData() {_uniqueStorage()._userInfoData = nil}
 
-  var isSteerable: Bool {
+  public var isSteerable: Bool {
     get {_storage._isSteerable ?? false}
     set {_uniqueStorage()._isSteerable = newValue}
   }
   /// Returns true if `isSteerable` has been explicitly set.
-  var hasIsSteerable: Bool {_storage._isSteerable != nil}
+  public var hasIsSteerable: Bool {_storage._isSteerable != nil}
   /// Clears the value of `isSteerable`. Subsequent reads from it will return its default value.
-  mutating func clearIsSteerable() {_uniqueStorage()._isSteerable = nil}
+  public mutating func clearIsSteerable() {_uniqueStorage()._isSteerable = nil}
 
-  var artworkURL: String {
+  public var artworkURL: String {
     get {_storage._artworkURL ?? String()}
     set {_uniqueStorage()._artworkURL = newValue}
   }
   /// Returns true if `artworkURL` has been explicitly set.
-  var hasArtworkURL: Bool {_storage._artworkURL != nil}
+  public var hasArtworkURL: Bool {_storage._artworkURL != nil}
   /// Clears the value of `artworkURL`. Subsequent reads from it will return its default value.
-  mutating func clearArtworkURL() {_uniqueStorage()._artworkURL = nil}
+  public mutating func clearArtworkURL() {_uniqueStorage()._artworkURL = nil}
 
-  var lyricsURL: String {
+  public var lyricsURL: String {
     get {_storage._lyricsURL ?? String()}
     set {_uniqueStorage()._lyricsURL = newValue}
   }
   /// Returns true if `lyricsURL` has been explicitly set.
-  var hasLyricsURL: Bool {_storage._lyricsURL != nil}
+  public var hasLyricsURL: Bool {_storage._lyricsURL != nil}
   /// Clears the value of `lyricsURL`. Subsequent reads from it will return its default value.
-  mutating func clearLyricsURL() {_uniqueStorage()._lyricsURL = nil}
+  public mutating func clearLyricsURL() {_uniqueStorage()._lyricsURL = nil}
 
-  var deviceSpecificUserInfoData: Data {
+  public var deviceSpecificUserInfoData: Data {
     get {_storage._deviceSpecificUserInfoData ?? Data()}
     set {_uniqueStorage()._deviceSpecificUserInfoData = newValue}
   }
   /// Returns true if `deviceSpecificUserInfoData` has been explicitly set.
-  var hasDeviceSpecificUserInfoData: Bool {_storage._deviceSpecificUserInfoData != nil}
+  public var hasDeviceSpecificUserInfoData: Bool {_storage._deviceSpecificUserInfoData != nil}
   /// Clears the value of `deviceSpecificUserInfoData`. Subsequent reads from it will return its default value.
-  mutating func clearDeviceSpecificUserInfoData() {_uniqueStorage()._deviceSpecificUserInfoData = nil}
+  public mutating func clearDeviceSpecificUserInfoData() {_uniqueStorage()._deviceSpecificUserInfoData = nil}
 
-  var collectionInfoData: Data {
+  public var collectionInfoData: Data {
     get {_storage._collectionInfoData ?? Data()}
     set {_uniqueStorage()._collectionInfoData = newValue}
   }
   /// Returns true if `collectionInfoData` has been explicitly set.
-  var hasCollectionInfoData: Bool {_storage._collectionInfoData != nil}
+  public var hasCollectionInfoData: Bool {_storage._collectionInfoData != nil}
   /// Clears the value of `collectionInfoData`. Subsequent reads from it will return its default value.
-  mutating func clearCollectionInfoData() {_uniqueStorage()._collectionInfoData = nil}
+  public mutating func clearCollectionInfoData() {_uniqueStorage()._collectionInfoData = nil}
 
-  var elapsedTimeTimestamp: Double {
+  public var elapsedTimeTimestamp: Double {
     get {_storage._elapsedTimeTimestamp ?? 0}
     set {_uniqueStorage()._elapsedTimeTimestamp = newValue}
   }
   /// Returns true if `elapsedTimeTimestamp` has been explicitly set.
-  var hasElapsedTimeTimestamp: Bool {_storage._elapsedTimeTimestamp != nil}
+  public var hasElapsedTimeTimestamp: Bool {_storage._elapsedTimeTimestamp != nil}
   /// Clears the value of `elapsedTimeTimestamp`. Subsequent reads from it will return its default value.
-  mutating func clearElapsedTimeTimestamp() {_uniqueStorage()._elapsedTimeTimestamp = nil}
+  public mutating func clearElapsedTimeTimestamp() {_uniqueStorage()._elapsedTimeTimestamp = nil}
 
-  var inferredTimestamp: Double {
+  public var inferredTimestamp: Double {
     get {_storage._inferredTimestamp ?? 0}
     set {_uniqueStorage()._inferredTimestamp = newValue}
   }
   /// Returns true if `inferredTimestamp` has been explicitly set.
-  var hasInferredTimestamp: Bool {_storage._inferredTimestamp != nil}
+  public var hasInferredTimestamp: Bool {_storage._inferredTimestamp != nil}
   /// Clears the value of `inferredTimestamp`. Subsequent reads from it will return its default value.
-  mutating func clearInferredTimestamp() {_uniqueStorage()._inferredTimestamp = nil}
+  public mutating func clearInferredTimestamp() {_uniqueStorage()._inferredTimestamp = nil}
 
-  var serviceIdentifier: String {
+  public var serviceIdentifier: String {
     get {_storage._serviceIdentifier ?? String()}
     set {_uniqueStorage()._serviceIdentifier = newValue}
   }
   /// Returns true if `serviceIdentifier` has been explicitly set.
-  var hasServiceIdentifier: Bool {_storage._serviceIdentifier != nil}
+  public var hasServiceIdentifier: Bool {_storage._serviceIdentifier != nil}
   /// Clears the value of `serviceIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearServiceIdentifier() {_uniqueStorage()._serviceIdentifier = nil}
+  public mutating func clearServiceIdentifier() {_uniqueStorage()._serviceIdentifier = nil}
 
-  var artworkDataWidth: Int32 {
+  public var artworkDataWidth: Int32 {
     get {_storage._artworkDataWidth ?? 0}
     set {_uniqueStorage()._artworkDataWidth = newValue}
   }
   /// Returns true if `artworkDataWidth` has been explicitly set.
-  var hasArtworkDataWidth: Bool {_storage._artworkDataWidth != nil}
+  public var hasArtworkDataWidth: Bool {_storage._artworkDataWidth != nil}
   /// Clears the value of `artworkDataWidth`. Subsequent reads from it will return its default value.
-  mutating func clearArtworkDataWidth() {_uniqueStorage()._artworkDataWidth = nil}
+  public mutating func clearArtworkDataWidth() {_uniqueStorage()._artworkDataWidth = nil}
 
-  var artworkDataHeight: Int32 {
+  public var artworkDataHeight: Int32 {
     get {_storage._artworkDataHeight ?? 0}
     set {_uniqueStorage()._artworkDataHeight = newValue}
   }
   /// Returns true if `artworkDataHeight` has been explicitly set.
-  var hasArtworkDataHeight: Bool {_storage._artworkDataHeight != nil}
+  public var hasArtworkDataHeight: Bool {_storage._artworkDataHeight != nil}
   /// Clears the value of `artworkDataHeight`. Subsequent reads from it will return its default value.
-  mutating func clearArtworkDataHeight() {_uniqueStorage()._artworkDataHeight = nil}
+  public mutating func clearArtworkDataHeight() {_uniqueStorage()._artworkDataHeight = nil}
 
-  var currentPlaybackDateData: Data {
+  public var currentPlaybackDateData: Data {
     get {_storage._currentPlaybackDateData ?? Data()}
     set {_uniqueStorage()._currentPlaybackDateData = newValue}
   }
   /// Returns true if `currentPlaybackDateData` has been explicitly set.
-  var hasCurrentPlaybackDateData: Bool {_storage._currentPlaybackDateData != nil}
+  public var hasCurrentPlaybackDateData: Bool {_storage._currentPlaybackDateData != nil}
   /// Clears the value of `currentPlaybackDateData`. Subsequent reads from it will return its default value.
-  mutating func clearCurrentPlaybackDateData() {_uniqueStorage()._currentPlaybackDateData = nil}
+  public mutating func clearCurrentPlaybackDateData() {_uniqueStorage()._currentPlaybackDateData = nil}
 
-  var artworkIdentifier: String {
+  public var artworkIdentifier: String {
     get {_storage._artworkIdentifier ?? String()}
     set {_uniqueStorage()._artworkIdentifier = newValue}
   }
   /// Returns true if `artworkIdentifier` has been explicitly set.
-  var hasArtworkIdentifier: Bool {_storage._artworkIdentifier != nil}
+  public var hasArtworkIdentifier: Bool {_storage._artworkIdentifier != nil}
   /// Clears the value of `artworkIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearArtworkIdentifier() {_uniqueStorage()._artworkIdentifier = nil}
+  public mutating func clearArtworkIdentifier() {_uniqueStorage()._artworkIdentifier = nil}
 
-  var isLoading: Bool {
+  public var isLoading: Bool {
     get {_storage._isLoading ?? false}
     set {_uniqueStorage()._isLoading = newValue}
   }
   /// Returns true if `isLoading` has been explicitly set.
-  var hasIsLoading: Bool {_storage._isLoading != nil}
+  public var hasIsLoading: Bool {_storage._isLoading != nil}
   /// Clears the value of `isLoading`. Subsequent reads from it will return its default value.
-  mutating func clearIsLoading() {_uniqueStorage()._isLoading = nil}
+  public mutating func clearIsLoading() {_uniqueStorage()._isLoading = nil}
 
-  var artworkUrltemplatesData: Data {
+  public var artworkUrltemplatesData: Data {
     get {_storage._artworkUrltemplatesData ?? Data()}
     set {_uniqueStorage()._artworkUrltemplatesData = newValue}
   }
   /// Returns true if `artworkUrltemplatesData` has been explicitly set.
-  var hasArtworkUrltemplatesData: Bool {_storage._artworkUrltemplatesData != nil}
+  public var hasArtworkUrltemplatesData: Bool {_storage._artworkUrltemplatesData != nil}
   /// Clears the value of `artworkUrltemplatesData`. Subsequent reads from it will return its default value.
-  mutating func clearArtworkUrltemplatesData() {_uniqueStorage()._artworkUrltemplatesData = nil}
+  public mutating func clearArtworkUrltemplatesData() {_uniqueStorage()._artworkUrltemplatesData = nil}
 
-  var legacyUniqueIdentifier: Int64 {
+  public var legacyUniqueIdentifier: Int64 {
     get {_storage._legacyUniqueIdentifier ?? 0}
     set {_uniqueStorage()._legacyUniqueIdentifier = newValue}
   }
   /// Returns true if `legacyUniqueIdentifier` has been explicitly set.
-  var hasLegacyUniqueIdentifier: Bool {_storage._legacyUniqueIdentifier != nil}
+  public var hasLegacyUniqueIdentifier: Bool {_storage._legacyUniqueIdentifier != nil}
   /// Clears the value of `legacyUniqueIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearLegacyUniqueIdentifier() {_uniqueStorage()._legacyUniqueIdentifier = nil}
+  public mutating func clearLegacyUniqueIdentifier() {_uniqueStorage()._legacyUniqueIdentifier = nil}
 
-  var episodeType: Int32 {
+  public var episodeType: Int32 {
     get {_storage._episodeType ?? 0}
     set {_uniqueStorage()._episodeType = newValue}
   }
   /// Returns true if `episodeType` has been explicitly set.
-  var hasEpisodeType: Bool {_storage._episodeType != nil}
+  public var hasEpisodeType: Bool {_storage._episodeType != nil}
   /// Clears the value of `episodeType`. Subsequent reads from it will return its default value.
-  mutating func clearEpisodeType() {_uniqueStorage()._episodeType = nil}
+  public mutating func clearEpisodeType() {_uniqueStorage()._episodeType = nil}
 
-  var artworkFileURL: String {
+  public var artworkFileURL: String {
     get {_storage._artworkFileURL ?? String()}
     set {_uniqueStorage()._artworkFileURL = newValue}
   }
   /// Returns true if `artworkFileURL` has been explicitly set.
-  var hasArtworkFileURL: Bool {_storage._artworkFileURL != nil}
+  public var hasArtworkFileURL: Bool {_storage._artworkFileURL != nil}
   /// Clears the value of `artworkFileURL`. Subsequent reads from it will return its default value.
-  mutating func clearArtworkFileURL() {_uniqueStorage()._artworkFileURL = nil}
+  public mutating func clearArtworkFileURL() {_uniqueStorage()._artworkFileURL = nil}
 
-  var brandIdentifier: String {
+  public var brandIdentifier: String {
     get {_storage._brandIdentifier ?? String()}
     set {_uniqueStorage()._brandIdentifier = newValue}
   }
   /// Returns true if `brandIdentifier` has been explicitly set.
-  var hasBrandIdentifier: Bool {_storage._brandIdentifier != nil}
+  public var hasBrandIdentifier: Bool {_storage._brandIdentifier != nil}
   /// Clears the value of `brandIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearBrandIdentifier() {_uniqueStorage()._brandIdentifier = nil}
+  public mutating func clearBrandIdentifier() {_uniqueStorage()._brandIdentifier = nil}
 
-  var localizedDurationString: String {
+  public var localizedDurationString: String {
     get {_storage._localizedDurationString ?? String()}
     set {_uniqueStorage()._localizedDurationString = newValue}
   }
   /// Returns true if `localizedDurationString` has been explicitly set.
-  var hasLocalizedDurationString: Bool {_storage._localizedDurationString != nil}
+  public var hasLocalizedDurationString: Bool {_storage._localizedDurationString != nil}
   /// Clears the value of `localizedDurationString`. Subsequent reads from it will return its default value.
-  mutating func clearLocalizedDurationString() {_uniqueStorage()._localizedDurationString = nil}
+  public mutating func clearLocalizedDurationString() {_uniqueStorage()._localizedDurationString = nil}
 
-  var albumYear: String {
+  public var albumYear: String {
     get {_storage._albumYear ?? String()}
     set {_uniqueStorage()._albumYear = newValue}
   }
   /// Returns true if `albumYear` has been explicitly set.
-  var hasAlbumYear: Bool {_storage._albumYear != nil}
+  public var hasAlbumYear: Bool {_storage._albumYear != nil}
   /// Clears the value of `albumYear`. Subsequent reads from it will return its default value.
-  mutating func clearAlbumYear() {_uniqueStorage()._albumYear = nil}
+  public mutating func clearAlbumYear() {_uniqueStorage()._albumYear = nil}
 
-  var songTraits: SongTraits.Enum {
+  public var songTraits: SongTraits.Enum {
     get {_storage._songTraits ?? .none}
     set {_uniqueStorage()._songTraits = newValue}
   }
   /// Returns true if `songTraits` has been explicitly set.
-  var hasSongTraits: Bool {_storage._songTraits != nil}
+  public var hasSongTraits: Bool {_storage._songTraits != nil}
   /// Clears the value of `songTraits`. Subsequent reads from it will return its default value.
-  mutating func clearSongTraits() {_uniqueStorage()._songTraits = nil}
+  public mutating func clearSongTraits() {_uniqueStorage()._songTraits = nil}
 
-  var albumTraits: AlbumTraits.Enum {
+  public var albumTraits: AlbumTraits.Enum {
     get {_storage._albumTraits ?? .none}
     set {_uniqueStorage()._albumTraits = newValue}
   }
   /// Returns true if `albumTraits` has been explicitly set.
-  var hasAlbumTraits: Bool {_storage._albumTraits != nil}
+  public var hasAlbumTraits: Bool {_storage._albumTraits != nil}
   /// Clears the value of `albumTraits`. Subsequent reads from it will return its default value.
-  mutating func clearAlbumTraits() {_uniqueStorage()._albumTraits = nil}
+  public mutating func clearAlbumTraits() {_uniqueStorage()._albumTraits = nil}
 
-  var playlistTraits: PlaylistTraits.Enum {
+  public var playlistTraits: PlaylistTraits.Enum {
     get {_storage._playlistTraits ?? .none}
     set {_uniqueStorage()._playlistTraits = newValue}
   }
   /// Returns true if `playlistTraits` has been explicitly set.
-  var hasPlaylistTraits: Bool {_storage._playlistTraits != nil}
+  public var hasPlaylistTraits: Bool {_storage._playlistTraits != nil}
   /// Clears the value of `playlistTraits`. Subsequent reads from it will return its default value.
-  mutating func clearPlaylistTraits() {_uniqueStorage()._playlistTraits = nil}
+  public mutating func clearPlaylistTraits() {_uniqueStorage()._playlistTraits = nil}
 
-  var preferredFormat: AudioFormat {
+  public var preferredFormat: AudioFormat {
     get {_storage._preferredFormat ?? AudioFormat()}
     set {_uniqueStorage()._preferredFormat = newValue}
   }
   /// Returns true if `preferredFormat` has been explicitly set.
-  var hasPreferredFormat: Bool {_storage._preferredFormat != nil}
+  public var hasPreferredFormat: Bool {_storage._preferredFormat != nil}
   /// Clears the value of `preferredFormat`. Subsequent reads from it will return its default value.
-  mutating func clearPreferredFormat() {_uniqueStorage()._preferredFormat = nil}
+  public mutating func clearPreferredFormat() {_uniqueStorage()._preferredFormat = nil}
 
-  var activeFormat: AudioFormat {
+  public var activeFormat: AudioFormat {
     get {_storage._activeFormat ?? AudioFormat()}
     set {_uniqueStorage()._activeFormat = newValue}
   }
   /// Returns true if `activeFormat` has been explicitly set.
-  var hasActiveFormat: Bool {_storage._activeFormat != nil}
+  public var hasActiveFormat: Bool {_storage._activeFormat != nil}
   /// Clears the value of `activeFormat`. Subsequent reads from it will return its default value.
-  mutating func clearActiveFormat() {_uniqueStorage()._activeFormat = nil}
+  public mutating func clearActiveFormat() {_uniqueStorage()._activeFormat = nil}
 
-  var activeFormatJustification: ActiveFormatJustification.Enum {
+  public var activeFormatJustification: ActiveFormatJustification.Enum {
     get {_storage._activeFormatJustification ?? .unknown}
     set {_uniqueStorage()._activeFormatJustification = newValue}
   }
   /// Returns true if `activeFormatJustification` has been explicitly set.
-  var hasActiveFormatJustification: Bool {_storage._activeFormatJustification != nil}
+  public var hasActiveFormatJustification: Bool {_storage._activeFormatJustification != nil}
   /// Clears the value of `activeFormatJustification`. Subsequent reads from it will return its default value.
-  mutating func clearActiveFormatJustification() {_uniqueStorage()._activeFormatJustification = nil}
+  public mutating func clearActiveFormatJustification() {_uniqueStorage()._activeFormatJustification = nil}
 
-  var formatTierPreference: FormatTier.Enum {
+  public var formatTierPreference: FormatTier.Enum {
     get {_storage._formatTierPreference ?? .lowBandwidthStereo}
     set {_uniqueStorage()._formatTierPreference = newValue}
   }
   /// Returns true if `formatTierPreference` has been explicitly set.
-  var hasFormatTierPreference: Bool {_storage._formatTierPreference != nil}
+  public var hasFormatTierPreference: Bool {_storage._formatTierPreference != nil}
   /// Clears the value of `formatTierPreference`. Subsequent reads from it will return its default value.
-  mutating func clearFormatTierPreference() {_uniqueStorage()._formatTierPreference = nil}
+  public mutating func clearFormatTierPreference() {_uniqueStorage()._formatTierPreference = nil}
 
-  var audioRoute: AudioRoute {
+  public var audioRoute: AudioRoute {
     get {_storage._audioRoute ?? AudioRoute()}
     set {_uniqueStorage()._audioRoute = newValue}
   }
   /// Returns true if `audioRoute` has been explicitly set.
-  var hasAudioRoute: Bool {_storage._audioRoute != nil}
+  public var hasAudioRoute: Bool {_storage._audioRoute != nil}
   /// Clears the value of `audioRoute`. Subsequent reads from it will return its default value.
-  mutating func clearAudioRoute() {_uniqueStorage()._audioRoute = nil}
+  public mutating func clearAudioRoute() {_uniqueStorage()._audioRoute = nil}
 
-  var alternativeFormats: [AudioFormat] {
+  public var alternativeFormats: [AudioFormat] {
     get {_storage._alternativeFormats}
     set {_uniqueStorage()._alternativeFormats = newValue}
   }
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum MediaType: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum MediaType: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case unknownMediaType = 0
     case audio = 1
     case video = 2
 
-    init() {
+    public init() {
       self = .unknownMediaType
     }
 
   }
 
-  nonisolated enum MediaSubType: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum MediaSubType: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case unknownMediaSubType = 0
     case music = 1
     case podcast = 4
     case audioBook = 5
     case itunesU = 6
 
-    init() {
+    public init() {
       self = .unknownMediaSubType
     }
 
   }
 
-  init() {}
+  public init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
 }
@@ -1212,33 +1212,33 @@ nonisolated struct ContentItemMetadata: @unchecked Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension AudioRouteType: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "AudioRouteType"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "AudioRouteType"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: AudioRouteType, rhs: AudioRouteType) -> Bool {
+  public static func ==(lhs: AudioRouteType, rhs: AudioRouteType) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension AudioRouteType.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}DevicesSpeaker\0\u{1}LineOut\0\u{1}Headphones\0\u{1}BluetoothHeadphones\0\u{1}BluetoothSpeaker\0\u{1}USBAudio\0\u{1}CarAudio\0\u{1}HDMI\0\u{1}AirPlay\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}DevicesSpeaker\0\u{1}LineOut\0\u{1}Headphones\0\u{1}BluetoothHeadphones\0\u{1}BluetoothSpeaker\0\u{1}USBAudio\0\u{1}CarAudio\0\u{1}HDMI\0\u{1}AirPlay\0")
 }
 
 nonisolated extension AudioRoute: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "AudioRoute"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}type\0\u{1}name\0\u{1}supportsSpatialization\0")
+  public static let protoMessageName: String = "AudioRoute"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}type\0\u{1}name\0\u{1}supportsSpatialization\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -1252,7 +1252,7 @@ nonisolated extension AudioRoute: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -1269,7 +1269,7 @@ nonisolated extension AudioRoute: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: AudioRoute, rhs: AudioRoute) -> Bool {
+  public static func ==(lhs: AudioRoute, rhs: AudioRoute) -> Bool {
     if lhs._type != rhs._type {return false}
     if lhs._name != rhs._name {return false}
     if lhs._supportsSpatialization != rhs._supportsSpatialization {return false}
@@ -1279,148 +1279,148 @@ nonisolated extension AudioRoute: SwiftProtobuf.Message, SwiftProtobuf._MessageI
 }
 
 nonisolated extension AudioTier: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "AudioTier"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "AudioTier"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: AudioTier, rhs: AudioTier) -> Bool {
+  public static func ==(lhs: AudioTier, rhs: AudioTier) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension AudioTier.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}LowBandwidthStereo\0\u{1}HighQualityStereo\0\u{1}Lossless\0\u{1}HighResolutionLossless\0\u{1}Spatial\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}LowBandwidthStereo\0\u{1}HighQualityStereo\0\u{1}Lossless\0\u{1}HighResolutionLossless\0\u{1}Spatial\0")
 }
 
 nonisolated extension SongTraits: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SongTraits"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "SongTraits"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SongTraits, rhs: SongTraits) -> Bool {
+  public static func ==(lhs: SongTraits, rhs: SongTraits) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension SongTraits.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0None\0\u{1}AppleDigitialMaster\0\u{1}Lossless\0\u{2}\u{2}HighResolutionLossless\0\u{2}\u{4}Spatial\0\u{2}\u{8}Atmos\0\u{2}\u{10}Surround\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0None\0\u{1}AppleDigitialMaster\0\u{1}Lossless\0\u{2}\u{2}HighResolutionLossless\0\u{2}\u{4}Spatial\0\u{2}\u{8}Atmos\0\u{2}\u{10}Surround\0")
 }
 
 nonisolated extension AlbumTraits: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "AlbumTraits"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "AlbumTraits"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: AlbumTraits, rhs: AlbumTraits) -> Bool {
+  public static func ==(lhs: AlbumTraits, rhs: AlbumTraits) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension AlbumTraits.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0None\0\u{1}AppleDigitialMaster\0\u{1}Lossless\0\u{2}\u{2}HighResolutionLossless\0\u{2}\u{4}Spatial\0\u{2}\u{8}Atmos\0\u{2}\u{10}Surround\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0None\0\u{1}AppleDigitialMaster\0\u{1}Lossless\0\u{2}\u{2}HighResolutionLossless\0\u{2}\u{4}Spatial\0\u{2}\u{8}Atmos\0\u{2}\u{10}Surround\0")
 }
 
 nonisolated extension PlaylistTraits: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PlaylistTraits"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "PlaylistTraits"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PlaylistTraits, rhs: PlaylistTraits) -> Bool {
+  public static func ==(lhs: PlaylistTraits, rhs: PlaylistTraits) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension PlaylistTraits.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0None\0\u{2}\u{8}Spatial\0\u{2}\u{8}Atmos\0\u{2}\u{10}Surround\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0None\0\u{2}\u{8}Spatial\0\u{2}\u{8}Atmos\0\u{2}\u{10}Surround\0")
 }
 
 nonisolated extension ActiveFormatJustification: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ActiveFormatJustification"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "ActiveFormatJustification"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ActiveFormatJustification, rhs: ActiveFormatJustification) -> Bool {
+  public static func ==(lhs: ActiveFormatJustification, rhs: ActiveFormatJustification) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension ActiveFormatJustification.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}Unavailable\0\u{2}c\u{1}UserPreference\0\u{1}UserDownload\0\u{2}O\u{6}RouteIncompatible\0\u{1}RouteUnknownCompatibility\0\u{2}s\u{7}BandwidthInsufficient\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}Unavailable\0\u{2}c\u{1}UserPreference\0\u{1}UserDownload\0\u{2}O\u{6}RouteIncompatible\0\u{1}RouteUnknownCompatibility\0\u{2}s\u{7}BandwidthInsufficient\0")
 }
 
 nonisolated extension FormatTier: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "FormatTier"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "FormatTier"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: FormatTier, rhs: FormatTier) -> Bool {
+  public static func ==(lhs: FormatTier, rhs: FormatTier) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension FormatTier.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}LowBandwidthStereo\0\u{1}HighQualityStereo\0\u{2}\u{2}Lossless\0\u{2}\u{4}HighResolutionLossless\0\u{2}\u{8}Spatial\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}LowBandwidthStereo\0\u{1}HighQualityStereo\0\u{2}\u{2}Lossless\0\u{2}\u{4}HighResolutionLossless\0\u{2}\u{8}Spatial\0")
 }
 
 nonisolated extension AudioFormat: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "AudioFormat"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}tier\0\u{1}bitrate\0\u{1}sampleRate\0\u{1}bitDepth\0\u{1}codec\0\u{1}spatialized\0\u{1}multiChannel\0\u{1}channelLayout\0\u{1}audioChannelLayoutDescription\0\u{1}groupID\0\u{1}stableVariantID\0")
+  public static let protoMessageName: String = "AudioFormat"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}tier\0\u{1}bitrate\0\u{1}sampleRate\0\u{1}bitDepth\0\u{1}codec\0\u{1}spatialized\0\u{1}multiChannel\0\u{1}channelLayout\0\u{1}audioChannelLayoutDescription\0\u{1}groupID\0\u{1}stableVariantID\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -1442,7 +1442,7 @@ nonisolated extension AudioFormat: SwiftProtobuf.Message, SwiftProtobuf._Message
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -1483,7 +1483,7 @@ nonisolated extension AudioFormat: SwiftProtobuf.Message, SwiftProtobuf._Message
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: AudioFormat, rhs: AudioFormat) -> Bool {
+  public static func ==(lhs: AudioFormat, rhs: AudioFormat) -> Bool {
     if lhs._tier != rhs._tier {return false}
     if lhs._bitrate != rhs._bitrate {return false}
     if lhs._sampleRate != rhs._sampleRate {return false}
@@ -1501,8 +1501,8 @@ nonisolated extension AudioFormat: SwiftProtobuf.Message, SwiftProtobuf._Message
 }
 
 nonisolated extension ContentItemMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ContentItemMetadata"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}title\0\u{1}subtitle\0\u{1}isContainer\0\u{1}isPlayable\0\u{1}playbackProgress\0\u{1}albumName\0\u{1}trackArtistName\0\u{1}albumArtistName\0\u{1}directorName\0\u{1}seasonNumber\0\u{1}episodeNumber\0\u{1}releaseDate\0\u{1}playCount\0\u{1}duration\0\u{1}localizedContentRating\0\u{1}isExplicitItem\0\u{1}playlistType\0\u{1}radioStationType\0\u{1}artworkAvailable\0\u{2}\u{2}infoAvailable\0\u{1}languageOptionsAvailable\0\u{1}numberOfSections\0\u{1}lyricsAvailable\0\u{1}editingStyleFlags\0\u{1}isStreamingContent\0\u{1}isCurrentlyPlaying\0\u{1}collectionIdentifier\0\u{1}profileIdentifier\0\u{1}startTime\0\u{1}artworkMIMEType\0\u{1}assetURLString\0\u{1}composer\0\u{1}discNumber\0\u{1}elapsedTime\0\u{1}genre\0\u{1}isAlwaysLive\0\u{2}\u{2}playbackRate\0\u{1}chapterCount\0\u{1}totalDiscCount\0\u{1}totalTrackCount\0\u{1}trackNumber\0\u{1}contentIdentifier\0\u{2}\u{2}isSharable\0\u{2}\u{2}isLiked\0\u{1}isInWishList\0\u{1}radioStationIdentifier\0\u{2}\u{2}radioStationName\0\u{1}radioStationString\0\u{1}iTunesStoreIdentifier\0\u{1}iTunesStoreSubscriptionIdentifier\0\u{1}iTunesStoreArtistIdentifier\0\u{1}iTunesStoreAlbumIdentifier\0\u{1}purchaseInfoData\0\u{1}defaultPlaybackRate\0\u{1}downloadState\0\u{1}downloadProgress\0\u{1}appMetricsData\0\u{1}seriesName\0\u{1}mediaType\0\u{1}mediaSubType\0\u{2}\u{2}nowPlayingInfoData\0\u{1}userInfoData\0\u{1}isSteerable\0\u{1}artworkURL\0\u{1}lyricsURL\0\u{1}deviceSpecificUserInfoData\0\u{1}collectionInfoData\0\u{1}elapsedTimeTimestamp\0\u{1}inferredTimestamp\0\u{1}serviceIdentifier\0\u{1}artworkDataWidth\0\u{1}artworkDataHeight\0\u{1}currentPlaybackDateData\0\u{1}artworkIdentifier\0\u{1}isLoading\0\u{1}artworkURLTemplatesData\0\u{1}legacyUniqueIdentifier\0\u{1}episodeType\0\u{1}artworkFileURL\0\u{1}brandIdentifier\0\u{1}localizedDurationString\0\u{1}albumYear\0\u{1}songTraits\0\u{1}albumTraits\0\u{1}playlistTraits\0\u{1}preferredFormat\0\u{1}activeFormat\0\u{1}activeFormatJustification\0\u{1}formatTierPreference\0\u{1}audioRoute\0\u{1}alternativeFormats\0")
+  public static let protoMessageName: String = "ContentItemMetadata"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}title\0\u{1}subtitle\0\u{1}isContainer\0\u{1}isPlayable\0\u{1}playbackProgress\0\u{1}albumName\0\u{1}trackArtistName\0\u{1}albumArtistName\0\u{1}directorName\0\u{1}seasonNumber\0\u{1}episodeNumber\0\u{1}releaseDate\0\u{1}playCount\0\u{1}duration\0\u{1}localizedContentRating\0\u{1}isExplicitItem\0\u{1}playlistType\0\u{1}radioStationType\0\u{1}artworkAvailable\0\u{2}\u{2}infoAvailable\0\u{1}languageOptionsAvailable\0\u{1}numberOfSections\0\u{1}lyricsAvailable\0\u{1}editingStyleFlags\0\u{1}isStreamingContent\0\u{1}isCurrentlyPlaying\0\u{1}collectionIdentifier\0\u{1}profileIdentifier\0\u{1}startTime\0\u{1}artworkMIMEType\0\u{1}assetURLString\0\u{1}composer\0\u{1}discNumber\0\u{1}elapsedTime\0\u{1}genre\0\u{1}isAlwaysLive\0\u{2}\u{2}playbackRate\0\u{1}chapterCount\0\u{1}totalDiscCount\0\u{1}totalTrackCount\0\u{1}trackNumber\0\u{1}contentIdentifier\0\u{2}\u{2}isSharable\0\u{2}\u{2}isLiked\0\u{1}isInWishList\0\u{1}radioStationIdentifier\0\u{2}\u{2}radioStationName\0\u{1}radioStationString\0\u{1}iTunesStoreIdentifier\0\u{1}iTunesStoreSubscriptionIdentifier\0\u{1}iTunesStoreArtistIdentifier\0\u{1}iTunesStoreAlbumIdentifier\0\u{1}purchaseInfoData\0\u{1}defaultPlaybackRate\0\u{1}downloadState\0\u{1}downloadProgress\0\u{1}appMetricsData\0\u{1}seriesName\0\u{1}mediaType\0\u{1}mediaSubType\0\u{2}\u{2}nowPlayingInfoData\0\u{1}userInfoData\0\u{1}isSteerable\0\u{1}artworkURL\0\u{1}lyricsURL\0\u{1}deviceSpecificUserInfoData\0\u{1}collectionInfoData\0\u{1}elapsedTimeTimestamp\0\u{1}inferredTimestamp\0\u{1}serviceIdentifier\0\u{1}artworkDataWidth\0\u{1}artworkDataHeight\0\u{1}currentPlaybackDateData\0\u{1}artworkIdentifier\0\u{1}isLoading\0\u{1}artworkURLTemplatesData\0\u{1}legacyUniqueIdentifier\0\u{1}episodeType\0\u{1}artworkFileURL\0\u{1}brandIdentifier\0\u{1}localizedDurationString\0\u{1}albumYear\0\u{1}songTraits\0\u{1}albumTraits\0\u{1}playlistTraits\0\u{1}preferredFormat\0\u{1}activeFormat\0\u{1}activeFormatJustification\0\u{1}formatTierPreference\0\u{1}audioRoute\0\u{1}alternativeFormats\0")
 
   fileprivate class _StorageClass {
     var _title: String? = nil
@@ -1707,7 +1707,7 @@ nonisolated extension ContentItemMetadata: SwiftProtobuf.Message, SwiftProtobuf.
     return _storage
   }
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     _ = _uniqueStorage()
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1812,7 +1812,7 @@ nonisolated extension ContentItemMetadata: SwiftProtobuf.Message, SwiftProtobuf.
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every if/case branch local when no optimizations
@@ -2095,7 +2095,7 @@ nonisolated extension ContentItemMetadata: SwiftProtobuf.Message, SwiftProtobuf.
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ContentItemMetadata, rhs: ContentItemMetadata) -> Bool {
+  public static func ==(lhs: ContentItemMetadata, rhs: ContentItemMetadata) -> Bool {
     if lhs._storage !== rhs._storage {
       let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
         let _storage = _args.0
@@ -2201,9 +2201,9 @@ nonisolated extension ContentItemMetadata: SwiftProtobuf.Message, SwiftProtobuf.
 }
 
 nonisolated extension ContentItemMetadata.MediaType: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0UnknownMediaType\0\u{1}Audio\0\u{1}Video\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0UnknownMediaType\0\u{1}Audio\0\u{1}Video\0")
 }
 
 nonisolated extension ContentItemMetadata.MediaSubType: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0UnknownMediaSubType\0\u{1}Music\0\u{2}\u{3}Podcast\0\u{1}AudioBook\0\u{1}ITunesU\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0UnknownMediaSubType\0\u{1}Music\0\u{2}\u{3}Podcast\0\u{1}AudioBook\0\u{1}ITunesU\0")
 }

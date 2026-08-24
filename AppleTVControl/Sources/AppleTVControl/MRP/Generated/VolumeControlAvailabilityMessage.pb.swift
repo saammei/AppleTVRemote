@@ -20,56 +20,56 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct VolumeCapabilities: Sendable {
+public nonisolated struct VolumeCapabilities: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   /// This is really a bitmap but protobuf has no type for that, so lets just add a "Both"
   /// option since only two values exist anyway
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case none = 0
     case relative = 1
     case absolute = 2
     case both = 3
 
-    init() {
+    public init() {
       self = .none
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct VolumeControlAvailabilityMessage: Sendable {
+public nonisolated struct VolumeControlAvailabilityMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var volumeControlAvailable: Bool {
+  public var volumeControlAvailable: Bool {
     get {_volumeControlAvailable ?? false}
     set {_volumeControlAvailable = newValue}
   }
   /// Returns true if `volumeControlAvailable` has been explicitly set.
-  var hasVolumeControlAvailable: Bool {self._volumeControlAvailable != nil}
+  public var hasVolumeControlAvailable: Bool {self._volumeControlAvailable != nil}
   /// Clears the value of `volumeControlAvailable`. Subsequent reads from it will return its default value.
-  mutating func clearVolumeControlAvailable() {self._volumeControlAvailable = nil}
+  public mutating func clearVolumeControlAvailable() {self._volumeControlAvailable = nil}
 
-  var volumeCapabilities: VolumeCapabilities.Enum {
+  public var volumeCapabilities: VolumeCapabilities.Enum {
     get {_volumeCapabilities ?? .none}
     set {_volumeCapabilities = newValue}
   }
   /// Returns true if `volumeCapabilities` has been explicitly set.
-  var hasVolumeCapabilities: Bool {self._volumeCapabilities != nil}
+  public var hasVolumeCapabilities: Bool {self._volumeCapabilities != nil}
   /// Clears the value of `volumeCapabilities`. Subsequent reads from it will return its default value.
-  mutating func clearVolumeCapabilities() {self._volumeCapabilities = nil}
+  public mutating func clearVolumeCapabilities() {self._volumeCapabilities = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _volumeControlAvailable: Bool? = nil
   fileprivate var _volumeCapabilities: VolumeCapabilities.Enum? = nil
@@ -86,18 +86,18 @@ nonisolated struct VolumeControlAvailabilityMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var volumeControlAvailabilityMessage: VolumeControlAvailabilityMessage {
+  public var volumeControlAvailabilityMessage: VolumeControlAvailabilityMessage {
     get {return getExtensionValue(ext: Extensions_volumeControlAvailabilityMessage) ?? VolumeControlAvailabilityMessage()}
     set {setExtensionValue(ext: Extensions_volumeControlAvailabilityMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_volumeControlAvailabilityMessage`
   /// has been explicitly set.
-  var hasVolumeControlAvailabilityMessage: Bool {
+  public var hasVolumeControlAvailabilityMessage: Bool {
     return hasExtensionValue(ext: Extensions_volumeControlAvailabilityMessage)
   }
   /// Clears the value of extension `Extensions_volumeControlAvailabilityMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearVolumeControlAvailabilityMessage() {
+  public mutating func clearVolumeControlAvailabilityMessage() {
     clearExtensionValue(ext: Extensions_volumeControlAvailabilityMessage)
   }
 
@@ -109,7 +109,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let VolumeControlAvailabilityMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let VolumeControlAvailabilityMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_volumeControlAvailabilityMessage
 ]
 
@@ -117,7 +117,7 @@ nonisolated let VolumeControlAvailabilityMessage_Extensions: SwiftProtobuf.Simpl
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_volumeControlAvailabilityMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<VolumeControlAvailabilityMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_volumeControlAvailabilityMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<VolumeControlAvailabilityMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 22,
   fieldName: "volumeControlAvailabilityMessage"
 )
@@ -125,33 +125,33 @@ nonisolated let Extensions_volumeControlAvailabilityMessage = SwiftProtobuf.Mess
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension VolumeCapabilities: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "VolumeCapabilities"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "VolumeCapabilities"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: VolumeCapabilities, rhs: VolumeCapabilities) -> Bool {
+  public static func ==(lhs: VolumeCapabilities, rhs: VolumeCapabilities) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension VolumeCapabilities.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0None\0\u{1}Relative\0\u{1}Absolute\0\u{1}Both\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0None\0\u{1}Relative\0\u{1}Absolute\0\u{1}Both\0")
 }
 
 nonisolated extension VolumeControlAvailabilityMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "VolumeControlAvailabilityMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}volumeControlAvailable\0\u{1}volumeCapabilities\0")
+  public static let protoMessageName: String = "VolumeControlAvailabilityMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}volumeControlAvailable\0\u{1}volumeCapabilities\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -164,7 +164,7 @@ nonisolated extension VolumeControlAvailabilityMessage: SwiftProtobuf.Message, S
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -178,7 +178,7 @@ nonisolated extension VolumeControlAvailabilityMessage: SwiftProtobuf.Message, S
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: VolumeControlAvailabilityMessage, rhs: VolumeControlAvailabilityMessage) -> Bool {
+  public static func ==(lhs: VolumeControlAvailabilityMessage, rhs: VolumeControlAvailabilityMessage) -> Bool {
     if lhs._volumeControlAvailable != rhs._volumeControlAvailable {return false}
     if lhs._volumeCapabilities != rhs._volumeCapabilities {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

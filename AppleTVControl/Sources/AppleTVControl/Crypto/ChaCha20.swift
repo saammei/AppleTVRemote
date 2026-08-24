@@ -33,6 +33,18 @@ public enum ChaCha20Poly1305 {
         return nonce
     }
 
+    /// MRP 连接层 nonce:前 4 字节为 0 + 8 字节小端计数器(共 12 字节)。
+    /// 对应 pyatv 的 Chacha20Cipher8byteNonce(Struct("<LQ").pack(0, counter))。
+    public static func nonceCounter8(_ counter: UInt64) -> Data {
+        var nonce = Data(repeating: 0, count: 4)
+        var c = counter
+        for _ in 0..<8 {
+            nonce.append(UInt8(c & 0xFF))
+            c >>= 8
+        }
+        return nonce
+    }
+
     /// 加密,返回 ciphertext + 16 字节 tag(与 pyatv 的 encrypt 一致)。
     public static func seal(
         _ message: Data, key: Data, nonce: Data, aad: Data

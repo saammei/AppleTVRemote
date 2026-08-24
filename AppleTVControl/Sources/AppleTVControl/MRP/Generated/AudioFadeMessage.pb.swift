@@ -20,32 +20,32 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct AudioFadeMessage: Sendable {
+public nonisolated struct AudioFadeMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var playerPath: PlayerPath {
+  public var playerPath: PlayerPath {
     get {_playerPath ?? PlayerPath()}
     set {_playerPath = newValue}
   }
   /// Returns true if `playerPath` has been explicitly set.
-  var hasPlayerPath: Bool {self._playerPath != nil}
+  public var hasPlayerPath: Bool {self._playerPath != nil}
   /// Clears the value of `playerPath`. Subsequent reads from it will return its default value.
-  mutating func clearPlayerPath() {self._playerPath = nil}
+  public mutating func clearPlayerPath() {self._playerPath = nil}
 
-  var fadeType: Int32 {
+  public var fadeType: Int32 {
     get {_fadeType ?? 0}
     set {_fadeType = newValue}
   }
   /// Returns true if `fadeType` has been explicitly set.
-  var hasFadeType: Bool {self._fadeType != nil}
+  public var hasFadeType: Bool {self._fadeType != nil}
   /// Clears the value of `fadeType`. Subsequent reads from it will return its default value.
-  mutating func clearFadeType() {self._fadeType = nil}
+  public mutating func clearFadeType() {self._fadeType = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _playerPath: PlayerPath? = nil
   fileprivate var _fadeType: Int32? = nil
@@ -62,18 +62,18 @@ nonisolated struct AudioFadeMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var audioFadeMessage: AudioFadeMessage {
+  public var audioFadeMessage: AudioFadeMessage {
     get {return getExtensionValue(ext: Extensions_audioFadeMessage) ?? AudioFadeMessage()}
     set {setExtensionValue(ext: Extensions_audioFadeMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_audioFadeMessage`
   /// has been explicitly set.
-  var hasAudioFadeMessage: Bool {
+  public var hasAudioFadeMessage: Bool {
     return hasExtensionValue(ext: Extensions_audioFadeMessage)
   }
   /// Clears the value of extension `Extensions_audioFadeMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearAudioFadeMessage() {
+  public mutating func clearAudioFadeMessage() {
     clearExtensionValue(ext: Extensions_audioFadeMessage)
   }
 
@@ -85,7 +85,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let AudioFadeMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let AudioFadeMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_audioFadeMessage
 ]
 
@@ -93,7 +93,7 @@ nonisolated let AudioFadeMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = 
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_audioFadeMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<AudioFadeMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_audioFadeMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<AudioFadeMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 88,
   fieldName: "audioFadeMessage"
 )
@@ -101,15 +101,15 @@ nonisolated let Extensions_audioFadeMessage = SwiftProtobuf.MessageExtension<Swi
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension AudioFadeMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "AudioFadeMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}playerPath\0\u{1}fadeType\0")
+  public static let protoMessageName: String = "AudioFadeMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}playerPath\0\u{1}fadeType\0")
 
   public var isInitialized: Bool {
     if let v = self._playerPath, !v.isInitialized {return false}
     return true
   }
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -122,7 +122,7 @@ nonisolated extension AudioFadeMessage: SwiftProtobuf.Message, SwiftProtobuf._Me
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -136,7 +136,7 @@ nonisolated extension AudioFadeMessage: SwiftProtobuf.Message, SwiftProtobuf._Me
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: AudioFadeMessage, rhs: AudioFadeMessage) -> Bool {
+  public static func ==(lhs: AudioFadeMessage, rhs: AudioFadeMessage) -> Bool {
     if lhs._playerPath != rhs._playerPath {return false}
     if lhs._fadeType != rhs._fadeType {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

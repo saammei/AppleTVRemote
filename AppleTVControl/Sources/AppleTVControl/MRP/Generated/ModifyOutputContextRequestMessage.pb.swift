@@ -20,54 +20,54 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct ModifyOutputContextRequestType: Sendable {
+public nonisolated struct ModifyOutputContextRequestType: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case sharedAudioPresentation = 1
 
-    init() {
+    public init() {
       self = .sharedAudioPresentation
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct ModifyOutputContextRequestMessage: Sendable {
+public nonisolated struct ModifyOutputContextRequestMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var type: ModifyOutputContextRequestType.Enum {
+  public var type: ModifyOutputContextRequestType.Enum {
     get {_type ?? .sharedAudioPresentation}
     set {_type = newValue}
   }
   /// Returns true if `type` has been explicitly set.
-  var hasType: Bool {self._type != nil}
+  public var hasType: Bool {self._type != nil}
   /// Clears the value of `type`. Subsequent reads from it will return its default value.
-  mutating func clearType() {self._type = nil}
+  public mutating func clearType() {self._type = nil}
 
-  var addingDevices: [String] = []
+  public var addingDevices: [String] = []
 
-  var removingDevices: [String] = []
+  public var removingDevices: [String] = []
 
-  var settingDevices: [String] = []
+  public var settingDevices: [String] = []
 
-  var clusterAwareAddingDevices: [String] = []
+  public var clusterAwareAddingDevices: [String] = []
 
-  var clusterAwareRemovingDevices: [String] = []
+  public var clusterAwareRemovingDevices: [String] = []
 
-  var clusterAwareSettingDevices: [String] = []
+  public var clusterAwareSettingDevices: [String] = []
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _type: ModifyOutputContextRequestType.Enum? = nil
 }
@@ -83,18 +83,18 @@ nonisolated struct ModifyOutputContextRequestMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var modifyOutputContextRequestMessage: ModifyOutputContextRequestMessage {
+  public var modifyOutputContextRequestMessage: ModifyOutputContextRequestMessage {
     get {return getExtensionValue(ext: Extensions_modifyOutputContextRequestMessage) ?? ModifyOutputContextRequestMessage()}
     set {setExtensionValue(ext: Extensions_modifyOutputContextRequestMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_modifyOutputContextRequestMessage`
   /// has been explicitly set.
-  var hasModifyOutputContextRequestMessage: Bool {
+  public var hasModifyOutputContextRequestMessage: Bool {
     return hasExtensionValue(ext: Extensions_modifyOutputContextRequestMessage)
   }
   /// Clears the value of extension `Extensions_modifyOutputContextRequestMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearModifyOutputContextRequestMessage() {
+  public mutating func clearModifyOutputContextRequestMessage() {
     clearExtensionValue(ext: Extensions_modifyOutputContextRequestMessage)
   }
 
@@ -106,7 +106,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let ModifyOutputContextRequestMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let ModifyOutputContextRequestMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_modifyOutputContextRequestMessage
 ]
 
@@ -114,7 +114,7 @@ nonisolated let ModifyOutputContextRequestMessage_Extensions: SwiftProtobuf.Simp
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_modifyOutputContextRequestMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<ModifyOutputContextRequestMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_modifyOutputContextRequestMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<ModifyOutputContextRequestMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 52,
   fieldName: "modifyOutputContextRequestMessage"
 )
@@ -122,33 +122,33 @@ nonisolated let Extensions_modifyOutputContextRequestMessage = SwiftProtobuf.Mes
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension ModifyOutputContextRequestType: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ModifyOutputContextRequestType"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "ModifyOutputContextRequestType"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ModifyOutputContextRequestType, rhs: ModifyOutputContextRequestType) -> Bool {
+  public static func ==(lhs: ModifyOutputContextRequestType, rhs: ModifyOutputContextRequestType) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension ModifyOutputContextRequestType.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}SharedAudioPresentation\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}SharedAudioPresentation\0")
 }
 
 nonisolated extension ModifyOutputContextRequestMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ModifyOutputContextRequestMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}type\0\u{1}addingDevices\0\u{1}removingDevices\0\u{1}settingDevices\0\u{1}clusterAwareAddingDevices\0\u{1}clusterAwareRemovingDevices\0\u{1}clusterAwareSettingDevices\0")
+  public static let protoMessageName: String = "ModifyOutputContextRequestMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}type\0\u{1}addingDevices\0\u{1}removingDevices\0\u{1}settingDevices\0\u{1}clusterAwareAddingDevices\0\u{1}clusterAwareRemovingDevices\0\u{1}clusterAwareSettingDevices\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -166,7 +166,7 @@ nonisolated extension ModifyOutputContextRequestMessage: SwiftProtobuf.Message, 
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -195,7 +195,7 @@ nonisolated extension ModifyOutputContextRequestMessage: SwiftProtobuf.Message, 
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ModifyOutputContextRequestMessage, rhs: ModifyOutputContextRequestMessage) -> Bool {
+  public static func ==(lhs: ModifyOutputContextRequestMessage, rhs: ModifyOutputContextRequestMessage) -> Bool {
     if lhs._type != rhs._type {return false}
     if lhs.addingDevices != rhs.addingDevices {return false}
     if lhs.removingDevices != rhs.removingDevices {return false}

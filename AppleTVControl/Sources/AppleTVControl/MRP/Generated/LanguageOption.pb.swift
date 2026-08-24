@@ -20,52 +20,52 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct LanguageOption: Sendable {
+public nonisolated struct LanguageOption: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var type: Int32 {
+  public var type: Int32 {
     get {_type ?? 0}
     set {_type = newValue}
   }
   /// Returns true if `type` has been explicitly set.
-  var hasType: Bool {self._type != nil}
+  public var hasType: Bool {self._type != nil}
   /// Clears the value of `type`. Subsequent reads from it will return its default value.
-  mutating func clearType() {self._type = nil}
+  public mutating func clearType() {self._type = nil}
 
-  var languageTag: String {
+  public var languageTag: String {
     get {_languageTag ?? String()}
     set {_languageTag = newValue}
   }
   /// Returns true if `languageTag` has been explicitly set.
-  var hasLanguageTag: Bool {self._languageTag != nil}
+  public var hasLanguageTag: Bool {self._languageTag != nil}
   /// Clears the value of `languageTag`. Subsequent reads from it will return its default value.
-  mutating func clearLanguageTag() {self._languageTag = nil}
+  public mutating func clearLanguageTag() {self._languageTag = nil}
 
-  var characteristics: [String] = []
+  public var characteristics: [String] = []
 
-  var displayName: String {
+  public var displayName: String {
     get {_displayName ?? String()}
     set {_displayName = newValue}
   }
   /// Returns true if `displayName` has been explicitly set.
-  var hasDisplayName: Bool {self._displayName != nil}
+  public var hasDisplayName: Bool {self._displayName != nil}
   /// Clears the value of `displayName`. Subsequent reads from it will return its default value.
-  mutating func clearDisplayName() {self._displayName = nil}
+  public mutating func clearDisplayName() {self._displayName = nil}
 
-  var identifier: String {
+  public var identifier: String {
     get {_identifier ?? String()}
     set {_identifier = newValue}
   }
   /// Returns true if `identifier` has been explicitly set.
-  var hasIdentifier: Bool {self._identifier != nil}
+  public var hasIdentifier: Bool {self._identifier != nil}
   /// Clears the value of `identifier`. Subsequent reads from it will return its default value.
-  mutating func clearIdentifier() {self._identifier = nil}
+  public mutating func clearIdentifier() {self._identifier = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _type: Int32? = nil
   fileprivate var _languageTag: String? = nil
@@ -76,10 +76,10 @@ nonisolated struct LanguageOption: Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension LanguageOption: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "LanguageOption"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}type\0\u{1}languageTag\0\u{1}characteristics\0\u{1}displayName\0\u{1}identifier\0")
+  public static let protoMessageName: String = "LanguageOption"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}type\0\u{1}languageTag\0\u{1}characteristics\0\u{1}displayName\0\u{1}identifier\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -95,7 +95,7 @@ nonisolated extension LanguageOption: SwiftProtobuf.Message, SwiftProtobuf._Mess
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -118,7 +118,7 @@ nonisolated extension LanguageOption: SwiftProtobuf.Message, SwiftProtobuf._Mess
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: LanguageOption, rhs: LanguageOption) -> Bool {
+  public static func ==(lhs: LanguageOption, rhs: LanguageOption) -> Bool {
     if lhs._type != rhs._type {return false}
     if lhs._languageTag != rhs._languageTag {return false}
     if lhs.characteristics != rhs.characteristics {return false}

@@ -25,23 +25,23 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct AudioFormatSettings: Sendable {
+public nonisolated struct AudioFormatSettings: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var formatSettingsPlistData: Data {
+  public var formatSettingsPlistData: Data {
     get {_formatSettingsPlistData ?? Data()}
     set {_formatSettingsPlistData = newValue}
   }
   /// Returns true if `formatSettingsPlistData` has been explicitly set.
-  var hasFormatSettingsPlistData: Bool {self._formatSettingsPlistData != nil}
+  public var hasFormatSettingsPlistData: Bool {self._formatSettingsPlistData != nil}
   /// Clears the value of `formatSettingsPlistData`. Subsequent reads from it will return its default value.
-  mutating func clearFormatSettingsPlistData() {self._formatSettingsPlistData = nil}
+  public mutating func clearFormatSettingsPlistData() {self._formatSettingsPlistData = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _formatSettingsPlistData: Data? = nil
 }
@@ -49,10 +49,10 @@ nonisolated struct AudioFormatSettings: Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension AudioFormatSettings: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "AudioFormatSettings"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}formatSettingsPlistData\0")
+  public static let protoMessageName: String = "AudioFormatSettings"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}formatSettingsPlistData\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -64,7 +64,7 @@ nonisolated extension AudioFormatSettings: SwiftProtobuf.Message, SwiftProtobuf.
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -75,7 +75,7 @@ nonisolated extension AudioFormatSettings: SwiftProtobuf.Message, SwiftProtobuf.
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: AudioFormatSettings, rhs: AudioFormatSettings) -> Bool {
+  public static func ==(lhs: AudioFormatSettings, rhs: AudioFormatSettings) -> Bool {
     if lhs._formatSettingsPlistData != rhs._formatSettingsPlistData {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

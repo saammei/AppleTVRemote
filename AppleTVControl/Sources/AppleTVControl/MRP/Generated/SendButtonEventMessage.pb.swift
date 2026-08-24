@@ -20,41 +20,41 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct SendButtonEventMessage: Sendable {
+public nonisolated struct SendButtonEventMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var usagePage: UInt32 {
+  public var usagePage: UInt32 {
     get {_usagePage ?? 0}
     set {_usagePage = newValue}
   }
   /// Returns true if `usagePage` has been explicitly set.
-  var hasUsagePage: Bool {self._usagePage != nil}
+  public var hasUsagePage: Bool {self._usagePage != nil}
   /// Clears the value of `usagePage`. Subsequent reads from it will return its default value.
-  mutating func clearUsagePage() {self._usagePage = nil}
+  public mutating func clearUsagePage() {self._usagePage = nil}
 
-  var usage: UInt32 {
+  public var usage: UInt32 {
     get {_usage ?? 0}
     set {_usage = newValue}
   }
   /// Returns true if `usage` has been explicitly set.
-  var hasUsage: Bool {self._usage != nil}
+  public var hasUsage: Bool {self._usage != nil}
   /// Clears the value of `usage`. Subsequent reads from it will return its default value.
-  mutating func clearUsage() {self._usage = nil}
+  public mutating func clearUsage() {self._usage = nil}
 
-  var buttonDown: Bool {
+  public var buttonDown: Bool {
     get {_buttonDown ?? false}
     set {_buttonDown = newValue}
   }
   /// Returns true if `buttonDown` has been explicitly set.
-  var hasButtonDown: Bool {self._buttonDown != nil}
+  public var hasButtonDown: Bool {self._buttonDown != nil}
   /// Clears the value of `buttonDown`. Subsequent reads from it will return its default value.
-  mutating func clearButtonDown() {self._buttonDown = nil}
+  public mutating func clearButtonDown() {self._buttonDown = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _usagePage: UInt32? = nil
   fileprivate var _usage: UInt32? = nil
@@ -72,18 +72,18 @@ nonisolated struct SendButtonEventMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var sendButtonEventMessage: SendButtonEventMessage {
+  public var sendButtonEventMessage: SendButtonEventMessage {
     get {return getExtensionValue(ext: Extensions_sendButtonEventMessage) ?? SendButtonEventMessage()}
     set {setExtensionValue(ext: Extensions_sendButtonEventMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_sendButtonEventMessage`
   /// has been explicitly set.
-  var hasSendButtonEventMessage: Bool {
+  public var hasSendButtonEventMessage: Bool {
     return hasExtensionValue(ext: Extensions_sendButtonEventMessage)
   }
   /// Clears the value of extension `Extensions_sendButtonEventMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearSendButtonEventMessage() {
+  public mutating func clearSendButtonEventMessage() {
     clearExtensionValue(ext: Extensions_sendButtonEventMessage)
   }
 
@@ -95,7 +95,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let SendButtonEventMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let SendButtonEventMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_sendButtonEventMessage
 ]
 
@@ -103,7 +103,7 @@ nonisolated let SendButtonEventMessage_Extensions: SwiftProtobuf.SimpleExtension
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_sendButtonEventMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SendButtonEventMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_sendButtonEventMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SendButtonEventMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 43,
   fieldName: "sendButtonEventMessage"
 )
@@ -111,10 +111,10 @@ nonisolated let Extensions_sendButtonEventMessage = SwiftProtobuf.MessageExtensi
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension SendButtonEventMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SendButtonEventMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}usagePage\0\u{1}usage\0\u{1}buttonDown\0")
+  public static let protoMessageName: String = "SendButtonEventMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}usagePage\0\u{1}usage\0\u{1}buttonDown\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -128,7 +128,7 @@ nonisolated extension SendButtonEventMessage: SwiftProtobuf.Message, SwiftProtob
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -145,7 +145,7 @@ nonisolated extension SendButtonEventMessage: SwiftProtobuf.Message, SwiftProtob
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SendButtonEventMessage, rhs: SendButtonEventMessage) -> Bool {
+  public static func ==(lhs: SendButtonEventMessage, rhs: SendButtonEventMessage) -> Bool {
     if lhs._usagePage != rhs._usagePage {return false}
     if lhs._usage != rhs._usage {return false}
     if lhs._buttonDown != rhs._buttonDown {return false}

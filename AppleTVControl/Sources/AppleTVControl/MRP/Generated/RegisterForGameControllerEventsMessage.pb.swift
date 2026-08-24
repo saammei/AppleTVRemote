@@ -20,35 +20,35 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct RegisterForGameControllerEventsMessage: Sendable {
+public nonisolated struct RegisterForGameControllerEventsMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var inputModeFlags: RegisterForGameControllerEventsMessage.InputModeFlags {
+  public var inputModeFlags: RegisterForGameControllerEventsMessage.InputModeFlags {
     get {_inputModeFlags ?? .none}
     set {_inputModeFlags = newValue}
   }
   /// Returns true if `inputModeFlags` has been explicitly set.
-  var hasInputModeFlags: Bool {self._inputModeFlags != nil}
+  public var hasInputModeFlags: Bool {self._inputModeFlags != nil}
   /// Clears the value of `inputModeFlags`. Subsequent reads from it will return its default value.
-  mutating func clearInputModeFlags() {self._inputModeFlags = nil}
+  public mutating func clearInputModeFlags() {self._inputModeFlags = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum InputModeFlags: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum InputModeFlags: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case none = 0
     case motion = 1
     case buttons = 2
     case digitizer = 3
 
-    init() {
+    public init() {
       self = .none
     }
 
   }
 
-  init() {}
+  public init() {}
 
   fileprivate var _inputModeFlags: RegisterForGameControllerEventsMessage.InputModeFlags? = nil
 }
@@ -64,18 +64,18 @@ nonisolated struct RegisterForGameControllerEventsMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var registerForGameControllerEventsMessage: RegisterForGameControllerEventsMessage {
+  public var registerForGameControllerEventsMessage: RegisterForGameControllerEventsMessage {
     get {return getExtensionValue(ext: Extensions_registerForGameControllerEventsMessage) ?? RegisterForGameControllerEventsMessage()}
     set {setExtensionValue(ext: Extensions_registerForGameControllerEventsMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_registerForGameControllerEventsMessage`
   /// has been explicitly set.
-  var hasRegisterForGameControllerEventsMessage: Bool {
+  public var hasRegisterForGameControllerEventsMessage: Bool {
     return hasExtensionValue(ext: Extensions_registerForGameControllerEventsMessage)
   }
   /// Clears the value of extension `Extensions_registerForGameControllerEventsMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearRegisterForGameControllerEventsMessage() {
+  public mutating func clearRegisterForGameControllerEventsMessage() {
     clearExtensionValue(ext: Extensions_registerForGameControllerEventsMessage)
   }
 
@@ -87,7 +87,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let RegisterForGameControllerEventsMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let RegisterForGameControllerEventsMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_registerForGameControllerEventsMessage
 ]
 
@@ -95,7 +95,7 @@ nonisolated let RegisterForGameControllerEventsMessage_Extensions: SwiftProtobuf
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_registerForGameControllerEventsMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<RegisterForGameControllerEventsMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_registerForGameControllerEventsMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<RegisterForGameControllerEventsMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 27,
   fieldName: "registerForGameControllerEventsMessage"
 )
@@ -103,10 +103,10 @@ nonisolated let Extensions_registerForGameControllerEventsMessage = SwiftProtobu
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension RegisterForGameControllerEventsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "RegisterForGameControllerEventsMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}inputModeFlags\0")
+  public static let protoMessageName: String = "RegisterForGameControllerEventsMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}inputModeFlags\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -118,7 +118,7 @@ nonisolated extension RegisterForGameControllerEventsMessage: SwiftProtobuf.Mess
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -129,7 +129,7 @@ nonisolated extension RegisterForGameControllerEventsMessage: SwiftProtobuf.Mess
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: RegisterForGameControllerEventsMessage, rhs: RegisterForGameControllerEventsMessage) -> Bool {
+  public static func ==(lhs: RegisterForGameControllerEventsMessage, rhs: RegisterForGameControllerEventsMessage) -> Bool {
     if lhs._inputModeFlags != rhs._inputModeFlags {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -137,5 +137,5 @@ nonisolated extension RegisterForGameControllerEventsMessage: SwiftProtobuf.Mess
 }
 
 nonisolated extension RegisterForGameControllerEventsMessage.InputModeFlags: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0None\0\u{1}Motion\0\u{1}Buttons\0\u{1}Digitizer\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0None\0\u{1}Motion\0\u{1}Buttons\0\u{1}Digitizer\0")
 }

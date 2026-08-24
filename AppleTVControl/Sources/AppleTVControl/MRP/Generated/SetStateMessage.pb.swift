@@ -20,104 +20,104 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct SetStateMessage: @unchecked Sendable {
+public nonisolated struct SetStateMessage: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var nowPlayingInfo: NowPlayingInfo {
+  public var nowPlayingInfo: NowPlayingInfo {
     get {_storage._nowPlayingInfo ?? NowPlayingInfo()}
     set {_uniqueStorage()._nowPlayingInfo = newValue}
   }
   /// Returns true if `nowPlayingInfo` has been explicitly set.
-  var hasNowPlayingInfo: Bool {_storage._nowPlayingInfo != nil}
+  public var hasNowPlayingInfo: Bool {_storage._nowPlayingInfo != nil}
   /// Clears the value of `nowPlayingInfo`. Subsequent reads from it will return its default value.
-  mutating func clearNowPlayingInfo() {_uniqueStorage()._nowPlayingInfo = nil}
+  public mutating func clearNowPlayingInfo() {_uniqueStorage()._nowPlayingInfo = nil}
 
-  var supportedCommands: SupportedCommands {
+  public var supportedCommands: SupportedCommands {
     get {_storage._supportedCommands ?? SupportedCommands()}
     set {_uniqueStorage()._supportedCommands = newValue}
   }
   /// Returns true if `supportedCommands` has been explicitly set.
-  var hasSupportedCommands: Bool {_storage._supportedCommands != nil}
+  public var hasSupportedCommands: Bool {_storage._supportedCommands != nil}
   /// Clears the value of `supportedCommands`. Subsequent reads from it will return its default value.
-  mutating func clearSupportedCommands() {_uniqueStorage()._supportedCommands = nil}
+  public mutating func clearSupportedCommands() {_uniqueStorage()._supportedCommands = nil}
 
-  var playbackQueue: PlaybackQueue {
+  public var playbackQueue: PlaybackQueue {
     get {_storage._playbackQueue ?? PlaybackQueue()}
     set {_uniqueStorage()._playbackQueue = newValue}
   }
   /// Returns true if `playbackQueue` has been explicitly set.
-  var hasPlaybackQueue: Bool {_storage._playbackQueue != nil}
+  public var hasPlaybackQueue: Bool {_storage._playbackQueue != nil}
   /// Clears the value of `playbackQueue`. Subsequent reads from it will return its default value.
-  mutating func clearPlaybackQueue() {_uniqueStorage()._playbackQueue = nil}
+  public mutating func clearPlaybackQueue() {_uniqueStorage()._playbackQueue = nil}
 
-  var displayID: String {
+  public var displayID: String {
     get {_storage._displayID ?? String()}
     set {_uniqueStorage()._displayID = newValue}
   }
   /// Returns true if `displayID` has been explicitly set.
-  var hasDisplayID: Bool {_storage._displayID != nil}
+  public var hasDisplayID: Bool {_storage._displayID != nil}
   /// Clears the value of `displayID`. Subsequent reads from it will return its default value.
-  mutating func clearDisplayID() {_uniqueStorage()._displayID = nil}
+  public mutating func clearDisplayID() {_uniqueStorage()._displayID = nil}
 
-  var displayName: String {
+  public var displayName: String {
     get {_storage._displayName ?? String()}
     set {_uniqueStorage()._displayName = newValue}
   }
   /// Returns true if `displayName` has been explicitly set.
-  var hasDisplayName: Bool {_storage._displayName != nil}
+  public var hasDisplayName: Bool {_storage._displayName != nil}
   /// Clears the value of `displayName`. Subsequent reads from it will return its default value.
-  mutating func clearDisplayName() {_uniqueStorage()._displayName = nil}
+  public mutating func clearDisplayName() {_uniqueStorage()._displayName = nil}
 
-  var playbackState: PlaybackState.Enum {
+  public var playbackState: PlaybackState.Enum {
     get {_storage._playbackState ?? .unknown}
     set {_uniqueStorage()._playbackState = newValue}
   }
   /// Returns true if `playbackState` has been explicitly set.
-  var hasPlaybackState: Bool {_storage._playbackState != nil}
+  public var hasPlaybackState: Bool {_storage._playbackState != nil}
   /// Clears the value of `playbackState`. Subsequent reads from it will return its default value.
-  mutating func clearPlaybackState() {_uniqueStorage()._playbackState = nil}
+  public mutating func clearPlaybackState() {_uniqueStorage()._playbackState = nil}
 
-  var playbackQueueCapabilities: PlaybackQueueCapabilities {
+  public var playbackQueueCapabilities: PlaybackQueueCapabilities {
     get {_storage._playbackQueueCapabilities ?? PlaybackQueueCapabilities()}
     set {_uniqueStorage()._playbackQueueCapabilities = newValue}
   }
   /// Returns true if `playbackQueueCapabilities` has been explicitly set.
-  var hasPlaybackQueueCapabilities: Bool {_storage._playbackQueueCapabilities != nil}
+  public var hasPlaybackQueueCapabilities: Bool {_storage._playbackQueueCapabilities != nil}
   /// Clears the value of `playbackQueueCapabilities`. Subsequent reads from it will return its default value.
-  mutating func clearPlaybackQueueCapabilities() {_uniqueStorage()._playbackQueueCapabilities = nil}
+  public mutating func clearPlaybackQueueCapabilities() {_uniqueStorage()._playbackQueueCapabilities = nil}
 
-  var playerPath: PlayerPath {
+  public var playerPath: PlayerPath {
     get {_storage._playerPath ?? PlayerPath()}
     set {_uniqueStorage()._playerPath = newValue}
   }
   /// Returns true if `playerPath` has been explicitly set.
-  var hasPlayerPath: Bool {_storage._playerPath != nil}
+  public var hasPlayerPath: Bool {_storage._playerPath != nil}
   /// Clears the value of `playerPath`. Subsequent reads from it will return its default value.
-  mutating func clearPlayerPath() {_uniqueStorage()._playerPath = nil}
+  public mutating func clearPlayerPath() {_uniqueStorage()._playerPath = nil}
 
-  var request: PlaybackQueueRequestMessage {
+  public var request: PlaybackQueueRequestMessage {
     get {_storage._request ?? PlaybackQueueRequestMessage()}
     set {_uniqueStorage()._request = newValue}
   }
   /// Returns true if `request` has been explicitly set.
-  var hasRequest: Bool {_storage._request != nil}
+  public var hasRequest: Bool {_storage._request != nil}
   /// Clears the value of `request`. Subsequent reads from it will return its default value.
-  mutating func clearRequest() {_uniqueStorage()._request = nil}
+  public mutating func clearRequest() {_uniqueStorage()._request = nil}
 
-  var playbackStateTimestamp: Double {
+  public var playbackStateTimestamp: Double {
     get {_storage._playbackStateTimestamp ?? 0}
     set {_uniqueStorage()._playbackStateTimestamp = newValue}
   }
   /// Returns true if `playbackStateTimestamp` has been explicitly set.
-  var hasPlaybackStateTimestamp: Bool {_storage._playbackStateTimestamp != nil}
+  public var hasPlaybackStateTimestamp: Bool {_storage._playbackStateTimestamp != nil}
   /// Clears the value of `playbackStateTimestamp`. Subsequent reads from it will return its default value.
-  mutating func clearPlaybackStateTimestamp() {_uniqueStorage()._playbackStateTimestamp = nil}
+  public mutating func clearPlaybackStateTimestamp() {_uniqueStorage()._playbackStateTimestamp = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
 }
@@ -133,18 +133,18 @@ nonisolated struct SetStateMessage: @unchecked Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var setStateMessage: SetStateMessage {
+  public var setStateMessage: SetStateMessage {
     get {return getExtensionValue(ext: Extensions_setStateMessage) ?? SetStateMessage()}
     set {setExtensionValue(ext: Extensions_setStateMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_setStateMessage`
   /// has been explicitly set.
-  var hasSetStateMessage: Bool {
+  public var hasSetStateMessage: Bool {
     return hasExtensionValue(ext: Extensions_setStateMessage)
   }
   /// Clears the value of extension `Extensions_setStateMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearSetStateMessage() {
+  public mutating func clearSetStateMessage() {
     clearExtensionValue(ext: Extensions_setStateMessage)
   }
 
@@ -156,7 +156,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let SetStateMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let SetStateMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_setStateMessage
 ]
 
@@ -164,7 +164,7 @@ nonisolated let SetStateMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_setStateMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SetStateMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_setStateMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SetStateMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 9,
   fieldName: "setStateMessage"
 )
@@ -172,8 +172,8 @@ nonisolated let Extensions_setStateMessage = SwiftProtobuf.MessageExtension<Swif
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension SetStateMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SetStateMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}nowPlayingInfo\0\u{1}supportedCommands\0\u{1}playbackQueue\0\u{1}displayID\0\u{1}displayName\0\u{1}playbackState\0\u{2}\u{2}playbackQueueCapabilities\0\u{1}playerPath\0\u{1}request\0\u{1}playbackStateTimestamp\0")
+  public static let protoMessageName: String = "SetStateMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}nowPlayingInfo\0\u{1}supportedCommands\0\u{1}playbackQueue\0\u{1}displayID\0\u{1}displayName\0\u{1}playbackState\0\u{2}\u{2}playbackQueueCapabilities\0\u{1}playerPath\0\u{1}request\0\u{1}playbackStateTimestamp\0")
 
   fileprivate class _StorageClass {
     var _nowPlayingInfo: NowPlayingInfo? = nil
@@ -225,7 +225,7 @@ nonisolated extension SetStateMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     }
   }
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     _ = _uniqueStorage()
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       while let fieldNumber = try decoder.nextFieldNumber() {
@@ -249,7 +249,7 @@ nonisolated extension SetStateMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every if/case branch local when no optimizations
@@ -289,7 +289,7 @@ nonisolated extension SetStateMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SetStateMessage, rhs: SetStateMessage) -> Bool {
+  public static func ==(lhs: SetStateMessage, rhs: SetStateMessage) -> Bool {
     if lhs._storage !== rhs._storage {
       let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
         let _storage = _args.0

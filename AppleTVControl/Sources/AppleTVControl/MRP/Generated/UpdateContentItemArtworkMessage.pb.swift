@@ -20,25 +20,25 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct UpdateContentItemArtworkMessage: Sendable {
+public nonisolated struct UpdateContentItemArtworkMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var contentItems: [ContentItem] = []
+  public var contentItems: [ContentItem] = []
 
-  var playerPath: PlayerPath {
+  public var playerPath: PlayerPath {
     get {_playerPath ?? PlayerPath()}
     set {_playerPath = newValue}
   }
   /// Returns true if `playerPath` has been explicitly set.
-  var hasPlayerPath: Bool {self._playerPath != nil}
+  public var hasPlayerPath: Bool {self._playerPath != nil}
   /// Clears the value of `playerPath`. Subsequent reads from it will return its default value.
-  mutating func clearPlayerPath() {self._playerPath = nil}
+  public mutating func clearPlayerPath() {self._playerPath = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _playerPath: PlayerPath? = nil
 }
@@ -54,18 +54,18 @@ nonisolated struct UpdateContentItemArtworkMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var updateContentItemArtworkMessage: UpdateContentItemArtworkMessage {
+  public var updateContentItemArtworkMessage: UpdateContentItemArtworkMessage {
     get {return getExtensionValue(ext: Extensions_updateContentItemArtworkMessage) ?? UpdateContentItemArtworkMessage()}
     set {setExtensionValue(ext: Extensions_updateContentItemArtworkMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_updateContentItemArtworkMessage`
   /// has been explicitly set.
-  var hasUpdateContentItemArtworkMessage: Bool {
+  public var hasUpdateContentItemArtworkMessage: Bool {
     return hasExtensionValue(ext: Extensions_updateContentItemArtworkMessage)
   }
   /// Clears the value of extension `Extensions_updateContentItemArtworkMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearUpdateContentItemArtworkMessage() {
+  public mutating func clearUpdateContentItemArtworkMessage() {
     clearExtensionValue(ext: Extensions_updateContentItemArtworkMessage)
   }
 
@@ -77,7 +77,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let UpdateContentItemArtworkMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let UpdateContentItemArtworkMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_updateContentItemArtworkMessage
 ]
 
@@ -85,7 +85,7 @@ nonisolated let UpdateContentItemArtworkMessage_Extensions: SwiftProtobuf.Simple
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_updateContentItemArtworkMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<UpdateContentItemArtworkMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_updateContentItemArtworkMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<UpdateContentItemArtworkMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 61,
   fieldName: "updateContentItemArtworkMessage"
 )
@@ -93,15 +93,15 @@ nonisolated let Extensions_updateContentItemArtworkMessage = SwiftProtobuf.Messa
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension UpdateContentItemArtworkMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "UpdateContentItemArtworkMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}contentItems\0\u{1}playerPath\0")
+  public static let protoMessageName: String = "UpdateContentItemArtworkMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}contentItems\0\u{1}playerPath\0")
 
   public var isInitialized: Bool {
     if let v = self._playerPath, !v.isInitialized {return false}
     return true
   }
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -114,7 +114,7 @@ nonisolated extension UpdateContentItemArtworkMessage: SwiftProtobuf.Message, Sw
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -128,7 +128,7 @@ nonisolated extension UpdateContentItemArtworkMessage: SwiftProtobuf.Message, Sw
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: UpdateContentItemArtworkMessage, rhs: UpdateContentItemArtworkMessage) -> Bool {
+  public static func ==(lhs: UpdateContentItemArtworkMessage, rhs: UpdateContentItemArtworkMessage) -> Bool {
     if lhs.contentItems != rhs.contentItems {return false}
     if lhs._playerPath != rhs._playerPath {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

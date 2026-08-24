@@ -25,631 +25,631 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct AVOutputDeviceSourceInfo: Sendable {
+public nonisolated struct AVOutputDeviceSourceInfo: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var routingContextUid: String {
+  public var routingContextUid: String {
     get {_routingContextUid ?? String()}
     set {_routingContextUid = newValue}
   }
   /// Returns true if `routingContextUid` has been explicitly set.
-  var hasRoutingContextUid: Bool {self._routingContextUid != nil}
+  public var hasRoutingContextUid: Bool {self._routingContextUid != nil}
   /// Clears the value of `routingContextUid`. Subsequent reads from it will return its default value.
-  mutating func clearRoutingContextUid() {self._routingContextUid = nil}
+  public mutating func clearRoutingContextUid() {self._routingContextUid = nil}
 
-  var multipleBuiltInDevices: Bool {
+  public var multipleBuiltInDevices: Bool {
     get {_multipleBuiltInDevices ?? false}
     set {_multipleBuiltInDevices = newValue}
   }
   /// Returns true if `multipleBuiltInDevices` has been explicitly set.
-  var hasMultipleBuiltInDevices: Bool {self._multipleBuiltInDevices != nil}
+  public var hasMultipleBuiltInDevices: Bool {self._multipleBuiltInDevices != nil}
   /// Clears the value of `multipleBuiltInDevices`. Subsequent reads from it will return its default value.
-  mutating func clearMultipleBuiltInDevices() {self._multipleBuiltInDevices = nil}
+  public mutating func clearMultipleBuiltInDevices() {self._multipleBuiltInDevices = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _routingContextUid: String? = nil
   fileprivate var _multipleBuiltInDevices: Bool? = nil
 }
 
-nonisolated struct AVOutputDeviceDescriptor: @unchecked Sendable {
+public nonisolated struct AVOutputDeviceDescriptor: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var name: String {
+  public var name: String {
     get {_storage._name ?? String()}
     set {_uniqueStorage()._name = newValue}
   }
   /// Returns true if `name` has been explicitly set.
-  var hasName: Bool {_storage._name != nil}
+  public var hasName: Bool {_storage._name != nil}
   /// Clears the value of `name`. Subsequent reads from it will return its default value.
-  mutating func clearName() {_uniqueStorage()._name = nil}
+  public mutating func clearName() {_uniqueStorage()._name = nil}
 
-  var uniqueIdentifier: String {
+  public var uniqueIdentifier: String {
     get {_storage._uniqueIdentifier ?? String()}
     set {_uniqueStorage()._uniqueIdentifier = newValue}
   }
   /// Returns true if `uniqueIdentifier` has been explicitly set.
-  var hasUniqueIdentifier: Bool {_storage._uniqueIdentifier != nil}
+  public var hasUniqueIdentifier: Bool {_storage._uniqueIdentifier != nil}
   /// Clears the value of `uniqueIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearUniqueIdentifier() {_uniqueStorage()._uniqueIdentifier = nil}
+  public mutating func clearUniqueIdentifier() {_uniqueStorage()._uniqueIdentifier = nil}
 
-  var groupID: String {
+  public var groupID: String {
     get {_storage._groupID ?? String()}
     set {_uniqueStorage()._groupID = newValue}
   }
   /// Returns true if `groupID` has been explicitly set.
-  var hasGroupID: Bool {_storage._groupID != nil}
+  public var hasGroupID: Bool {_storage._groupID != nil}
   /// Clears the value of `groupID`. Subsequent reads from it will return its default value.
-  mutating func clearGroupID() {_uniqueStorage()._groupID = nil}
+  public mutating func clearGroupID() {_uniqueStorage()._groupID = nil}
 
-  var modelID: String {
+  public var modelID: String {
     get {_storage._modelID ?? String()}
     set {_uniqueStorage()._modelID = newValue}
   }
   /// Returns true if `modelID` has been explicitly set.
-  var hasModelID: Bool {_storage._modelID != nil}
+  public var hasModelID: Bool {_storage._modelID != nil}
   /// Clears the value of `modelID`. Subsequent reads from it will return its default value.
-  mutating func clearModelID() {_uniqueStorage()._modelID = nil}
+  public mutating func clearModelID() {_uniqueStorage()._modelID = nil}
 
-  var macAddress: Data {
+  public var macAddress: Data {
     get {_storage._macAddress ?? Data()}
     set {_uniqueStorage()._macAddress = newValue}
   }
   /// Returns true if `macAddress` has been explicitly set.
-  var hasMacAddress: Bool {_storage._macAddress != nil}
+  public var hasMacAddress: Bool {_storage._macAddress != nil}
   /// Clears the value of `macAddress`. Subsequent reads from it will return its default value.
-  mutating func clearMacAddress() {_uniqueStorage()._macAddress = nil}
+  public mutating func clearMacAddress() {_uniqueStorage()._macAddress = nil}
 
-  var canAccessRemoteAssets: Bool {
+  public var canAccessRemoteAssets: Bool {
     get {_storage._canAccessRemoteAssets ?? false}
     set {_uniqueStorage()._canAccessRemoteAssets = newValue}
   }
   /// Returns true if `canAccessRemoteAssets` has been explicitly set.
-  var hasCanAccessRemoteAssets: Bool {_storage._canAccessRemoteAssets != nil}
+  public var hasCanAccessRemoteAssets: Bool {_storage._canAccessRemoteAssets != nil}
   /// Clears the value of `canAccessRemoteAssets`. Subsequent reads from it will return its default value.
-  mutating func clearCanAccessRemoteAssets() {_uniqueStorage()._canAccessRemoteAssets = nil}
+  public mutating func clearCanAccessRemoteAssets() {_uniqueStorage()._canAccessRemoteAssets = nil}
 
-  var isRemoteControllable: Bool {
+  public var isRemoteControllable: Bool {
     get {_storage._isRemoteControllable ?? false}
     set {_uniqueStorage()._isRemoteControllable = newValue}
   }
   /// Returns true if `isRemoteControllable` has been explicitly set.
-  var hasIsRemoteControllable: Bool {_storage._isRemoteControllable != nil}
+  public var hasIsRemoteControllable: Bool {_storage._isRemoteControllable != nil}
   /// Clears the value of `isRemoteControllable`. Subsequent reads from it will return its default value.
-  mutating func clearIsRemoteControllable() {_uniqueStorage()._isRemoteControllable = nil}
+  public mutating func clearIsRemoteControllable() {_uniqueStorage()._isRemoteControllable = nil}
 
-  var isGroupLeader: Bool {
+  public var isGroupLeader: Bool {
     get {_storage._isGroupLeader ?? false}
     set {_uniqueStorage()._isGroupLeader = newValue}
   }
   /// Returns true if `isGroupLeader` has been explicitly set.
-  var hasIsGroupLeader: Bool {_storage._isGroupLeader != nil}
+  public var hasIsGroupLeader: Bool {_storage._isGroupLeader != nil}
   /// Clears the value of `isGroupLeader`. Subsequent reads from it will return its default value.
-  mutating func clearIsGroupLeader() {_uniqueStorage()._isGroupLeader = nil}
+  public mutating func clearIsGroupLeader() {_uniqueStorage()._isGroupLeader = nil}
 
-  var isGroupable: Bool {
+  public var isGroupable: Bool {
     get {_storage._isGroupable ?? false}
     set {_uniqueStorage()._isGroupable = newValue}
   }
   /// Returns true if `isGroupable` has been explicitly set.
-  var hasIsGroupable: Bool {_storage._isGroupable != nil}
+  public var hasIsGroupable: Bool {_storage._isGroupable != nil}
   /// Clears the value of `isGroupable`. Subsequent reads from it will return its default value.
-  mutating func clearIsGroupable() {_uniqueStorage()._isGroupable = nil}
+  public mutating func clearIsGroupable() {_uniqueStorage()._isGroupable = nil}
 
-  var deviceType: DeviceType.Enum {
+  public var deviceType: DeviceType.Enum {
     get {_storage._deviceType ?? .unknown}
     set {_uniqueStorage()._deviceType = newValue}
   }
   /// Returns true if `deviceType` has been explicitly set.
-  var hasDeviceType: Bool {_storage._deviceType != nil}
+  public var hasDeviceType: Bool {_storage._deviceType != nil}
   /// Clears the value of `deviceType`. Subsequent reads from it will return its default value.
-  mutating func clearDeviceType() {_uniqueStorage()._deviceType = nil}
+  public mutating func clearDeviceType() {_uniqueStorage()._deviceType = nil}
 
-  var deviceSubType: DeviceSubType.Enum {
+  public var deviceSubType: DeviceSubType.Enum {
     get {_storage._deviceSubType ?? .default}
     set {_uniqueStorage()._deviceSubType = newValue}
   }
   /// Returns true if `deviceSubType` has been explicitly set.
-  var hasDeviceSubType: Bool {_storage._deviceSubType != nil}
+  public var hasDeviceSubType: Bool {_storage._deviceSubType != nil}
   /// Clears the value of `deviceSubType`. Subsequent reads from it will return its default value.
-  mutating func clearDeviceSubType() {_uniqueStorage()._deviceSubType = nil}
+  public mutating func clearDeviceSubType() {_uniqueStorage()._deviceSubType = nil}
 
-  var modelSpecificInfoData: Data {
+  public var modelSpecificInfoData: Data {
     get {_storage._modelSpecificInfoData ?? Data()}
     set {_uniqueStorage()._modelSpecificInfoData = newValue}
   }
   /// Returns true if `modelSpecificInfoData` has been explicitly set.
-  var hasModelSpecificInfoData: Bool {_storage._modelSpecificInfoData != nil}
+  public var hasModelSpecificInfoData: Bool {_storage._modelSpecificInfoData != nil}
   /// Clears the value of `modelSpecificInfoData`. Subsequent reads from it will return its default value.
-  mutating func clearModelSpecificInfoData() {_uniqueStorage()._modelSpecificInfoData = nil}
+  public mutating func clearModelSpecificInfoData() {_uniqueStorage()._modelSpecificInfoData = nil}
 
-  var batteryLevel: Float {
+  public var batteryLevel: Float {
     get {_storage._batteryLevel ?? 0}
     set {_uniqueStorage()._batteryLevel = newValue}
   }
   /// Returns true if `batteryLevel` has been explicitly set.
-  var hasBatteryLevel: Bool {_storage._batteryLevel != nil}
+  public var hasBatteryLevel: Bool {_storage._batteryLevel != nil}
   /// Clears the value of `batteryLevel`. Subsequent reads from it will return its default value.
-  mutating func clearBatteryLevel() {_uniqueStorage()._batteryLevel = nil}
+  public mutating func clearBatteryLevel() {_uniqueStorage()._batteryLevel = nil}
 
-  var isLocalDevice: Bool {
+  public var isLocalDevice: Bool {
     get {_storage._isLocalDevice ?? false}
     set {_uniqueStorage()._isLocalDevice = newValue}
   }
   /// Returns true if `isLocalDevice` has been explicitly set.
-  var hasIsLocalDevice: Bool {_storage._isLocalDevice != nil}
+  public var hasIsLocalDevice: Bool {_storage._isLocalDevice != nil}
   /// Clears the value of `isLocalDevice`. Subsequent reads from it will return its default value.
-  mutating func clearIsLocalDevice() {_uniqueStorage()._isLocalDevice = nil}
+  public mutating func clearIsLocalDevice() {_uniqueStorage()._isLocalDevice = nil}
 
-  var supportsExternalScreen: Bool {
+  public var supportsExternalScreen: Bool {
     get {_storage._supportsExternalScreen ?? false}
     set {_uniqueStorage()._supportsExternalScreen = newValue}
   }
   /// Returns true if `supportsExternalScreen` has been explicitly set.
-  var hasSupportsExternalScreen: Bool {_storage._supportsExternalScreen != nil}
+  public var hasSupportsExternalScreen: Bool {_storage._supportsExternalScreen != nil}
   /// Clears the value of `supportsExternalScreen`. Subsequent reads from it will return its default value.
-  mutating func clearSupportsExternalScreen() {_uniqueStorage()._supportsExternalScreen = nil}
+  public mutating func clearSupportsExternalScreen() {_uniqueStorage()._supportsExternalScreen = nil}
 
-  var requiresAuthorization: Bool {
+  public var requiresAuthorization: Bool {
     get {_storage._requiresAuthorization ?? false}
     set {_uniqueStorage()._requiresAuthorization = newValue}
   }
   /// Returns true if `requiresAuthorization` has been explicitly set.
-  var hasRequiresAuthorization: Bool {_storage._requiresAuthorization != nil}
+  public var hasRequiresAuthorization: Bool {_storage._requiresAuthorization != nil}
   /// Clears the value of `requiresAuthorization`. Subsequent reads from it will return its default value.
-  mutating func clearRequiresAuthorization() {_uniqueStorage()._requiresAuthorization = nil}
+  public mutating func clearRequiresAuthorization() {_uniqueStorage()._requiresAuthorization = nil}
 
-  var shouldForceRemoteControlabillity: Bool {
+  public var shouldForceRemoteControlabillity: Bool {
     get {_storage._shouldForceRemoteControlabillity ?? false}
     set {_uniqueStorage()._shouldForceRemoteControlabillity = newValue}
   }
   /// Returns true if `shouldForceRemoteControlabillity` has been explicitly set.
-  var hasShouldForceRemoteControlabillity: Bool {_storage._shouldForceRemoteControlabillity != nil}
+  public var hasShouldForceRemoteControlabillity: Bool {_storage._shouldForceRemoteControlabillity != nil}
   /// Clears the value of `shouldForceRemoteControlabillity`. Subsequent reads from it will return its default value.
-  mutating func clearShouldForceRemoteControlabillity() {_uniqueStorage()._shouldForceRemoteControlabillity = nil}
+  public mutating func clearShouldForceRemoteControlabillity() {_uniqueStorage()._shouldForceRemoteControlabillity = nil}
 
-  var sourceInfo: AVOutputDeviceSourceInfo {
+  public var sourceInfo: AVOutputDeviceSourceInfo {
     get {_storage._sourceInfo ?? AVOutputDeviceSourceInfo()}
     set {_uniqueStorage()._sourceInfo = newValue}
   }
   /// Returns true if `sourceInfo` has been explicitly set.
-  var hasSourceInfo: Bool {_storage._sourceInfo != nil}
+  public var hasSourceInfo: Bool {_storage._sourceInfo != nil}
   /// Clears the value of `sourceInfo`. Subsequent reads from it will return its default value.
-  mutating func clearSourceInfo() {_uniqueStorage()._sourceInfo = nil}
+  public mutating func clearSourceInfo() {_uniqueStorage()._sourceInfo = nil}
 
-  var isDeviceGroupable: Bool {
+  public var isDeviceGroupable: Bool {
     get {_storage._isDeviceGroupable ?? false}
     set {_uniqueStorage()._isDeviceGroupable = newValue}
   }
   /// Returns true if `isDeviceGroupable` has been explicitly set.
-  var hasIsDeviceGroupable: Bool {_storage._isDeviceGroupable != nil}
+  public var hasIsDeviceGroupable: Bool {_storage._isDeviceGroupable != nil}
   /// Clears the value of `isDeviceGroupable`. Subsequent reads from it will return its default value.
-  mutating func clearIsDeviceGroupable() {_uniqueStorage()._isDeviceGroupable = nil}
+  public mutating func clearIsDeviceGroupable() {_uniqueStorage()._isDeviceGroupable = nil}
 
-  var canRelayCommunicationChannel: Bool {
+  public var canRelayCommunicationChannel: Bool {
     get {_storage._canRelayCommunicationChannel ?? false}
     set {_uniqueStorage()._canRelayCommunicationChannel = newValue}
   }
   /// Returns true if `canRelayCommunicationChannel` has been explicitly set.
-  var hasCanRelayCommunicationChannel: Bool {_storage._canRelayCommunicationChannel != nil}
+  public var hasCanRelayCommunicationChannel: Bool {_storage._canRelayCommunicationChannel != nil}
   /// Clears the value of `canRelayCommunicationChannel`. Subsequent reads from it will return its default value.
-  mutating func clearCanRelayCommunicationChannel() {_uniqueStorage()._canRelayCommunicationChannel = nil}
+  public mutating func clearCanRelayCommunicationChannel() {_uniqueStorage()._canRelayCommunicationChannel = nil}
 
-  var logicalDeviceID: String {
+  public var logicalDeviceID: String {
     get {_storage._logicalDeviceID ?? String()}
     set {_uniqueStorage()._logicalDeviceID = newValue}
   }
   /// Returns true if `logicalDeviceID` has been explicitly set.
-  var hasLogicalDeviceID: Bool {_storage._logicalDeviceID != nil}
+  public var hasLogicalDeviceID: Bool {_storage._logicalDeviceID != nil}
   /// Clears the value of `logicalDeviceID`. Subsequent reads from it will return its default value.
-  mutating func clearLogicalDeviceID() {_uniqueStorage()._logicalDeviceID = nil}
+  public mutating func clearLogicalDeviceID() {_uniqueStorage()._logicalDeviceID = nil}
 
-  var isProxyGroupPlayer: Bool {
+  public var isProxyGroupPlayer: Bool {
     get {_storage._isProxyGroupPlayer ?? false}
     set {_uniqueStorage()._isProxyGroupPlayer = newValue}
   }
   /// Returns true if `isProxyGroupPlayer` has been explicitly set.
-  var hasIsProxyGroupPlayer: Bool {_storage._isProxyGroupPlayer != nil}
+  public var hasIsProxyGroupPlayer: Bool {_storage._isProxyGroupPlayer != nil}
   /// Clears the value of `isProxyGroupPlayer`. Subsequent reads from it will return its default value.
-  mutating func clearIsProxyGroupPlayer() {_uniqueStorage()._isProxyGroupPlayer = nil}
+  public mutating func clearIsProxyGroupPlayer() {_uniqueStorage()._isProxyGroupPlayer = nil}
 
-  var firmwareVersion: String {
+  public var firmwareVersion: String {
     get {_storage._firmwareVersion ?? String()}
     set {_uniqueStorage()._firmwareVersion = newValue}
   }
   /// Returns true if `firmwareVersion` has been explicitly set.
-  var hasFirmwareVersion: Bool {_storage._firmwareVersion != nil}
+  public var hasFirmwareVersion: Bool {_storage._firmwareVersion != nil}
   /// Clears the value of `firmwareVersion`. Subsequent reads from it will return its default value.
-  mutating func clearFirmwareVersion() {_uniqueStorage()._firmwareVersion = nil}
+  public mutating func clearFirmwareVersion() {_uniqueStorage()._firmwareVersion = nil}
 
-  var volume: Float {
+  public var volume: Float {
     get {_storage._volume ?? 0}
     set {_uniqueStorage()._volume = newValue}
   }
   /// Returns true if `volume` has been explicitly set.
-  var hasVolume: Bool {_storage._volume != nil}
+  public var hasVolume: Bool {_storage._volume != nil}
   /// Clears the value of `volume`. Subsequent reads from it will return its default value.
-  mutating func clearVolume() {_uniqueStorage()._volume = nil}
+  public mutating func clearVolume() {_uniqueStorage()._volume = nil}
 
-  var isVolumeControlAvailable: Bool {
+  public var isVolumeControlAvailable: Bool {
     get {_storage._isVolumeControlAvailable ?? false}
     set {_uniqueStorage()._isVolumeControlAvailable = newValue}
   }
   /// Returns true if `isVolumeControlAvailable` has been explicitly set.
-  var hasIsVolumeControlAvailable: Bool {_storage._isVolumeControlAvailable != nil}
+  public var hasIsVolumeControlAvailable: Bool {_storage._isVolumeControlAvailable != nil}
   /// Clears the value of `isVolumeControlAvailable`. Subsequent reads from it will return its default value.
-  mutating func clearIsVolumeControlAvailable() {_uniqueStorage()._isVolumeControlAvailable = nil}
+  public mutating func clearIsVolumeControlAvailable() {_uniqueStorage()._isVolumeControlAvailable = nil}
 
-  var canAccessAppleMusic: Bool {
+  public var canAccessAppleMusic: Bool {
     get {_storage._canAccessAppleMusic ?? false}
     set {_uniqueStorage()._canAccessAppleMusic = newValue}
   }
   /// Returns true if `canAccessAppleMusic` has been explicitly set.
-  var hasCanAccessAppleMusic: Bool {_storage._canAccessAppleMusic != nil}
+  public var hasCanAccessAppleMusic: Bool {_storage._canAccessAppleMusic != nil}
   /// Clears the value of `canAccessAppleMusic`. Subsequent reads from it will return its default value.
-  mutating func clearCanAccessAppleMusic() {_uniqueStorage()._canAccessAppleMusic = nil}
+  public mutating func clearCanAccessAppleMusic() {_uniqueStorage()._canAccessAppleMusic = nil}
 
-  var canAccessiCloudMusicLibrary: Bool {
+  public var canAccessiCloudMusicLibrary: Bool {
     get {_storage._canAccessiCloudMusicLibrary ?? false}
     set {_uniqueStorage()._canAccessiCloudMusicLibrary = newValue}
   }
   /// Returns true if `canAccessiCloudMusicLibrary` has been explicitly set.
-  var hasCanAccessiCloudMusicLibrary: Bool {_storage._canAccessiCloudMusicLibrary != nil}
+  public var hasCanAccessiCloudMusicLibrary: Bool {_storage._canAccessiCloudMusicLibrary != nil}
   /// Clears the value of `canAccessiCloudMusicLibrary`. Subsequent reads from it will return its default value.
-  mutating func clearCanAccessiCloudMusicLibrary() {_uniqueStorage()._canAccessiCloudMusicLibrary = nil}
+  public mutating func clearCanAccessiCloudMusicLibrary() {_uniqueStorage()._canAccessiCloudMusicLibrary = nil}
 
-  var groupContainsGroupLeader: Bool {
+  public var groupContainsGroupLeader: Bool {
     get {_storage._groupContainsGroupLeader ?? false}
     set {_uniqueStorage()._groupContainsGroupLeader = newValue}
   }
   /// Returns true if `groupContainsGroupLeader` has been explicitly set.
-  var hasGroupContainsGroupLeader: Bool {_storage._groupContainsGroupLeader != nil}
+  public var hasGroupContainsGroupLeader: Bool {_storage._groupContainsGroupLeader != nil}
   /// Clears the value of `groupContainsGroupLeader`. Subsequent reads from it will return its default value.
-  mutating func clearGroupContainsGroupLeader() {_uniqueStorage()._groupContainsGroupLeader = nil}
+  public mutating func clearGroupContainsGroupLeader() {_uniqueStorage()._groupContainsGroupLeader = nil}
 
-  var supportsBufferedAirPlay: Bool {
+  public var supportsBufferedAirPlay: Bool {
     get {_storage._supportsBufferedAirPlay ?? false}
     set {_uniqueStorage()._supportsBufferedAirPlay = newValue}
   }
   /// Returns true if `supportsBufferedAirPlay` has been explicitly set.
-  var hasSupportsBufferedAirPlay: Bool {_storage._supportsBufferedAirPlay != nil}
+  public var hasSupportsBufferedAirPlay: Bool {_storage._supportsBufferedAirPlay != nil}
   /// Clears the value of `supportsBufferedAirPlay`. Subsequent reads from it will return its default value.
-  mutating func clearSupportsBufferedAirPlay() {_uniqueStorage()._supportsBufferedAirPlay = nil}
+  public mutating func clearSupportsBufferedAirPlay() {_uniqueStorage()._supportsBufferedAirPlay = nil}
 
-  var canPlayEncryptedProgressiveDownloadAssets: Bool {
+  public var canPlayEncryptedProgressiveDownloadAssets: Bool {
     get {_storage._canPlayEncryptedProgressiveDownloadAssets ?? false}
     set {_uniqueStorage()._canPlayEncryptedProgressiveDownloadAssets = newValue}
   }
   /// Returns true if `canPlayEncryptedProgressiveDownloadAssets` has been explicitly set.
-  var hasCanPlayEncryptedProgressiveDownloadAssets: Bool {_storage._canPlayEncryptedProgressiveDownloadAssets != nil}
+  public var hasCanPlayEncryptedProgressiveDownloadAssets: Bool {_storage._canPlayEncryptedProgressiveDownloadAssets != nil}
   /// Clears the value of `canPlayEncryptedProgressiveDownloadAssets`. Subsequent reads from it will return its default value.
-  mutating func clearCanPlayEncryptedProgressiveDownloadAssets() {_uniqueStorage()._canPlayEncryptedProgressiveDownloadAssets = nil}
+  public mutating func clearCanPlayEncryptedProgressiveDownloadAssets() {_uniqueStorage()._canPlayEncryptedProgressiveDownloadAssets = nil}
 
-  var canFetchMediaDataFromSender: Bool {
+  public var canFetchMediaDataFromSender: Bool {
     get {_storage._canFetchMediaDataFromSender ?? false}
     set {_uniqueStorage()._canFetchMediaDataFromSender = newValue}
   }
   /// Returns true if `canFetchMediaDataFromSender` has been explicitly set.
-  var hasCanFetchMediaDataFromSender: Bool {_storage._canFetchMediaDataFromSender != nil}
+  public var hasCanFetchMediaDataFromSender: Bool {_storage._canFetchMediaDataFromSender != nil}
   /// Clears the value of `canFetchMediaDataFromSender`. Subsequent reads from it will return its default value.
-  mutating func clearCanFetchMediaDataFromSender() {_uniqueStorage()._canFetchMediaDataFromSender = nil}
+  public mutating func clearCanFetchMediaDataFromSender() {_uniqueStorage()._canFetchMediaDataFromSender = nil}
 
-  var resentsOptimizedUserInterfaceWhenPlayingFetchedAudioOnlyAssets: Bool {
+  public var resentsOptimizedUserInterfaceWhenPlayingFetchedAudioOnlyAssets: Bool {
     get {_storage._resentsOptimizedUserInterfaceWhenPlayingFetchedAudioOnlyAssets ?? false}
     set {_uniqueStorage()._resentsOptimizedUserInterfaceWhenPlayingFetchedAudioOnlyAssets = newValue}
   }
   /// Returns true if `resentsOptimizedUserInterfaceWhenPlayingFetchedAudioOnlyAssets` has been explicitly set.
-  var hasResentsOptimizedUserInterfaceWhenPlayingFetchedAudioOnlyAssets: Bool {_storage._resentsOptimizedUserInterfaceWhenPlayingFetchedAudioOnlyAssets != nil}
+  public var hasResentsOptimizedUserInterfaceWhenPlayingFetchedAudioOnlyAssets: Bool {_storage._resentsOptimizedUserInterfaceWhenPlayingFetchedAudioOnlyAssets != nil}
   /// Clears the value of `resentsOptimizedUserInterfaceWhenPlayingFetchedAudioOnlyAssets`. Subsequent reads from it will return its default value.
-  mutating func clearResentsOptimizedUserInterfaceWhenPlayingFetchedAudioOnlyAssets() {_uniqueStorage()._resentsOptimizedUserInterfaceWhenPlayingFetchedAudioOnlyAssets = nil}
+  public mutating func clearResentsOptimizedUserInterfaceWhenPlayingFetchedAudioOnlyAssets() {_uniqueStorage()._resentsOptimizedUserInterfaceWhenPlayingFetchedAudioOnlyAssets = nil}
 
-  var isAirPlayReceiverSessionActive: Bool {
+  public var isAirPlayReceiverSessionActive: Bool {
     get {_storage._isAirPlayReceiverSessionActive ?? false}
     set {_uniqueStorage()._isAirPlayReceiverSessionActive = newValue}
   }
   /// Returns true if `isAirPlayReceiverSessionActive` has been explicitly set.
-  var hasIsAirPlayReceiverSessionActive: Bool {_storage._isAirPlayReceiverSessionActive != nil}
+  public var hasIsAirPlayReceiverSessionActive: Bool {_storage._isAirPlayReceiverSessionActive != nil}
   /// Clears the value of `isAirPlayReceiverSessionActive`. Subsequent reads from it will return its default value.
-  mutating func clearIsAirPlayReceiverSessionActive() {_uniqueStorage()._isAirPlayReceiverSessionActive = nil}
+  public mutating func clearIsAirPlayReceiverSessionActive() {_uniqueStorage()._isAirPlayReceiverSessionActive = nil}
 
-  var parentGroupIdentifier: String {
+  public var parentGroupIdentifier: String {
     get {_storage._parentGroupIdentifier ?? String()}
     set {_uniqueStorage()._parentGroupIdentifier = newValue}
   }
   /// Returns true if `parentGroupIdentifier` has been explicitly set.
-  var hasParentGroupIdentifier: Bool {_storage._parentGroupIdentifier != nil}
+  public var hasParentGroupIdentifier: Bool {_storage._parentGroupIdentifier != nil}
   /// Clears the value of `parentGroupIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearParentGroupIdentifier() {_uniqueStorage()._parentGroupIdentifier = nil}
+  public mutating func clearParentGroupIdentifier() {_uniqueStorage()._parentGroupIdentifier = nil}
 
-  var parentGroupContainsDiscoverableLeader: Bool {
+  public var parentGroupContainsDiscoverableLeader: Bool {
     get {_storage._parentGroupContainsDiscoverableLeader ?? false}
     set {_uniqueStorage()._parentGroupContainsDiscoverableLeader = newValue}
   }
   /// Returns true if `parentGroupContainsDiscoverableLeader` has been explicitly set.
-  var hasParentGroupContainsDiscoverableLeader: Bool {_storage._parentGroupContainsDiscoverableLeader != nil}
+  public var hasParentGroupContainsDiscoverableLeader: Bool {_storage._parentGroupContainsDiscoverableLeader != nil}
   /// Clears the value of `parentGroupContainsDiscoverableLeader`. Subsequent reads from it will return its default value.
-  mutating func clearParentGroupContainsDiscoverableLeader() {_uniqueStorage()._parentGroupContainsDiscoverableLeader = nil}
+  public mutating func clearParentGroupContainsDiscoverableLeader() {_uniqueStorage()._parentGroupContainsDiscoverableLeader = nil}
 
-  var isAddedToHomeKit: Bool {
+  public var isAddedToHomeKit: Bool {
     get {_storage._isAddedToHomeKit ?? false}
     set {_uniqueStorage()._isAddedToHomeKit = newValue}
   }
   /// Returns true if `isAddedToHomeKit` has been explicitly set.
-  var hasIsAddedToHomeKit: Bool {_storage._isAddedToHomeKit != nil}
+  public var hasIsAddedToHomeKit: Bool {_storage._isAddedToHomeKit != nil}
   /// Clears the value of `isAddedToHomeKit`. Subsequent reads from it will return its default value.
-  mutating func clearIsAddedToHomeKit() {_uniqueStorage()._isAddedToHomeKit = nil}
+  public mutating func clearIsAddedToHomeKit() {_uniqueStorage()._isAddedToHomeKit = nil}
 
-  var volumeCapabilities: Int32 {
+  public var volumeCapabilities: Int32 {
     get {_storage._volumeCapabilities ?? 0}
     set {_uniqueStorage()._volumeCapabilities = newValue}
   }
   /// Returns true if `volumeCapabilities` has been explicitly set.
-  var hasVolumeCapabilities: Bool {_storage._volumeCapabilities != nil}
+  public var hasVolumeCapabilities: Bool {_storage._volumeCapabilities != nil}
   /// Clears the value of `volumeCapabilities`. Subsequent reads from it will return its default value.
-  mutating func clearVolumeCapabilities() {_uniqueStorage()._volumeCapabilities = nil}
+  public mutating func clearVolumeCapabilities() {_uniqueStorage()._volumeCapabilities = nil}
 
-  var bluetoothID: String {
+  public var bluetoothID: String {
     get {_storage._bluetoothID ?? String()}
     set {_uniqueStorage()._bluetoothID = newValue}
   }
   /// Returns true if `bluetoothID` has been explicitly set.
-  var hasBluetoothID: Bool {_storage._bluetoothID != nil}
+  public var hasBluetoothID: Bool {_storage._bluetoothID != nil}
   /// Clears the value of `bluetoothID`. Subsequent reads from it will return its default value.
-  mutating func clearBluetoothID() {_uniqueStorage()._bluetoothID = nil}
+  public mutating func clearBluetoothID() {_uniqueStorage()._bluetoothID = nil}
 
-  var supportsHap: Bool {
+  public var supportsHap: Bool {
     get {_storage._supportsHap ?? false}
     set {_uniqueStorage()._supportsHap = newValue}
   }
   /// Returns true if `supportsHap` has been explicitly set.
-  var hasSupportsHap: Bool {_storage._supportsHap != nil}
+  public var hasSupportsHap: Bool {_storage._supportsHap != nil}
   /// Clears the value of `supportsHap`. Subsequent reads from it will return its default value.
-  mutating func clearSupportsHap() {_uniqueStorage()._supportsHap = nil}
+  public mutating func clearSupportsHap() {_uniqueStorage()._supportsHap = nil}
 
-  var usingJsonprotocol: Bool {
+  public var usingJsonprotocol: Bool {
     get {_storage._usingJsonprotocol ?? false}
     set {_uniqueStorage()._usingJsonprotocol = newValue}
   }
   /// Returns true if `usingJsonprotocol` has been explicitly set.
-  var hasUsingJsonprotocol: Bool {_storage._usingJsonprotocol != nil}
+  public var hasUsingJsonprotocol: Bool {_storage._usingJsonprotocol != nil}
   /// Clears the value of `usingJsonprotocol`. Subsequent reads from it will return its default value.
-  mutating func clearUsingJsonprotocol() {_uniqueStorage()._usingJsonprotocol = nil}
+  public mutating func clearUsingJsonprotocol() {_uniqueStorage()._usingJsonprotocol = nil}
 
-  var clusterCompositions: [AVOutputDeviceDescriptor] {
+  public var clusterCompositions: [AVOutputDeviceDescriptor] {
     get {_storage._clusterCompositions}
     set {_uniqueStorage()._clusterCompositions = newValue}
   }
 
-  var clusterType: UInt32 {
+  public var clusterType: UInt32 {
     get {_storage._clusterType ?? 0}
     set {_uniqueStorage()._clusterType = newValue}
   }
   /// Returns true if `clusterType` has been explicitly set.
-  var hasClusterType: Bool {_storage._clusterType != nil}
+  public var hasClusterType: Bool {_storage._clusterType != nil}
   /// Clears the value of `clusterType`. Subsequent reads from it will return its default value.
-  mutating func clearClusterType() {_uniqueStorage()._clusterType = nil}
+  public mutating func clearClusterType() {_uniqueStorage()._clusterType = nil}
 
-  var primaryUid: String {
+  public var primaryUid: String {
     get {_storage._primaryUid ?? String()}
     set {_uniqueStorage()._primaryUid = newValue}
   }
   /// Returns true if `primaryUid` has been explicitly set.
-  var hasPrimaryUid: Bool {_storage._primaryUid != nil}
+  public var hasPrimaryUid: Bool {_storage._primaryUid != nil}
   /// Clears the value of `primaryUid`. Subsequent reads from it will return its default value.
-  mutating func clearPrimaryUid() {_uniqueStorage()._primaryUid = nil}
+  public mutating func clearPrimaryUid() {_uniqueStorage()._primaryUid = nil}
 
-  var configuredClusterSize: UInt32 {
+  public var configuredClusterSize: UInt32 {
     get {_storage._configuredClusterSize ?? 0}
     set {_uniqueStorage()._configuredClusterSize = newValue}
   }
   /// Returns true if `configuredClusterSize` has been explicitly set.
-  var hasConfiguredClusterSize: Bool {_storage._configuredClusterSize != nil}
+  public var hasConfiguredClusterSize: Bool {_storage._configuredClusterSize != nil}
   /// Clears the value of `configuredClusterSize`. Subsequent reads from it will return its default value.
-  mutating func clearConfiguredClusterSize() {_uniqueStorage()._configuredClusterSize = nil}
+  public mutating func clearConfiguredClusterSize() {_uniqueStorage()._configuredClusterSize = nil}
 
-  var supportsRapportRemoteControlTransport: Bool {
+  public var supportsRapportRemoteControlTransport: Bool {
     get {_storage._supportsRapportRemoteControlTransport ?? false}
     set {_uniqueStorage()._supportsRapportRemoteControlTransport = newValue}
   }
   /// Returns true if `supportsRapportRemoteControlTransport` has been explicitly set.
-  var hasSupportsRapportRemoteControlTransport: Bool {_storage._supportsRapportRemoteControlTransport != nil}
+  public var hasSupportsRapportRemoteControlTransport: Bool {_storage._supportsRapportRemoteControlTransport != nil}
   /// Clears the value of `supportsRapportRemoteControlTransport`. Subsequent reads from it will return its default value.
-  mutating func clearSupportsRapportRemoteControlTransport() {_uniqueStorage()._supportsRapportRemoteControlTransport = nil}
+  public mutating func clearSupportsRapportRemoteControlTransport() {_uniqueStorage()._supportsRapportRemoteControlTransport = nil}
 
-  var currentBluetoothListeningMode: String {
+  public var currentBluetoothListeningMode: String {
     get {_storage._currentBluetoothListeningMode ?? String()}
     set {_uniqueStorage()._currentBluetoothListeningMode = newValue}
   }
   /// Returns true if `currentBluetoothListeningMode` has been explicitly set.
-  var hasCurrentBluetoothListeningMode: Bool {_storage._currentBluetoothListeningMode != nil}
+  public var hasCurrentBluetoothListeningMode: Bool {_storage._currentBluetoothListeningMode != nil}
   /// Clears the value of `currentBluetoothListeningMode`. Subsequent reads from it will return its default value.
-  mutating func clearCurrentBluetoothListeningMode() {_uniqueStorage()._currentBluetoothListeningMode = nil}
+  public mutating func clearCurrentBluetoothListeningMode() {_uniqueStorage()._currentBluetoothListeningMode = nil}
 
-  var availableBluetoothListeningModes: [String] {
+  public var availableBluetoothListeningModes: [String] {
     get {_storage._availableBluetoothListeningModes}
     set {_uniqueStorage()._availableBluetoothListeningModes = newValue}
   }
 
-  var supportsMultiplayer: [Bool] {
+  public var supportsMultiplayer: [Bool] {
     get {_storage._supportsMultiplayer}
     set {_uniqueStorage()._supportsMultiplayer = newValue}
   }
 
-  var producesLowFidelityAudio: Bool {
+  public var producesLowFidelityAudio: Bool {
     get {_storage._producesLowFidelityAudio ?? false}
     set {_uniqueStorage()._producesLowFidelityAudio = newValue}
   }
   /// Returns true if `producesLowFidelityAudio` has been explicitly set.
-  var hasProducesLowFidelityAudio: Bool {_storage._producesLowFidelityAudio != nil}
+  public var hasProducesLowFidelityAudio: Bool {_storage._producesLowFidelityAudio != nil}
   /// Clears the value of `producesLowFidelityAudio`. Subsequent reads from it will return its default value.
-  mutating func clearProducesLowFidelityAudio() {_uniqueStorage()._producesLowFidelityAudio = nil}
+  public mutating func clearProducesLowFidelityAudio() {_uniqueStorage()._producesLowFidelityAudio = nil}
 
-  var hostDeviceClass: Int32 {
+  public var hostDeviceClass: Int32 {
     get {_storage._hostDeviceClass ?? 0}
     set {_uniqueStorage()._hostDeviceClass = newValue}
   }
   /// Returns true if `hostDeviceClass` has been explicitly set.
-  var hasHostDeviceClass: Bool {_storage._hostDeviceClass != nil}
+  public var hasHostDeviceClass: Bool {_storage._hostDeviceClass != nil}
   /// Clears the value of `hostDeviceClass`. Subsequent reads from it will return its default value.
-  mutating func clearHostDeviceClass() {_uniqueStorage()._hostDeviceClass = nil}
+  public mutating func clearHostDeviceClass() {_uniqueStorage()._hostDeviceClass = nil}
 
-  var airPlayGroupID: String {
+  public var airPlayGroupID: String {
     get {_storage._airPlayGroupID ?? String()}
     set {_uniqueStorage()._airPlayGroupID = newValue}
   }
   /// Returns true if `airPlayGroupID` has been explicitly set.
-  var hasAirPlayGroupID: Bool {_storage._airPlayGroupID != nil}
+  public var hasAirPlayGroupID: Bool {_storage._airPlayGroupID != nil}
   /// Clears the value of `airPlayGroupID`. Subsequent reads from it will return its default value.
-  mutating func clearAirPlayGroupID() {_uniqueStorage()._airPlayGroupID = nil}
+  public mutating func clearAirPlayGroupID() {_uniqueStorage()._airPlayGroupID = nil}
 
-  var supportsSharePlayHandoff: Bool {
+  public var supportsSharePlayHandoff: Bool {
     get {_storage._supportsSharePlayHandoff ?? false}
     set {_uniqueStorage()._supportsSharePlayHandoff = newValue}
   }
   /// Returns true if `supportsSharePlayHandoff` has been explicitly set.
-  var hasSupportsSharePlayHandoff: Bool {_storage._supportsSharePlayHandoff != nil}
+  public var hasSupportsSharePlayHandoff: Bool {_storage._supportsSharePlayHandoff != nil}
   /// Clears the value of `supportsSharePlayHandoff`. Subsequent reads from it will return its default value.
-  mutating func clearSupportsSharePlayHandoff() {_uniqueStorage()._supportsSharePlayHandoff = nil}
+  public mutating func clearSupportsSharePlayHandoff() {_uniqueStorage()._supportsSharePlayHandoff = nil}
 
-  var distance: Float {
+  public var distance: Float {
     get {_storage._distance ?? 0}
     set {_uniqueStorage()._distance = newValue}
   }
   /// Returns true if `distance` has been explicitly set.
-  var hasDistance: Bool {_storage._distance != nil}
+  public var hasDistance: Bool {_storage._distance != nil}
   /// Clears the value of `distance`. Subsequent reads from it will return its default value.
-  mutating func clearDistance() {_uniqueStorage()._distance = nil}
+  public mutating func clearDistance() {_uniqueStorage()._distance = nil}
 
-  var discoveredOnSameInfra: Bool {
+  public var discoveredOnSameInfra: Bool {
     get {_storage._discoveredOnSameInfra ?? false}
     set {_uniqueStorage()._discoveredOnSameInfra = newValue}
   }
   /// Returns true if `discoveredOnSameInfra` has been explicitly set.
-  var hasDiscoveredOnSameInfra: Bool {_storage._discoveredOnSameInfra != nil}
+  public var hasDiscoveredOnSameInfra: Bool {_storage._discoveredOnSameInfra != nil}
   /// Clears the value of `discoveredOnSameInfra`. Subsequent reads from it will return its default value.
-  mutating func clearDiscoveredOnSameInfra() {_uniqueStorage()._discoveredOnSameInfra = nil}
+  public mutating func clearDiscoveredOnSameInfra() {_uniqueStorage()._discoveredOnSameInfra = nil}
 
-  var activatedClusterMembers: [AVOutputDeviceDescriptor] {
+  public var activatedClusterMembers: [AVOutputDeviceDescriptor] {
     get {_storage._activatedClusterMembers}
     set {_uniqueStorage()._activatedClusterMembers = newValue}
   }
 
-  var pickable: [Bool] {
+  public var pickable: [Bool] {
     get {_storage._pickable}
     set {_uniqueStorage()._pickable = newValue}
   }
 
-  var transportType: Int32 {
+  public var transportType: Int32 {
     get {_storage._transportType ?? 0}
     set {_uniqueStorage()._transportType = newValue}
   }
   /// Returns true if `transportType` has been explicitly set.
-  var hasTransportType: Bool {_storage._transportType != nil}
+  public var hasTransportType: Bool {_storage._transportType != nil}
   /// Clears the value of `transportType`. Subsequent reads from it will return its default value.
-  mutating func clearTransportType() {_uniqueStorage()._transportType = nil}
+  public mutating func clearTransportType() {_uniqueStorage()._transportType = nil}
 
-  var clusterID: String {
+  public var clusterID: String {
     get {_storage._clusterID ?? String()}
     set {_uniqueStorage()._clusterID = newValue}
   }
   /// Returns true if `clusterID` has been explicitly set.
-  var hasClusterID: Bool {_storage._clusterID != nil}
+  public var hasClusterID: Bool {_storage._clusterID != nil}
   /// Clears the value of `clusterID`. Subsequent reads from it will return its default value.
-  mutating func clearClusterID() {_uniqueStorage()._clusterID = nil}
+  public mutating func clearClusterID() {_uniqueStorage()._clusterID = nil}
 
-  var isClusterLeader: Bool {
+  public var isClusterLeader: Bool {
     get {_storage._isClusterLeader ?? false}
     set {_uniqueStorage()._isClusterLeader = newValue}
   }
   /// Returns true if `isClusterLeader` has been explicitly set.
-  var hasIsClusterLeader: Bool {_storage._isClusterLeader != nil}
+  public var hasIsClusterLeader: Bool {_storage._isClusterLeader != nil}
   /// Clears the value of `isClusterLeader`. Subsequent reads from it will return its default value.
-  mutating func clearIsClusterLeader() {_uniqueStorage()._isClusterLeader = nil}
+  public mutating func clearIsClusterLeader() {_uniqueStorage()._isClusterLeader = nil}
 
-  var isAppleAccessory: Bool {
+  public var isAppleAccessory: Bool {
     get {_storage._isAppleAccessory ?? false}
     set {_uniqueStorage()._isAppleAccessory = newValue}
   }
   /// Returns true if `isAppleAccessory` has been explicitly set.
-  var hasIsAppleAccessory: Bool {_storage._isAppleAccessory != nil}
+  public var hasIsAppleAccessory: Bool {_storage._isAppleAccessory != nil}
   /// Clears the value of `isAppleAccessory`. Subsequent reads from it will return its default value.
-  mutating func clearIsAppleAccessory() {_uniqueStorage()._isAppleAccessory = nil}
+  public mutating func clearIsAppleAccessory() {_uniqueStorage()._isAppleAccessory = nil}
 
-  var parentUniqueIdentifier: String {
+  public var parentUniqueIdentifier: String {
     get {_storage._parentUniqueIdentifier ?? String()}
     set {_uniqueStorage()._parentUniqueIdentifier = newValue}
   }
   /// Returns true if `parentUniqueIdentifier` has been explicitly set.
-  var hasParentUniqueIdentifier: Bool {_storage._parentUniqueIdentifier != nil}
+  public var hasParentUniqueIdentifier: Bool {_storage._parentUniqueIdentifier != nil}
   /// Clears the value of `parentUniqueIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearParentUniqueIdentifier() {_uniqueStorage()._parentUniqueIdentifier = nil}
+  public mutating func clearParentUniqueIdentifier() {_uniqueStorage()._parentUniqueIdentifier = nil}
 
-  var roomID: String {
+  public var roomID: String {
     get {_storage._roomID ?? String()}
     set {_uniqueStorage()._roomID = newValue}
   }
   /// Returns true if `roomID` has been explicitly set.
-  var hasRoomID: Bool {_storage._roomID != nil}
+  public var hasRoomID: Bool {_storage._roomID != nil}
   /// Clears the value of `roomID`. Subsequent reads from it will return its default value.
-  mutating func clearRoomID() {_uniqueStorage()._roomID = nil}
+  public mutating func clearRoomID() {_uniqueStorage()._roomID = nil}
 
-  var roomName: String {
+  public var roomName: String {
     get {_storage._roomName ?? String()}
     set {_uniqueStorage()._roomName = newValue}
   }
   /// Returns true if `roomName` has been explicitly set.
-  var hasRoomName: Bool {_storage._roomName != nil}
+  public var hasRoomName: Bool {_storage._roomName != nil}
   /// Clears the value of `roomName`. Subsequent reads from it will return its default value.
-  mutating func clearRoomName() {_uniqueStorage()._roomName = nil}
+  public mutating func clearRoomName() {_uniqueStorage()._roomName = nil}
 
-  var allClusterMembers: [AVOutputDeviceDescriptor] {
+  public var allClusterMembers: [AVOutputDeviceDescriptor] {
     get {_storage._allClusterMembers}
     set {_uniqueStorage()._allClusterMembers = newValue}
   }
 
-  var engageOnClusterActivate: Bool {
+  public var engageOnClusterActivate: Bool {
     get {_storage._engageOnClusterActivate ?? false}
     set {_uniqueStorage()._engageOnClusterActivate = newValue}
   }
   /// Returns true if `engageOnClusterActivate` has been explicitly set.
-  var hasEngageOnClusterActivate: Bool {_storage._engageOnClusterActivate != nil}
+  public var hasEngageOnClusterActivate: Bool {_storage._engageOnClusterActivate != nil}
   /// Clears the value of `engageOnClusterActivate`. Subsequent reads from it will return its default value.
-  mutating func clearEngageOnClusterActivate() {_uniqueStorage()._engageOnClusterActivate = nil}
+  public mutating func clearEngageOnClusterActivate() {_uniqueStorage()._engageOnClusterActivate = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-nonisolated struct UpdateOutputDeviceMessage: Sendable {
+public nonisolated struct UpdateOutputDeviceMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var outputDevices: [AVOutputDeviceDescriptor] = []
+  public var outputDevices: [AVOutputDeviceDescriptor] = []
 
-  var endpointUid: String {
+  public var endpointUid: String {
     get {_endpointUid ?? String()}
     set {_endpointUid = newValue}
   }
   /// Returns true if `endpointUid` has been explicitly set.
-  var hasEndpointUid: Bool {self._endpointUid != nil}
+  public var hasEndpointUid: Bool {self._endpointUid != nil}
   /// Clears the value of `endpointUid`. Subsequent reads from it will return its default value.
-  mutating func clearEndpointUid() {self._endpointUid = nil}
+  public mutating func clearEndpointUid() {self._endpointUid = nil}
 
-  var clusterAwareOutputDevices: [AVOutputDeviceDescriptor] = []
+  public var clusterAwareOutputDevices: [AVOutputDeviceDescriptor] = []
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _endpointUid: String? = nil
 }
@@ -665,18 +665,18 @@ nonisolated struct UpdateOutputDeviceMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var updateOutputDeviceMessage: UpdateOutputDeviceMessage {
+  public var updateOutputDeviceMessage: UpdateOutputDeviceMessage {
     get {return getExtensionValue(ext: Extensions_updateOutputDeviceMessage) ?? UpdateOutputDeviceMessage()}
     set {setExtensionValue(ext: Extensions_updateOutputDeviceMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_updateOutputDeviceMessage`
   /// has been explicitly set.
-  var hasUpdateOutputDeviceMessage: Bool {
+  public var hasUpdateOutputDeviceMessage: Bool {
     return hasExtensionValue(ext: Extensions_updateOutputDeviceMessage)
   }
   /// Clears the value of extension `Extensions_updateOutputDeviceMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearUpdateOutputDeviceMessage() {
+  public mutating func clearUpdateOutputDeviceMessage() {
     clearExtensionValue(ext: Extensions_updateOutputDeviceMessage)
   }
 
@@ -688,7 +688,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let UpdateOutputDeviceMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let UpdateOutputDeviceMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_updateOutputDeviceMessage
 ]
 
@@ -696,7 +696,7 @@ nonisolated let UpdateOutputDeviceMessage_Extensions: SwiftProtobuf.SimpleExtens
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_updateOutputDeviceMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<UpdateOutputDeviceMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_updateOutputDeviceMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<UpdateOutputDeviceMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 69,
   fieldName: "updateOutputDeviceMessage"
 )
@@ -704,10 +704,10 @@ nonisolated let Extensions_updateOutputDeviceMessage = SwiftProtobuf.MessageExte
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension AVOutputDeviceSourceInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "AVOutputDeviceSourceInfo"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}routingContextUID\0\u{1}multipleBuiltInDevices\0")
+  public static let protoMessageName: String = "AVOutputDeviceSourceInfo"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}routingContextUID\0\u{1}multipleBuiltInDevices\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -720,7 +720,7 @@ nonisolated extension AVOutputDeviceSourceInfo: SwiftProtobuf.Message, SwiftProt
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -734,7 +734,7 @@ nonisolated extension AVOutputDeviceSourceInfo: SwiftProtobuf.Message, SwiftProt
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: AVOutputDeviceSourceInfo, rhs: AVOutputDeviceSourceInfo) -> Bool {
+  public static func ==(lhs: AVOutputDeviceSourceInfo, rhs: AVOutputDeviceSourceInfo) -> Bool {
     if lhs._routingContextUid != rhs._routingContextUid {return false}
     if lhs._multipleBuiltInDevices != rhs._multipleBuiltInDevices {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -743,8 +743,8 @@ nonisolated extension AVOutputDeviceSourceInfo: SwiftProtobuf.Message, SwiftProt
 }
 
 nonisolated extension AVOutputDeviceDescriptor: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "AVOutputDeviceDescriptor"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}uniqueIdentifier\0\u{1}groupID\0\u{1}modelID\0\u{1}macAddress\0\u{1}canAccessRemoteAssets\0\u{1}isRemoteControllable\0\u{1}isGroupLeader\0\u{1}isGroupable\0\u{1}deviceType\0\u{1}deviceSubType\0\u{1}modelSpecificInfoData\0\u{1}batteryLevel\0\u{1}isLocalDevice\0\u{1}supportsExternalScreen\0\u{1}requiresAuthorization\0\u{1}shouldForceRemoteControlabillity\0\u{1}sourceInfo\0\u{1}isDeviceGroupable\0\u{1}canRelayCommunicationChannel\0\u{1}logicalDeviceID\0\u{1}isProxyGroupPlayer\0\u{1}firmwareVersion\0\u{1}volume\0\u{1}isVolumeControlAvailable\0\u{1}canAccessAppleMusic\0\u{1}canAccessiCloudMusicLibrary\0\u{1}groupContainsGroupLeader\0\u{1}supportsBufferedAirPlay\0\u{1}canPlayEncryptedProgressiveDownloadAssets\0\u{1}canFetchMediaDataFromSender\0\u{1}resentsOptimizedUserInterfaceWhenPlayingFetchedAudioOnlyAssets\0\u{1}isAirPlayReceiverSessionActive\0\u{1}parentGroupIdentifier\0\u{1}parentGroupContainsDiscoverableLeader\0\u{1}isAddedToHomeKit\0\u{1}volumeCapabilities\0\u{1}bluetoothID\0\u{1}supportsHAP\0\u{1}usingJSONProtocol\0\u{1}clusterCompositions\0\u{1}clusterType\0\u{1}primaryUID\0\u{1}configuredClusterSize\0\u{1}supportsRapportRemoteControlTransport\0\u{1}currentBluetoothListeningMode\0\u{1}availableBluetoothListeningModes\0\u{1}supportsMultiplayer\0\u{1}producesLowFidelityAudio\0\u{1}hostDeviceClass\0\u{1}airPlayGroupID\0\u{1}supportsSharePlayHandoff\0\u{1}distance\0\u{1}discoveredOnSameInfra\0\u{1}activatedClusterMembers\0\u{1}pickable\0\u{1}transportType\0\u{1}clusterID\0\u{1}isClusterLeader\0\u{1}isAppleAccessory\0\u{1}parentUniqueIdentifier\0\u{1}roomID\0\u{1}roomName\0\u{1}allClusterMembers\0\u{2}\u{3}engageOnClusterActivate\0")
+  public static let protoMessageName: String = "AVOutputDeviceDescriptor"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}uniqueIdentifier\0\u{1}groupID\0\u{1}modelID\0\u{1}macAddress\0\u{1}canAccessRemoteAssets\0\u{1}isRemoteControllable\0\u{1}isGroupLeader\0\u{1}isGroupable\0\u{1}deviceType\0\u{1}deviceSubType\0\u{1}modelSpecificInfoData\0\u{1}batteryLevel\0\u{1}isLocalDevice\0\u{1}supportsExternalScreen\0\u{1}requiresAuthorization\0\u{1}shouldForceRemoteControlabillity\0\u{1}sourceInfo\0\u{1}isDeviceGroupable\0\u{1}canRelayCommunicationChannel\0\u{1}logicalDeviceID\0\u{1}isProxyGroupPlayer\0\u{1}firmwareVersion\0\u{1}volume\0\u{1}isVolumeControlAvailable\0\u{1}canAccessAppleMusic\0\u{1}canAccessiCloudMusicLibrary\0\u{1}groupContainsGroupLeader\0\u{1}supportsBufferedAirPlay\0\u{1}canPlayEncryptedProgressiveDownloadAssets\0\u{1}canFetchMediaDataFromSender\0\u{1}resentsOptimizedUserInterfaceWhenPlayingFetchedAudioOnlyAssets\0\u{1}isAirPlayReceiverSessionActive\0\u{1}parentGroupIdentifier\0\u{1}parentGroupContainsDiscoverableLeader\0\u{1}isAddedToHomeKit\0\u{1}volumeCapabilities\0\u{1}bluetoothID\0\u{1}supportsHAP\0\u{1}usingJSONProtocol\0\u{1}clusterCompositions\0\u{1}clusterType\0\u{1}primaryUID\0\u{1}configuredClusterSize\0\u{1}supportsRapportRemoteControlTransport\0\u{1}currentBluetoothListeningMode\0\u{1}availableBluetoothListeningModes\0\u{1}supportsMultiplayer\0\u{1}producesLowFidelityAudio\0\u{1}hostDeviceClass\0\u{1}airPlayGroupID\0\u{1}supportsSharePlayHandoff\0\u{1}distance\0\u{1}discoveredOnSameInfra\0\u{1}activatedClusterMembers\0\u{1}pickable\0\u{1}transportType\0\u{1}clusterID\0\u{1}isClusterLeader\0\u{1}isAppleAccessory\0\u{1}parentUniqueIdentifier\0\u{1}roomID\0\u{1}roomName\0\u{1}allClusterMembers\0\u{2}\u{3}engageOnClusterActivate\0")
 
   fileprivate class _StorageClass {
     var _name: String? = nil
@@ -897,7 +897,7 @@ nonisolated extension AVOutputDeviceDescriptor: SwiftProtobuf.Message, SwiftProt
     return _storage
   }
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     _ = _uniqueStorage()
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       while let fieldNumber = try decoder.nextFieldNumber() {
@@ -976,7 +976,7 @@ nonisolated extension AVOutputDeviceDescriptor: SwiftProtobuf.Message, SwiftProt
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every if/case branch local when no optimizations
@@ -1181,7 +1181,7 @@ nonisolated extension AVOutputDeviceDescriptor: SwiftProtobuf.Message, SwiftProt
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: AVOutputDeviceDescriptor, rhs: AVOutputDeviceDescriptor) -> Bool {
+  public static func ==(lhs: AVOutputDeviceDescriptor, rhs: AVOutputDeviceDescriptor) -> Bool {
     if lhs._storage !== rhs._storage {
       let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
         let _storage = _args.0
@@ -1261,10 +1261,10 @@ nonisolated extension AVOutputDeviceDescriptor: SwiftProtobuf.Message, SwiftProt
 }
 
 nonisolated extension UpdateOutputDeviceMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "UpdateOutputDeviceMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}outputDevices\0\u{1}endpointUID\0\u{1}clusterAwareOutputDevices\0")
+  public static let protoMessageName: String = "UpdateOutputDeviceMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}outputDevices\0\u{1}endpointUID\0\u{1}clusterAwareOutputDevices\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -1278,7 +1278,7 @@ nonisolated extension UpdateOutputDeviceMessage: SwiftProtobuf.Message, SwiftPro
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -1295,7 +1295,7 @@ nonisolated extension UpdateOutputDeviceMessage: SwiftProtobuf.Message, SwiftPro
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: UpdateOutputDeviceMessage, rhs: UpdateOutputDeviceMessage) -> Bool {
+  public static func ==(lhs: UpdateOutputDeviceMessage, rhs: UpdateOutputDeviceMessage) -> Bool {
     if lhs.outputDevices != rhs.outputDevices {return false}
     if lhs._endpointUid != rhs._endpointUid {return false}
     if lhs.clusterAwareOutputDevices != rhs.clusterAwareOutputDevices {return false}

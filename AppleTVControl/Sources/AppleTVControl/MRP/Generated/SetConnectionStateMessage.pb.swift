@@ -20,35 +20,35 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct SetConnectionStateMessage: Sendable {
+public nonisolated struct SetConnectionStateMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var state: SetConnectionStateMessage.ConnectionState {
+  public var state: SetConnectionStateMessage.ConnectionState {
     get {_state ?? .none}
     set {_state = newValue}
   }
   /// Returns true if `state` has been explicitly set.
-  var hasState: Bool {self._state != nil}
+  public var hasState: Bool {self._state != nil}
   /// Clears the value of `state`. Subsequent reads from it will return its default value.
-  mutating func clearState() {self._state = nil}
+  public mutating func clearState() {self._state = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum ConnectionState: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum ConnectionState: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case none = 0
     case connecting = 1
     case connected = 2
     case disconnected = 3
 
-    init() {
+    public init() {
       self = .none
     }
 
   }
 
-  init() {}
+  public init() {}
 
   fileprivate var _state: SetConnectionStateMessage.ConnectionState? = nil
 }
@@ -64,18 +64,18 @@ nonisolated struct SetConnectionStateMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var setConnectionStateMessage: SetConnectionStateMessage {
+  public var setConnectionStateMessage: SetConnectionStateMessage {
     get {return getExtensionValue(ext: Extensions_setConnectionStateMessage) ?? SetConnectionStateMessage()}
     set {setExtensionValue(ext: Extensions_setConnectionStateMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_setConnectionStateMessage`
   /// has been explicitly set.
-  var hasSetConnectionStateMessage: Bool {
+  public var hasSetConnectionStateMessage: Bool {
     return hasExtensionValue(ext: Extensions_setConnectionStateMessage)
   }
   /// Clears the value of extension `Extensions_setConnectionStateMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearSetConnectionStateMessage() {
+  public mutating func clearSetConnectionStateMessage() {
     clearExtensionValue(ext: Extensions_setConnectionStateMessage)
   }
 
@@ -87,7 +87,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let SetConnectionStateMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let SetConnectionStateMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_setConnectionStateMessage
 ]
 
@@ -95,7 +95,7 @@ nonisolated let SetConnectionStateMessage_Extensions: SwiftProtobuf.SimpleExtens
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_setConnectionStateMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SetConnectionStateMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_setConnectionStateMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SetConnectionStateMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 42,
   fieldName: "setConnectionStateMessage"
 )
@@ -103,10 +103,10 @@ nonisolated let Extensions_setConnectionStateMessage = SwiftProtobuf.MessageExte
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension SetConnectionStateMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SetConnectionStateMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}state\0")
+  public static let protoMessageName: String = "SetConnectionStateMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}state\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -118,7 +118,7 @@ nonisolated extension SetConnectionStateMessage: SwiftProtobuf.Message, SwiftPro
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -129,7 +129,7 @@ nonisolated extension SetConnectionStateMessage: SwiftProtobuf.Message, SwiftPro
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SetConnectionStateMessage, rhs: SetConnectionStateMessage) -> Bool {
+  public static func ==(lhs: SetConnectionStateMessage, rhs: SetConnectionStateMessage) -> Bool {
     if lhs._state != rhs._state {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -137,5 +137,5 @@ nonisolated extension SetConnectionStateMessage: SwiftProtobuf.Message, SwiftPro
 }
 
 nonisolated extension SetConnectionStateMessage.ConnectionState: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0None\0\u{1}Connecting\0\u{1}Connected\0\u{1}Disconnected\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0None\0\u{1}Connecting\0\u{1}Connected\0\u{1}Disconnected\0")
 }

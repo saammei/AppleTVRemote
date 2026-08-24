@@ -25,32 +25,32 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct TransactionKey: Sendable {
+public nonisolated struct TransactionKey: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var identifier: String {
+  public var identifier: String {
     get {_identifier ?? String()}
     set {_identifier = newValue}
   }
   /// Returns true if `identifier` has been explicitly set.
-  var hasIdentifier: Bool {self._identifier != nil}
+  public var hasIdentifier: Bool {self._identifier != nil}
   /// Clears the value of `identifier`. Subsequent reads from it will return its default value.
-  mutating func clearIdentifier() {self._identifier = nil}
+  public mutating func clearIdentifier() {self._identifier = nil}
 
-  var userData: Data {
+  public var userData: Data {
     get {_userData ?? Data()}
     set {_userData = newValue}
   }
   /// Returns true if `userData` has been explicitly set.
-  var hasUserData: Bool {self._userData != nil}
+  public var hasUserData: Bool {self._userData != nil}
   /// Clears the value of `userData`. Subsequent reads from it will return its default value.
-  mutating func clearUserData() {self._userData = nil}
+  public mutating func clearUserData() {self._userData = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _identifier: String? = nil
   fileprivate var _userData: Data? = nil
@@ -59,10 +59,10 @@ nonisolated struct TransactionKey: Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension TransactionKey: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "TransactionKey"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}identifier\0\u{1}userData\0")
+  public static let protoMessageName: String = "TransactionKey"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}identifier\0\u{1}userData\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -75,7 +75,7 @@ nonisolated extension TransactionKey: SwiftProtobuf.Message, SwiftProtobuf._Mess
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -89,7 +89,7 @@ nonisolated extension TransactionKey: SwiftProtobuf.Message, SwiftProtobuf._Mess
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: TransactionKey, rhs: TransactionKey) -> Bool {
+  public static func ==(lhs: TransactionKey, rhs: TransactionKey) -> Bool {
     if lhs._identifier != rhs._identifier {return false}
     if lhs._userData != rhs._userData {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

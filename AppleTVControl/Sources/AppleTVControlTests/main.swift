@@ -16,6 +16,7 @@ runOPACKTests()
 runBinaryPlistTests()
 await runCompanionTests()
 await runCompanionAPITests()
+await runMRPTests()
 
 if testFailures.isEmpty {
     print("✅ All tests passed")

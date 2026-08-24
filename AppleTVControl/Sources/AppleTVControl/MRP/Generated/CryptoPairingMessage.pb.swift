@@ -25,61 +25,61 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct CryptoPairingMessage: Sendable {
+public nonisolated struct CryptoPairingMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// Example: <00010006 0101>
-  var pairingData: Data {
+  public var pairingData: Data {
     get {_pairingData ?? Data()}
     set {_pairingData = newValue}
   }
   /// Returns true if `pairingData` has been explicitly set.
-  var hasPairingData: Bool {self._pairingData != nil}
+  public var hasPairingData: Bool {self._pairingData != nil}
   /// Clears the value of `pairingData`. Subsequent reads from it will return its default value.
-  mutating func clearPairingData() {self._pairingData = nil}
+  public mutating func clearPairingData() {self._pairingData = nil}
 
   /// Example: 0
-  var status: Int32 {
+  public var status: Int32 {
     get {_status ?? 0}
     set {_status = newValue}
   }
   /// Returns true if `status` has been explicitly set.
-  var hasStatus: Bool {self._status != nil}
+  public var hasStatus: Bool {self._status != nil}
   /// Clears the value of `status`. Subsequent reads from it will return its default value.
-  mutating func clearStatus() {self._status = nil}
+  public mutating func clearStatus() {self._status = nil}
 
-  var isRetrying: Bool {
+  public var isRetrying: Bool {
     get {_isRetrying ?? false}
     set {_isRetrying = newValue}
   }
   /// Returns true if `isRetrying` has been explicitly set.
-  var hasIsRetrying: Bool {self._isRetrying != nil}
+  public var hasIsRetrying: Bool {self._isRetrying != nil}
   /// Clears the value of `isRetrying`. Subsequent reads from it will return its default value.
-  mutating func clearIsRetrying() {self._isRetrying = nil}
+  public mutating func clearIsRetrying() {self._isRetrying = nil}
 
-  var isUsingSystemPairing: Bool {
+  public var isUsingSystemPairing: Bool {
     get {_isUsingSystemPairing ?? false}
     set {_isUsingSystemPairing = newValue}
   }
   /// Returns true if `isUsingSystemPairing` has been explicitly set.
-  var hasIsUsingSystemPairing: Bool {self._isUsingSystemPairing != nil}
+  public var hasIsUsingSystemPairing: Bool {self._isUsingSystemPairing != nil}
   /// Clears the value of `isUsingSystemPairing`. Subsequent reads from it will return its default value.
-  mutating func clearIsUsingSystemPairing() {self._isUsingSystemPairing = nil}
+  public mutating func clearIsUsingSystemPairing() {self._isUsingSystemPairing = nil}
 
-  var state: Int32 {
+  public var state: Int32 {
     get {_state ?? 0}
     set {_state = newValue}
   }
   /// Returns true if `state` has been explicitly set.
-  var hasState: Bool {self._state != nil}
+  public var hasState: Bool {self._state != nil}
   /// Clears the value of `state`. Subsequent reads from it will return its default value.
-  mutating func clearState() {self._state = nil}
+  public mutating func clearState() {self._state = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _pairingData: Data? = nil
   fileprivate var _status: Int32? = nil
@@ -99,18 +99,18 @@ nonisolated struct CryptoPairingMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var cryptoPairingMessage: CryptoPairingMessage {
+  public var cryptoPairingMessage: CryptoPairingMessage {
     get {return getExtensionValue(ext: Extensions_cryptoPairingMessage) ?? CryptoPairingMessage()}
     set {setExtensionValue(ext: Extensions_cryptoPairingMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_cryptoPairingMessage`
   /// has been explicitly set.
-  var hasCryptoPairingMessage: Bool {
+  public var hasCryptoPairingMessage: Bool {
     return hasExtensionValue(ext: Extensions_cryptoPairingMessage)
   }
   /// Clears the value of extension `Extensions_cryptoPairingMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearCryptoPairingMessage() {
+  public mutating func clearCryptoPairingMessage() {
     clearExtensionValue(ext: Extensions_cryptoPairingMessage)
   }
 
@@ -122,7 +122,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let CryptoPairingMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let CryptoPairingMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_cryptoPairingMessage
 ]
 
@@ -130,7 +130,7 @@ nonisolated let CryptoPairingMessage_Extensions: SwiftProtobuf.SimpleExtensionMa
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_cryptoPairingMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<CryptoPairingMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_cryptoPairingMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<CryptoPairingMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 39,
   fieldName: "cryptoPairingMessage"
 )
@@ -138,10 +138,10 @@ nonisolated let Extensions_cryptoPairingMessage = SwiftProtobuf.MessageExtension
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension CryptoPairingMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "CryptoPairingMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}pairingData\0\u{1}status\0\u{1}isRetrying\0\u{1}isUsingSystemPairing\0\u{1}state\0")
+  public static let protoMessageName: String = "CryptoPairingMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}pairingData\0\u{1}status\0\u{1}isRetrying\0\u{1}isUsingSystemPairing\0\u{1}state\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -157,7 +157,7 @@ nonisolated extension CryptoPairingMessage: SwiftProtobuf.Message, SwiftProtobuf
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -180,7 +180,7 @@ nonisolated extension CryptoPairingMessage: SwiftProtobuf.Message, SwiftProtobuf
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: CryptoPairingMessage, rhs: CryptoPairingMessage) -> Bool {
+  public static func ==(lhs: CryptoPairingMessage, rhs: CryptoPairingMessage) -> Bool {
     if lhs._pairingData != rhs._pairingData {return false}
     if lhs._status != rhs._status {return false}
     if lhs._isRetrying != rhs._isRetrying {return false}

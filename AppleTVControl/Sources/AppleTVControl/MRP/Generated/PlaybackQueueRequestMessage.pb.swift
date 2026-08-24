@@ -20,163 +20,163 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct PlaybackQueueRequestMessage: @unchecked Sendable {
+public nonisolated struct PlaybackQueueRequestMessage: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var location: Int32 {
+  public var location: Int32 {
     get {_storage._location ?? 0}
     set {_uniqueStorage()._location = newValue}
   }
   /// Returns true if `location` has been explicitly set.
-  var hasLocation: Bool {_storage._location != nil}
+  public var hasLocation: Bool {_storage._location != nil}
   /// Clears the value of `location`. Subsequent reads from it will return its default value.
-  mutating func clearLocation() {_uniqueStorage()._location = nil}
+  public mutating func clearLocation() {_uniqueStorage()._location = nil}
 
-  var length: Int32 {
+  public var length: Int32 {
     get {_storage._length ?? 0}
     set {_uniqueStorage()._length = newValue}
   }
   /// Returns true if `length` has been explicitly set.
-  var hasLength: Bool {_storage._length != nil}
+  public var hasLength: Bool {_storage._length != nil}
   /// Clears the value of `length`. Subsequent reads from it will return its default value.
-  mutating func clearLength() {_uniqueStorage()._length = nil}
+  public mutating func clearLength() {_uniqueStorage()._length = nil}
 
-  var includeMetadata: Bool {
+  public var includeMetadata: Bool {
     get {_storage._includeMetadata ?? false}
     set {_uniqueStorage()._includeMetadata = newValue}
   }
   /// Returns true if `includeMetadata` has been explicitly set.
-  var hasIncludeMetadata: Bool {_storage._includeMetadata != nil}
+  public var hasIncludeMetadata: Bool {_storage._includeMetadata != nil}
   /// Clears the value of `includeMetadata`. Subsequent reads from it will return its default value.
-  mutating func clearIncludeMetadata() {_uniqueStorage()._includeMetadata = nil}
+  public mutating func clearIncludeMetadata() {_uniqueStorage()._includeMetadata = nil}
 
-  var artworkWidth: Double {
+  public var artworkWidth: Double {
     get {_storage._artworkWidth ?? 0}
     set {_uniqueStorage()._artworkWidth = newValue}
   }
   /// Returns true if `artworkWidth` has been explicitly set.
-  var hasArtworkWidth: Bool {_storage._artworkWidth != nil}
+  public var hasArtworkWidth: Bool {_storage._artworkWidth != nil}
   /// Clears the value of `artworkWidth`. Subsequent reads from it will return its default value.
-  mutating func clearArtworkWidth() {_uniqueStorage()._artworkWidth = nil}
+  public mutating func clearArtworkWidth() {_uniqueStorage()._artworkWidth = nil}
 
-  var artworkHeight: Double {
+  public var artworkHeight: Double {
     get {_storage._artworkHeight ?? 0}
     set {_uniqueStorage()._artworkHeight = newValue}
   }
   /// Returns true if `artworkHeight` has been explicitly set.
-  var hasArtworkHeight: Bool {_storage._artworkHeight != nil}
+  public var hasArtworkHeight: Bool {_storage._artworkHeight != nil}
   /// Clears the value of `artworkHeight`. Subsequent reads from it will return its default value.
-  mutating func clearArtworkHeight() {_uniqueStorage()._artworkHeight = nil}
+  public mutating func clearArtworkHeight() {_uniqueStorage()._artworkHeight = nil}
 
-  var includeLyrics: Bool {
+  public var includeLyrics: Bool {
     get {_storage._includeLyrics ?? false}
     set {_uniqueStorage()._includeLyrics = newValue}
   }
   /// Returns true if `includeLyrics` has been explicitly set.
-  var hasIncludeLyrics: Bool {_storage._includeLyrics != nil}
+  public var hasIncludeLyrics: Bool {_storage._includeLyrics != nil}
   /// Clears the value of `includeLyrics`. Subsequent reads from it will return its default value.
-  mutating func clearIncludeLyrics() {_uniqueStorage()._includeLyrics = nil}
+  public mutating func clearIncludeLyrics() {_uniqueStorage()._includeLyrics = nil}
 
-  var includeSections: Bool {
+  public var includeSections: Bool {
     get {_storage._includeSections ?? false}
     set {_uniqueStorage()._includeSections = newValue}
   }
   /// Returns true if `includeSections` has been explicitly set.
-  var hasIncludeSections: Bool {_storage._includeSections != nil}
+  public var hasIncludeSections: Bool {_storage._includeSections != nil}
   /// Clears the value of `includeSections`. Subsequent reads from it will return its default value.
-  mutating func clearIncludeSections() {_uniqueStorage()._includeSections = nil}
+  public mutating func clearIncludeSections() {_uniqueStorage()._includeSections = nil}
 
-  var includeInfo: Bool {
+  public var includeInfo: Bool {
     get {_storage._includeInfo ?? false}
     set {_uniqueStorage()._includeInfo = newValue}
   }
   /// Returns true if `includeInfo` has been explicitly set.
-  var hasIncludeInfo: Bool {_storage._includeInfo != nil}
+  public var hasIncludeInfo: Bool {_storage._includeInfo != nil}
   /// Clears the value of `includeInfo`. Subsequent reads from it will return its default value.
-  mutating func clearIncludeInfo() {_uniqueStorage()._includeInfo = nil}
+  public mutating func clearIncludeInfo() {_uniqueStorage()._includeInfo = nil}
 
-  var includeLanguageOptions: Bool {
+  public var includeLanguageOptions: Bool {
     get {_storage._includeLanguageOptions ?? false}
     set {_uniqueStorage()._includeLanguageOptions = newValue}
   }
   /// Returns true if `includeLanguageOptions` has been explicitly set.
-  var hasIncludeLanguageOptions: Bool {_storage._includeLanguageOptions != nil}
+  public var hasIncludeLanguageOptions: Bool {_storage._includeLanguageOptions != nil}
   /// Clears the value of `includeLanguageOptions`. Subsequent reads from it will return its default value.
-  mutating func clearIncludeLanguageOptions() {_uniqueStorage()._includeLanguageOptions = nil}
+  public mutating func clearIncludeLanguageOptions() {_uniqueStorage()._includeLanguageOptions = nil}
 
-  var context: PlaybackQueueContext {
+  public var context: PlaybackQueueContext {
     get {_storage._context ?? PlaybackQueueContext()}
     set {_uniqueStorage()._context = newValue}
   }
   /// Returns true if `context` has been explicitly set.
-  var hasContext: Bool {_storage._context != nil}
+  public var hasContext: Bool {_storage._context != nil}
   /// Clears the value of `context`. Subsequent reads from it will return its default value.
-  mutating func clearContext() {_uniqueStorage()._context = nil}
+  public mutating func clearContext() {_uniqueStorage()._context = nil}
 
-  var requestID: String {
+  public var requestID: String {
     get {_storage._requestID ?? String()}
     set {_uniqueStorage()._requestID = newValue}
   }
   /// Returns true if `requestID` has been explicitly set.
-  var hasRequestID: Bool {_storage._requestID != nil}
+  public var hasRequestID: Bool {_storage._requestID != nil}
   /// Clears the value of `requestID`. Subsequent reads from it will return its default value.
-  mutating func clearRequestID() {_uniqueStorage()._requestID = nil}
+  public mutating func clearRequestID() {_uniqueStorage()._requestID = nil}
 
-  var contentItemIdentifiers: [String] {
+  public var contentItemIdentifiers: [String] {
     get {_storage._contentItemIdentifiers}
     set {_uniqueStorage()._contentItemIdentifiers = newValue}
   }
 
-  var returnContentItemAssetsInUserCompletion: Bool {
+  public var returnContentItemAssetsInUserCompletion: Bool {
     get {_storage._returnContentItemAssetsInUserCompletion ?? false}
     set {_uniqueStorage()._returnContentItemAssetsInUserCompletion = newValue}
   }
   /// Returns true if `returnContentItemAssetsInUserCompletion` has been explicitly set.
-  var hasReturnContentItemAssetsInUserCompletion: Bool {_storage._returnContentItemAssetsInUserCompletion != nil}
+  public var hasReturnContentItemAssetsInUserCompletion: Bool {_storage._returnContentItemAssetsInUserCompletion != nil}
   /// Clears the value of `returnContentItemAssetsInUserCompletion`. Subsequent reads from it will return its default value.
-  mutating func clearReturnContentItemAssetsInUserCompletion() {_uniqueStorage()._returnContentItemAssetsInUserCompletion = nil}
+  public mutating func clearReturnContentItemAssetsInUserCompletion() {_uniqueStorage()._returnContentItemAssetsInUserCompletion = nil}
 
-  var playerPath: PlayerPath {
+  public var playerPath: PlayerPath {
     get {_storage._playerPath ?? PlayerPath()}
     set {_uniqueStorage()._playerPath = newValue}
   }
   /// Returns true if `playerPath` has been explicitly set.
-  var hasPlayerPath: Bool {_storage._playerPath != nil}
+  public var hasPlayerPath: Bool {_storage._playerPath != nil}
   /// Clears the value of `playerPath`. Subsequent reads from it will return its default value.
-  mutating func clearPlayerPath() {_uniqueStorage()._playerPath = nil}
+  public mutating func clearPlayerPath() {_uniqueStorage()._playerPath = nil}
 
-  var cachingPolicy: Int32 {
+  public var cachingPolicy: Int32 {
     get {_storage._cachingPolicy ?? 0}
     set {_uniqueStorage()._cachingPolicy = newValue}
   }
   /// Returns true if `cachingPolicy` has been explicitly set.
-  var hasCachingPolicy: Bool {_storage._cachingPolicy != nil}
+  public var hasCachingPolicy: Bool {_storage._cachingPolicy != nil}
   /// Clears the value of `cachingPolicy`. Subsequent reads from it will return its default value.
-  mutating func clearCachingPolicy() {_uniqueStorage()._cachingPolicy = nil}
+  public mutating func clearCachingPolicy() {_uniqueStorage()._cachingPolicy = nil}
 
-  var label: String {
+  public var label: String {
     get {_storage._label ?? String()}
     set {_uniqueStorage()._label = newValue}
   }
   /// Returns true if `label` has been explicitly set.
-  var hasLabel: Bool {_storage._label != nil}
+  public var hasLabel: Bool {_storage._label != nil}
   /// Clears the value of `label`. Subsequent reads from it will return its default value.
-  mutating func clearLabel() {_uniqueStorage()._label = nil}
+  public mutating func clearLabel() {_uniqueStorage()._label = nil}
 
-  var isLegacyNowPlayingInfoRequest: Bool {
+  public var isLegacyNowPlayingInfoRequest: Bool {
     get {_storage._isLegacyNowPlayingInfoRequest ?? false}
     set {_uniqueStorage()._isLegacyNowPlayingInfoRequest = newValue}
   }
   /// Returns true if `isLegacyNowPlayingInfoRequest` has been explicitly set.
-  var hasIsLegacyNowPlayingInfoRequest: Bool {_storage._isLegacyNowPlayingInfoRequest != nil}
+  public var hasIsLegacyNowPlayingInfoRequest: Bool {_storage._isLegacyNowPlayingInfoRequest != nil}
   /// Clears the value of `isLegacyNowPlayingInfoRequest`. Subsequent reads from it will return its default value.
-  mutating func clearIsLegacyNowPlayingInfoRequest() {_uniqueStorage()._isLegacyNowPlayingInfoRequest = nil}
+  public mutating func clearIsLegacyNowPlayingInfoRequest() {_uniqueStorage()._isLegacyNowPlayingInfoRequest = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
 }
@@ -192,18 +192,18 @@ nonisolated struct PlaybackQueueRequestMessage: @unchecked Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var playbackQueueRequestMessage: PlaybackQueueRequestMessage {
+  public var playbackQueueRequestMessage: PlaybackQueueRequestMessage {
     get {return getExtensionValue(ext: Extensions_playbackQueueRequestMessage) ?? PlaybackQueueRequestMessage()}
     set {setExtensionValue(ext: Extensions_playbackQueueRequestMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_playbackQueueRequestMessage`
   /// has been explicitly set.
-  var hasPlaybackQueueRequestMessage: Bool {
+  public var hasPlaybackQueueRequestMessage: Bool {
     return hasExtensionValue(ext: Extensions_playbackQueueRequestMessage)
   }
   /// Clears the value of extension `Extensions_playbackQueueRequestMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearPlaybackQueueRequestMessage() {
+  public mutating func clearPlaybackQueueRequestMessage() {
     clearExtensionValue(ext: Extensions_playbackQueueRequestMessage)
   }
 
@@ -215,7 +215,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let PlaybackQueueRequestMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let PlaybackQueueRequestMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_playbackQueueRequestMessage
 ]
 
@@ -223,7 +223,7 @@ nonisolated let PlaybackQueueRequestMessage_Extensions: SwiftProtobuf.SimpleExte
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_playbackQueueRequestMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<PlaybackQueueRequestMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_playbackQueueRequestMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<PlaybackQueueRequestMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 37,
   fieldName: "playbackQueueRequestMessage"
 )
@@ -231,8 +231,8 @@ nonisolated let Extensions_playbackQueueRequestMessage = SwiftProtobuf.MessageEx
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension PlaybackQueueRequestMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PlaybackQueueRequestMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}location\0\u{1}length\0\u{1}includeMetadata\0\u{1}artworkWidth\0\u{1}artworkHeight\0\u{1}includeLyrics\0\u{1}includeSections\0\u{1}includeInfo\0\u{1}includeLanguageOptions\0\u{1}context\0\u{1}requestID\0\u{1}contentItemIdentifiers\0\u{1}returnContentItemAssetsInUserCompletion\0\u{1}playerPath\0\u{1}cachingPolicy\0\u{1}label\0\u{1}isLegacyNowPlayingInfoRequest\0")
+  public static let protoMessageName: String = "PlaybackQueueRequestMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}location\0\u{1}length\0\u{1}includeMetadata\0\u{1}artworkWidth\0\u{1}artworkHeight\0\u{1}includeLyrics\0\u{1}includeSections\0\u{1}includeInfo\0\u{1}includeLanguageOptions\0\u{1}context\0\u{1}requestID\0\u{1}contentItemIdentifiers\0\u{1}returnContentItemAssetsInUserCompletion\0\u{1}playerPath\0\u{1}cachingPolicy\0\u{1}label\0\u{1}isLegacyNowPlayingInfoRequest\0")
 
   fileprivate class _StorageClass {
     var _location: Int32? = nil
@@ -296,7 +296,7 @@ nonisolated extension PlaybackQueueRequestMessage: SwiftProtobuf.Message, SwiftP
     }
   }
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     _ = _uniqueStorage()
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       while let fieldNumber = try decoder.nextFieldNumber() {
@@ -327,7 +327,7 @@ nonisolated extension PlaybackQueueRequestMessage: SwiftProtobuf.Message, SwiftP
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every if/case branch local when no optimizations
@@ -388,7 +388,7 @@ nonisolated extension PlaybackQueueRequestMessage: SwiftProtobuf.Message, SwiftP
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PlaybackQueueRequestMessage, rhs: PlaybackQueueRequestMessage) -> Bool {
+  public static func ==(lhs: PlaybackQueueRequestMessage, rhs: PlaybackQueueRequestMessage) -> Bool {
     if lhs._storage !== rhs._storage {
       let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
         let _storage = _args.0

@@ -25,14 +25,14 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct KeyboardState: Sendable {
+public nonisolated struct KeyboardState: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case unknown = 0
     case notEditing = 1
     case didBeginEditing = 2
@@ -41,45 +41,45 @@ nonisolated struct KeyboardState: Sendable {
     case didEndEditing = 5
     case response = 6
 
-    init() {
+    public init() {
       self = .unknown
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct AutocapitalizationType: Sendable {
+public nonisolated struct AutocapitalizationType: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case none = 0
     case words = 1
     case sentences = 2
     case allCharacters = 3
 
-    init() {
+    public init() {
       self = .none
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct KeyboardType: Sendable {
+public nonisolated struct KeyboardType: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case `default` = 0
     case asciiCapable = 1
     case numbersAndPunctuation = 2
@@ -94,23 +94,23 @@ nonisolated struct KeyboardType: Sendable {
     case alphanet = 11
     case passcodePad = 12
 
-    init() {
+    public init() {
       self = .default
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct ReturnKeyType: Sendable {
+public nonisolated struct ReturnKeyType: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case `default` = 0
     case go = 1
     case google = 2
@@ -124,106 +124,106 @@ nonisolated struct ReturnKeyType: Sendable {
     case emergencyCall = 10
     case `continue` = 11
 
-    init() {
+    public init() {
       self = .default
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct TextInputTraits: Sendable {
+public nonisolated struct TextInputTraits: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var autocapitalizationType: AutocapitalizationType.Enum {
+  public var autocapitalizationType: AutocapitalizationType.Enum {
     get {_autocapitalizationType ?? .none}
     set {_autocapitalizationType = newValue}
   }
   /// Returns true if `autocapitalizationType` has been explicitly set.
-  var hasAutocapitalizationType: Bool {self._autocapitalizationType != nil}
+  public var hasAutocapitalizationType: Bool {self._autocapitalizationType != nil}
   /// Clears the value of `autocapitalizationType`. Subsequent reads from it will return its default value.
-  mutating func clearAutocapitalizationType() {self._autocapitalizationType = nil}
+  public mutating func clearAutocapitalizationType() {self._autocapitalizationType = nil}
 
-  var keyboardType: KeyboardType.Enum {
+  public var keyboardType: KeyboardType.Enum {
     get {_keyboardType ?? .default}
     set {_keyboardType = newValue}
   }
   /// Returns true if `keyboardType` has been explicitly set.
-  var hasKeyboardType: Bool {self._keyboardType != nil}
+  public var hasKeyboardType: Bool {self._keyboardType != nil}
   /// Clears the value of `keyboardType`. Subsequent reads from it will return its default value.
-  mutating func clearKeyboardType() {self._keyboardType = nil}
+  public mutating func clearKeyboardType() {self._keyboardType = nil}
 
-  var returnKeyType: ReturnKeyType.Enum {
+  public var returnKeyType: ReturnKeyType.Enum {
     get {_returnKeyType ?? .default}
     set {_returnKeyType = newValue}
   }
   /// Returns true if `returnKeyType` has been explicitly set.
-  var hasReturnKeyType: Bool {self._returnKeyType != nil}
+  public var hasReturnKeyType: Bool {self._returnKeyType != nil}
   /// Clears the value of `returnKeyType`. Subsequent reads from it will return its default value.
-  mutating func clearReturnKeyType() {self._returnKeyType = nil}
+  public mutating func clearReturnKeyType() {self._returnKeyType = nil}
 
-  var autocorrection: Bool {
+  public var autocorrection: Bool {
     get {_autocorrection ?? false}
     set {_autocorrection = newValue}
   }
   /// Returns true if `autocorrection` has been explicitly set.
-  var hasAutocorrection: Bool {self._autocorrection != nil}
+  public var hasAutocorrection: Bool {self._autocorrection != nil}
   /// Clears the value of `autocorrection`. Subsequent reads from it will return its default value.
-  mutating func clearAutocorrection() {self._autocorrection = nil}
+  public mutating func clearAutocorrection() {self._autocorrection = nil}
 
-  var spellchecking: Bool {
+  public var spellchecking: Bool {
     get {_spellchecking ?? false}
     set {_spellchecking = newValue}
   }
   /// Returns true if `spellchecking` has been explicitly set.
-  var hasSpellchecking: Bool {self._spellchecking != nil}
+  public var hasSpellchecking: Bool {self._spellchecking != nil}
   /// Clears the value of `spellchecking`. Subsequent reads from it will return its default value.
-  mutating func clearSpellchecking() {self._spellchecking = nil}
+  public mutating func clearSpellchecking() {self._spellchecking = nil}
 
-  var enablesReturnKeyAutomatically: Bool {
+  public var enablesReturnKeyAutomatically: Bool {
     get {_enablesReturnKeyAutomatically ?? false}
     set {_enablesReturnKeyAutomatically = newValue}
   }
   /// Returns true if `enablesReturnKeyAutomatically` has been explicitly set.
-  var hasEnablesReturnKeyAutomatically: Bool {self._enablesReturnKeyAutomatically != nil}
+  public var hasEnablesReturnKeyAutomatically: Bool {self._enablesReturnKeyAutomatically != nil}
   /// Clears the value of `enablesReturnKeyAutomatically`. Subsequent reads from it will return its default value.
-  mutating func clearEnablesReturnKeyAutomatically() {self._enablesReturnKeyAutomatically = nil}
+  public mutating func clearEnablesReturnKeyAutomatically() {self._enablesReturnKeyAutomatically = nil}
 
-  var secureTextEntry: Bool {
+  public var secureTextEntry: Bool {
     get {_secureTextEntry ?? false}
     set {_secureTextEntry = newValue}
   }
   /// Returns true if `secureTextEntry` has been explicitly set.
-  var hasSecureTextEntry: Bool {self._secureTextEntry != nil}
+  public var hasSecureTextEntry: Bool {self._secureTextEntry != nil}
   /// Clears the value of `secureTextEntry`. Subsequent reads from it will return its default value.
-  mutating func clearSecureTextEntry() {self._secureTextEntry = nil}
+  public mutating func clearSecureTextEntry() {self._secureTextEntry = nil}
 
-  var validTextRangeLocation: UInt64 {
+  public var validTextRangeLocation: UInt64 {
     get {_validTextRangeLocation ?? 0}
     set {_validTextRangeLocation = newValue}
   }
   /// Returns true if `validTextRangeLocation` has been explicitly set.
-  var hasValidTextRangeLocation: Bool {self._validTextRangeLocation != nil}
+  public var hasValidTextRangeLocation: Bool {self._validTextRangeLocation != nil}
   /// Clears the value of `validTextRangeLocation`. Subsequent reads from it will return its default value.
-  mutating func clearValidTextRangeLocation() {self._validTextRangeLocation = nil}
+  public mutating func clearValidTextRangeLocation() {self._validTextRangeLocation = nil}
 
-  var validTextRangeLength: UInt64 {
+  public var validTextRangeLength: UInt64 {
     get {_validTextRangeLength ?? 0}
     set {_validTextRangeLength = newValue}
   }
   /// Returns true if `validTextRangeLength` has been explicitly set.
-  var hasValidTextRangeLength: Bool {self._validTextRangeLength != nil}
+  public var hasValidTextRangeLength: Bool {self._validTextRangeLength != nil}
   /// Clears the value of `validTextRangeLength`. Subsequent reads from it will return its default value.
-  mutating func clearValidTextRangeLength() {self._validTextRangeLength = nil}
+  public mutating func clearValidTextRangeLength() {self._validTextRangeLength = nil}
 
-  var pInentrySeparatorIndexes: [UInt64] = []
+  public var pInentrySeparatorIndexes: [UInt64] = []
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _autocapitalizationType: AutocapitalizationType.Enum? = nil
   fileprivate var _keyboardType: KeyboardType.Enum? = nil
@@ -236,82 +236,82 @@ nonisolated struct TextInputTraits: Sendable {
   fileprivate var _validTextRangeLength: UInt64? = nil
 }
 
-nonisolated struct TextEditingAttributes: Sendable {
+public nonisolated struct TextEditingAttributes: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var title: String {
+  public var title: String {
     get {_title ?? String()}
     set {_title = newValue}
   }
   /// Returns true if `title` has been explicitly set.
-  var hasTitle: Bool {self._title != nil}
+  public var hasTitle: Bool {self._title != nil}
   /// Clears the value of `title`. Subsequent reads from it will return its default value.
-  mutating func clearTitle() {self._title = nil}
+  public mutating func clearTitle() {self._title = nil}
 
-  var prompt: String {
+  public var prompt: String {
     get {_prompt ?? String()}
     set {_prompt = newValue}
   }
   /// Returns true if `prompt` has been explicitly set.
-  var hasPrompt: Bool {self._prompt != nil}
+  public var hasPrompt: Bool {self._prompt != nil}
   /// Clears the value of `prompt`. Subsequent reads from it will return its default value.
-  mutating func clearPrompt() {self._prompt = nil}
+  public mutating func clearPrompt() {self._prompt = nil}
 
-  var inputTraits: TextInputTraits {
+  public var inputTraits: TextInputTraits {
     get {_inputTraits ?? TextInputTraits()}
     set {_inputTraits = newValue}
   }
   /// Returns true if `inputTraits` has been explicitly set.
-  var hasInputTraits: Bool {self._inputTraits != nil}
+  public var hasInputTraits: Bool {self._inputTraits != nil}
   /// Clears the value of `inputTraits`. Subsequent reads from it will return its default value.
-  mutating func clearInputTraits() {self._inputTraits = nil}
+  public mutating func clearInputTraits() {self._inputTraits = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _title: String? = nil
   fileprivate var _prompt: String? = nil
   fileprivate var _inputTraits: TextInputTraits? = nil
 }
 
-nonisolated struct KeyboardMessage: Sendable {
+public nonisolated struct KeyboardMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var state: KeyboardState.Enum {
+  public var state: KeyboardState.Enum {
     get {_state ?? .unknown}
     set {_state = newValue}
   }
   /// Returns true if `state` has been explicitly set.
-  var hasState: Bool {self._state != nil}
+  public var hasState: Bool {self._state != nil}
   /// Clears the value of `state`. Subsequent reads from it will return its default value.
-  mutating func clearState() {self._state = nil}
+  public mutating func clearState() {self._state = nil}
 
-  var attributes: TextEditingAttributes {
+  public var attributes: TextEditingAttributes {
     get {_attributes ?? TextEditingAttributes()}
     set {_attributes = newValue}
   }
   /// Returns true if `attributes` has been explicitly set.
-  var hasAttributes: Bool {self._attributes != nil}
+  public var hasAttributes: Bool {self._attributes != nil}
   /// Clears the value of `attributes`. Subsequent reads from it will return its default value.
-  mutating func clearAttributes() {self._attributes = nil}
+  public mutating func clearAttributes() {self._attributes = nil}
 
-  var encryptedTextCyphertext: Data {
+  public var encryptedTextCyphertext: Data {
     get {_encryptedTextCyphertext ?? Data()}
     set {_encryptedTextCyphertext = newValue}
   }
   /// Returns true if `encryptedTextCyphertext` has been explicitly set.
-  var hasEncryptedTextCyphertext: Bool {self._encryptedTextCyphertext != nil}
+  public var hasEncryptedTextCyphertext: Bool {self._encryptedTextCyphertext != nil}
   /// Clears the value of `encryptedTextCyphertext`. Subsequent reads from it will return its default value.
-  mutating func clearEncryptedTextCyphertext() {self._encryptedTextCyphertext = nil}
+  public mutating func clearEncryptedTextCyphertext() {self._encryptedTextCyphertext = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _state: KeyboardState.Enum? = nil
   fileprivate var _attributes: TextEditingAttributes? = nil
@@ -329,18 +329,18 @@ nonisolated struct KeyboardMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var keyboardMessage: KeyboardMessage {
+  public var keyboardMessage: KeyboardMessage {
     get {return getExtensionValue(ext: Extensions_keyboardMessage) ?? KeyboardMessage()}
     set {setExtensionValue(ext: Extensions_keyboardMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_keyboardMessage`
   /// has been explicitly set.
-  var hasKeyboardMessage: Bool {
+  public var hasKeyboardMessage: Bool {
     return hasExtensionValue(ext: Extensions_keyboardMessage)
   }
   /// Clears the value of extension `Extensions_keyboardMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearKeyboardMessage() {
+  public mutating func clearKeyboardMessage() {
     clearExtensionValue(ext: Extensions_keyboardMessage)
   }
 
@@ -352,7 +352,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let KeyboardMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let KeyboardMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_keyboardMessage
 ]
 
@@ -360,7 +360,7 @@ nonisolated let KeyboardMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_keyboardMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<KeyboardMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_keyboardMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<KeyboardMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 28,
   fieldName: "keyboardMessage"
 )
@@ -368,102 +368,102 @@ nonisolated let Extensions_keyboardMessage = SwiftProtobuf.MessageExtension<Swif
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension KeyboardState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "KeyboardState"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "KeyboardState"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: KeyboardState, rhs: KeyboardState) -> Bool {
+  public static func ==(lhs: KeyboardState, rhs: KeyboardState) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension KeyboardState.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}NotEditing\0\u{1}DidBeginEditing\0\u{1}Editing\0\u{1}TextDidChange\0\u{1}DidEndEditing\0\u{1}Response\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}NotEditing\0\u{1}DidBeginEditing\0\u{1}Editing\0\u{1}TextDidChange\0\u{1}DidEndEditing\0\u{1}Response\0")
 }
 
 nonisolated extension AutocapitalizationType: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "AutocapitalizationType"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "AutocapitalizationType"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: AutocapitalizationType, rhs: AutocapitalizationType) -> Bool {
+  public static func ==(lhs: AutocapitalizationType, rhs: AutocapitalizationType) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension AutocapitalizationType.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0None\0\u{1}Words\0\u{1}Sentences\0\u{1}AllCharacters\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0None\0\u{1}Words\0\u{1}Sentences\0\u{1}AllCharacters\0")
 }
 
 nonisolated extension KeyboardType: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "KeyboardType"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "KeyboardType"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: KeyboardType, rhs: KeyboardType) -> Bool {
+  public static func ==(lhs: KeyboardType, rhs: KeyboardType) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension KeyboardType.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Default\0\u{1}ASCII_Capable\0\u{1}NumbersAndPunctuation\0\u{1}URL\0\u{1}NumberPad\0\u{1}PhonePad\0\u{1}NamePhonePad\0\u{1}EmailAddress\0\u{1}DecimalPad\0\u{1}Twitter\0\u{1}WebSearch\0\u{1}Alphanet\0\u{1}PasscodePad\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Default\0\u{1}ASCII_Capable\0\u{1}NumbersAndPunctuation\0\u{1}URL\0\u{1}NumberPad\0\u{1}PhonePad\0\u{1}NamePhonePad\0\u{1}EmailAddress\0\u{1}DecimalPad\0\u{1}Twitter\0\u{1}WebSearch\0\u{1}Alphanet\0\u{1}PasscodePad\0")
 }
 
 nonisolated extension ReturnKeyType: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ReturnKeyType"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "ReturnKeyType"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ReturnKeyType, rhs: ReturnKeyType) -> Bool {
+  public static func ==(lhs: ReturnKeyType, rhs: ReturnKeyType) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension ReturnKeyType.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Default\0\u{1}Go\0\u{1}Google\0\u{1}Join\0\u{1}Next\0\u{1}Route\0\u{1}Search\0\u{1}Send\0\u{1}Yahoo\0\u{1}Done\0\u{1}EmergencyCall\0\u{1}Continue\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Default\0\u{1}Go\0\u{1}Google\0\u{1}Join\0\u{1}Next\0\u{1}Route\0\u{1}Search\0\u{1}Send\0\u{1}Yahoo\0\u{1}Done\0\u{1}EmergencyCall\0\u{1}Continue\0")
 }
 
 nonisolated extension TextInputTraits: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "TextInputTraits"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}autocapitalizationType\0\u{1}keyboardType\0\u{1}returnKeyType\0\u{1}autocorrection\0\u{1}spellchecking\0\u{1}enablesReturnKeyAutomatically\0\u{1}secureTextEntry\0\u{1}validTextRangeLocation\0\u{1}validTextRangeLength\0\u{1}pINEntrySeparatorIndexes\0")
+  public static let protoMessageName: String = "TextInputTraits"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}autocapitalizationType\0\u{1}keyboardType\0\u{1}returnKeyType\0\u{1}autocorrection\0\u{1}spellchecking\0\u{1}enablesReturnKeyAutomatically\0\u{1}secureTextEntry\0\u{1}validTextRangeLocation\0\u{1}validTextRangeLength\0\u{1}pINEntrySeparatorIndexes\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -484,7 +484,7 @@ nonisolated extension TextInputTraits: SwiftProtobuf.Message, SwiftProtobuf._Mes
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -522,7 +522,7 @@ nonisolated extension TextInputTraits: SwiftProtobuf.Message, SwiftProtobuf._Mes
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: TextInputTraits, rhs: TextInputTraits) -> Bool {
+  public static func ==(lhs: TextInputTraits, rhs: TextInputTraits) -> Bool {
     if lhs._autocapitalizationType != rhs._autocapitalizationType {return false}
     if lhs._keyboardType != rhs._keyboardType {return false}
     if lhs._returnKeyType != rhs._returnKeyType {return false}
@@ -539,10 +539,10 @@ nonisolated extension TextInputTraits: SwiftProtobuf.Message, SwiftProtobuf._Mes
 }
 
 nonisolated extension TextEditingAttributes: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "TextEditingAttributes"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}title\0\u{1}prompt\0\u{1}inputTraits\0")
+  public static let protoMessageName: String = "TextEditingAttributes"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}title\0\u{1}prompt\0\u{1}inputTraits\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -556,7 +556,7 @@ nonisolated extension TextEditingAttributes: SwiftProtobuf.Message, SwiftProtobu
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -573,7 +573,7 @@ nonisolated extension TextEditingAttributes: SwiftProtobuf.Message, SwiftProtobu
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: TextEditingAttributes, rhs: TextEditingAttributes) -> Bool {
+  public static func ==(lhs: TextEditingAttributes, rhs: TextEditingAttributes) -> Bool {
     if lhs._title != rhs._title {return false}
     if lhs._prompt != rhs._prompt {return false}
     if lhs._inputTraits != rhs._inputTraits {return false}
@@ -583,10 +583,10 @@ nonisolated extension TextEditingAttributes: SwiftProtobuf.Message, SwiftProtobu
 }
 
 nonisolated extension KeyboardMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "KeyboardMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}state\0\u{2}\u{2}attributes\0\u{1}encryptedTextCyphertext\0")
+  public static let protoMessageName: String = "KeyboardMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}state\0\u{2}\u{2}attributes\0\u{1}encryptedTextCyphertext\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -600,7 +600,7 @@ nonisolated extension KeyboardMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -617,7 +617,7 @@ nonisolated extension KeyboardMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: KeyboardMessage, rhs: KeyboardMessage) -> Bool {
+  public static func ==(lhs: KeyboardMessage, rhs: KeyboardMessage) -> Bool {
     if lhs._state != rhs._state {return false}
     if lhs._attributes != rhs._attributes {return false}
     if lhs._encryptedTextCyphertext != rhs._encryptedTextCyphertext {return false}

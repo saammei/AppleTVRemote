@@ -20,16 +20,16 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct RemoveEndpointsMessage: Sendable {
+public nonisolated struct RemoveEndpointsMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var endpointUids: [String] = []
+  public var endpointUids: [String] = []
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 }
 
 // MARK: - Extension support defined in RemoveEndpointsMessage.proto.
@@ -43,18 +43,18 @@ nonisolated struct RemoveEndpointsMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var removeEndpointsMessage: RemoveEndpointsMessage {
+  public var removeEndpointsMessage: RemoveEndpointsMessage {
     get {return getExtensionValue(ext: Extensions_removeEndpointsMessage) ?? RemoveEndpointsMessage()}
     set {setExtensionValue(ext: Extensions_removeEndpointsMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_removeEndpointsMessage`
   /// has been explicitly set.
-  var hasRemoveEndpointsMessage: Bool {
+  public var hasRemoveEndpointsMessage: Bool {
     return hasExtensionValue(ext: Extensions_removeEndpointsMessage)
   }
   /// Clears the value of extension `Extensions_removeEndpointsMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearRemoveEndpointsMessage() {
+  public mutating func clearRemoveEndpointsMessage() {
     clearExtensionValue(ext: Extensions_removeEndpointsMessage)
   }
 
@@ -66,7 +66,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let RemoveEndpointsMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let RemoveEndpointsMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_removeEndpointsMessage
 ]
 
@@ -74,7 +74,7 @@ nonisolated let RemoveEndpointsMessage_Extensions: SwiftProtobuf.SimpleExtension
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_removeEndpointsMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<RemoveEndpointsMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_removeEndpointsMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<RemoveEndpointsMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 84,
   fieldName: "removeEndpointsMessage"
 )
@@ -82,10 +82,10 @@ nonisolated let Extensions_removeEndpointsMessage = SwiftProtobuf.MessageExtensi
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension RemoveEndpointsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "RemoveEndpointsMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}endpointUIDs\0")
+  public static let protoMessageName: String = "RemoveEndpointsMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}endpointUIDs\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -97,14 +97,14 @@ nonisolated extension RemoveEndpointsMessage: SwiftProtobuf.Message, SwiftProtob
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if !self.endpointUids.isEmpty {
       try visitor.visitRepeatedStringField(value: self.endpointUids, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: RemoveEndpointsMessage, rhs: RemoveEndpointsMessage) -> Bool {
+  public static func ==(lhs: RemoveEndpointsMessage, rhs: RemoveEndpointsMessage) -> Bool {
     if lhs.endpointUids != rhs.endpointUids {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

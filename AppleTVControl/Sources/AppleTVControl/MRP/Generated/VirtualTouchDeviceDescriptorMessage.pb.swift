@@ -20,50 +20,50 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct VirtualTouchDeviceDescriptor: Sendable {
+public nonisolated struct VirtualTouchDeviceDescriptor: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var absolute: Bool {
+  public var absolute: Bool {
     get {_absolute ?? false}
     set {_absolute = newValue}
   }
   /// Returns true if `absolute` has been explicitly set.
-  var hasAbsolute: Bool {self._absolute != nil}
+  public var hasAbsolute: Bool {self._absolute != nil}
   /// Clears the value of `absolute`. Subsequent reads from it will return its default value.
-  mutating func clearAbsolute() {self._absolute = nil}
+  public mutating func clearAbsolute() {self._absolute = nil}
 
-  var integratedDisplay: Bool {
+  public var integratedDisplay: Bool {
     get {_integratedDisplay ?? false}
     set {_integratedDisplay = newValue}
   }
   /// Returns true if `integratedDisplay` has been explicitly set.
-  var hasIntegratedDisplay: Bool {self._integratedDisplay != nil}
+  public var hasIntegratedDisplay: Bool {self._integratedDisplay != nil}
   /// Clears the value of `integratedDisplay`. Subsequent reads from it will return its default value.
-  mutating func clearIntegratedDisplay() {self._integratedDisplay = nil}
+  public mutating func clearIntegratedDisplay() {self._integratedDisplay = nil}
 
-  var screenSizeWidth: Float {
+  public var screenSizeWidth: Float {
     get {_screenSizeWidth ?? 0}
     set {_screenSizeWidth = newValue}
   }
   /// Returns true if `screenSizeWidth` has been explicitly set.
-  var hasScreenSizeWidth: Bool {self._screenSizeWidth != nil}
+  public var hasScreenSizeWidth: Bool {self._screenSizeWidth != nil}
   /// Clears the value of `screenSizeWidth`. Subsequent reads from it will return its default value.
-  mutating func clearScreenSizeWidth() {self._screenSizeWidth = nil}
+  public mutating func clearScreenSizeWidth() {self._screenSizeWidth = nil}
 
-  var screenSizeHeight: Float {
+  public var screenSizeHeight: Float {
     get {_screenSizeHeight ?? 0}
     set {_screenSizeHeight = newValue}
   }
   /// Returns true if `screenSizeHeight` has been explicitly set.
-  var hasScreenSizeHeight: Bool {self._screenSizeHeight != nil}
+  public var hasScreenSizeHeight: Bool {self._screenSizeHeight != nil}
   /// Clears the value of `screenSizeHeight`. Subsequent reads from it will return its default value.
-  mutating func clearScreenSizeHeight() {self._screenSizeHeight = nil}
+  public mutating func clearScreenSizeHeight() {self._screenSizeHeight = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _absolute: Bool? = nil
   fileprivate var _integratedDisplay: Bool? = nil
@@ -74,10 +74,10 @@ nonisolated struct VirtualTouchDeviceDescriptor: Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension VirtualTouchDeviceDescriptor: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "VirtualTouchDeviceDescriptor"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}absolute\0\u{1}integratedDisplay\0\u{1}screenSizeWidth\0\u{1}screenSizeHeight\0")
+  public static let protoMessageName: String = "VirtualTouchDeviceDescriptor"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}absolute\0\u{1}integratedDisplay\0\u{1}screenSizeWidth\0\u{1}screenSizeHeight\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -92,7 +92,7 @@ nonisolated extension VirtualTouchDeviceDescriptor: SwiftProtobuf.Message, Swift
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -112,7 +112,7 @@ nonisolated extension VirtualTouchDeviceDescriptor: SwiftProtobuf.Message, Swift
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: VirtualTouchDeviceDescriptor, rhs: VirtualTouchDeviceDescriptor) -> Bool {
+  public static func ==(lhs: VirtualTouchDeviceDescriptor, rhs: VirtualTouchDeviceDescriptor) -> Bool {
     if lhs._absolute != rhs._absolute {return false}
     if lhs._integratedDisplay != rhs._integratedDisplay {return false}
     if lhs._screenSizeWidth != rhs._screenSizeWidth {return false}

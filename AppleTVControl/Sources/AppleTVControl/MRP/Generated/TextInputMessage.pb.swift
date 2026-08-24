@@ -20,14 +20,14 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct ActionType: Sendable {
+public nonisolated struct ActionType: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case unknown = 0
     case insert = 1
     case set = 2
@@ -36,50 +36,50 @@ nonisolated struct ActionType: Sendable {
     /// "Clear" clashes with something, making mypy unhappy 
     case clearAction = 4
 
-    init() {
+    public init() {
       self = .unknown
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct TextInputMessage: Sendable {
+public nonisolated struct TextInputMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var timestamp: Double {
+  public var timestamp: Double {
     get {_timestamp ?? 0}
     set {_timestamp = newValue}
   }
   /// Returns true if `timestamp` has been explicitly set.
-  var hasTimestamp: Bool {self._timestamp != nil}
+  public var hasTimestamp: Bool {self._timestamp != nil}
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
-  mutating func clearTimestamp() {self._timestamp = nil}
+  public mutating func clearTimestamp() {self._timestamp = nil}
 
-  var text: String {
+  public var text: String {
     get {_text ?? String()}
     set {_text = newValue}
   }
   /// Returns true if `text` has been explicitly set.
-  var hasText: Bool {self._text != nil}
+  public var hasText: Bool {self._text != nil}
   /// Clears the value of `text`. Subsequent reads from it will return its default value.
-  mutating func clearText() {self._text = nil}
+  public mutating func clearText() {self._text = nil}
 
-  var actionType: ActionType.Enum {
+  public var actionType: ActionType.Enum {
     get {_actionType ?? .unknown}
     set {_actionType = newValue}
   }
   /// Returns true if `actionType` has been explicitly set.
-  var hasActionType: Bool {self._actionType != nil}
+  public var hasActionType: Bool {self._actionType != nil}
   /// Clears the value of `actionType`. Subsequent reads from it will return its default value.
-  mutating func clearActionType() {self._actionType = nil}
+  public mutating func clearActionType() {self._actionType = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _timestamp: Double? = nil
   fileprivate var _text: String? = nil
@@ -97,18 +97,18 @@ nonisolated struct TextInputMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var textInputMessage: TextInputMessage {
+  public var textInputMessage: TextInputMessage {
     get {return getExtensionValue(ext: Extensions_textInputMessage) ?? TextInputMessage()}
     set {setExtensionValue(ext: Extensions_textInputMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_textInputMessage`
   /// has been explicitly set.
-  var hasTextInputMessage: Bool {
+  public var hasTextInputMessage: Bool {
     return hasExtensionValue(ext: Extensions_textInputMessage)
   }
   /// Clears the value of extension `Extensions_textInputMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearTextInputMessage() {
+  public mutating func clearTextInputMessage() {
     clearExtensionValue(ext: Extensions_textInputMessage)
   }
 
@@ -120,7 +120,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let TextInputMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let TextInputMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_textInputMessage
 ]
 
@@ -128,7 +128,7 @@ nonisolated let TextInputMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = 
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_textInputMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<TextInputMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_textInputMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<TextInputMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 30,
   fieldName: "textInputMessage"
 )
@@ -136,33 +136,33 @@ nonisolated let Extensions_textInputMessage = SwiftProtobuf.MessageExtension<Swi
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension ActionType: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ActionType"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "ActionType"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ActionType, rhs: ActionType) -> Bool {
+  public static func ==(lhs: ActionType, rhs: ActionType) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension ActionType.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}Insert\0\u{1}Set\0\u{1}Delete\0\u{1}ClearAction\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}Insert\0\u{1}Set\0\u{1}Delete\0\u{1}ClearAction\0")
 }
 
 nonisolated extension TextInputMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "TextInputMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}timestamp\0\u{1}text\0\u{1}actionType\0")
+  public static let protoMessageName: String = "TextInputMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}timestamp\0\u{1}text\0\u{1}actionType\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -176,7 +176,7 @@ nonisolated extension TextInputMessage: SwiftProtobuf.Message, SwiftProtobuf._Me
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -193,7 +193,7 @@ nonisolated extension TextInputMessage: SwiftProtobuf.Message, SwiftProtobuf._Me
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: TextInputMessage, rhs: TextInputMessage) -> Bool {
+  public static func ==(lhs: TextInputMessage, rhs: TextInputMessage) -> Bool {
     if lhs._timestamp != rhs._timestamp {return false}
     if lhs._text != rhs._text {return false}
     if lhs._actionType != rhs._actionType {return false}

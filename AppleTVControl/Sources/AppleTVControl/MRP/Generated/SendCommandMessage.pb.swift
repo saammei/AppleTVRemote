@@ -20,41 +20,41 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct SendCommandMessage: Sendable {
+public nonisolated struct SendCommandMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var command: Command {
+  public var command: Command {
     get {_command ?? .unknown}
     set {_command = newValue}
   }
   /// Returns true if `command` has been explicitly set.
-  var hasCommand: Bool {self._command != nil}
+  public var hasCommand: Bool {self._command != nil}
   /// Clears the value of `command`. Subsequent reads from it will return its default value.
-  mutating func clearCommand() {self._command = nil}
+  public mutating func clearCommand() {self._command = nil}
 
-  var options: CommandOptions {
+  public var options: CommandOptions {
     get {_options ?? CommandOptions()}
     set {_options = newValue}
   }
   /// Returns true if `options` has been explicitly set.
-  var hasOptions: Bool {self._options != nil}
+  public var hasOptions: Bool {self._options != nil}
   /// Clears the value of `options`. Subsequent reads from it will return its default value.
-  mutating func clearOptions() {self._options = nil}
+  public mutating func clearOptions() {self._options = nil}
 
-  var playerPath: PlayerPath {
+  public var playerPath: PlayerPath {
     get {_playerPath ?? PlayerPath()}
     set {_playerPath = newValue}
   }
   /// Returns true if `playerPath` has been explicitly set.
-  var hasPlayerPath: Bool {self._playerPath != nil}
+  public var hasPlayerPath: Bool {self._playerPath != nil}
   /// Clears the value of `playerPath`. Subsequent reads from it will return its default value.
-  mutating func clearPlayerPath() {self._playerPath = nil}
+  public mutating func clearPlayerPath() {self._playerPath = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _command: Command? = nil
   fileprivate var _options: CommandOptions? = nil
@@ -72,18 +72,18 @@ nonisolated struct SendCommandMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var sendCommandMessage: SendCommandMessage {
+  public var sendCommandMessage: SendCommandMessage {
     get {return getExtensionValue(ext: Extensions_sendCommandMessage) ?? SendCommandMessage()}
     set {setExtensionValue(ext: Extensions_sendCommandMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_sendCommandMessage`
   /// has been explicitly set.
-  var hasSendCommandMessage: Bool {
+  public var hasSendCommandMessage: Bool {
     return hasExtensionValue(ext: Extensions_sendCommandMessage)
   }
   /// Clears the value of extension `Extensions_sendCommandMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearSendCommandMessage() {
+  public mutating func clearSendCommandMessage() {
     clearExtensionValue(ext: Extensions_sendCommandMessage)
   }
 
@@ -95,7 +95,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let SendCommandMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let SendCommandMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_sendCommandMessage
 ]
 
@@ -103,7 +103,7 @@ nonisolated let SendCommandMessage_Extensions: SwiftProtobuf.SimpleExtensionMap 
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_sendCommandMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SendCommandMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_sendCommandMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SendCommandMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 6,
   fieldName: "sendCommandMessage"
 )
@@ -111,15 +111,15 @@ nonisolated let Extensions_sendCommandMessage = SwiftProtobuf.MessageExtension<S
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension SendCommandMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SendCommandMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}command\0\u{1}options\0\u{1}playerPath\0")
+  public static let protoMessageName: String = "SendCommandMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}command\0\u{1}options\0\u{1}playerPath\0")
 
   public var isInitialized: Bool {
     if let v = self._playerPath, !v.isInitialized {return false}
     return true
   }
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -133,7 +133,7 @@ nonisolated extension SendCommandMessage: SwiftProtobuf.Message, SwiftProtobuf._
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -150,7 +150,7 @@ nonisolated extension SendCommandMessage: SwiftProtobuf.Message, SwiftProtobuf._
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SendCommandMessage, rhs: SendCommandMessage) -> Bool {
+  public static func ==(lhs: SendCommandMessage, rhs: SendCommandMessage) -> Bool {
     if lhs._command != rhs._command {return false}
     if lhs._options != rhs._options {return false}
     if lhs._playerPath != rhs._playerPath {return false}

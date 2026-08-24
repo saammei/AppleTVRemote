@@ -20,58 +20,58 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct RepeatMode: Sendable {
+public nonisolated struct RepeatMode: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case unknown = 0
     case off = 1
     case one = 2
     case all = 3
 
-    init() {
+    public init() {
       self = .unknown
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct ShuffleMode: Sendable {
+public nonisolated struct ShuffleMode: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case unknown = 0
     case off = 1
     case albums = 2
     case songs = 3
 
-    init() {
+    public init() {
       self = .unknown
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct DeviceClass: Sendable {
+public nonisolated struct DeviceClass: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case invalid = 0
     case iPhone = 1
     case iPod = 2
@@ -83,23 +83,23 @@ nonisolated struct DeviceClass: Sendable {
     case bridge = 8
     case mac = 9
 
-    init() {
+    public init() {
       self = .invalid
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct DeviceType: Sendable {
+public nonisolated struct DeviceType: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case unknown = 0
     case airPlay = 1
     case bluetooth = 2
@@ -107,23 +107,23 @@ nonisolated struct DeviceType: Sendable {
     case builtIn = 4
     case wired = 5
 
-    init() {
+    public init() {
       self = .unknown
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct DeviceSubType: Sendable {
+public nonisolated struct DeviceSubType: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case `default` = 0
     case speaker = 1
     case headphones = 2
@@ -143,23 +143,23 @@ nonisolated struct DeviceSubType: Sendable {
     case setTopBox = 16
     case tvstick = 17
 
-    init() {
+    public init() {
       self = .default
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct PlaybackState: Sendable {
+public nonisolated struct PlaybackState: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case unknown = 0
     case playing = 1
     case paused = 2
@@ -167,151 +167,151 @@ nonisolated struct PlaybackState: Sendable {
     case interrupted = 4
     case seeking = 5
 
-    init() {
+    public init() {
       self = .unknown
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension RepeatMode: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "RepeatMode"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "RepeatMode"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: RepeatMode, rhs: RepeatMode) -> Bool {
+  public static func ==(lhs: RepeatMode, rhs: RepeatMode) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension RepeatMode.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}Off\0\u{1}One\0\u{1}All\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}Off\0\u{1}One\0\u{1}All\0")
 }
 
 nonisolated extension ShuffleMode: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ShuffleMode"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "ShuffleMode"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ShuffleMode, rhs: ShuffleMode) -> Bool {
+  public static func ==(lhs: ShuffleMode, rhs: ShuffleMode) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension ShuffleMode.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}Off\0\u{1}Albums\0\u{1}Songs\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}Off\0\u{1}Albums\0\u{1}Songs\0")
 }
 
 nonisolated extension DeviceClass: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "DeviceClass"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "DeviceClass"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: DeviceClass, rhs: DeviceClass) -> Bool {
+  public static func ==(lhs: DeviceClass, rhs: DeviceClass) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension DeviceClass.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Invalid\0\u{1}iPhone\0\u{1}iPod\0\u{1}iPad\0\u{1}AppleTV\0\u{1}iFPGA\0\u{1}Watch\0\u{1}Accessory\0\u{1}Bridge\0\u{1}Mac\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Invalid\0\u{1}iPhone\0\u{1}iPod\0\u{1}iPad\0\u{1}AppleTV\0\u{1}iFPGA\0\u{1}Watch\0\u{1}Accessory\0\u{1}Bridge\0\u{1}Mac\0")
 }
 
 nonisolated extension DeviceType: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "DeviceType"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "DeviceType"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: DeviceType, rhs: DeviceType) -> Bool {
+  public static func ==(lhs: DeviceType, rhs: DeviceType) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension DeviceType.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}AirPlay\0\u{1}Bluetooth\0\u{1}CarPlay\0\u{1}BuiltIn\0\u{1}Wired\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}AirPlay\0\u{1}Bluetooth\0\u{1}CarPlay\0\u{1}BuiltIn\0\u{1}Wired\0")
 }
 
 nonisolated extension DeviceSubType: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "DeviceSubType"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "DeviceSubType"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: DeviceSubType, rhs: DeviceSubType) -> Bool {
+  public static func ==(lhs: DeviceSubType, rhs: DeviceSubType) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension DeviceSubType.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Default\0\u{1}Speaker\0\u{1}Headphones\0\u{1}Headset\0\u{1}Receiver\0\u{1}LineOut\0\u{1}USB\0\u{1}DisplayPort\0\u{1}HDMI\0\u{1}LowEnergy\0\u{1}SPDIF\0\u{1}TV\0\u{1}HomePod\0\u{1}AppleTV\0\u{1}Vehicle\0\u{1}Cluster\0\u{1}SetTopBox\0\u{1}TVStick\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Default\0\u{1}Speaker\0\u{1}Headphones\0\u{1}Headset\0\u{1}Receiver\0\u{1}LineOut\0\u{1}USB\0\u{1}DisplayPort\0\u{1}HDMI\0\u{1}LowEnergy\0\u{1}SPDIF\0\u{1}TV\0\u{1}HomePod\0\u{1}AppleTV\0\u{1}Vehicle\0\u{1}Cluster\0\u{1}SetTopBox\0\u{1}TVStick\0")
 }
 
 nonisolated extension PlaybackState: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PlaybackState"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "PlaybackState"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PlaybackState, rhs: PlaybackState) -> Bool {
+  public static func ==(lhs: PlaybackState, rhs: PlaybackState) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension PlaybackState.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}Playing\0\u{1}Paused\0\u{1}Stopped\0\u{1}Interrupted\0\u{1}Seeking\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}Playing\0\u{1}Paused\0\u{1}Stopped\0\u{1}Interrupted\0\u{1}Seeking\0")
 }

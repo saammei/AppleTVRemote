@@ -25,102 +25,102 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct AudioStreamPacketDescription: Sendable {
+public nonisolated struct AudioStreamPacketDescription: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var startOffset: Int64 {
+  public var startOffset: Int64 {
     get {_startOffset ?? 0}
     set {_startOffset = newValue}
   }
   /// Returns true if `startOffset` has been explicitly set.
-  var hasStartOffset: Bool {self._startOffset != nil}
+  public var hasStartOffset: Bool {self._startOffset != nil}
   /// Clears the value of `startOffset`. Subsequent reads from it will return its default value.
-  mutating func clearStartOffset() {self._startOffset = nil}
+  public mutating func clearStartOffset() {self._startOffset = nil}
 
-  var variableFramesInPacket: UInt32 {
+  public var variableFramesInPacket: UInt32 {
     get {_variableFramesInPacket ?? 0}
     set {_variableFramesInPacket = newValue}
   }
   /// Returns true if `variableFramesInPacket` has been explicitly set.
-  var hasVariableFramesInPacket: Bool {self._variableFramesInPacket != nil}
+  public var hasVariableFramesInPacket: Bool {self._variableFramesInPacket != nil}
   /// Clears the value of `variableFramesInPacket`. Subsequent reads from it will return its default value.
-  mutating func clearVariableFramesInPacket() {self._variableFramesInPacket = nil}
+  public mutating func clearVariableFramesInPacket() {self._variableFramesInPacket = nil}
 
-  var dataByteSize: UInt32 {
+  public var dataByteSize: UInt32 {
     get {_dataByteSize ?? 0}
     set {_dataByteSize = newValue}
   }
   /// Returns true if `dataByteSize` has been explicitly set.
-  var hasDataByteSize: Bool {self._dataByteSize != nil}
+  public var hasDataByteSize: Bool {self._dataByteSize != nil}
   /// Clears the value of `dataByteSize`. Subsequent reads from it will return its default value.
-  mutating func clearDataByteSize() {self._dataByteSize = nil}
+  public mutating func clearDataByteSize() {self._dataByteSize = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _startOffset: Int64? = nil
   fileprivate var _variableFramesInPacket: UInt32? = nil
   fileprivate var _dataByteSize: UInt32? = nil
 }
 
-nonisolated struct AudioBuffer: Sendable {
+public nonisolated struct AudioBuffer: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var formatSettings: AudioFormatSettings {
+  public var formatSettings: AudioFormatSettings {
     get {_formatSettings ?? AudioFormatSettings()}
     set {_formatSettings = newValue}
   }
   /// Returns true if `formatSettings` has been explicitly set.
-  var hasFormatSettings: Bool {self._formatSettings != nil}
+  public var hasFormatSettings: Bool {self._formatSettings != nil}
   /// Clears the value of `formatSettings`. Subsequent reads from it will return its default value.
-  mutating func clearFormatSettings() {self._formatSettings = nil}
+  public mutating func clearFormatSettings() {self._formatSettings = nil}
 
-  var packetCapacity: Int64 {
+  public var packetCapacity: Int64 {
     get {_packetCapacity ?? 0}
     set {_packetCapacity = newValue}
   }
   /// Returns true if `packetCapacity` has been explicitly set.
-  var hasPacketCapacity: Bool {self._packetCapacity != nil}
+  public var hasPacketCapacity: Bool {self._packetCapacity != nil}
   /// Clears the value of `packetCapacity`. Subsequent reads from it will return its default value.
-  mutating func clearPacketCapacity() {self._packetCapacity = nil}
+  public mutating func clearPacketCapacity() {self._packetCapacity = nil}
 
-  var maximumPacketSize: Int64 {
+  public var maximumPacketSize: Int64 {
     get {_maximumPacketSize ?? 0}
     set {_maximumPacketSize = newValue}
   }
   /// Returns true if `maximumPacketSize` has been explicitly set.
-  var hasMaximumPacketSize: Bool {self._maximumPacketSize != nil}
+  public var hasMaximumPacketSize: Bool {self._maximumPacketSize != nil}
   /// Clears the value of `maximumPacketSize`. Subsequent reads from it will return its default value.
-  mutating func clearMaximumPacketSize() {self._maximumPacketSize = nil}
+  public mutating func clearMaximumPacketSize() {self._maximumPacketSize = nil}
 
-  var packetCount: Int64 {
+  public var packetCount: Int64 {
     get {_packetCount ?? 0}
     set {_packetCount = newValue}
   }
   /// Returns true if `packetCount` has been explicitly set.
-  var hasPacketCount: Bool {self._packetCount != nil}
+  public var hasPacketCount: Bool {self._packetCount != nil}
   /// Clears the value of `packetCount`. Subsequent reads from it will return its default value.
-  mutating func clearPacketCount() {self._packetCount = nil}
+  public mutating func clearPacketCount() {self._packetCount = nil}
 
-  var contents: Data {
+  public var contents: Data {
     get {_contents ?? Data()}
     set {_contents = newValue}
   }
   /// Returns true if `contents` has been explicitly set.
-  var hasContents: Bool {self._contents != nil}
+  public var hasContents: Bool {self._contents != nil}
   /// Clears the value of `contents`. Subsequent reads from it will return its default value.
-  mutating func clearContents() {self._contents = nil}
+  public mutating func clearContents() {self._contents = nil}
 
-  var packetDescriptions: [AudioStreamPacketDescription] = []
+  public var packetDescriptions: [AudioStreamPacketDescription] = []
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _formatSettings: AudioFormatSettings? = nil
   fileprivate var _packetCapacity: Int64? = nil
@@ -129,95 +129,95 @@ nonisolated struct AudioBuffer: Sendable {
   fileprivate var _contents: Data? = nil
 }
 
-nonisolated struct AudioTime: Sendable {
+public nonisolated struct AudioTime: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var timestamp: Double {
+  public var timestamp: Double {
     get {_timestamp ?? 0}
     set {_timestamp = newValue}
   }
   /// Returns true if `timestamp` has been explicitly set.
-  var hasTimestamp: Bool {self._timestamp != nil}
+  public var hasTimestamp: Bool {self._timestamp != nil}
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
-  mutating func clearTimestamp() {self._timestamp = nil}
+  public mutating func clearTimestamp() {self._timestamp = nil}
 
-  var sampleRate: Double {
+  public var sampleRate: Double {
     get {_sampleRate ?? 0}
     set {_sampleRate = newValue}
   }
   /// Returns true if `sampleRate` has been explicitly set.
-  var hasSampleRate: Bool {self._sampleRate != nil}
+  public var hasSampleRate: Bool {self._sampleRate != nil}
   /// Clears the value of `sampleRate`. Subsequent reads from it will return its default value.
-  mutating func clearSampleRate() {self._sampleRate = nil}
+  public mutating func clearSampleRate() {self._sampleRate = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _timestamp: Double? = nil
   fileprivate var _sampleRate: Double? = nil
 }
 
-nonisolated struct AudioDataBlock: Sendable {
+public nonisolated struct AudioDataBlock: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var buffer: AudioBuffer {
+  public var buffer: AudioBuffer {
     get {_buffer ?? AudioBuffer()}
     set {_buffer = newValue}
   }
   /// Returns true if `buffer` has been explicitly set.
-  var hasBuffer: Bool {self._buffer != nil}
+  public var hasBuffer: Bool {self._buffer != nil}
   /// Clears the value of `buffer`. Subsequent reads from it will return its default value.
-  mutating func clearBuffer() {self._buffer = nil}
+  public mutating func clearBuffer() {self._buffer = nil}
 
-  var time: AudioTime {
+  public var time: AudioTime {
     get {_time ?? AudioTime()}
     set {_time = newValue}
   }
   /// Returns true if `time` has been explicitly set.
-  var hasTime: Bool {self._time != nil}
+  public var hasTime: Bool {self._time != nil}
   /// Clears the value of `time`. Subsequent reads from it will return its default value.
-  mutating func clearTime() {self._time = nil}
+  public mutating func clearTime() {self._time = nil}
 
-  var gain: Double {
+  public var gain: Double {
     get {_gain ?? 0}
     set {_gain = newValue}
   }
   /// Returns true if `gain` has been explicitly set.
-  var hasGain: Bool {self._gain != nil}
+  public var hasGain: Bool {self._gain != nil}
   /// Clears the value of `gain`. Subsequent reads from it will return its default value.
-  mutating func clearGain() {self._gain = nil}
+  public mutating func clearGain() {self._gain = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _buffer: AudioBuffer? = nil
   fileprivate var _time: AudioTime? = nil
   fileprivate var _gain: Double? = nil
 }
 
-nonisolated struct SendVoiceInputMessage: Sendable {
+public nonisolated struct SendVoiceInputMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var dataBlock: AudioDataBlock {
+  public var dataBlock: AudioDataBlock {
     get {_dataBlock ?? AudioDataBlock()}
     set {_dataBlock = newValue}
   }
   /// Returns true if `dataBlock` has been explicitly set.
-  var hasDataBlock: Bool {self._dataBlock != nil}
+  public var hasDataBlock: Bool {self._dataBlock != nil}
   /// Clears the value of `dataBlock`. Subsequent reads from it will return its default value.
-  mutating func clearDataBlock() {self._dataBlock = nil}
+  public mutating func clearDataBlock() {self._dataBlock = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _dataBlock: AudioDataBlock? = nil
 }
@@ -233,18 +233,18 @@ nonisolated struct SendVoiceInputMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var sendVoiceInputMessage: SendVoiceInputMessage {
+  public var sendVoiceInputMessage: SendVoiceInputMessage {
     get {return getExtensionValue(ext: Extensions_sendVoiceInputMessage) ?? SendVoiceInputMessage()}
     set {setExtensionValue(ext: Extensions_sendVoiceInputMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_sendVoiceInputMessage`
   /// has been explicitly set.
-  var hasSendVoiceInputMessage: Bool {
+  public var hasSendVoiceInputMessage: Bool {
     return hasExtensionValue(ext: Extensions_sendVoiceInputMessage)
   }
   /// Clears the value of extension `Extensions_sendVoiceInputMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearSendVoiceInputMessage() {
+  public mutating func clearSendVoiceInputMessage() {
     clearExtensionValue(ext: Extensions_sendVoiceInputMessage)
   }
 
@@ -256,7 +256,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let SendVoiceInputMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let SendVoiceInputMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_sendVoiceInputMessage
 ]
 
@@ -264,7 +264,7 @@ nonisolated let SendVoiceInputMessage_Extensions: SwiftProtobuf.SimpleExtensionM
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_sendVoiceInputMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SendVoiceInputMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_sendVoiceInputMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SendVoiceInputMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 36,
   fieldName: "sendVoiceInputMessage"
 )
@@ -272,10 +272,10 @@ nonisolated let Extensions_sendVoiceInputMessage = SwiftProtobuf.MessageExtensio
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension AudioStreamPacketDescription: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "AudioStreamPacketDescription"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}startOffset\0\u{1}variableFramesInPacket\0\u{1}dataByteSize\0")
+  public static let protoMessageName: String = "AudioStreamPacketDescription"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}startOffset\0\u{1}variableFramesInPacket\0\u{1}dataByteSize\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -289,7 +289,7 @@ nonisolated extension AudioStreamPacketDescription: SwiftProtobuf.Message, Swift
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -306,7 +306,7 @@ nonisolated extension AudioStreamPacketDescription: SwiftProtobuf.Message, Swift
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: AudioStreamPacketDescription, rhs: AudioStreamPacketDescription) -> Bool {
+  public static func ==(lhs: AudioStreamPacketDescription, rhs: AudioStreamPacketDescription) -> Bool {
     if lhs._startOffset != rhs._startOffset {return false}
     if lhs._variableFramesInPacket != rhs._variableFramesInPacket {return false}
     if lhs._dataByteSize != rhs._dataByteSize {return false}
@@ -316,10 +316,10 @@ nonisolated extension AudioStreamPacketDescription: SwiftProtobuf.Message, Swift
 }
 
 nonisolated extension AudioBuffer: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "AudioBuffer"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}formatSettings\0\u{1}packetCapacity\0\u{1}maximumPacketSize\0\u{1}packetCount\0\u{1}contents\0\u{1}packetDescriptions\0")
+  public static let protoMessageName: String = "AudioBuffer"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}formatSettings\0\u{1}packetCapacity\0\u{1}maximumPacketSize\0\u{1}packetCount\0\u{1}contents\0\u{1}packetDescriptions\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -336,7 +336,7 @@ nonisolated extension AudioBuffer: SwiftProtobuf.Message, SwiftProtobuf._Message
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -362,7 +362,7 @@ nonisolated extension AudioBuffer: SwiftProtobuf.Message, SwiftProtobuf._Message
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: AudioBuffer, rhs: AudioBuffer) -> Bool {
+  public static func ==(lhs: AudioBuffer, rhs: AudioBuffer) -> Bool {
     if lhs._formatSettings != rhs._formatSettings {return false}
     if lhs._packetCapacity != rhs._packetCapacity {return false}
     if lhs._maximumPacketSize != rhs._maximumPacketSize {return false}
@@ -375,10 +375,10 @@ nonisolated extension AudioBuffer: SwiftProtobuf.Message, SwiftProtobuf._Message
 }
 
 nonisolated extension AudioTime: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "AudioTime"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}timestamp\0\u{1}sampleRate\0")
+  public static let protoMessageName: String = "AudioTime"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}timestamp\0\u{1}sampleRate\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -391,7 +391,7 @@ nonisolated extension AudioTime: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -405,7 +405,7 @@ nonisolated extension AudioTime: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: AudioTime, rhs: AudioTime) -> Bool {
+  public static func ==(lhs: AudioTime, rhs: AudioTime) -> Bool {
     if lhs._timestamp != rhs._timestamp {return false}
     if lhs._sampleRate != rhs._sampleRate {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -414,10 +414,10 @@ nonisolated extension AudioTime: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
 }
 
 nonisolated extension AudioDataBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "AudioDataBlock"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}buffer\0\u{1}time\0\u{1}gain\0")
+  public static let protoMessageName: String = "AudioDataBlock"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}buffer\0\u{1}time\0\u{1}gain\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -431,7 +431,7 @@ nonisolated extension AudioDataBlock: SwiftProtobuf.Message, SwiftProtobuf._Mess
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -448,7 +448,7 @@ nonisolated extension AudioDataBlock: SwiftProtobuf.Message, SwiftProtobuf._Mess
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: AudioDataBlock, rhs: AudioDataBlock) -> Bool {
+  public static func ==(lhs: AudioDataBlock, rhs: AudioDataBlock) -> Bool {
     if lhs._buffer != rhs._buffer {return false}
     if lhs._time != rhs._time {return false}
     if lhs._gain != rhs._gain {return false}
@@ -458,10 +458,10 @@ nonisolated extension AudioDataBlock: SwiftProtobuf.Message, SwiftProtobuf._Mess
 }
 
 nonisolated extension SendVoiceInputMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SendVoiceInputMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}dataBlock\0")
+  public static let protoMessageName: String = "SendVoiceInputMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}dataBlock\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -473,7 +473,7 @@ nonisolated extension SendVoiceInputMessage: SwiftProtobuf.Message, SwiftProtobu
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -484,7 +484,7 @@ nonisolated extension SendVoiceInputMessage: SwiftProtobuf.Message, SwiftProtobu
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SendVoiceInputMessage, rhs: SendVoiceInputMessage) -> Bool {
+  public static func ==(lhs: SendVoiceInputMessage, rhs: SendVoiceInputMessage) -> Bool {
     if lhs._dataBlock != rhs._dataBlock {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

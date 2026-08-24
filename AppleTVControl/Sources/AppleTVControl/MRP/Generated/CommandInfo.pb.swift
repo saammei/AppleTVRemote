@@ -20,7 +20,7 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated enum Command: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+public nonisolated enum Command: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
   case unknown = 0
   case play = 1
   case pause = 2
@@ -78,329 +78,329 @@ nonisolated enum Command: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
   case reshuffle = 63
   case changeQueueEndAction = 135
 
-  init() {
+  public init() {
     self = .unknown
   }
 
 }
 
-nonisolated struct QueueEndAction: Sendable {
+public nonisolated struct QueueEndAction: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case clearAction = 0
     case none = 1
     case reset = 2
     case autoPlay = 3
 
-    init() {
+    public init() {
       self = .clearAction
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct DisableReason: Sendable {
+public nonisolated struct DisableReason: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case unknown = 0
     case adPlayback = 1
     case skipLimitReached = 2
 
-    init() {
+    public init() {
       self = .unknown
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct PreloadedPlaybackSessionInfo: Sendable {
+public nonisolated struct PreloadedPlaybackSessionInfo: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var playbackSessionIdentifier: String {
+  public var playbackSessionIdentifier: String {
     get {_playbackSessionIdentifier ?? String()}
     set {_playbackSessionIdentifier = newValue}
   }
   /// Returns true if `playbackSessionIdentifier` has been explicitly set.
-  var hasPlaybackSessionIdentifier: Bool {self._playbackSessionIdentifier != nil}
+  public var hasPlaybackSessionIdentifier: Bool {self._playbackSessionIdentifier != nil}
   /// Clears the value of `playbackSessionIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearPlaybackSessionIdentifier() {self._playbackSessionIdentifier = nil}
+  public mutating func clearPlaybackSessionIdentifier() {self._playbackSessionIdentifier = nil}
 
-  var playbackSessionRevision: String {
+  public var playbackSessionRevision: String {
     get {_playbackSessionRevision ?? String()}
     set {_playbackSessionRevision = newValue}
   }
   /// Returns true if `playbackSessionRevision` has been explicitly set.
-  var hasPlaybackSessionRevision: Bool {self._playbackSessionRevision != nil}
+  public var hasPlaybackSessionRevision: Bool {self._playbackSessionRevision != nil}
   /// Clears the value of `playbackSessionRevision`. Subsequent reads from it will return its default value.
-  mutating func clearPlaybackSessionRevision() {self._playbackSessionRevision = nil}
+  public mutating func clearPlaybackSessionRevision() {self._playbackSessionRevision = nil}
 
-  var playbackSessionPriority: Int32 {
+  public var playbackSessionPriority: Int32 {
     get {_playbackSessionPriority ?? 0}
     set {_playbackSessionPriority = newValue}
   }
   /// Returns true if `playbackSessionPriority` has been explicitly set.
-  var hasPlaybackSessionPriority: Bool {self._playbackSessionPriority != nil}
+  public var hasPlaybackSessionPriority: Bool {self._playbackSessionPriority != nil}
   /// Clears the value of `playbackSessionPriority`. Subsequent reads from it will return its default value.
-  mutating func clearPlaybackSessionPriority() {self._playbackSessionPriority = nil}
+  public mutating func clearPlaybackSessionPriority() {self._playbackSessionPriority = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _playbackSessionIdentifier: String? = nil
   fileprivate var _playbackSessionRevision: String? = nil
   fileprivate var _playbackSessionPriority: Int32? = nil
 }
 
-nonisolated struct CommandInfo: @unchecked Sendable {
+public nonisolated struct CommandInfo: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var command: Command {
+  public var command: Command {
     get {_storage._command ?? .unknown}
     set {_uniqueStorage()._command = newValue}
   }
   /// Returns true if `command` has been explicitly set.
-  var hasCommand: Bool {_storage._command != nil}
+  public var hasCommand: Bool {_storage._command != nil}
   /// Clears the value of `command`. Subsequent reads from it will return its default value.
-  mutating func clearCommand() {_uniqueStorage()._command = nil}
+  public mutating func clearCommand() {_uniqueStorage()._command = nil}
 
-  var enabled: Bool {
+  public var enabled: Bool {
     get {_storage._enabled ?? false}
     set {_uniqueStorage()._enabled = newValue}
   }
   /// Returns true if `enabled` has been explicitly set.
-  var hasEnabled: Bool {_storage._enabled != nil}
+  public var hasEnabled: Bool {_storage._enabled != nil}
   /// Clears the value of `enabled`. Subsequent reads from it will return its default value.
-  mutating func clearEnabled() {_uniqueStorage()._enabled = nil}
+  public mutating func clearEnabled() {_uniqueStorage()._enabled = nil}
 
-  var active: Bool {
+  public var active: Bool {
     get {_storage._active ?? false}
     set {_uniqueStorage()._active = newValue}
   }
   /// Returns true if `active` has been explicitly set.
-  var hasActive: Bool {_storage._active != nil}
+  public var hasActive: Bool {_storage._active != nil}
   /// Clears the value of `active`. Subsequent reads from it will return its default value.
-  mutating func clearActive() {_uniqueStorage()._active = nil}
+  public mutating func clearActive() {_uniqueStorage()._active = nil}
 
-  var preferredIntervals: [Double] {
+  public var preferredIntervals: [Double] {
     get {_storage._preferredIntervals}
     set {_uniqueStorage()._preferredIntervals = newValue}
   }
 
-  var localizedTitle: String {
+  public var localizedTitle: String {
     get {_storage._localizedTitle ?? String()}
     set {_uniqueStorage()._localizedTitle = newValue}
   }
   /// Returns true if `localizedTitle` has been explicitly set.
-  var hasLocalizedTitle: Bool {_storage._localizedTitle != nil}
+  public var hasLocalizedTitle: Bool {_storage._localizedTitle != nil}
   /// Clears the value of `localizedTitle`. Subsequent reads from it will return its default value.
-  mutating func clearLocalizedTitle() {_uniqueStorage()._localizedTitle = nil}
+  public mutating func clearLocalizedTitle() {_uniqueStorage()._localizedTitle = nil}
 
-  var minimumRating: Float {
+  public var minimumRating: Float {
     get {_storage._minimumRating ?? 0}
     set {_uniqueStorage()._minimumRating = newValue}
   }
   /// Returns true if `minimumRating` has been explicitly set.
-  var hasMinimumRating: Bool {_storage._minimumRating != nil}
+  public var hasMinimumRating: Bool {_storage._minimumRating != nil}
   /// Clears the value of `minimumRating`. Subsequent reads from it will return its default value.
-  mutating func clearMinimumRating() {_uniqueStorage()._minimumRating = nil}
+  public mutating func clearMinimumRating() {_uniqueStorage()._minimumRating = nil}
 
-  var maximumRating: Float {
+  public var maximumRating: Float {
     get {_storage._maximumRating ?? 0}
     set {_uniqueStorage()._maximumRating = newValue}
   }
   /// Returns true if `maximumRating` has been explicitly set.
-  var hasMaximumRating: Bool {_storage._maximumRating != nil}
+  public var hasMaximumRating: Bool {_storage._maximumRating != nil}
   /// Clears the value of `maximumRating`. Subsequent reads from it will return its default value.
-  mutating func clearMaximumRating() {_uniqueStorage()._maximumRating = nil}
+  public mutating func clearMaximumRating() {_uniqueStorage()._maximumRating = nil}
 
-  var supportedRates: [Float] {
+  public var supportedRates: [Float] {
     get {_storage._supportedRates}
     set {_uniqueStorage()._supportedRates = newValue}
   }
 
-  var localizedShortTitle: String {
+  public var localizedShortTitle: String {
     get {_storage._localizedShortTitle ?? String()}
     set {_uniqueStorage()._localizedShortTitle = newValue}
   }
   /// Returns true if `localizedShortTitle` has been explicitly set.
-  var hasLocalizedShortTitle: Bool {_storage._localizedShortTitle != nil}
+  public var hasLocalizedShortTitle: Bool {_storage._localizedShortTitle != nil}
   /// Clears the value of `localizedShortTitle`. Subsequent reads from it will return its default value.
-  mutating func clearLocalizedShortTitle() {_uniqueStorage()._localizedShortTitle = nil}
+  public mutating func clearLocalizedShortTitle() {_uniqueStorage()._localizedShortTitle = nil}
 
-  var repeatMode: RepeatMode.Enum {
+  public var repeatMode: RepeatMode.Enum {
     get {_storage._repeatMode ?? .unknown}
     set {_uniqueStorage()._repeatMode = newValue}
   }
   /// Returns true if `repeatMode` has been explicitly set.
-  var hasRepeatMode: Bool {_storage._repeatMode != nil}
+  public var hasRepeatMode: Bool {_storage._repeatMode != nil}
   /// Clears the value of `repeatMode`. Subsequent reads from it will return its default value.
-  mutating func clearRepeatMode() {_uniqueStorage()._repeatMode = nil}
+  public mutating func clearRepeatMode() {_uniqueStorage()._repeatMode = nil}
 
-  var shuffleMode: ShuffleMode.Enum {
+  public var shuffleMode: ShuffleMode.Enum {
     get {_storage._shuffleMode ?? .unknown}
     set {_uniqueStorage()._shuffleMode = newValue}
   }
   /// Returns true if `shuffleMode` has been explicitly set.
-  var hasShuffleMode: Bool {_storage._shuffleMode != nil}
+  public var hasShuffleMode: Bool {_storage._shuffleMode != nil}
   /// Clears the value of `shuffleMode`. Subsequent reads from it will return its default value.
-  mutating func clearShuffleMode() {_uniqueStorage()._shuffleMode = nil}
+  public mutating func clearShuffleMode() {_uniqueStorage()._shuffleMode = nil}
 
-  var presentationStyle: Int32 {
+  public var presentationStyle: Int32 {
     get {_storage._presentationStyle ?? 0}
     set {_uniqueStorage()._presentationStyle = newValue}
   }
   /// Returns true if `presentationStyle` has been explicitly set.
-  var hasPresentationStyle: Bool {_storage._presentationStyle != nil}
+  public var hasPresentationStyle: Bool {_storage._presentationStyle != nil}
   /// Clears the value of `presentationStyle`. Subsequent reads from it will return its default value.
-  mutating func clearPresentationStyle() {_uniqueStorage()._presentationStyle = nil}
+  public mutating func clearPresentationStyle() {_uniqueStorage()._presentationStyle = nil}
 
-  var skipInterval: Int32 {
+  public var skipInterval: Int32 {
     get {_storage._skipInterval ?? 0}
     set {_uniqueStorage()._skipInterval = newValue}
   }
   /// Returns true if `skipInterval` has been explicitly set.
-  var hasSkipInterval: Bool {_storage._skipInterval != nil}
+  public var hasSkipInterval: Bool {_storage._skipInterval != nil}
   /// Clears the value of `skipInterval`. Subsequent reads from it will return its default value.
-  mutating func clearSkipInterval() {_uniqueStorage()._skipInterval = nil}
+  public mutating func clearSkipInterval() {_uniqueStorage()._skipInterval = nil}
 
-  var numAvailableSkips: Int32 {
+  public var numAvailableSkips: Int32 {
     get {_storage._numAvailableSkips ?? 0}
     set {_uniqueStorage()._numAvailableSkips = newValue}
   }
   /// Returns true if `numAvailableSkips` has been explicitly set.
-  var hasNumAvailableSkips: Bool {_storage._numAvailableSkips != nil}
+  public var hasNumAvailableSkips: Bool {_storage._numAvailableSkips != nil}
   /// Clears the value of `numAvailableSkips`. Subsequent reads from it will return its default value.
-  mutating func clearNumAvailableSkips() {_uniqueStorage()._numAvailableSkips = nil}
+  public mutating func clearNumAvailableSkips() {_uniqueStorage()._numAvailableSkips = nil}
 
-  var skipFrequency: Int32 {
+  public var skipFrequency: Int32 {
     get {_storage._skipFrequency ?? 0}
     set {_uniqueStorage()._skipFrequency = newValue}
   }
   /// Returns true if `skipFrequency` has been explicitly set.
-  var hasSkipFrequency: Bool {_storage._skipFrequency != nil}
+  public var hasSkipFrequency: Bool {_storage._skipFrequency != nil}
   /// Clears the value of `skipFrequency`. Subsequent reads from it will return its default value.
-  mutating func clearSkipFrequency() {_uniqueStorage()._skipFrequency = nil}
+  public mutating func clearSkipFrequency() {_uniqueStorage()._skipFrequency = nil}
 
-  var canScrub: Int32 {
+  public var canScrub: Int32 {
     get {_storage._canScrub ?? 0}
     set {_uniqueStorage()._canScrub = newValue}
   }
   /// Returns true if `canScrub` has been explicitly set.
-  var hasCanScrub: Bool {_storage._canScrub != nil}
+  public var hasCanScrub: Bool {_storage._canScrub != nil}
   /// Clears the value of `canScrub`. Subsequent reads from it will return its default value.
-  mutating func clearCanScrub() {_uniqueStorage()._canScrub = nil}
+  public mutating func clearCanScrub() {_uniqueStorage()._canScrub = nil}
 
-  var supportedPlaybackQueueTypes: [Int32] {
+  public var supportedPlaybackQueueTypes: [Int32] {
     get {_storage._supportedPlaybackQueueTypes}
     set {_uniqueStorage()._supportedPlaybackQueueTypes = newValue}
   }
 
-  var supportedCustomQueueIdentifiers: [String] {
+  public var supportedCustomQueueIdentifiers: [String] {
     get {_storage._supportedCustomQueueIdentifiers}
     set {_uniqueStorage()._supportedCustomQueueIdentifiers = newValue}
   }
 
-  var supportedInsertionPositions: [Int32] {
+  public var supportedInsertionPositions: [Int32] {
     get {_storage._supportedInsertionPositions}
     set {_uniqueStorage()._supportedInsertionPositions = newValue}
   }
 
-  var supportsSharedQueue: Bool {
+  public var supportsSharedQueue: Bool {
     get {_storage._supportsSharedQueue ?? false}
     set {_uniqueStorage()._supportsSharedQueue = newValue}
   }
   /// Returns true if `supportsSharedQueue` has been explicitly set.
-  var hasSupportsSharedQueue: Bool {_storage._supportsSharedQueue != nil}
+  public var hasSupportsSharedQueue: Bool {_storage._supportsSharedQueue != nil}
   /// Clears the value of `supportsSharedQueue`. Subsequent reads from it will return its default value.
-  mutating func clearSupportsSharedQueue() {_uniqueStorage()._supportsSharedQueue = nil}
+  public mutating func clearSupportsSharedQueue() {_uniqueStorage()._supportsSharedQueue = nil}
 
-  var upNextItemCount: Int32 {
+  public var upNextItemCount: Int32 {
     get {_storage._upNextItemCount ?? 0}
     set {_uniqueStorage()._upNextItemCount = newValue}
   }
   /// Returns true if `upNextItemCount` has been explicitly set.
-  var hasUpNextItemCount: Bool {_storage._upNextItemCount != nil}
+  public var hasUpNextItemCount: Bool {_storage._upNextItemCount != nil}
   /// Clears the value of `upNextItemCount`. Subsequent reads from it will return its default value.
-  mutating func clearUpNextItemCount() {_uniqueStorage()._upNextItemCount = nil}
+  public mutating func clearUpNextItemCount() {_uniqueStorage()._upNextItemCount = nil}
 
-  var preferredPlaybackRate: Float {
+  public var preferredPlaybackRate: Float {
     get {_storage._preferredPlaybackRate ?? 0}
     set {_uniqueStorage()._preferredPlaybackRate = newValue}
   }
   /// Returns true if `preferredPlaybackRate` has been explicitly set.
-  var hasPreferredPlaybackRate: Bool {_storage._preferredPlaybackRate != nil}
+  public var hasPreferredPlaybackRate: Bool {_storage._preferredPlaybackRate != nil}
   /// Clears the value of `preferredPlaybackRate`. Subsequent reads from it will return its default value.
-  mutating func clearPreferredPlaybackRate() {_uniqueStorage()._preferredPlaybackRate = nil}
+  public mutating func clearPreferredPlaybackRate() {_uniqueStorage()._preferredPlaybackRate = nil}
 
-  var supportedPlaybackSessionTypes: [String] {
+  public var supportedPlaybackSessionTypes: [String] {
     get {_storage._supportedPlaybackSessionTypes}
     set {_uniqueStorage()._supportedPlaybackSessionTypes = newValue}
   }
 
-  var currentPlaybackSessionTypes: [String] {
+  public var currentPlaybackSessionTypes: [String] {
     get {_storage._currentPlaybackSessionTypes}
     set {_uniqueStorage()._currentPlaybackSessionTypes = newValue}
   }
 
-  var playbackSessionIdentifier: String {
+  public var playbackSessionIdentifier: String {
     get {_storage._playbackSessionIdentifier ?? String()}
     set {_uniqueStorage()._playbackSessionIdentifier = newValue}
   }
   /// Returns true if `playbackSessionIdentifier` has been explicitly set.
-  var hasPlaybackSessionIdentifier: Bool {_storage._playbackSessionIdentifier != nil}
+  public var hasPlaybackSessionIdentifier: Bool {_storage._playbackSessionIdentifier != nil}
   /// Clears the value of `playbackSessionIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearPlaybackSessionIdentifier() {_uniqueStorage()._playbackSessionIdentifier = nil}
+  public mutating func clearPlaybackSessionIdentifier() {_uniqueStorage()._playbackSessionIdentifier = nil}
 
-  var currentQueueEndAction: QueueEndAction.Enum {
+  public var currentQueueEndAction: QueueEndAction.Enum {
     get {_storage._currentQueueEndAction ?? .clearAction}
     set {_uniqueStorage()._currentQueueEndAction = newValue}
   }
   /// Returns true if `currentQueueEndAction` has been explicitly set.
-  var hasCurrentQueueEndAction: Bool {_storage._currentQueueEndAction != nil}
+  public var hasCurrentQueueEndAction: Bool {_storage._currentQueueEndAction != nil}
   /// Clears the value of `currentQueueEndAction`. Subsequent reads from it will return its default value.
-  mutating func clearCurrentQueueEndAction() {_uniqueStorage()._currentQueueEndAction = nil}
+  public mutating func clearCurrentQueueEndAction() {_uniqueStorage()._currentQueueEndAction = nil}
 
-  var supportedEndQueueActions: [QueueEndAction.Enum] {
+  public var supportedEndQueueActions: [QueueEndAction.Enum] {
     get {_storage._supportedEndQueueActions}
     set {_uniqueStorage()._supportedEndQueueActions = newValue}
   }
 
-  var disableReason: DisableReason.Enum {
+  public var disableReason: DisableReason.Enum {
     get {_storage._disableReason ?? .unknown}
     set {_uniqueStorage()._disableReason = newValue}
   }
   /// Returns true if `disableReason` has been explicitly set.
-  var hasDisableReason: Bool {_storage._disableReason != nil}
+  public var hasDisableReason: Bool {_storage._disableReason != nil}
   /// Clears the value of `disableReason`. Subsequent reads from it will return its default value.
-  mutating func clearDisableReason() {_uniqueStorage()._disableReason = nil}
+  public mutating func clearDisableReason() {_uniqueStorage()._disableReason = nil}
 
-  var supportedPlaybackSessionIdentifiers: [PreloadedPlaybackSessionInfo] {
+  public var supportedPlaybackSessionIdentifiers: [PreloadedPlaybackSessionInfo] {
     get {_storage._supportedPlaybackSessionIdentifiers}
     set {_uniqueStorage()._supportedPlaybackSessionIdentifiers = newValue}
   }
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
 }
@@ -408,60 +408,60 @@ nonisolated struct CommandInfo: @unchecked Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension Command: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}Play\0\u{1}Pause\0\u{1}TogglePlayPause\0\u{1}Stop\0\u{1}NextTrack\0\u{1}PreviousTrack\0\u{1}AdvanceShuffleMode\0\u{1}AdvanceRepeatMode\0\u{1}BeginFastForward\0\u{1}EndFastForward\0\u{1}BeginRewind\0\u{1}EndRewind\0\u{1}Rewind15Seconds\0\u{1}FastForward15Seconds\0\u{1}Rewind30Seconds\0\u{1}FastForward30Seconds\0\u{2}\u{2}SkipForward\0\u{1}SkipBackward\0\u{1}ChangePlaybackRate\0\u{1}RateTrack\0\u{1}LikeTrack\0\u{1}DislikeTrack\0\u{1}BookmarkTrack\0\u{1}NextChapter\0\u{1}PreviousChapter\0\u{1}NextAlbum\0\u{1}PreviousAlbum\0\u{1}NextPlaylist\0\u{1}PreviousPlaylist\0\u{1}BanTrack\0\u{1}AddTrackToWishList\0\u{1}RemoveTrackFromWishList\0\u{1}NextInContext\0\u{1}PreviousInContext\0\u{2}\u{6}ResetPlaybackTimeout\0\u{2}\u{4}SeekToPlaybackPosition\0\u{1}ChangeRepeatMode\0\u{1}ChangeShuffleMode\0\u{1}SetPlaybackQueue\0\u{1}AddNowPlayingItemToLibrary\0\u{1}CreateRadioStation\0\u{1}AddItemToLibrary\0\u{1}InsertIntoPlaybackQueue\0\u{1}EnableLanguageOption\0\u{1}DisableLanguageOption\0\u{1}ReorderPlaybackQueue\0\u{1}RemoveFromPlaybackQueue\0\u{1}PlayItemInPlaybackQueue\0\u{1}PrepareForSetQueue\0\u{1}SetPlaybackSession\0\u{1}PreloadedPlaybackSession\0\u{1}SetPriorityForPlaybackSession\0\u{1}DiscardPlaybackSession\0\u{1}Reshuffle\0\u{2}H\u{1}ChangeQueueEndAction\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}Play\0\u{1}Pause\0\u{1}TogglePlayPause\0\u{1}Stop\0\u{1}NextTrack\0\u{1}PreviousTrack\0\u{1}AdvanceShuffleMode\0\u{1}AdvanceRepeatMode\0\u{1}BeginFastForward\0\u{1}EndFastForward\0\u{1}BeginRewind\0\u{1}EndRewind\0\u{1}Rewind15Seconds\0\u{1}FastForward15Seconds\0\u{1}Rewind30Seconds\0\u{1}FastForward30Seconds\0\u{2}\u{2}SkipForward\0\u{1}SkipBackward\0\u{1}ChangePlaybackRate\0\u{1}RateTrack\0\u{1}LikeTrack\0\u{1}DislikeTrack\0\u{1}BookmarkTrack\0\u{1}NextChapter\0\u{1}PreviousChapter\0\u{1}NextAlbum\0\u{1}PreviousAlbum\0\u{1}NextPlaylist\0\u{1}PreviousPlaylist\0\u{1}BanTrack\0\u{1}AddTrackToWishList\0\u{1}RemoveTrackFromWishList\0\u{1}NextInContext\0\u{1}PreviousInContext\0\u{2}\u{6}ResetPlaybackTimeout\0\u{2}\u{4}SeekToPlaybackPosition\0\u{1}ChangeRepeatMode\0\u{1}ChangeShuffleMode\0\u{1}SetPlaybackQueue\0\u{1}AddNowPlayingItemToLibrary\0\u{1}CreateRadioStation\0\u{1}AddItemToLibrary\0\u{1}InsertIntoPlaybackQueue\0\u{1}EnableLanguageOption\0\u{1}DisableLanguageOption\0\u{1}ReorderPlaybackQueue\0\u{1}RemoveFromPlaybackQueue\0\u{1}PlayItemInPlaybackQueue\0\u{1}PrepareForSetQueue\0\u{1}SetPlaybackSession\0\u{1}PreloadedPlaybackSession\0\u{1}SetPriorityForPlaybackSession\0\u{1}DiscardPlaybackSession\0\u{1}Reshuffle\0\u{2}H\u{1}ChangeQueueEndAction\0")
 }
 
 nonisolated extension QueueEndAction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "QueueEndAction"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "QueueEndAction"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: QueueEndAction, rhs: QueueEndAction) -> Bool {
+  public static func ==(lhs: QueueEndAction, rhs: QueueEndAction) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension QueueEndAction.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0ClearAction\0\u{1}None\0\u{1}Reset\0\u{1}AutoPlay\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0ClearAction\0\u{1}None\0\u{1}Reset\0\u{1}AutoPlay\0")
 }
 
 nonisolated extension DisableReason: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "DisableReason"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "DisableReason"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: DisableReason, rhs: DisableReason) -> Bool {
+  public static func ==(lhs: DisableReason, rhs: DisableReason) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension DisableReason.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}AdPlayback\0\u{1}SkipLimitReached\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Unknown\0\u{1}AdPlayback\0\u{1}SkipLimitReached\0")
 }
 
 nonisolated extension PreloadedPlaybackSessionInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PreloadedPlaybackSessionInfo"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}playbackSessionIdentifier\0\u{1}playbackSessionRevision\0\u{1}playbackSessionPriority\0")
+  public static let protoMessageName: String = "PreloadedPlaybackSessionInfo"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}playbackSessionIdentifier\0\u{1}playbackSessionRevision\0\u{1}playbackSessionPriority\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -475,7 +475,7 @@ nonisolated extension PreloadedPlaybackSessionInfo: SwiftProtobuf.Message, Swift
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -492,7 +492,7 @@ nonisolated extension PreloadedPlaybackSessionInfo: SwiftProtobuf.Message, Swift
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PreloadedPlaybackSessionInfo, rhs: PreloadedPlaybackSessionInfo) -> Bool {
+  public static func ==(lhs: PreloadedPlaybackSessionInfo, rhs: PreloadedPlaybackSessionInfo) -> Bool {
     if lhs._playbackSessionIdentifier != rhs._playbackSessionIdentifier {return false}
     if lhs._playbackSessionRevision != rhs._playbackSessionRevision {return false}
     if lhs._playbackSessionPriority != rhs._playbackSessionPriority {return false}
@@ -502,8 +502,8 @@ nonisolated extension PreloadedPlaybackSessionInfo: SwiftProtobuf.Message, Swift
 }
 
 nonisolated extension CommandInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "CommandInfo"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}command\0\u{1}enabled\0\u{1}active\0\u{1}preferredIntervals\0\u{1}localizedTitle\0\u{1}minimumRating\0\u{1}maximumRating\0\u{1}supportedRates\0\u{1}localizedShortTitle\0\u{1}repeatMode\0\u{1}shuffleMode\0\u{1}presentationStyle\0\u{1}skipInterval\0\u{1}numAvailableSkips\0\u{1}skipFrequency\0\u{1}canScrub\0\u{1}supportedPlaybackQueueTypes\0\u{1}supportedCustomQueueIdentifiers\0\u{1}supportedInsertionPositions\0\u{1}supportsSharedQueue\0\u{1}upNextItemCount\0\u{1}preferredPlaybackRate\0\u{1}supportedPlaybackSessionTypes\0\u{1}currentPlaybackSessionTypes\0\u{1}playbackSessionIdentifier\0\u{1}currentQueueEndAction\0\u{1}supportedEndQueueActions\0\u{1}disableReason\0\u{1}supportedPlaybackSessionIdentifiers\0")
+  public static let protoMessageName: String = "CommandInfo"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}command\0\u{1}enabled\0\u{1}active\0\u{1}preferredIntervals\0\u{1}localizedTitle\0\u{1}minimumRating\0\u{1}maximumRating\0\u{1}supportedRates\0\u{1}localizedShortTitle\0\u{1}repeatMode\0\u{1}shuffleMode\0\u{1}presentationStyle\0\u{1}skipInterval\0\u{1}numAvailableSkips\0\u{1}skipFrequency\0\u{1}canScrub\0\u{1}supportedPlaybackQueueTypes\0\u{1}supportedCustomQueueIdentifiers\0\u{1}supportedInsertionPositions\0\u{1}supportsSharedQueue\0\u{1}upNextItemCount\0\u{1}preferredPlaybackRate\0\u{1}supportedPlaybackSessionTypes\0\u{1}currentPlaybackSessionTypes\0\u{1}playbackSessionIdentifier\0\u{1}currentQueueEndAction\0\u{1}supportedEndQueueActions\0\u{1}disableReason\0\u{1}supportedPlaybackSessionIdentifiers\0")
 
   fileprivate class _StorageClass {
     var _command: Command? = nil
@@ -584,7 +584,7 @@ nonisolated extension CommandInfo: SwiftProtobuf.Message, SwiftProtobuf._Message
     return _storage
   }
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     _ = _uniqueStorage()
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       while let fieldNumber = try decoder.nextFieldNumber() {
@@ -627,7 +627,7 @@ nonisolated extension CommandInfo: SwiftProtobuf.Message, SwiftProtobuf._Message
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every if/case branch local when no optimizations
@@ -724,7 +724,7 @@ nonisolated extension CommandInfo: SwiftProtobuf.Message, SwiftProtobuf._Message
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: CommandInfo, rhs: CommandInfo) -> Bool {
+  public static func ==(lhs: CommandInfo, rhs: CommandInfo) -> Bool {
     if lhs._storage !== rhs._storage {
       let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
         let _storage = _args.0

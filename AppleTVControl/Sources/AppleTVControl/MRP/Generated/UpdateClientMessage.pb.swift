@@ -20,23 +20,23 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct UpdateClientMessage: Sendable {
+public nonisolated struct UpdateClientMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var client: NowPlayingClient {
+  public var client: NowPlayingClient {
     get {_client ?? NowPlayingClient()}
     set {_client = newValue}
   }
   /// Returns true if `client` has been explicitly set.
-  var hasClient: Bool {self._client != nil}
+  public var hasClient: Bool {self._client != nil}
   /// Clears the value of `client`. Subsequent reads from it will return its default value.
-  mutating func clearClient() {self._client = nil}
+  public mutating func clearClient() {self._client = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _client: NowPlayingClient? = nil
 }
@@ -52,18 +52,18 @@ nonisolated struct UpdateClientMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var updateClientMessage: UpdateClientMessage {
+  public var updateClientMessage: UpdateClientMessage {
     get {return getExtensionValue(ext: Extensions_updateClientMessage) ?? UpdateClientMessage()}
     set {setExtensionValue(ext: Extensions_updateClientMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_updateClientMessage`
   /// has been explicitly set.
-  var hasUpdateClientMessage: Bool {
+  public var hasUpdateClientMessage: Bool {
     return hasExtensionValue(ext: Extensions_updateClientMessage)
   }
   /// Clears the value of extension `Extensions_updateClientMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearUpdateClientMessage() {
+  public mutating func clearUpdateClientMessage() {
     clearExtensionValue(ext: Extensions_updateClientMessage)
   }
 
@@ -75,7 +75,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let UpdateClientMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let UpdateClientMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_updateClientMessage
 ]
 
@@ -83,7 +83,7 @@ nonisolated let UpdateClientMessage_Extensions: SwiftProtobuf.SimpleExtensionMap
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_updateClientMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<UpdateClientMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_updateClientMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<UpdateClientMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 59,
   fieldName: "updateClientMessage"
 )
@@ -91,10 +91,10 @@ nonisolated let Extensions_updateClientMessage = SwiftProtobuf.MessageExtension<
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension UpdateClientMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "UpdateClientMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}client\0")
+  public static let protoMessageName: String = "UpdateClientMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}client\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -106,7 +106,7 @@ nonisolated extension UpdateClientMessage: SwiftProtobuf.Message, SwiftProtobuf.
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -117,7 +117,7 @@ nonisolated extension UpdateClientMessage: SwiftProtobuf.Message, SwiftProtobuf.
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: UpdateClientMessage, rhs: UpdateClientMessage) -> Bool {
+  public static func ==(lhs: UpdateClientMessage, rhs: UpdateClientMessage) -> Bool {
     if lhs._client != rhs._client {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

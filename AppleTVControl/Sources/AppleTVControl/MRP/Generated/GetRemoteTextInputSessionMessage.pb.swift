@@ -20,14 +20,14 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct GetRemoteTextInputSessionMessage: Sendable {
+public nonisolated struct GetRemoteTextInputSessionMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 }
 
 // MARK: - Extension support defined in GetRemoteTextInputSessionMessage.proto.
@@ -41,18 +41,18 @@ nonisolated struct GetRemoteTextInputSessionMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var getRemoteTextInputSessionMessage: GetRemoteTextInputSessionMessage {
+  public var getRemoteTextInputSessionMessage: GetRemoteTextInputSessionMessage {
     get {return getExtensionValue(ext: Extensions_getRemoteTextInputSessionMessage) ?? GetRemoteTextInputSessionMessage()}
     set {setExtensionValue(ext: Extensions_getRemoteTextInputSessionMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_getRemoteTextInputSessionMessage`
   /// has been explicitly set.
-  var hasGetRemoteTextInputSessionMessage: Bool {
+  public var hasGetRemoteTextInputSessionMessage: Bool {
     return hasExtensionValue(ext: Extensions_getRemoteTextInputSessionMessage)
   }
   /// Clears the value of extension `Extensions_getRemoteTextInputSessionMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearGetRemoteTextInputSessionMessage() {
+  public mutating func clearGetRemoteTextInputSessionMessage() {
     clearExtensionValue(ext: Extensions_getRemoteTextInputSessionMessage)
   }
 
@@ -64,7 +64,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let GetRemoteTextInputSessionMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let GetRemoteTextInputSessionMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_getRemoteTextInputSessionMessage
 ]
 
@@ -72,7 +72,7 @@ nonisolated let GetRemoteTextInputSessionMessage_Extensions: SwiftProtobuf.Simpl
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_getRemoteTextInputSessionMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<GetRemoteTextInputSessionMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_getRemoteTextInputSessionMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<GetRemoteTextInputSessionMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 72,
   fieldName: "getRemoteTextInputSessionMessage"
 )
@@ -80,19 +80,19 @@ nonisolated let Extensions_getRemoteTextInputSessionMessage = SwiftProtobuf.Mess
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension GetRemoteTextInputSessionMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetRemoteTextInputSessionMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "GetRemoteTextInputSessionMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: GetRemoteTextInputSessionMessage, rhs: GetRemoteTextInputSessionMessage) -> Bool {
+  public static func ==(lhs: GetRemoteTextInputSessionMessage, rhs: GetRemoteTextInputSessionMessage) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -20,32 +20,32 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct SetDiscoveryModeMessage: Sendable {
+public nonisolated struct SetDiscoveryModeMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var mode: Int32 {
+  public var mode: Int32 {
     get {_mode ?? 0}
     set {_mode = newValue}
   }
   /// Returns true if `mode` has been explicitly set.
-  var hasMode: Bool {self._mode != nil}
+  public var hasMode: Bool {self._mode != nil}
   /// Clears the value of `mode`. Subsequent reads from it will return its default value.
-  mutating func clearMode() {self._mode = nil}
+  public mutating func clearMode() {self._mode = nil}
 
-  var features: Int32 {
+  public var features: Int32 {
     get {_features ?? 0}
     set {_features = newValue}
   }
   /// Returns true if `features` has been explicitly set.
-  var hasFeatures: Bool {self._features != nil}
+  public var hasFeatures: Bool {self._features != nil}
   /// Clears the value of `features`. Subsequent reads from it will return its default value.
-  mutating func clearFeatures() {self._features = nil}
+  public mutating func clearFeatures() {self._features = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _mode: Int32? = nil
   fileprivate var _features: Int32? = nil
@@ -62,18 +62,18 @@ nonisolated struct SetDiscoveryModeMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var setDiscoveryModeMessage: SetDiscoveryModeMessage {
+  public var setDiscoveryModeMessage: SetDiscoveryModeMessage {
     get {return getExtensionValue(ext: Extensions_setDiscoveryModeMessage) ?? SetDiscoveryModeMessage()}
     set {setExtensionValue(ext: Extensions_setDiscoveryModeMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_setDiscoveryModeMessage`
   /// has been explicitly set.
-  var hasSetDiscoveryModeMessage: Bool {
+  public var hasSetDiscoveryModeMessage: Bool {
     return hasExtensionValue(ext: Extensions_setDiscoveryModeMessage)
   }
   /// Clears the value of extension `Extensions_setDiscoveryModeMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearSetDiscoveryModeMessage() {
+  public mutating func clearSetDiscoveryModeMessage() {
     clearExtensionValue(ext: Extensions_setDiscoveryModeMessage)
   }
 
@@ -85,7 +85,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let SetDiscoveryModeMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let SetDiscoveryModeMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_setDiscoveryModeMessage
 ]
 
@@ -93,7 +93,7 @@ nonisolated let SetDiscoveryModeMessage_Extensions: SwiftProtobuf.SimpleExtensio
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_setDiscoveryModeMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SetDiscoveryModeMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_setDiscoveryModeMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SetDiscoveryModeMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 82,
   fieldName: "setDiscoveryModeMessage"
 )
@@ -101,10 +101,10 @@ nonisolated let Extensions_setDiscoveryModeMessage = SwiftProtobuf.MessageExtens
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension SetDiscoveryModeMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SetDiscoveryModeMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}mode\0\u{1}features\0")
+  public static let protoMessageName: String = "SetDiscoveryModeMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}mode\0\u{1}features\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -117,7 +117,7 @@ nonisolated extension SetDiscoveryModeMessage: SwiftProtobuf.Message, SwiftProto
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -131,7 +131,7 @@ nonisolated extension SetDiscoveryModeMessage: SwiftProtobuf.Message, SwiftProto
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SetDiscoveryModeMessage, rhs: SetDiscoveryModeMessage) -> Bool {
+  public static func ==(lhs: SetDiscoveryModeMessage, rhs: SetDiscoveryModeMessage) -> Bool {
     if lhs._mode != rhs._mode {return false}
     if lhs._features != rhs._features {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

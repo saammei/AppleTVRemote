@@ -20,14 +20,14 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct ErrorCode: Sendable {
+public nonisolated struct ErrorCode: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case noError = 0
     case unknownError = 1
     case invalidOperation = 2
@@ -95,87 +95,87 @@ nonisolated struct ErrorCode: Sendable {
     case outputContextModificationRequestedNoTopologyChange = 202
     case otherUnknownError = 299
 
-    init() {
+    public init() {
       self = .noError
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct ProtocolMessageMessage: SwiftProtobuf.ExtensibleMessage, Sendable {
+public nonisolated struct ProtocolMessageMessage: SwiftProtobuf.ExtensibleMessage, Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// Identifies which underlying message is filled in.
-  var type: ProtocolMessageMessage.TypeEnum {
+  public var type: ProtocolMessageMessage.TypeEnum {
     get {_type ?? .unknownMessage}
     set {_type = newValue}
   }
   /// Returns true if `type` has been explicitly set.
-  var hasType: Bool {self._type != nil}
+  public var hasType: Bool {self._type != nil}
   /// Clears the value of `type`. Subsequent reads from it will return its default value.
-  mutating func clearType() {self._type = nil}
+  public mutating func clearType() {self._type = nil}
 
-  var identifier: String {
+  public var identifier: String {
     get {_identifier ?? String()}
     set {_identifier = newValue}
   }
   /// Returns true if `identifier` has been explicitly set.
-  var hasIdentifier: Bool {self._identifier != nil}
+  public var hasIdentifier: Bool {self._identifier != nil}
   /// Clears the value of `identifier`. Subsequent reads from it will return its default value.
-  mutating func clearIdentifier() {self._identifier = nil}
+  public mutating func clearIdentifier() {self._identifier = nil}
 
-  var authenticationToken: String {
+  public var authenticationToken: String {
     get {_authenticationToken ?? String()}
     set {_authenticationToken = newValue}
   }
   /// Returns true if `authenticationToken` has been explicitly set.
-  var hasAuthenticationToken: Bool {self._authenticationToken != nil}
+  public var hasAuthenticationToken: Bool {self._authenticationToken != nil}
   /// Clears the value of `authenticationToken`. Subsequent reads from it will return its default value.
-  mutating func clearAuthenticationToken() {self._authenticationToken = nil}
+  public mutating func clearAuthenticationToken() {self._authenticationToken = nil}
 
-  var errorCode: ErrorCode.Enum {
+  public var errorCode: ErrorCode.Enum {
     get {_errorCode ?? .noError}
     set {_errorCode = newValue}
   }
   /// Returns true if `errorCode` has been explicitly set.
-  var hasErrorCode: Bool {self._errorCode != nil}
+  public var hasErrorCode: Bool {self._errorCode != nil}
   /// Clears the value of `errorCode`. Subsequent reads from it will return its default value.
-  mutating func clearErrorCode() {self._errorCode = nil}
+  public mutating func clearErrorCode() {self._errorCode = nil}
 
-  var timestamp: UInt64 {
+  public var timestamp: UInt64 {
     get {_timestamp ?? 0}
     set {_timestamp = newValue}
   }
   /// Returns true if `timestamp` has been explicitly set.
-  var hasTimestamp: Bool {self._timestamp != nil}
+  public var hasTimestamp: Bool {self._timestamp != nil}
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
-  mutating func clearTimestamp() {self._timestamp = nil}
+  public mutating func clearTimestamp() {self._timestamp = nil}
 
-  var errorDescription: String {
+  public var errorDescription: String {
     get {_errorDescription ?? String()}
     set {_errorDescription = newValue}
   }
   /// Returns true if `errorDescription` has been explicitly set.
-  var hasErrorDescription: Bool {self._errorDescription != nil}
+  public var hasErrorDescription: Bool {self._errorDescription != nil}
   /// Clears the value of `errorDescription`. Subsequent reads from it will return its default value.
-  mutating func clearErrorDescription() {self._errorDescription = nil}
+  public mutating func clearErrorDescription() {self._errorDescription = nil}
 
-  var uniqueIdentifier: String {
+  public var uniqueIdentifier: String {
     get {_uniqueIdentifier ?? String()}
     set {_uniqueIdentifier = newValue}
   }
   /// Returns true if `uniqueIdentifier` has been explicitly set.
-  var hasUniqueIdentifier: Bool {self._uniqueIdentifier != nil}
+  public var hasUniqueIdentifier: Bool {self._uniqueIdentifier != nil}
   /// Clears the value of `uniqueIdentifier`. Subsequent reads from it will return its default value.
-  mutating func clearUniqueIdentifier() {self._uniqueIdentifier = nil}
+  public mutating func clearUniqueIdentifier() {self._uniqueIdentifier = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum TypeEnum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum TypeEnum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case unknownMessage = 0
     case sendCommandMessage = 1
     case sendCommandResultMessage = 2
@@ -262,15 +262,15 @@ nonisolated struct ProtocolMessageMessage: SwiftProtobuf.ExtensibleMessage, Send
     case audioFadeResponseMessage = 107
     case configureConnectionMessage = 120
 
-    init() {
+    public init() {
       self = .unknownMessage
     }
 
   }
 
-  init() {}
+  public init() {}
 
-  var _protobuf_extensionFieldValues = SwiftProtobuf.ExtensionFieldValueSet()
+  public var _protobuf_extensionFieldValues = SwiftProtobuf.ExtensionFieldValueSet()
   fileprivate var _type: ProtocolMessageMessage.TypeEnum? = nil
   fileprivate var _identifier: String? = nil
   fileprivate var _authenticationToken: String? = nil
@@ -283,38 +283,38 @@ nonisolated struct ProtocolMessageMessage: SwiftProtobuf.ExtensibleMessage, Send
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension ErrorCode: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ErrorCode"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "ErrorCode"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ErrorCode, rhs: ErrorCode) -> Bool {
+  public static func ==(lhs: ErrorCode, rhs: ErrorCode) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension ErrorCode.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0NoError\0\u{1}UnknownError\0\u{1}InvalidOperation\0\u{1}OperationNotPermitted\0\u{1}ClientDoesNotExist\0\u{1}OriginDoesNotExist\0\u{1}UnsupportedOperation\0\u{1}FailedToSetPickedRoute\0\u{1}FailedToRegisterCustomOrigin\0\u{1}FailedToRemoveCustomOrigin\0\u{1}TheApplicationActivityDoesNotExist\0\u{1}TheAppHasNotSetupABrowsableContentEndpoint\0\u{1}TheRequestedBrowsableContentApiIsNotSupportedByTheApplication\0\u{1}TheNotficationHasNotBeenWhitelistedByTheServer\0\u{1}OperationRequiresAClientCallbackToHaveBeenRegistered\0\u{1}OperationRequiresAClientDataSourceToHaveBeenRegistered\0\u{1}RequestedDataIsOutOfDateAndShouldBeRequestedAgain\0\u{1}TheDevicesEnforcedVolumeLimitHasBeenExceeded\0\u{1}VolumeValueIsOutOfRange\0\u{1}VolumeIsAlreadyAtTheMaximumValue\0\u{1}VolumeIsAlreadyMuted\0\u{1}VoiceInputEndpointDoesNotExist\0\u{1}TheVoiceInputDeviceIsNotRegisteredOrDoesNotExist\0\u{1}EncryptionFailure\0\u{1}EndpointDoesNotExist\0\u{1}TheClientsApplicationCancelledTheOperation\0\u{1}TheOperationTimedOut\0\u{1}TheSpecifiedPlayerPathObjectWasInvalid\0\u{1}AddingOrRemovingDevicesFromTheAvOutputContextHasFailed\0\u{1}CouldNotFindTheSpecifiedNowPlayingPlayer\0\u{1}TheSpecifiedContentItemDoesNotExist\0\u{1}TheSpecifiedOffsetIsInvalid\0\u{1}TheSpecifiedOutputContextIsInvalid\0\u{1}OneOrMoreSpecifiedOutputDevicesAreNotGroupable\0\u{1}TheSpecifiedOutputContextDoesNotSupportAddingMoreThanOneOutputDevice\0\u{1}CouldNotFindTheSpecifiedNowPlayingClient\0\u{1}EndpointVolumeControlIsOnlyPossibleIfTheEndpointIsPickedOrRemoteControllable\0\u{1}OutputDeviceVolumeControlIsOnlyPossibleIfTheEndpointIsPickedOrRemoteControllable\0\u{1}CoderMustSupportKeyValueCoding\0\u{1}CouldNotFindTheGivenOutputdevice\0\u{2}=FailedToConnectToRemoteDevice\0\u{1}AuthenticationTokenIsInvalid\0\u{1}RecordingSessionIsAlreadyInProgressOnThisDevice\0\u{1}TheDeviceIsNotCurrentlyRecording\0\u{1}TheClientHasDisconnected\0\u{1}TheServerHasDisconnected\0\u{1}TheConnectionHasBeenCancelledByTheClient\0\u{1}PairingFunctionalityIsLockedDueToSecurityReasons\0\u{1}TheClientsOperatingSystemVersionIsTooOld\0\u{1}TheClientsApplicationVersionIsTooOld\0\u{1}TheDeviceIsNotPaired\0\u{1}ThePinPairingDialogWasRemovedByTheUserBeforePairingOccoured\0\u{1}ThePinPairingDialogWasRemovedByATimeoutBeforePairingOccoured\0\u{1}TheConnectionTimedout\0\u{1}PairingWithThisDeviceIsBlocked\0\u{1}TheDeviceIsGoingToSleep\0\u{1}ConnectionBlockedByServer\0\u{1}MravendpointWasDeallocatedWhileWaitingForDeviceToConnect\0\u{2}S\u{1}OutputContextModificationCausedADeviceToNoLongerBeAProxyGroupPlayer\0\u{1}OutputContextModificationCausedADeviceToBecomeAProxyGroupPlayer\0\u{1}OutputContextModificationRequestedNoTopologyChange\0\u{2}a\u{1}OtherUnknownError\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0NoError\0\u{1}UnknownError\0\u{1}InvalidOperation\0\u{1}OperationNotPermitted\0\u{1}ClientDoesNotExist\0\u{1}OriginDoesNotExist\0\u{1}UnsupportedOperation\0\u{1}FailedToSetPickedRoute\0\u{1}FailedToRegisterCustomOrigin\0\u{1}FailedToRemoveCustomOrigin\0\u{1}TheApplicationActivityDoesNotExist\0\u{1}TheAppHasNotSetupABrowsableContentEndpoint\0\u{1}TheRequestedBrowsableContentApiIsNotSupportedByTheApplication\0\u{1}TheNotficationHasNotBeenWhitelistedByTheServer\0\u{1}OperationRequiresAClientCallbackToHaveBeenRegistered\0\u{1}OperationRequiresAClientDataSourceToHaveBeenRegistered\0\u{1}RequestedDataIsOutOfDateAndShouldBeRequestedAgain\0\u{1}TheDevicesEnforcedVolumeLimitHasBeenExceeded\0\u{1}VolumeValueIsOutOfRange\0\u{1}VolumeIsAlreadyAtTheMaximumValue\0\u{1}VolumeIsAlreadyMuted\0\u{1}VoiceInputEndpointDoesNotExist\0\u{1}TheVoiceInputDeviceIsNotRegisteredOrDoesNotExist\0\u{1}EncryptionFailure\0\u{1}EndpointDoesNotExist\0\u{1}TheClientsApplicationCancelledTheOperation\0\u{1}TheOperationTimedOut\0\u{1}TheSpecifiedPlayerPathObjectWasInvalid\0\u{1}AddingOrRemovingDevicesFromTheAvOutputContextHasFailed\0\u{1}CouldNotFindTheSpecifiedNowPlayingPlayer\0\u{1}TheSpecifiedContentItemDoesNotExist\0\u{1}TheSpecifiedOffsetIsInvalid\0\u{1}TheSpecifiedOutputContextIsInvalid\0\u{1}OneOrMoreSpecifiedOutputDevicesAreNotGroupable\0\u{1}TheSpecifiedOutputContextDoesNotSupportAddingMoreThanOneOutputDevice\0\u{1}CouldNotFindTheSpecifiedNowPlayingClient\0\u{1}EndpointVolumeControlIsOnlyPossibleIfTheEndpointIsPickedOrRemoteControllable\0\u{1}OutputDeviceVolumeControlIsOnlyPossibleIfTheEndpointIsPickedOrRemoteControllable\0\u{1}CoderMustSupportKeyValueCoding\0\u{1}CouldNotFindTheGivenOutputdevice\0\u{2}=FailedToConnectToRemoteDevice\0\u{1}AuthenticationTokenIsInvalid\0\u{1}RecordingSessionIsAlreadyInProgressOnThisDevice\0\u{1}TheDeviceIsNotCurrentlyRecording\0\u{1}TheClientHasDisconnected\0\u{1}TheServerHasDisconnected\0\u{1}TheConnectionHasBeenCancelledByTheClient\0\u{1}PairingFunctionalityIsLockedDueToSecurityReasons\0\u{1}TheClientsOperatingSystemVersionIsTooOld\0\u{1}TheClientsApplicationVersionIsTooOld\0\u{1}TheDeviceIsNotPaired\0\u{1}ThePinPairingDialogWasRemovedByTheUserBeforePairingOccoured\0\u{1}ThePinPairingDialogWasRemovedByATimeoutBeforePairingOccoured\0\u{1}TheConnectionTimedout\0\u{1}PairingWithThisDeviceIsBlocked\0\u{1}TheDeviceIsGoingToSleep\0\u{1}ConnectionBlockedByServer\0\u{1}MravendpointWasDeallocatedWhileWaitingForDeviceToConnect\0\u{2}S\u{1}OutputContextModificationCausedADeviceToNoLongerBeAProxyGroupPlayer\0\u{1}OutputContextModificationCausedADeviceToBecomeAProxyGroupPlayer\0\u{1}OutputContextModificationRequestedNoTopologyChange\0\u{2}a\u{1}OtherUnknownError\0")
 }
 
 nonisolated extension ProtocolMessageMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ProtocolMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}type\0\u{1}identifier\0\u{1}authenticationToken\0\u{1}errorCode\0\u{1}timestamp\0\u{2}I\u{1}errorDescription\0\u{2}\u{7}uniqueIdentifier\0")
+  public static let protoMessageName: String = "ProtocolMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}type\0\u{1}identifier\0\u{1}authenticationToken\0\u{1}errorCode\0\u{1}timestamp\0\u{2}I\u{1}errorDescription\0\u{2}\u{7}uniqueIdentifier\0")
 
   public var isInitialized: Bool {
     if !_protobuf_extensionFieldValues.isInitialized {return false}
     return true
   }
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -334,7 +334,7 @@ nonisolated extension ProtocolMessageMessage: SwiftProtobuf.Message, SwiftProtob
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -366,7 +366,7 @@ nonisolated extension ProtocolMessageMessage: SwiftProtobuf.Message, SwiftProtob
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ProtocolMessageMessage, rhs: ProtocolMessageMessage) -> Bool {
+  public static func ==(lhs: ProtocolMessageMessage, rhs: ProtocolMessageMessage) -> Bool {
     if lhs._type != rhs._type {return false}
     if lhs._identifier != rhs._identifier {return false}
     if lhs._authenticationToken != rhs._authenticationToken {return false}
@@ -381,5 +381,5 @@ nonisolated extension ProtocolMessageMessage: SwiftProtobuf.Message, SwiftProtob
 }
 
 nonisolated extension ProtocolMessageMessage.TypeEnum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0UNKNOWN_MESSAGE\0\u{1}SEND_COMMAND_MESSAGE\0\u{1}SEND_COMMAND_RESULT_MESSAGE\0\u{1}GET_STATE_MESSAGE\0\u{1}SET_STATE_MESSAGE\0\u{1}SET_ARTWORK_MESSAGE\0\u{1}REGISTER_HID_DEVICE_MESSAGE\0\u{1}REGISTER_HID_DEVICE_RESULT_MESSAGE\0\u{1}SEND_HID_EVENT_MESSAGE\0\u{1}SEND_HID_REPORT_MESSAGE\0\u{1}SEND_VIRTUAL_TOUCH_EVENT_MESSAGE\0\u{1}NOTIFICATION_MESSAGE\0\u{1}CONTENT_ITEMS_CHANGED_NOTIFICATION_MESSAGE\0\u{2}\u{3}DEVICE_INFO_MESSAGE\0\u{1}CLIENT_UPDATES_CONFIG_MESSAGE\0\u{1}VOLUME_CONTROL_AVAILABILITY_MESSAGE\0\u{1}GAME_CONTROLLER_MESSAGE\0\u{1}REGISTER_GAME_CONTROLLER_MESSAGE\0\u{1}REGISTER_GAME_CONTROLLER_RESPONSE_MESSAGE\0\u{1}UNREGISTER_GAME_CONTROLLER_MESSAGE\0\u{1}REGISTER_FOR_GAME_CONTROLLER_EVENTS_MESSAGE\0\u{1}KEYBOARD_MESSAGE\0\u{1}GET_KEYBOARD_SESSION_MESSAGE\0\u{1}TEXT_INPUT_MESSAGE\0\u{1}GET_VOICE_INPUT_DEVICES_MESSAGE\0\u{1}GET_VOICE_INPUT_DEVICES_RESPONSE_MESSAGE\0\u{1}REGISTER_VOICE_INPUT_DEVICE_MESSAGE\0\u{1}REGISTER_VOICE_INPUT_DEVICE_RESPONSE_MESSAGE\0\u{1}SET_RECORDING_STATE_MESSAGE\0\u{1}SEND_VOICE_INPUT_MESSAGE\0\u{1}PLAYBACK_QUEUE_REQUEST_MESSAGE\0\u{1}TRANSACTION_MESSAGE\0\u{1}CRYPTO_PAIRING_MESSAGE\0\u{1}GAME_CONTROLLER_PROPERTIES_MESSAGE\0\u{1}SET_READY_STATE_MESSAGE\0\u{1}DEVICE_INFO_UPDATE_MESSAGE\0\u{1}SET_CONNECTION_STATE_MESSAGE\0\u{1}SEND_BUTTON_EVENT_MESSAGE\0\u{1}SET_HILITE_MODE_MESSAGE\0\u{1}WAKE_DEVICE_MESSAGE\0\u{1}GENERIC_MESSAGE\0\u{1}SEND_PACKED_VIRTUAL_TOUCH_EVENT_MESSAGE\0\u{1}SEND_LYRICS_EVENT\0\u{2}\u{2}SET_NOW_PLAYING_CLIENT_MESSAGE\0\u{1}SET_NOW_PLAYING_PLAYER_MESSAGE\0\u{1}MODIFY_OUTPUT_CONTEXT_REQUEST_MESSAGE\0\u{1}GET_VOLUME_MESSAGE\0\u{1}GET_VOLUME_RESULT_MESSAGE\0\u{1}SET_VOLUME_MESSAGE\0\u{1}VOLUME_DID_CHANGE_MESSAGE\0\u{1}REMOVE_CLIENT_MESSAGE\0\u{1}REMOVE_PLAYER_MESSAGE\0\u{1}UPDATE_CLIENT_MESSAGE\0\u{1}UPDATE_CONTENT_ITEM_MESSAGE\0\u{1}UPDATE_CONTENT_ITEM_ARTWORK_MESSAGE\0\u{1}UPDATE_PLAYER_MESSAGE\0\u{1}PROMPT_FOR_ROUTE_AUTHORIZATION_MESSAGE\0\u{1}PROMPT_FOR_ROUTE_AUTHORIZATION_RESPONSE_MESSAGE\0\u{1}PRESENT_ROUTE_AUTHORIZATION_STATUS_MESSAGE\0\u{1}GET_VOLUME_CONTROL_CAPABILITIES_MESSAGE\0\u{1}GET_VOLUME_CONTROL_CAPABILITIES_RESULT_MESSAGE\0\u{1}VOLUME_CONTROL_CAPABILITIES_DID_CHANGE_MESSAGE\0\u{1}UPDATE_OUTPUT_DEVICE_MESSAGE\0\u{1}REMOVE_OUTPUT_DEVICES_MESSAGE\0\u{1}REMOTE_TEXT_INPUT_MESSAGE\0\u{1}GET_REMOTE_TEXT_INPUT_SESSION_MESSAGE\0\u{1}REMOVE_OUTPUT_DEVICES_MESSAGE2\0\u{1}PLAYBACK_SESSION_REQUEST_MESSAGE\0\u{1}PLAYBACK_SESSION_RESPONSE_MESSAGE\0\u{1}SET_DEFAULT_SUPPORTED_COMMANDS_MESSAGE\0\u{1}PLAYBACK_SESSION_MIGRATE_REQUEST_MESSAGE\0\u{1}PLAYBACK_SESSION_MIGRATE_RESPONSE_MESSAGE\0\u{1}PLAYBACK_SESSION_MIGRATE_BEGIN_MESSAGE\0\u{1}PLAYBACK_SESSION_MIGRATE_END_MESSAGE\0\u{1}UPDATE_ACTIVE_SYSTEM_ENDPOINT_MESSAGE\0\u{2}\u{18}SET_DISCOVERY_MODE_MESSAGE\0\u{1}UPDATE_END_POINTS_MESSAGE\0\u{1}REMOVE_ENDPOINTS_MESSAGE\0\u{1}PLAYER_CLIENT_PROPERTIES_MESSAGE\0\u{1}ORIGIN_CLIENT_PROPERTIES_MESSAGE\0\u{1}AUDIO_FADE_MESSAGE\0\u{1}AUDIO_FADE_RESPONSE_MESSAGE\0\u{2}\u{d}CONFIGURE_CONNECTION_MESSAGE\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0UNKNOWN_MESSAGE\0\u{1}SEND_COMMAND_MESSAGE\0\u{1}SEND_COMMAND_RESULT_MESSAGE\0\u{1}GET_STATE_MESSAGE\0\u{1}SET_STATE_MESSAGE\0\u{1}SET_ARTWORK_MESSAGE\0\u{1}REGISTER_HID_DEVICE_MESSAGE\0\u{1}REGISTER_HID_DEVICE_RESULT_MESSAGE\0\u{1}SEND_HID_EVENT_MESSAGE\0\u{1}SEND_HID_REPORT_MESSAGE\0\u{1}SEND_VIRTUAL_TOUCH_EVENT_MESSAGE\0\u{1}NOTIFICATION_MESSAGE\0\u{1}CONTENT_ITEMS_CHANGED_NOTIFICATION_MESSAGE\0\u{2}\u{3}DEVICE_INFO_MESSAGE\0\u{1}CLIENT_UPDATES_CONFIG_MESSAGE\0\u{1}VOLUME_CONTROL_AVAILABILITY_MESSAGE\0\u{1}GAME_CONTROLLER_MESSAGE\0\u{1}REGISTER_GAME_CONTROLLER_MESSAGE\0\u{1}REGISTER_GAME_CONTROLLER_RESPONSE_MESSAGE\0\u{1}UNREGISTER_GAME_CONTROLLER_MESSAGE\0\u{1}REGISTER_FOR_GAME_CONTROLLER_EVENTS_MESSAGE\0\u{1}KEYBOARD_MESSAGE\0\u{1}GET_KEYBOARD_SESSION_MESSAGE\0\u{1}TEXT_INPUT_MESSAGE\0\u{1}GET_VOICE_INPUT_DEVICES_MESSAGE\0\u{1}GET_VOICE_INPUT_DEVICES_RESPONSE_MESSAGE\0\u{1}REGISTER_VOICE_INPUT_DEVICE_MESSAGE\0\u{1}REGISTER_VOICE_INPUT_DEVICE_RESPONSE_MESSAGE\0\u{1}SET_RECORDING_STATE_MESSAGE\0\u{1}SEND_VOICE_INPUT_MESSAGE\0\u{1}PLAYBACK_QUEUE_REQUEST_MESSAGE\0\u{1}TRANSACTION_MESSAGE\0\u{1}CRYPTO_PAIRING_MESSAGE\0\u{1}GAME_CONTROLLER_PROPERTIES_MESSAGE\0\u{1}SET_READY_STATE_MESSAGE\0\u{1}DEVICE_INFO_UPDATE_MESSAGE\0\u{1}SET_CONNECTION_STATE_MESSAGE\0\u{1}SEND_BUTTON_EVENT_MESSAGE\0\u{1}SET_HILITE_MODE_MESSAGE\0\u{1}WAKE_DEVICE_MESSAGE\0\u{1}GENERIC_MESSAGE\0\u{1}SEND_PACKED_VIRTUAL_TOUCH_EVENT_MESSAGE\0\u{1}SEND_LYRICS_EVENT\0\u{2}\u{2}SET_NOW_PLAYING_CLIENT_MESSAGE\0\u{1}SET_NOW_PLAYING_PLAYER_MESSAGE\0\u{1}MODIFY_OUTPUT_CONTEXT_REQUEST_MESSAGE\0\u{1}GET_VOLUME_MESSAGE\0\u{1}GET_VOLUME_RESULT_MESSAGE\0\u{1}SET_VOLUME_MESSAGE\0\u{1}VOLUME_DID_CHANGE_MESSAGE\0\u{1}REMOVE_CLIENT_MESSAGE\0\u{1}REMOVE_PLAYER_MESSAGE\0\u{1}UPDATE_CLIENT_MESSAGE\0\u{1}UPDATE_CONTENT_ITEM_MESSAGE\0\u{1}UPDATE_CONTENT_ITEM_ARTWORK_MESSAGE\0\u{1}UPDATE_PLAYER_MESSAGE\0\u{1}PROMPT_FOR_ROUTE_AUTHORIZATION_MESSAGE\0\u{1}PROMPT_FOR_ROUTE_AUTHORIZATION_RESPONSE_MESSAGE\0\u{1}PRESENT_ROUTE_AUTHORIZATION_STATUS_MESSAGE\0\u{1}GET_VOLUME_CONTROL_CAPABILITIES_MESSAGE\0\u{1}GET_VOLUME_CONTROL_CAPABILITIES_RESULT_MESSAGE\0\u{1}VOLUME_CONTROL_CAPABILITIES_DID_CHANGE_MESSAGE\0\u{1}UPDATE_OUTPUT_DEVICE_MESSAGE\0\u{1}REMOVE_OUTPUT_DEVICES_MESSAGE\0\u{1}REMOTE_TEXT_INPUT_MESSAGE\0\u{1}GET_REMOTE_TEXT_INPUT_SESSION_MESSAGE\0\u{1}REMOVE_OUTPUT_DEVICES_MESSAGE2\0\u{1}PLAYBACK_SESSION_REQUEST_MESSAGE\0\u{1}PLAYBACK_SESSION_RESPONSE_MESSAGE\0\u{1}SET_DEFAULT_SUPPORTED_COMMANDS_MESSAGE\0\u{1}PLAYBACK_SESSION_MIGRATE_REQUEST_MESSAGE\0\u{1}PLAYBACK_SESSION_MIGRATE_RESPONSE_MESSAGE\0\u{1}PLAYBACK_SESSION_MIGRATE_BEGIN_MESSAGE\0\u{1}PLAYBACK_SESSION_MIGRATE_END_MESSAGE\0\u{1}UPDATE_ACTIVE_SYSTEM_ENDPOINT_MESSAGE\0\u{2}\u{18}SET_DISCOVERY_MODE_MESSAGE\0\u{1}UPDATE_END_POINTS_MESSAGE\0\u{1}REMOVE_ENDPOINTS_MESSAGE\0\u{1}PLAYER_CLIENT_PROPERTIES_MESSAGE\0\u{1}ORIGIN_CLIENT_PROPERTIES_MESSAGE\0\u{1}AUDIO_FADE_MESSAGE\0\u{1}AUDIO_FADE_RESPONSE_MESSAGE\0\u{2}\u{d}CONFIGURE_CONNECTION_MESSAGE\0")
 }

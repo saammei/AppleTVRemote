@@ -25,14 +25,14 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct SendError: Sendable {
+public nonisolated struct SendError: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
 
     /// This is None in original message definitions (no-go with python)
     case noError = 0
@@ -47,23 +47,23 @@ nonisolated struct SendError: Sendable {
     case applicationNotInstalled = 9
     case notSupported = 10
 
-    init() {
+    public init() {
       self = .noError
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct HandlerReturnStatus: Sendable {
+public nonisolated struct HandlerReturnStatus: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case success = 0
     case noSuchContent = 1
     case commandFailed = 2
@@ -82,23 +82,23 @@ nonisolated struct HandlerReturnStatus: Sendable {
     case authenticationFailure = 401
     case mediaServiceUnavailable = 501
 
-    init() {
+    public init() {
       self = .success
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct SendCommandStatusCode: Sendable {
+public nonisolated struct SendCommandStatusCode: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case success = 0
     case noSuchContent = 1
     case commandFailed = 2
@@ -117,82 +117,82 @@ nonisolated struct SendCommandStatusCode: Sendable {
     case authenticationFailure = 401
     case mediaServiceUnavailable = 501
 
-    init() {
+    public init() {
       self = .success
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct SendCommandResultType: Sendable {
+public nonisolated struct SendCommandResultType: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum Enum: Int, SwiftProtobuf.Enum, Swift.CaseIterable {
     case dialog = 1
     case error = 2
     case custom = 999
 
-    init() {
+    public init() {
       self = .dialog
     }
 
   }
 
-  init() {}
+  public init() {}
 }
 
-nonisolated struct SendCommandResultStatus: Sendable {
+public nonisolated struct SendCommandResultStatus: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var statusCode: SendCommandStatusCode.Enum {
+  public var statusCode: SendCommandStatusCode.Enum {
     get {_statusCode ?? .success}
     set {_statusCode = newValue}
   }
   /// Returns true if `statusCode` has been explicitly set.
-  var hasStatusCode: Bool {self._statusCode != nil}
+  public var hasStatusCode: Bool {self._statusCode != nil}
   /// Clears the value of `statusCode`. Subsequent reads from it will return its default value.
-  mutating func clearStatusCode() {self._statusCode = nil}
+  public mutating func clearStatusCode() {self._statusCode = nil}
 
-  var type: SendCommandResultType.Enum {
+  public var type: SendCommandResultType.Enum {
     get {_type ?? .dialog}
     set {_type = newValue}
   }
   /// Returns true if `type` has been explicitly set.
-  var hasType: Bool {self._type != nil}
+  public var hasType: Bool {self._type != nil}
   /// Clears the value of `type`. Subsequent reads from it will return its default value.
-  mutating func clearType() {self._type = nil}
+  public mutating func clearType() {self._type = nil}
 
   /// optional ... dialog = 3;
   /// optional ... error = 4;
-  var customData: Data {
+  public var customData: Data {
     get {_customData ?? Data()}
     set {_customData = newValue}
   }
   /// Returns true if `customData` has been explicitly set.
-  var hasCustomData: Bool {self._customData != nil}
+  public var hasCustomData: Bool {self._customData != nil}
   /// Clears the value of `customData`. Subsequent reads from it will return its default value.
-  mutating func clearCustomData() {self._customData = nil}
+  public mutating func clearCustomData() {self._customData = nil}
 
-  var customDataType: String {
+  public var customDataType: String {
     get {_customDataType ?? String()}
     set {_customDataType = newValue}
   }
   /// Returns true if `customDataType` has been explicitly set.
-  var hasCustomDataType: Bool {self._customDataType != nil}
+  public var hasCustomDataType: Bool {self._customDataType != nil}
   /// Clears the value of `customDataType`. Subsequent reads from it will return its default value.
-  mutating func clearCustomDataType() {self._customDataType = nil}
+  public mutating func clearCustomDataType() {self._customDataType = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _statusCode: SendCommandStatusCode.Enum? = nil
   fileprivate var _type: SendCommandResultType.Enum? = nil
@@ -200,94 +200,94 @@ nonisolated struct SendCommandResultStatus: Sendable {
   fileprivate var _customDataType: String? = nil
 }
 
-nonisolated struct SendCommandResult: Sendable {
+public nonisolated struct SendCommandResult: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var playerPath: PlayerPath {
+  public var playerPath: PlayerPath {
     get {_playerPath ?? PlayerPath()}
     set {_playerPath = newValue}
   }
   /// Returns true if `playerPath` has been explicitly set.
-  var hasPlayerPath: Bool {self._playerPath != nil}
+  public var hasPlayerPath: Bool {self._playerPath != nil}
   /// Clears the value of `playerPath`. Subsequent reads from it will return its default value.
-  mutating func clearPlayerPath() {self._playerPath = nil}
+  public mutating func clearPlayerPath() {self._playerPath = nil}
 
-  var sendError: SendError.Enum {
+  public var sendError: SendError.Enum {
     get {_sendError ?? .noError}
     set {_sendError = newValue}
   }
   /// Returns true if `sendError` has been explicitly set.
-  var hasSendError: Bool {self._sendError != nil}
+  public var hasSendError: Bool {self._sendError != nil}
   /// Clears the value of `sendError`. Subsequent reads from it will return its default value.
-  mutating func clearSendError() {self._sendError = nil}
+  public mutating func clearSendError() {self._sendError = nil}
 
-  var statuses: [SendCommandResultStatus] = []
+  public var statuses: [SendCommandResultStatus] = []
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _playerPath: PlayerPath? = nil
   fileprivate var _sendError: SendError.Enum? = nil
 }
 
-nonisolated struct SendCommandResultMessage: Sendable {
+public nonisolated struct SendCommandResultMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var sendError: SendError.Enum {
+  public var sendError: SendError.Enum {
     get {_sendError ?? .noError}
     set {_sendError = newValue}
   }
   /// Returns true if `sendError` has been explicitly set.
-  var hasSendError: Bool {self._sendError != nil}
+  public var hasSendError: Bool {self._sendError != nil}
   /// Clears the value of `sendError`. Subsequent reads from it will return its default value.
-  mutating func clearSendError() {self._sendError = nil}
+  public mutating func clearSendError() {self._sendError = nil}
 
-  var handlerReturnStatus: HandlerReturnStatus.Enum {
+  public var handlerReturnStatus: HandlerReturnStatus.Enum {
     get {_handlerReturnStatus ?? .success}
     set {_handlerReturnStatus = newValue}
   }
   /// Returns true if `handlerReturnStatus` has been explicitly set.
-  var hasHandlerReturnStatus: Bool {self._handlerReturnStatus != nil}
+  public var hasHandlerReturnStatus: Bool {self._handlerReturnStatus != nil}
   /// Clears the value of `handlerReturnStatus`. Subsequent reads from it will return its default value.
-  mutating func clearHandlerReturnStatus() {self._handlerReturnStatus = nil}
+  public mutating func clearHandlerReturnStatus() {self._handlerReturnStatus = nil}
 
-  var handlerReturnStatusDatas: [Data] = []
+  public var handlerReturnStatusDatas: [Data] = []
 
-  var commandID: String {
+  public var commandID: String {
     get {_commandID ?? String()}
     set {_commandID = newValue}
   }
   /// Returns true if `commandID` has been explicitly set.
-  var hasCommandID: Bool {self._commandID != nil}
+  public var hasCommandID: Bool {self._commandID != nil}
   /// Clears the value of `commandID`. Subsequent reads from it will return its default value.
-  mutating func clearCommandID() {self._commandID = nil}
+  public mutating func clearCommandID() {self._commandID = nil}
 
-  var playerPath: PlayerPath {
+  public var playerPath: PlayerPath {
     get {_playerPath ?? PlayerPath()}
     set {_playerPath = newValue}
   }
   /// Returns true if `playerPath` has been explicitly set.
-  var hasPlayerPath: Bool {self._playerPath != nil}
+  public var hasPlayerPath: Bool {self._playerPath != nil}
   /// Clears the value of `playerPath`. Subsequent reads from it will return its default value.
-  mutating func clearPlayerPath() {self._playerPath = nil}
+  public mutating func clearPlayerPath() {self._playerPath = nil}
 
-  var commandResult: SendCommandResult {
+  public var commandResult: SendCommandResult {
     get {_commandResult ?? SendCommandResult()}
     set {_commandResult = newValue}
   }
   /// Returns true if `commandResult` has been explicitly set.
-  var hasCommandResult: Bool {self._commandResult != nil}
+  public var hasCommandResult: Bool {self._commandResult != nil}
   /// Clears the value of `commandResult`. Subsequent reads from it will return its default value.
-  mutating func clearCommandResult() {self._commandResult = nil}
+  public mutating func clearCommandResult() {self._commandResult = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _sendError: SendError.Enum? = nil
   fileprivate var _handlerReturnStatus: HandlerReturnStatus.Enum? = nil
@@ -307,18 +307,18 @@ nonisolated struct SendCommandResultMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var sendCommandResultMessage: SendCommandResultMessage {
+  public var sendCommandResultMessage: SendCommandResultMessage {
     get {return getExtensionValue(ext: Extensions_sendCommandResultMessage) ?? SendCommandResultMessage()}
     set {setExtensionValue(ext: Extensions_sendCommandResultMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_sendCommandResultMessage`
   /// has been explicitly set.
-  var hasSendCommandResultMessage: Bool {
+  public var hasSendCommandResultMessage: Bool {
     return hasExtensionValue(ext: Extensions_sendCommandResultMessage)
   }
   /// Clears the value of extension `Extensions_sendCommandResultMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearSendCommandResultMessage() {
+  public mutating func clearSendCommandResultMessage() {
     clearExtensionValue(ext: Extensions_sendCommandResultMessage)
   }
 
@@ -330,7 +330,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let SendCommandResultMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let SendCommandResultMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_sendCommandResultMessage
 ]
 
@@ -338,7 +338,7 @@ nonisolated let SendCommandResultMessage_Extensions: SwiftProtobuf.SimpleExtensi
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_sendCommandResultMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SendCommandResultMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_sendCommandResultMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SendCommandResultMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 7,
   fieldName: "sendCommandResultMessage"
 )
@@ -346,102 +346,102 @@ nonisolated let Extensions_sendCommandResultMessage = SwiftProtobuf.MessageExten
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension SendError: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SendError"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "SendError"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SendError, rhs: SendError) -> Bool {
+  public static func ==(lhs: SendError, rhs: SendError) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension SendError.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0NoError\0\u{1}ApplicationNotFound\0\u{1}ConnectionFailed\0\u{1}Ignored\0\u{1}CouldNotLaunchApplication\0\u{1}TimedOut\0\u{1}OriginDoesNotExist\0\u{1}InvalidOptions\0\u{1}NoCommandHandlers\0\u{1}ApplicationNotInstalled\0\u{1}NotSupported\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0NoError\0\u{1}ApplicationNotFound\0\u{1}ConnectionFailed\0\u{1}Ignored\0\u{1}CouldNotLaunchApplication\0\u{1}TimedOut\0\u{1}OriginDoesNotExist\0\u{1}InvalidOptions\0\u{1}NoCommandHandlers\0\u{1}ApplicationNotInstalled\0\u{1}NotSupported\0")
 }
 
 nonisolated extension HandlerReturnStatus: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "HandlerReturnStatus"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "HandlerReturnStatus"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: HandlerReturnStatus, rhs: HandlerReturnStatus) -> Bool {
+  public static func ==(lhs: HandlerReturnStatus, rhs: HandlerReturnStatus) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension HandlerReturnStatus.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Success\0\u{1}NoSuchContent\0\u{1}CommandFailed\0\u{1}UIKitLegacy\0\u{2}\u{7}NoActionableNowPlayingItem\0\u{2}\u{a}DeviceNotFound\0\u{2}P\u{1}SkipAdProhibited\0\u{1}QueueIsUserCurated\0\u{1}UserModifiedQueueDisabled\0\u{1}UserQueueModificationNotSupportedForCurrentItem\0\u{1}SubscriptionRequiredForSharedQueue\0\u{1}InsertionPositionNotSpecified\0\u{1}InvalidInsertionPosition\0\u{1}RequestParametersOutOfBounds\0\u{1}SkipLimitReached\0\u{2}e\u{4}AuthenticationFailure\0\u{2}d\u{1}MediaServiceUnavailable\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Success\0\u{1}NoSuchContent\0\u{1}CommandFailed\0\u{1}UIKitLegacy\0\u{2}\u{7}NoActionableNowPlayingItem\0\u{2}\u{a}DeviceNotFound\0\u{2}P\u{1}SkipAdProhibited\0\u{1}QueueIsUserCurated\0\u{1}UserModifiedQueueDisabled\0\u{1}UserQueueModificationNotSupportedForCurrentItem\0\u{1}SubscriptionRequiredForSharedQueue\0\u{1}InsertionPositionNotSpecified\0\u{1}InvalidInsertionPosition\0\u{1}RequestParametersOutOfBounds\0\u{1}SkipLimitReached\0\u{2}e\u{4}AuthenticationFailure\0\u{2}d\u{1}MediaServiceUnavailable\0")
 }
 
 nonisolated extension SendCommandStatusCode: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SendCommandStatusCode"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "SendCommandStatusCode"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SendCommandStatusCode, rhs: SendCommandStatusCode) -> Bool {
+  public static func ==(lhs: SendCommandStatusCode, rhs: SendCommandStatusCode) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension SendCommandStatusCode.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Success\0\u{1}NoSuchContent\0\u{1}CommandFailed\0\u{1}UIKitLegacy\0\u{2}\u{7}NoActionableNowPlayingItem\0\u{2}\u{a}DeviceNotFound\0\u{2}P\u{1}SkipAdProhibited\0\u{1}QueueIsUserCurated\0\u{1}UserModifiedQueueDisabled\0\u{1}UserQueueModificationNotSupportedForCurrentItem\0\u{1}SubscriptionRequiredForSharedQueue\0\u{1}InsertionPositionNotSpecified\0\u{1}InvalidInsertionPosition\0\u{1}RequestParametersOutOfBounds\0\u{1}SkipLimitReached\0\u{2}e\u{4}AuthenticationFailure\0\u{2}d\u{1}MediaServiceUnavailable\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0Success\0\u{1}NoSuchContent\0\u{1}CommandFailed\0\u{1}UIKitLegacy\0\u{2}\u{7}NoActionableNowPlayingItem\0\u{2}\u{a}DeviceNotFound\0\u{2}P\u{1}SkipAdProhibited\0\u{1}QueueIsUserCurated\0\u{1}UserModifiedQueueDisabled\0\u{1}UserQueueModificationNotSupportedForCurrentItem\0\u{1}SubscriptionRequiredForSharedQueue\0\u{1}InsertionPositionNotSpecified\0\u{1}InvalidInsertionPosition\0\u{1}RequestParametersOutOfBounds\0\u{1}SkipLimitReached\0\u{2}e\u{4}AuthenticationFailure\0\u{2}d\u{1}MediaServiceUnavailable\0")
 }
 
 nonisolated extension SendCommandResultType: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SendCommandResultType"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let protoMessageName: String = "SendCommandResultType"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     // Load everything into unknown fields
     while try decoder.nextFieldNumber() != nil {}
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SendCommandResultType, rhs: SendCommandResultType) -> Bool {
+  public static func ==(lhs: SendCommandResultType, rhs: SendCommandResultType) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
 nonisolated extension SendCommandResultType.Enum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}Dialog\0\u{1}Error\0\u{2}e\u{f}Custom\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}Dialog\0\u{1}Error\0\u{2}e\u{f}Custom\0")
 }
 
 nonisolated extension SendCommandResultStatus: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SendCommandResultStatus"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}statusCode\0\u{1}type\0\u{2}\u{3}customData\0\u{1}customDataType\0")
+  public static let protoMessageName: String = "SendCommandResultStatus"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}statusCode\0\u{1}type\0\u{2}\u{3}customData\0\u{1}customDataType\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -456,7 +456,7 @@ nonisolated extension SendCommandResultStatus: SwiftProtobuf.Message, SwiftProto
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -476,7 +476,7 @@ nonisolated extension SendCommandResultStatus: SwiftProtobuf.Message, SwiftProto
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SendCommandResultStatus, rhs: SendCommandResultStatus) -> Bool {
+  public static func ==(lhs: SendCommandResultStatus, rhs: SendCommandResultStatus) -> Bool {
     if lhs._statusCode != rhs._statusCode {return false}
     if lhs._type != rhs._type {return false}
     if lhs._customData != rhs._customData {return false}
@@ -487,15 +487,15 @@ nonisolated extension SendCommandResultStatus: SwiftProtobuf.Message, SwiftProto
 }
 
 nonisolated extension SendCommandResult: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SendCommandResult"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}playerPath\0\u{1}sendError\0\u{1}statuses\0")
+  public static let protoMessageName: String = "SendCommandResult"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}playerPath\0\u{1}sendError\0\u{1}statuses\0")
 
   public var isInitialized: Bool {
     if let v = self._playerPath, !v.isInitialized {return false}
     return true
   }
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -509,7 +509,7 @@ nonisolated extension SendCommandResult: SwiftProtobuf.Message, SwiftProtobuf._M
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -526,7 +526,7 @@ nonisolated extension SendCommandResult: SwiftProtobuf.Message, SwiftProtobuf._M
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SendCommandResult, rhs: SendCommandResult) -> Bool {
+  public static func ==(lhs: SendCommandResult, rhs: SendCommandResult) -> Bool {
     if lhs._playerPath != rhs._playerPath {return false}
     if lhs._sendError != rhs._sendError {return false}
     if lhs.statuses != rhs.statuses {return false}
@@ -536,8 +536,8 @@ nonisolated extension SendCommandResult: SwiftProtobuf.Message, SwiftProtobuf._M
 }
 
 nonisolated extension SendCommandResultMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SendCommandResultMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}sendError\0\u{1}handlerReturnStatus\0\u{1}handlerReturnStatusDatas\0\u{1}commandID\0\u{1}playerPath\0\u{1}commandResult\0")
+  public static let protoMessageName: String = "SendCommandResultMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}sendError\0\u{1}handlerReturnStatus\0\u{1}handlerReturnStatusDatas\0\u{1}commandID\0\u{1}playerPath\0\u{1}commandResult\0")
 
   public var isInitialized: Bool {
     if let v = self._playerPath, !v.isInitialized {return false}
@@ -545,7 +545,7 @@ nonisolated extension SendCommandResultMessage: SwiftProtobuf.Message, SwiftProt
     return true
   }
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -562,7 +562,7 @@ nonisolated extension SendCommandResultMessage: SwiftProtobuf.Message, SwiftProt
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -588,7 +588,7 @@ nonisolated extension SendCommandResultMessage: SwiftProtobuf.Message, SwiftProt
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SendCommandResultMessage, rhs: SendCommandResultMessage) -> Bool {
+  public static func ==(lhs: SendCommandResultMessage, rhs: SendCommandResultMessage) -> Bool {
     if lhs._sendError != rhs._sendError {return false}
     if lhs._handlerReturnStatus != rhs._handlerReturnStatus {return false}
     if lhs.handlerReturnStatusDatas != rhs.handlerReturnStatusDatas {return false}

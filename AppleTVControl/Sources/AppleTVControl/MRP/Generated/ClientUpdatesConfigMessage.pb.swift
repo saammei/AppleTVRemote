@@ -20,59 +20,59 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct ClientUpdatesConfigMessage: Sendable {
+public nonisolated struct ClientUpdatesConfigMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var artworkUpdates: Bool {
+  public var artworkUpdates: Bool {
     get {_artworkUpdates ?? false}
     set {_artworkUpdates = newValue}
   }
   /// Returns true if `artworkUpdates` has been explicitly set.
-  var hasArtworkUpdates: Bool {self._artworkUpdates != nil}
+  public var hasArtworkUpdates: Bool {self._artworkUpdates != nil}
   /// Clears the value of `artworkUpdates`. Subsequent reads from it will return its default value.
-  mutating func clearArtworkUpdates() {self._artworkUpdates = nil}
+  public mutating func clearArtworkUpdates() {self._artworkUpdates = nil}
 
-  var nowPlayingUpdates: Bool {
+  public var nowPlayingUpdates: Bool {
     get {_nowPlayingUpdates ?? false}
     set {_nowPlayingUpdates = newValue}
   }
   /// Returns true if `nowPlayingUpdates` has been explicitly set.
-  var hasNowPlayingUpdates: Bool {self._nowPlayingUpdates != nil}
+  public var hasNowPlayingUpdates: Bool {self._nowPlayingUpdates != nil}
   /// Clears the value of `nowPlayingUpdates`. Subsequent reads from it will return its default value.
-  mutating func clearNowPlayingUpdates() {self._nowPlayingUpdates = nil}
+  public mutating func clearNowPlayingUpdates() {self._nowPlayingUpdates = nil}
 
-  var volumeUpdates: Bool {
+  public var volumeUpdates: Bool {
     get {_volumeUpdates ?? false}
     set {_volumeUpdates = newValue}
   }
   /// Returns true if `volumeUpdates` has been explicitly set.
-  var hasVolumeUpdates: Bool {self._volumeUpdates != nil}
+  public var hasVolumeUpdates: Bool {self._volumeUpdates != nil}
   /// Clears the value of `volumeUpdates`. Subsequent reads from it will return its default value.
-  mutating func clearVolumeUpdates() {self._volumeUpdates = nil}
+  public mutating func clearVolumeUpdates() {self._volumeUpdates = nil}
 
-  var keyboardUpdates: Bool {
+  public var keyboardUpdates: Bool {
     get {_keyboardUpdates ?? false}
     set {_keyboardUpdates = newValue}
   }
   /// Returns true if `keyboardUpdates` has been explicitly set.
-  var hasKeyboardUpdates: Bool {self._keyboardUpdates != nil}
+  public var hasKeyboardUpdates: Bool {self._keyboardUpdates != nil}
   /// Clears the value of `keyboardUpdates`. Subsequent reads from it will return its default value.
-  mutating func clearKeyboardUpdates() {self._keyboardUpdates = nil}
+  public mutating func clearKeyboardUpdates() {self._keyboardUpdates = nil}
 
-  var outputDeviceUpdates: Bool {
+  public var outputDeviceUpdates: Bool {
     get {_outputDeviceUpdates ?? false}
     set {_outputDeviceUpdates = newValue}
   }
   /// Returns true if `outputDeviceUpdates` has been explicitly set.
-  var hasOutputDeviceUpdates: Bool {self._outputDeviceUpdates != nil}
+  public var hasOutputDeviceUpdates: Bool {self._outputDeviceUpdates != nil}
   /// Clears the value of `outputDeviceUpdates`. Subsequent reads from it will return its default value.
-  mutating func clearOutputDeviceUpdates() {self._outputDeviceUpdates = nil}
+  public mutating func clearOutputDeviceUpdates() {self._outputDeviceUpdates = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _artworkUpdates: Bool? = nil
   fileprivate var _nowPlayingUpdates: Bool? = nil
@@ -92,18 +92,18 @@ nonisolated struct ClientUpdatesConfigMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var clientUpdatesConfigMessage: ClientUpdatesConfigMessage {
+  public var clientUpdatesConfigMessage: ClientUpdatesConfigMessage {
     get {return getExtensionValue(ext: Extensions_clientUpdatesConfigMessage) ?? ClientUpdatesConfigMessage()}
     set {setExtensionValue(ext: Extensions_clientUpdatesConfigMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_clientUpdatesConfigMessage`
   /// has been explicitly set.
-  var hasClientUpdatesConfigMessage: Bool {
+  public var hasClientUpdatesConfigMessage: Bool {
     return hasExtensionValue(ext: Extensions_clientUpdatesConfigMessage)
   }
   /// Clears the value of extension `Extensions_clientUpdatesConfigMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearClientUpdatesConfigMessage() {
+  public mutating func clearClientUpdatesConfigMessage() {
     clearExtensionValue(ext: Extensions_clientUpdatesConfigMessage)
   }
 
@@ -115,7 +115,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let ClientUpdatesConfigMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let ClientUpdatesConfigMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_clientUpdatesConfigMessage
 ]
 
@@ -123,7 +123,7 @@ nonisolated let ClientUpdatesConfigMessage_Extensions: SwiftProtobuf.SimpleExten
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_clientUpdatesConfigMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<ClientUpdatesConfigMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_clientUpdatesConfigMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<ClientUpdatesConfigMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 21,
   fieldName: "clientUpdatesConfigMessage"
 )
@@ -131,10 +131,10 @@ nonisolated let Extensions_clientUpdatesConfigMessage = SwiftProtobuf.MessageExt
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension ClientUpdatesConfigMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ClientUpdatesConfigMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}artworkUpdates\0\u{1}nowPlayingUpdates\0\u{1}volumeUpdates\0\u{1}keyboardUpdates\0\u{1}outputDeviceUpdates\0")
+  public static let protoMessageName: String = "ClientUpdatesConfigMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}artworkUpdates\0\u{1}nowPlayingUpdates\0\u{1}volumeUpdates\0\u{1}keyboardUpdates\0\u{1}outputDeviceUpdates\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -150,7 +150,7 @@ nonisolated extension ClientUpdatesConfigMessage: SwiftProtobuf.Message, SwiftPr
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -173,7 +173,7 @@ nonisolated extension ClientUpdatesConfigMessage: SwiftProtobuf.Message, SwiftPr
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ClientUpdatesConfigMessage, rhs: ClientUpdatesConfigMessage) -> Bool {
+  public static func ==(lhs: ClientUpdatesConfigMessage, rhs: ClientUpdatesConfigMessage) -> Bool {
     if lhs._artworkUpdates != rhs._artworkUpdates {return false}
     if lhs._nowPlayingUpdates != rhs._nowPlayingUpdates {return false}
     if lhs._volumeUpdates != rhs._volumeUpdates {return false}

@@ -20,77 +20,77 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct NowPlayingPlayer: Sendable {
+public nonisolated struct NowPlayingPlayer: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var identifier: String {
+  public var identifier: String {
     get {_identifier ?? String()}
     set {_identifier = newValue}
   }
   /// Returns true if `identifier` has been explicitly set.
-  var hasIdentifier: Bool {self._identifier != nil}
+  public var hasIdentifier: Bool {self._identifier != nil}
   /// Clears the value of `identifier`. Subsequent reads from it will return its default value.
-  mutating func clearIdentifier() {self._identifier = nil}
+  public mutating func clearIdentifier() {self._identifier = nil}
 
-  var displayName: String {
+  public var displayName: String {
     get {_displayName ?? String()}
     set {_displayName = newValue}
   }
   /// Returns true if `displayName` has been explicitly set.
-  var hasDisplayName: Bool {self._displayName != nil}
+  public var hasDisplayName: Bool {self._displayName != nil}
   /// Clears the value of `displayName`. Subsequent reads from it will return its default value.
-  mutating func clearDisplayName() {self._displayName = nil}
+  public mutating func clearDisplayName() {self._displayName = nil}
 
-  var isDefaultPlayer: Bool {
+  public var isDefaultPlayer: Bool {
     get {_isDefaultPlayer ?? false}
     set {_isDefaultPlayer = newValue}
   }
   /// Returns true if `isDefaultPlayer` has been explicitly set.
-  var hasIsDefaultPlayer: Bool {self._isDefaultPlayer != nil}
+  public var hasIsDefaultPlayer: Bool {self._isDefaultPlayer != nil}
   /// Clears the value of `isDefaultPlayer`. Subsequent reads from it will return its default value.
-  mutating func clearIsDefaultPlayer() {self._isDefaultPlayer = nil}
+  public mutating func clearIsDefaultPlayer() {self._isDefaultPlayer = nil}
 
-  var audioSessionType: Int32 {
+  public var audioSessionType: Int32 {
     get {_audioSessionType ?? 0}
     set {_audioSessionType = newValue}
   }
   /// Returns true if `audioSessionType` has been explicitly set.
-  var hasAudioSessionType: Bool {self._audioSessionType != nil}
+  public var hasAudioSessionType: Bool {self._audioSessionType != nil}
   /// Clears the value of `audioSessionType`. Subsequent reads from it will return its default value.
-  mutating func clearAudioSessionType() {self._audioSessionType = nil}
+  public mutating func clearAudioSessionType() {self._audioSessionType = nil}
 
-  var mxSessionIds: Int64 {
+  public var mxSessionIds: Int64 {
     get {_mxSessionIds ?? 0}
     set {_mxSessionIds = newValue}
   }
   /// Returns true if `mxSessionIds` has been explicitly set.
-  var hasMxSessionIds: Bool {self._mxSessionIds != nil}
+  public var hasMxSessionIds: Bool {self._mxSessionIds != nil}
   /// Clears the value of `mxSessionIds`. Subsequent reads from it will return its default value.
-  mutating func clearMxSessionIds() {self._mxSessionIds = nil}
+  public mutating func clearMxSessionIds() {self._mxSessionIds = nil}
 
-  var audioSessionID: UInt32 {
+  public var audioSessionID: UInt32 {
     get {_audioSessionID ?? 0}
     set {_audioSessionID = newValue}
   }
   /// Returns true if `audioSessionID` has been explicitly set.
-  var hasAudioSessionID: Bool {self._audioSessionID != nil}
+  public var hasAudioSessionID: Bool {self._audioSessionID != nil}
   /// Clears the value of `audioSessionID`. Subsequent reads from it will return its default value.
-  mutating func clearAudioSessionID() {self._audioSessionID = nil}
+  public mutating func clearAudioSessionID() {self._audioSessionID = nil}
 
-  var iconURL: String {
+  public var iconURL: String {
     get {_iconURL ?? String()}
     set {_iconURL = newValue}
   }
   /// Returns true if `iconURL` has been explicitly set.
-  var hasIconURL: Bool {self._iconURL != nil}
+  public var hasIconURL: Bool {self._iconURL != nil}
   /// Clears the value of `iconURL`. Subsequent reads from it will return its default value.
-  mutating func clearIconURL() {self._iconURL = nil}
+  public mutating func clearIconURL() {self._iconURL = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _identifier: String? = nil
   fileprivate var _displayName: String? = nil
@@ -104,10 +104,10 @@ nonisolated struct NowPlayingPlayer: Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension NowPlayingPlayer: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "NowPlayingPlayer"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}identifier\0\u{1}displayName\0\u{1}isDefaultPlayer\0\u{1}audioSessionType\0\u{1}mxSessionIDs\0\u{1}audioSessionID\0\u{1}iconURL\0")
+  public static let protoMessageName: String = "NowPlayingPlayer"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}identifier\0\u{1}displayName\0\u{1}isDefaultPlayer\0\u{1}audioSessionType\0\u{1}mxSessionIDs\0\u{1}audioSessionID\0\u{1}iconURL\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -125,7 +125,7 @@ nonisolated extension NowPlayingPlayer: SwiftProtobuf.Message, SwiftProtobuf._Me
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -154,7 +154,7 @@ nonisolated extension NowPlayingPlayer: SwiftProtobuf.Message, SwiftProtobuf._Me
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: NowPlayingPlayer, rhs: NowPlayingPlayer) -> Bool {
+  public static func ==(lhs: NowPlayingPlayer, rhs: NowPlayingPlayer) -> Bool {
     if lhs._identifier != rhs._identifier {return false}
     if lhs._displayName != rhs._displayName {return false}
     if lhs._isDefaultPlayer != rhs._isDefaultPlayer {return false}

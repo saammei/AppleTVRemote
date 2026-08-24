@@ -20,32 +20,32 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct RegisterVoiceInputDeviceResponseMessage: Sendable {
+public nonisolated struct RegisterVoiceInputDeviceResponseMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var deviceID: Int32 {
+  public var deviceID: Int32 {
     get {_deviceID ?? 0}
     set {_deviceID = newValue}
   }
   /// Returns true if `deviceID` has been explicitly set.
-  var hasDeviceID: Bool {self._deviceID != nil}
+  public var hasDeviceID: Bool {self._deviceID != nil}
   /// Clears the value of `deviceID`. Subsequent reads from it will return its default value.
-  mutating func clearDeviceID() {self._deviceID = nil}
+  public mutating func clearDeviceID() {self._deviceID = nil}
 
-  var errorCode: Int32 {
+  public var errorCode: Int32 {
     get {_errorCode ?? 0}
     set {_errorCode = newValue}
   }
   /// Returns true if `errorCode` has been explicitly set.
-  var hasErrorCode: Bool {self._errorCode != nil}
+  public var hasErrorCode: Bool {self._errorCode != nil}
   /// Clears the value of `errorCode`. Subsequent reads from it will return its default value.
-  mutating func clearErrorCode() {self._errorCode = nil}
+  public mutating func clearErrorCode() {self._errorCode = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _deviceID: Int32? = nil
   fileprivate var _errorCode: Int32? = nil
@@ -62,18 +62,18 @@ nonisolated struct RegisterVoiceInputDeviceResponseMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var registerVoiceInputDeviceResponseMessage: RegisterVoiceInputDeviceResponseMessage {
+  public var registerVoiceInputDeviceResponseMessage: RegisterVoiceInputDeviceResponseMessage {
     get {return getExtensionValue(ext: Extensions_registerVoiceInputDeviceResponseMessage) ?? RegisterVoiceInputDeviceResponseMessage()}
     set {setExtensionValue(ext: Extensions_registerVoiceInputDeviceResponseMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_registerVoiceInputDeviceResponseMessage`
   /// has been explicitly set.
-  var hasRegisterVoiceInputDeviceResponseMessage: Bool {
+  public var hasRegisterVoiceInputDeviceResponseMessage: Bool {
     return hasExtensionValue(ext: Extensions_registerVoiceInputDeviceResponseMessage)
   }
   /// Clears the value of extension `Extensions_registerVoiceInputDeviceResponseMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearRegisterVoiceInputDeviceResponseMessage() {
+  public mutating func clearRegisterVoiceInputDeviceResponseMessage() {
     clearExtensionValue(ext: Extensions_registerVoiceInputDeviceResponseMessage)
   }
 
@@ -85,7 +85,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let RegisterVoiceInputDeviceResponseMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let RegisterVoiceInputDeviceResponseMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_registerVoiceInputDeviceResponseMessage
 ]
 
@@ -93,7 +93,7 @@ nonisolated let RegisterVoiceInputDeviceResponseMessage_Extensions: SwiftProtobu
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_registerVoiceInputDeviceResponseMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<RegisterVoiceInputDeviceResponseMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_registerVoiceInputDeviceResponseMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<RegisterVoiceInputDeviceResponseMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 34,
   fieldName: "registerVoiceInputDeviceResponseMessage"
 )
@@ -101,10 +101,10 @@ nonisolated let Extensions_registerVoiceInputDeviceResponseMessage = SwiftProtob
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension RegisterVoiceInputDeviceResponseMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "RegisterVoiceInputDeviceResponseMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}deviceID\0\u{1}errorCode\0")
+  public static let protoMessageName: String = "RegisterVoiceInputDeviceResponseMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}deviceID\0\u{1}errorCode\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -117,7 +117,7 @@ nonisolated extension RegisterVoiceInputDeviceResponseMessage: SwiftProtobuf.Mes
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -131,7 +131,7 @@ nonisolated extension RegisterVoiceInputDeviceResponseMessage: SwiftProtobuf.Mes
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: RegisterVoiceInputDeviceResponseMessage, rhs: RegisterVoiceInputDeviceResponseMessage) -> Bool {
+  public static func ==(lhs: RegisterVoiceInputDeviceResponseMessage, rhs: RegisterVoiceInputDeviceResponseMessage) -> Bool {
     if lhs._deviceID != rhs._deviceID {return false}
     if lhs._errorCode != rhs._errorCode {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

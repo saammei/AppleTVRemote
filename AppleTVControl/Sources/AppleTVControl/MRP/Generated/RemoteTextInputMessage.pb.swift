@@ -25,41 +25,41 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct RemoteTextInputMessage: Sendable {
+public nonisolated struct RemoteTextInputMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var timestamp: Double {
+  public var timestamp: Double {
     get {_timestamp ?? 0}
     set {_timestamp = newValue}
   }
   /// Returns true if `timestamp` has been explicitly set.
-  var hasTimestamp: Bool {self._timestamp != nil}
+  public var hasTimestamp: Bool {self._timestamp != nil}
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
-  mutating func clearTimestamp() {self._timestamp = nil}
+  public mutating func clearTimestamp() {self._timestamp = nil}
 
-  var version: UInt64 {
+  public var version: UInt64 {
     get {_version ?? 0}
     set {_version = newValue}
   }
   /// Returns true if `version` has been explicitly set.
-  var hasVersion: Bool {self._version != nil}
+  public var hasVersion: Bool {self._version != nil}
   /// Clears the value of `version`. Subsequent reads from it will return its default value.
-  mutating func clearVersion() {self._version = nil}
+  public mutating func clearVersion() {self._version = nil}
 
-  var data: Data {
+  public var data: Data {
     get {_data ?? Data()}
     set {_data = newValue}
   }
   /// Returns true if `data` has been explicitly set.
-  var hasData: Bool {self._data != nil}
+  public var hasData: Bool {self._data != nil}
   /// Clears the value of `data`. Subsequent reads from it will return its default value.
-  mutating func clearData() {self._data = nil}
+  public mutating func clearData() {self._data = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _timestamp: Double? = nil
   fileprivate var _version: UInt64? = nil
@@ -77,18 +77,18 @@ nonisolated struct RemoteTextInputMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var remoteTextInputMessage: RemoteTextInputMessage {
+  public var remoteTextInputMessage: RemoteTextInputMessage {
     get {return getExtensionValue(ext: Extensions_remoteTextInputMessage) ?? RemoteTextInputMessage()}
     set {setExtensionValue(ext: Extensions_remoteTextInputMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_remoteTextInputMessage`
   /// has been explicitly set.
-  var hasRemoteTextInputMessage: Bool {
+  public var hasRemoteTextInputMessage: Bool {
     return hasExtensionValue(ext: Extensions_remoteTextInputMessage)
   }
   /// Clears the value of extension `Extensions_remoteTextInputMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearRemoteTextInputMessage() {
+  public mutating func clearRemoteTextInputMessage() {
     clearExtensionValue(ext: Extensions_remoteTextInputMessage)
   }
 
@@ -100,7 +100,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let RemoteTextInputMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let RemoteTextInputMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_remoteTextInputMessage
 ]
 
@@ -108,7 +108,7 @@ nonisolated let RemoteTextInputMessage_Extensions: SwiftProtobuf.SimpleExtension
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_remoteTextInputMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<RemoteTextInputMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_remoteTextInputMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<RemoteTextInputMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 71,
   fieldName: "remoteTextInputMessage"
 )
@@ -116,10 +116,10 @@ nonisolated let Extensions_remoteTextInputMessage = SwiftProtobuf.MessageExtensi
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension RemoteTextInputMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "RemoteTextInputMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}timestamp\0\u{1}version\0\u{1}data\0")
+  public static let protoMessageName: String = "RemoteTextInputMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}timestamp\0\u{1}version\0\u{1}data\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -133,7 +133,7 @@ nonisolated extension RemoteTextInputMessage: SwiftProtobuf.Message, SwiftProtob
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -150,7 +150,7 @@ nonisolated extension RemoteTextInputMessage: SwiftProtobuf.Message, SwiftProtob
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: RemoteTextInputMessage, rhs: RemoteTextInputMessage) -> Bool {
+  public static func ==(lhs: RemoteTextInputMessage, rhs: RemoteTextInputMessage) -> Bool {
     if lhs._timestamp != rhs._timestamp {return false}
     if lhs._version != rhs._version {return false}
     if lhs._data != rhs._data {return false}

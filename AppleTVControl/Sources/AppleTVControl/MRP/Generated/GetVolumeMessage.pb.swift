@@ -20,23 +20,23 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct GetVolumeMessage: Sendable {
+public nonisolated struct GetVolumeMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var outputDeviceUid: String {
+  public var outputDeviceUid: String {
     get {_outputDeviceUid ?? String()}
     set {_outputDeviceUid = newValue}
   }
   /// Returns true if `outputDeviceUid` has been explicitly set.
-  var hasOutputDeviceUid: Bool {self._outputDeviceUid != nil}
+  public var hasOutputDeviceUid: Bool {self._outputDeviceUid != nil}
   /// Clears the value of `outputDeviceUid`. Subsequent reads from it will return its default value.
-  mutating func clearOutputDeviceUid() {self._outputDeviceUid = nil}
+  public mutating func clearOutputDeviceUid() {self._outputDeviceUid = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _outputDeviceUid: String? = nil
 }
@@ -52,18 +52,18 @@ nonisolated struct GetVolumeMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var getVolumeMessage: GetVolumeMessage {
+  public var getVolumeMessage: GetVolumeMessage {
     get {return getExtensionValue(ext: Extensions_getVolumeMessage) ?? GetVolumeMessage()}
     set {setExtensionValue(ext: Extensions_getVolumeMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_getVolumeMessage`
   /// has been explicitly set.
-  var hasGetVolumeMessage: Bool {
+  public var hasGetVolumeMessage: Bool {
     return hasExtensionValue(ext: Extensions_getVolumeMessage)
   }
   /// Clears the value of extension `Extensions_getVolumeMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearGetVolumeMessage() {
+  public mutating func clearGetVolumeMessage() {
     clearExtensionValue(ext: Extensions_getVolumeMessage)
   }
 
@@ -75,7 +75,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let GetVolumeMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let GetVolumeMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_getVolumeMessage
 ]
 
@@ -83,7 +83,7 @@ nonisolated let GetVolumeMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = 
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_getVolumeMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<GetVolumeMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_getVolumeMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<GetVolumeMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 53,
   fieldName: "getVolumeMessage"
 )
@@ -91,10 +91,10 @@ nonisolated let Extensions_getVolumeMessage = SwiftProtobuf.MessageExtension<Swi
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension GetVolumeMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetVolumeMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}outputDeviceUID\0")
+  public static let protoMessageName: String = "GetVolumeMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}outputDeviceUID\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -106,7 +106,7 @@ nonisolated extension GetVolumeMessage: SwiftProtobuf.Message, SwiftProtobuf._Me
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -117,7 +117,7 @@ nonisolated extension GetVolumeMessage: SwiftProtobuf.Message, SwiftProtobuf._Me
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: GetVolumeMessage, rhs: GetVolumeMessage) -> Bool {
+  public static func ==(lhs: GetVolumeMessage, rhs: GetVolumeMessage) -> Bool {
     if lhs._outputDeviceUid != rhs._outputDeviceUid {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

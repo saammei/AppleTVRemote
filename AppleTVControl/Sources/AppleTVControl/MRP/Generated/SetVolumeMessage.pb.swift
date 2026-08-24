@@ -20,32 +20,32 @@ fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobu
   typealias Version = _2
 }
 
-nonisolated struct SetVolumeMessage: Sendable {
+public nonisolated struct SetVolumeMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var volume: Float {
+  public var volume: Float {
     get {_volume ?? 0}
     set {_volume = newValue}
   }
   /// Returns true if `volume` has been explicitly set.
-  var hasVolume: Bool {self._volume != nil}
+  public var hasVolume: Bool {self._volume != nil}
   /// Clears the value of `volume`. Subsequent reads from it will return its default value.
-  mutating func clearVolume() {self._volume = nil}
+  public mutating func clearVolume() {self._volume = nil}
 
-  var outputDeviceUid: String {
+  public var outputDeviceUid: String {
     get {_outputDeviceUid ?? String()}
     set {_outputDeviceUid = newValue}
   }
   /// Returns true if `outputDeviceUid` has been explicitly set.
-  var hasOutputDeviceUid: Bool {self._outputDeviceUid != nil}
+  public var hasOutputDeviceUid: Bool {self._outputDeviceUid != nil}
   /// Clears the value of `outputDeviceUid`. Subsequent reads from it will return its default value.
-  mutating func clearOutputDeviceUid() {self._outputDeviceUid = nil}
+  public mutating func clearOutputDeviceUid() {self._outputDeviceUid = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _volume: Float? = nil
   fileprivate var _outputDeviceUid: String? = nil
@@ -62,18 +62,18 @@ nonisolated struct SetVolumeMessage: Sendable {
 
 nonisolated extension ProtocolMessageMessage {
 
-  var setVolumeMessage: SetVolumeMessage {
+  public var setVolumeMessage: SetVolumeMessage {
     get {return getExtensionValue(ext: Extensions_setVolumeMessage) ?? SetVolumeMessage()}
     set {setExtensionValue(ext: Extensions_setVolumeMessage, value: newValue)}
   }
   /// Returns true if extension `Extensions_setVolumeMessage`
   /// has been explicitly set.
-  var hasSetVolumeMessage: Bool {
+  public var hasSetVolumeMessage: Bool {
     return hasExtensionValue(ext: Extensions_setVolumeMessage)
   }
   /// Clears the value of extension `Extensions_setVolumeMessage`.
   /// Subsequent reads from it will return its default value.
-  mutating func clearSetVolumeMessage() {
+  public mutating func clearSetVolumeMessage() {
     clearExtensionValue(ext: Extensions_setVolumeMessage)
   }
 
@@ -85,7 +85,7 @@ nonisolated extension ProtocolMessageMessage {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-nonisolated let SetVolumeMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+public nonisolated let SetVolumeMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Extensions_setVolumeMessage
 ]
 
@@ -93,7 +93,7 @@ nonisolated let SetVolumeMessage_Extensions: SwiftProtobuf.SimpleExtensionMap = 
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-nonisolated let Extensions_setVolumeMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SetVolumeMessage>, ProtocolMessageMessage>(
+public nonisolated let Extensions_setVolumeMessage = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<SetVolumeMessage>, ProtocolMessageMessage>(
   _protobuf_fieldNumber: 55,
   fieldName: "setVolumeMessage"
 )
@@ -101,10 +101,10 @@ nonisolated let Extensions_setVolumeMessage = SwiftProtobuf.MessageExtension<Swi
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 nonisolated extension SetVolumeMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SetVolumeMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}volume\0\u{1}outputDeviceUID\0")
+  public static let protoMessageName: String = "SetVolumeMessage"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}volume\0\u{1}outputDeviceUID\0")
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -117,7 +117,7 @@ nonisolated extension SetVolumeMessage: SwiftProtobuf.Message, SwiftProtobuf._Me
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -131,7 +131,7 @@ nonisolated extension SetVolumeMessage: SwiftProtobuf.Message, SwiftProtobuf._Me
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SetVolumeMessage, rhs: SetVolumeMessage) -> Bool {
+  public static func ==(lhs: SetVolumeMessage, rhs: SetVolumeMessage) -> Bool {
     if lhs._volume != rhs._volume {return false}
     if lhs._outputDeviceUid != rhs._outputDeviceUid {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
