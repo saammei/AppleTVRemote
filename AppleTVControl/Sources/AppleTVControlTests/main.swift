@@ -7,9 +7,7 @@ import AppleTVControl
 //   runSuite("SRP") { runSRPTests() }
 //   ...
 
-runSuite("占位") {
-    expectEqual(AppleTVControl.version, "0.1.0", "版本号")
-}
+runDiscoveryTests()
 
 if testFailures.isEmpty {
     print("✅ All tests passed")
