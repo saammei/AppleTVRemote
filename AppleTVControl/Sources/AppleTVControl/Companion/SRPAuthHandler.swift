@@ -117,13 +117,15 @@ public final class SRPAuthHandler {
         deviceInfo.append(authPublic)
         let deviceSignature = try signingKey.signature(for: deviceInfo)
 
-        let entries: [(UInt8, Data)] = [
+        var entries: [(UInt8, Data)] = [
             (TLV8Tag.identifier.rawValue, pairingId),
             (TLV8Tag.publicKey.rawValue, authPublic),
             (TLV8Tag.signature.rawValue, deviceSignature),
         ]
-        // Name 字段需要 opack 序列化,留待 Phase 3 与消息层一并实现。
         // pyatv: tlv[Name] = opack.pack({"name": name})
+        if let name {
+            entries.append((TLV8Tag.name.rawValue, OPACK.pack(["name": name])))
+        }
 
         let tlv = TLV8.encode(entries)
         let nonce = ChaCha20Poly1305.nonce8("PS-Msg05")

@@ -1,6 +1,9 @@
 import Foundation
 import AppleTVControl
 
+// 无缓冲 stdout:崩溃时仍能看到已打印的测试输出(诊断用)。
+setvbuf(stdout, nil, _IONBF, 0)
+
 // 各测试套件在此注册。后续 Phase 逐步加入:
 //   runSuite("OPACK") { runOPACKTests() }
 //   runSuite("TLV8") { runTLV8Tests() }
@@ -9,6 +12,8 @@ import AppleTVControl
 
 runDiscoveryTests()
 runCryptoTests()
+runOPACKTests()
+await runCompanionTests()
 
 if testFailures.isEmpty {
     print("✅ All tests passed")

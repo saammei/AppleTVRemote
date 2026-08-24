@@ -53,3 +53,16 @@ func runSuite(_ name: String, _ body: () -> Void) {
     let delta = testFailures.count - before
     print("  \(delta == 0 ? "✅" : "❌") \(name): \(delta) failure(s)")
 }
+
+/// 异步测试套件(用于需要 await 的配对/连接流程)。
+func runSuiteAsync(_ name: String, _ body: () async throws -> Void) async {
+    print("— \(name)")
+    let before = testFailures.count
+    do {
+        try await body()
+    } catch {
+        record("\(name) 抛异常: \(error)", file: #file, line: #line)
+    }
+    let delta = testFailures.count - before
+    print("  \(delta == 0 ? "✅" : "❌") \(name): \(delta) failure(s)")
+}

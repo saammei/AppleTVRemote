@@ -41,7 +41,13 @@ public enum ChaCha20Poly1305 {
         let nonceObj = try ChaChaPoly.Nonce(data: nonce)
         let sealed = try ChaChaPoly.seal(
             message, using: symmetricKey, nonce: nonceObj, authenticating: aad)
-        return sealed.ciphertext + sealed.tag
+        // CryptoKit 的 ciphertext/tag 是共享缓冲区的切片,startIndex 可能非 0。
+        // 直接用 + 拼接会继承该偏移,导致下游 subdata 越界,故显式拷贝重建。
+        var result = Data()
+        result.reserveCapacity(sealed.ciphertext.count + sealed.tag.count)
+        result.append(sealed.ciphertext)
+        result.append(sealed.tag)
+        return result
     }
 
     /// 解密 ciphertext + 16 字节 tag,返回明文。
