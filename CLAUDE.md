@@ -6,8 +6,8 @@ macOS 菜单栏应用，用于在局域网内控制 Apple TV。SwiftUI 界面 + 
 ## ⚠️ 关键约束（务必遵守）
 
 - **个人项目，严禁泄露任何公司信息。** 任何 git 操作（commit / tag / push）都必须使用
-  个人身份：`meishaoming <shaoming.mei@gmail.com>`。提交前用
-  `git config --local user.name meishaoming && git config --local user.email shaoming.mei@gmail.com`
+  个人身份：`meishaoming <shaoming.mei@qq.com>`。提交前用
+  `git config --local user.name meishaoming && git config --local user.email shaoming.mei@qq.com`
   确认（本仓库已配好，改动前复查一遍）。提交信息、tag 注释、文档里都不要出现公司名/内部链接。
 - **推送前先告知用户。** 不要擅自 `git push`，先说明要推什么、推到哪里，得到确认再推。
 - 主开发分支是 `native-swift`；`main` 仍是旧 Python 版（暂不合回）。

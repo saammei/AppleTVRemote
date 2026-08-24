@@ -32,7 +32,7 @@ on:
 ```bash
 # 0. 确认身份（个人项目，严禁公司信息）
 git config --local user.name meishaoming
-git config --local user.email shaoming.mei@gmail.com
+git config --local user.email shaoming.mei@qq.com
 git log -1 --format='%an <%ae>'   # 复查
 
 # 1. 在开发分支（如 native-swift）上完成并提交改动
