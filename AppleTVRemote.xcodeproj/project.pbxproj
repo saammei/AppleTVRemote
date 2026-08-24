@@ -74,6 +74,7 @@
 			);
 			name = AppleTVRemote;
 			packageProductDependencies = (
+				AA00000000000000000000B2 /* AppleTVControl */,
 			);
 			productName = AppleTVRemote;
 			productReference = AA00000000000000000000A5 /* AppleTVRemote.app */;
@@ -104,6 +105,9 @@
 			);
 			mainGroup = AA00000000000000000000A3;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				AA00000000000000000000B1 /* XCLocalSwiftPackageReference "AppleTVControl" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = AA00000000000000000000A4 /* Products */;
 			projectDirPath = "";
@@ -305,6 +309,13 @@
 		};
 /* End XCBuildConfiguration section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		AA00000000000000000000B1 /* XCLocalSwiftPackageReference "AppleTVControl" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = AppleTVControl;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCConfigurationList section */
 		AA00000000000000000000AB /* Build configuration list for PBXProject "AppleTVRemote" */ = {
 			isa = XCConfigurationList;
@@ -325,6 +336,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA00000000000000000000B2 /* AppleTVControl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppleTVControl;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AA00000000000000000000AA /* Project object */;
 }

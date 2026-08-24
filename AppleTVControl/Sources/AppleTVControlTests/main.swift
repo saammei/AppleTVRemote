@@ -11,6 +11,7 @@ setvbuf(stdout, nil, _IONBF, 0)
 //   ...
 
 runDiscoveryTests()
+runCredentialsStoreTests()
 runCryptoTests()
 runOPACKTests()
 runBinaryPlistTests()

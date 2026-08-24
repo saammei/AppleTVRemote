@@ -8,10 +8,6 @@ struct SettingsView: View {
             DeviceSettingsView()
                 .environmentObject(bridge)
                 .tabItem { Label("设备", systemImage: "tv") }
-
-            BackendSettingsView()
-                .environmentObject(bridge)
-                .tabItem { Label("后端", systemImage: "terminal") }
         }
         .frame(width: 580, height: 480)
     }
@@ -133,48 +129,5 @@ private struct DeviceSettingsView: View {
             }
         }
         .padding(.vertical, 2)
-    }
-}
-
-private struct BackendSettingsView: View {
-    @EnvironmentObject private var bridge: ATVBridge
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Group {
-                LabeledContent("Python", value: bridge.pythonPath)
-                LabeledContent("状态", value: bridge.bridgeState.label)
-                LabeledContent("存储文件", value: bridge.storageURL.path)
-            }
-            .font(.caption)
-
-            HStack {
-                Button("重启后端") {
-                    bridge.restart()
-                }
-                Button("停止") {
-                    bridge.stop()
-                }
-                Button("启动") {
-                    bridge.start()
-                }
-            }
-
-            Text("后端日志")
-                .font(.subheadline.bold())
-            ScrollView {
-                Text(bridge.bridgeLog.isEmpty ? "（无日志）" : bridge.bridgeLog)
-                    .font(.system(.caption2, design: .monospaced))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .textSelection(.enabled)
-            }
-            .frame(maxHeight: .infinity)
-            .background(Color.secondary.opacity(0.06), in: RoundedRectangle(cornerRadius: 8))
-
-            Text("如果显示“未找到 Python 环境”，请在终端运行：\n~/Projects/apple_tv/scripts/setup.sh")
-                .font(.caption2)
-                .foregroundStyle(.secondary)
-        }
-        .padding(20)
     }
 }

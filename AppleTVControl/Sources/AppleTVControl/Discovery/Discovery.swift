@@ -22,7 +22,7 @@ public enum ServiceKind: String {
 }
 
 /// 发现的一台 Apple TV(聚合 MRP + Companion 两个服务)。
-public struct ATVDevice {
+public struct DiscoveredDevice {
     public let identifier: String
     public let name: String
     public let host: String
@@ -113,7 +113,7 @@ public struct DeviceAggregator {
         }
     }
 
-    public func build() -> ATVDevice? {
+    public func build() -> DiscoveredDevice? {
         guard let identifier = mrp?.identifier ?? companion?.identifier else { return nil }
         let name = mrp?.properties["Name"] ?? companion?.name ?? "未知设备"
         let host = mrp?.host ?? companion?.host ?? ""
@@ -122,7 +122,7 @@ public struct DeviceAggregator {
         } ?? "未知设备"
         var txt = mrp?.properties ?? [:]
         companion?.properties.forEach { txt[$0.key] = $0.value }
-        return ATVDevice(
+        return DiscoveredDevice(
             identifier: identifier,
             name: name,
             host: host,
@@ -136,7 +136,7 @@ public struct DeviceAggregator {
 
 /// Bonjour 发现器。回调在主线程 RunLoop 上派发。
 public final class DeviceDiscovery: NSObject {
-    public var onDevicesUpdated: (([ATVDevice]) -> Void)?
+    public var onDevicesUpdated: (([DiscoveredDevice]) -> Void)?
 
     private let serviceTypes: [(String, ServiceKind)] = [
         ("_mediaremotetv._tcp.", .mrp),

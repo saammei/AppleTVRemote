@@ -1,5 +1,7 @@
 import Foundation
 import Combine
+import Darwin
+import AppleTVControl
 
 enum BridgeError: LocalizedError {
     case message(String)
@@ -11,26 +13,13 @@ enum BridgeError: LocalizedError {
     }
 }
 
+/// 应用与原生 AppleTVControl 协议栈之间的桥接层。
+///
+/// 替代原先内嵌 Python + pyatv 的方案:直接在进程内完成设备发现、
+/// 配对、连接(Companion 控制 + MRP 元数据)与控制命令,不再启动子进程。
 final class ATVBridge: ObservableObject {
     static weak var shared: ATVBridge?
 
-    enum BridgeState: Equatable {
-        case stopped
-        case starting
-        case ready
-        case failed(String)
-
-        var label: String {
-            switch self {
-            case .stopped: "已停止"
-            case .starting: "启动中…"
-            case .ready: "就绪"
-            case .failed(let message): "启动失败：\(message)"
-            }
-        }
-    }
-
-    @Published private(set) var bridgeState: BridgeState = .stopped
     @Published private(set) var connectionState: ConnectionState = .disconnected
     @Published private(set) var devices: [ATVDevice] = []
     @Published private(set) var currentDevice: ATVDevice?
@@ -39,364 +28,110 @@ final class ATVBridge: ObservableObject {
     @Published private(set) var pairingAwaitingPin = false
     @Published private(set) var isScanning = false
     @Published private(set) var isPairing = false
-    @Published private(set) var bridgeLog: String = ""
     @Published var lastError: String?
 
-    private var process: Process?
-    private var inputPipe: Pipe?
-    private var stdoutBuffer = Data()
-    private var stderrBuffer = Data()
-    private let ioQueue = DispatchQueue(label: "atv.bridge.io")
-    private let lock = NSLock()
-    private var pending: [Int: CheckedContinuation<Any?, Error>] = [:]
-    private var nextRequestID = 1
-    private var shouldKeepRunning = false
-    private var restartAttempts = 0
+    private let defaults = UserDefaults.standard
+    private let credentialsStore: CredentialsStore
+
+    // 发现
+    private let discovery = DeviceDiscovery()
+    private let discoveryLock = NSLock()
+    private var discoveredDevices: [String: DiscoveredDevice] = [:]
+
+    // 连接
+    private let connectionLock = NSLock()
+    private var companionAPI: CompanionAPI?
+    private var mrpAPI: MRPAPI?
+
+    // 配对
+    private var pairingProcedure: CompanionPairSetupProcedure?
+    private var pairingConnection: TCPCompanionConnection?
+    private var pairingDeviceID: String?
+
     private var statusTimer: Timer?
 
-    private let defaults = UserDefaults.standard
-
     init() {
+        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("AppleTVRemote", isDirectory: true)
+        credentialsStore = CredentialsStore(fileURL: appSupport.appendingPathComponent("credentials.json"))
+
+        discovery.onDevicesUpdated = { [weak self] devices in
+            self?.handleDevicesUpdated(devices)
+        }
+
         ATVBridge.shared = self
     }
 
-    deinit {
-        stop()
+    // MARK: - 设备发现
+
+    private func handleDevicesUpdated(_ discovered: [DiscoveredDevice]) {
+        discoveryLock.lock()
+        discoveredDevices = Dictionary(uniqueKeysWithValues: discovered.map { ($0.identifier, $0) })
+        discoveryLock.unlock()
+
+        let appDevices = discovered.map(appDevice(from:))
+        DispatchQueue.main.async { self.devices = appDevices }
     }
 
-    // MARK: - Paths
-
-    private var appSupportURL: URL {
-        FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("AppleTVRemote", isDirectory: true)
+    private func appDevice(from device: DiscoveredDevice) -> ATVDevice {
+        var services: [String] = []
+        if device.isCompanionSupported { services.append("Companion") }
+        if device.isMRPSupported { services.append("MRP") }
+        return ATVDevice(
+            identifier: device.identifier,
+            name: device.name,
+            address: device.host,
+            model: device.model,
+            services: services
+        )
     }
-
-    var storageURL: URL {
-        appSupportURL.appendingPathComponent("pyatv.json")
-    }
-
-    /// 发布版 app 包内自带 Python（Resources/python-arm64|python-x86_64/），
-    /// 按当前进程架构选择，用户无需自行安装环境。
-    private var bundledPythonPath: String? {
-        let dir: String
-        #if arch(arm64)
-        dir = "python-arm64"
-        #else
-        dir = "python-x86_64"
-        #endif
-        guard let url = Bundle.main.resourceURL?
-            .appendingPathComponent(dir)
-            .appendingPathComponent("bin/python3") else { return nil }
-        return FileManager.default.isExecutableFile(atPath: url.path) ? url.path : nil
-    }
-
-    private var appSupportPythonPath: String {
-        appSupportURL.appendingPathComponent("venv/bin/python3").path
-    }
-
-    var pythonPath: String {
-        ProcessInfo.processInfo.environment["ATV_BRIDGE_PYTHON"]
-            ?? bundledPythonPath
-            ?? appSupportPythonPath
-    }
-
-    private func scriptURL() -> URL? {
-        if let url = Bundle.main.url(forResource: "bridge", withExtension: "py", subdirectory: "Backend") {
-            return url
-        }
-        return Bundle.main.url(forResource: "bridge", withExtension: "py")
-    }
-
-    // MARK: - Lifecycle
-
-    func start() {
-        guard process == nil else { return }
-        shouldKeepRunning = true
-        DispatchQueue.main.async { self.bridgeState = .starting }
-
-        guard FileManager.default.isExecutableFile(atPath: pythonPath) else {
-            DispatchQueue.main.async { self.bridgeState = .failed("未找到 Python 环境：\(self.pythonPath)\n请运行 scripts/setup.sh") }
-            return
-        }
-        guard let script = scriptURL() else {
-            DispatchQueue.main.async { self.bridgeState = .failed("找不到 bridge.py 资源") }
-            return
-        }
-
-        do {
-            try FileManager.default.createDirectory(at: appSupportURL, withIntermediateDirectories: true)
-            try launch(python: pythonPath, script: script)
-        } catch {
-            DispatchQueue.main.async { self.bridgeState = .failed("启动失败：\(error.localizedDescription)") }
-        }
-    }
-
-    func restart() {
-        shouldKeepRunning = false
-        let old = process
-        process = nil
-        old?.terminate()
-        old?.waitUntilExit()
-        failAllPending("后端已重启")
-        shouldKeepRunning = true
-        DispatchQueue.main.async { self.bridgeState = .stopped }
-        start()
-    }
-
-    func stop() {
-        shouldKeepRunning = false
-        let old = process
-        process = nil
-        old?.terminate()
-        failAllPending("后端已停止")
-        stopStatusTimer()
-    }
-
-    private func launch(python: String, script: URL) throws {
-        let proc = Process()
-        proc.executableURL = URL(fileURLWithPath: python)
-        proc.arguments = ["-u", script.path, "--storage", storageURL.path, "--log-level", "INFO"]
-
-        let input = Pipe()
-        let output = Pipe()
-        let errorOutput = Pipe()
-        proc.standardInput = input
-        proc.standardOutput = output
-        proc.standardError = errorOutput
-
-        proc.terminationHandler = { [weak self, weak proc] _ in
-            DispatchQueue.main.async {
-                guard let self, let proc, self.process === proc else { return }
-                self.process = nil
-                self.inputPipe = nil
-                self.connectionState = .disconnected
-                self.nowPlaying = nil
-                self.failAllPending("后端进程已退出")
-                if self.shouldKeepRunning {
-                    self.bridgeState = .starting
-                    let delay = min(2.0 * pow(2.0, Double(min(self.restartAttempts, 4))), 10.0)
-                    self.restartAttempts += 1
-                    DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
-                        self?.start()
-                    }
-                } else {
-                    self.bridgeState = .stopped
-                }
-            }
-        }
-
-        try proc.run()
-        process = proc
-        inputPipe = input
-
-        output.fileHandleForReading.readabilityHandler = { [weak self] handle in
-            self?.consumeStdout(handle)
-        }
-        errorOutput.fileHandleForReading.readabilityHandler = { [weak self] handle in
-            self?.consumeStderr(handle)
-        }
-    }
-
-    // MARK: - Process I/O
-
-    private func consumeStdout(_ handle: FileHandle) {
-        let data = handle.availableData
-        guard !data.isEmpty else { return }
-        stdoutBuffer.append(data)
-
-        var start = stdoutBuffer.startIndex
-        while let range = stdoutBuffer[start...].range(of: Data([0x0A])) {
-            let lineData = stdoutBuffer.subdata(in: start..<range.lowerBound)
-            start = range.upperBound
-            guard let line = String(data: lineData, encoding: .utf8), !line.isEmpty else { continue }
-            handleLine(line)
-        }
-        stdoutBuffer.removeSubrange(stdoutBuffer.startIndex..<start)
-    }
-
-    private func consumeStderr(_ handle: FileHandle) {
-        let data = handle.availableData
-        guard !data.isEmpty else { return }
-        stderrBuffer.append(data)
-        let maxLength = 12_000
-        if stderrBuffer.count > maxLength {
-            stderrBuffer.removeSubrange(stderrBuffer.startIndex..<(stderrBuffer.index(stderrBuffer.endIndex, offsetBy: -(maxLength / 2))))
-        }
-        let text = String(data: stderrBuffer, encoding: .utf8) ?? ""
-        let lines = text.components(separatedBy: "\n").suffix(200)
-        DispatchQueue.main.async {
-            self.bridgeLog = lines.joined(separator: "\n")
-        }
-    }
-
-    private func handleLine(_ line: String) {
-        guard let data = line.data(using: .utf8),
-              let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
-        else { return }
-
-        if let event = obj["event"] as? String {
-            DispatchQueue.main.async { self.handleEvent(event, payload: obj) }
-            return
-        }
-
-        guard let id = obj["id"] as? Int else { return }
-        lock.lock()
-        let continuation = pending.removeValue(forKey: id)
-        lock.unlock()
-        guard let continuation else { return }
-
-        if let ok = obj["ok"] as? Bool, ok {
-            continuation.resume(returning: obj["result"])
-        } else {
-            let message = obj["error"] as? String ?? "未知错误"
-            continuation.resume(throwing: BridgeError.message(message))
-        }
-    }
-
-    private func handleEvent(_ event: String, payload: [String: Any]) {
-        switch event {
-        case "connection":
-            if payload["state"] as? String == "connected" {
-                connectionState = .connected
-                bridgeState = .ready
-                restartAttempts = 0
-                startStatusTimer()
-            } else {
-                connectionState = .disconnected
-                stopStatusTimer()
-            }
-        case "pairing":
-            switch payload["state"] as? String {
-            case "awaiting_pin":
-                pairingAwaitingPin = true
-                isPairing = true
-            case "done":
-                pairingAwaitingPin = false
-                isPairing = false
-            case "failed":
-                pairingAwaitingPin = false
-                isPairing = false
-            default:
-                break
-            }
-        case "log":
-            if let message = payload["message"] as? String {
-                appendLog(message)
-                if message.contains("bridge ready") {
-                    bridgeState = .ready
-                    restartAttempts = 0
-                }
-            }
-        default:
-            break
-        }
-    }
-
-    private func appendLog(_ message: String) {
-        var lines = bridgeLog.components(separatedBy: "\n")
-        lines.insert(message, at: 0)
-        if lines.count > 300 { lines.removeLast(lines.count - 300) }
-        bridgeLog = lines.joined(separator: "\n")
-    }
-
-    private func failAllPending(_ message: String) {
-        lock.lock()
-        let continuations = Array(pending.values)
-        pending.removeAll()
-        lock.unlock()
-        for continuation in continuations {
-            continuation.resume(throwing: BridgeError.message(message))
-        }
-    }
-
-    // MARK: - Request plumbing
-
-    private func ensureRunning() {
-        guard process == nil else { return }
-        if case .failed = bridgeState { return }
-        start()
-    }
-
-    @discardableResult
-    func request(_ op: String, params: [String: Any] = [:], timeout: TimeInterval = 40) async throws -> Any? {
-        ensureRunning()
-        guard process != nil else {
-            throw BridgeError.message("后端未运行")
-        }
-
-        let id = nextRequestID
-        nextRequestID += 1
-
-        var payload: [String: Any] = ["id": id, "op": op]
-        if !params.isEmpty { payload["params"] = params }
-        let data = try JSONSerialization.data(withJSONObject: payload)
-
-        return try await withThrowingTaskGroup(of: Any?.self) { group in
-            group.addTask {
-                try await self.waitForReply(id: id, data: data)
-            }
-            group.addTask {
-                try await Task.sleep(nanoseconds: UInt64(timeout * 1_000_000_000))
-                self.lock.lock()
-                let continuation = self.pending.removeValue(forKey: id)
-                self.lock.unlock()
-                if let continuation {
-                    continuation.resume(throwing: BridgeError.message("请求超时（\(op)）"))
-                }
-                return nil
-            }
-            defer { group.cancelAll() }
-            guard let first = try await group.next() else {
-                throw BridgeError.message("请求失败（\(op)）")
-            }
-            return first
-        }
-    }
-
-    private func waitForReply(id: Int, data: Data) async throws -> Any? {
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Any?, Error>) in
-            lock.lock()
-            pending[id] = continuation
-            lock.unlock()
-            guard let input = inputPipe else {
-                continuation.resume(throwing: BridgeError.message("后端未运行"))
-                return
-            }
-            do {
-                var data = data
-                data.append(0x0A)
-                try input.fileHandleForWriting.write(contentsOf: data)
-            } catch {
-                continuation.resume(throwing: BridgeError.message("写入后端失败：\(error.localizedDescription)"))
-            }
-        }
-    }
-
-    private static func decode<T: Decodable>(_ type: T.Type, from value: Any) throws -> T {
-        let data = try JSONSerialization.data(withJSONObject: value)
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return try decoder.decode(type, from: data)
-    }
-
-    // MARK: - High-level operations
 
     func scanDevices() async {
         DispatchQueue.main.async { self.isScanning = true }
-        defer { DispatchQueue.main.async { self.isScanning = false } }
-        do {
-            guard let result = try await request("scan", params: ["timeout": 6], timeout: 25) else { return }
-            let found = try Self.decode([ATVDevice].self, from: result)
-            DispatchQueue.main.async { self.devices = found }
-        } catch {
-            setError(error)
-        }
+        discovery.start()
+        try? await Task.sleep(nanoseconds: 6_000_000_000)
+        discovery.stop()
+        DispatchQueue.main.async { self.isScanning = false }
     }
+
+    /// 拿到某台设备的完整信息(host/端口)。缓存未命中时先扫描一次。
+    private func resolveDevice(identifier: String) async throws -> DiscoveredDevice {
+        if let cached = cachedDevice(identifier) { return cached }
+        discovery.start()
+        try? await Task.sleep(nanoseconds: 5_000_000_000)
+        discovery.stop()
+        guard let found = cachedDevice(identifier) else {
+            throw BridgeError.message("找不到设备 \(identifier)，请先在设置中扫描并连接")
+        }
+        return found
+    }
+
+    private func cachedDevice(_ identifier: String) -> DiscoveredDevice? {
+        discoveryLock.lock()
+        defer { discoveryLock.unlock() }
+        return discoveredDevices[identifier]
+    }
+
+    // MARK: - 配对
 
     func pairBegin(device: ATVDevice) async {
         DispatchQueue.main.async { self.isPairing = true }
         do {
-            _ = try await request("pair_begin", params: ["identifier": device.identifier])
+            let discovered = try await resolveDevice(identifier: device.identifier)
+            guard let port = discovered.companionPort else {
+                throw BridgeError.message("设备不支持 Companion 协议，无法配对")
+            }
+
+            let connection = TCPCompanionConnection(host: discovered.host, port: UInt16(port))
+            let srp = SRPAuthHandler()
+            let protocolLayer = CompanionProtocol(connection: connection, srp: srp)
+            let procedure = CompanionPairSetupProcedure(protocolLayer, srp)
+
+            try await procedure.startPairing()
+
+            pairingProcedure = procedure
+            pairingConnection = connection
+            pairingDeviceID = discovered.identifier
             DispatchQueue.main.async { self.pairingAwaitingPin = true }
         } catch {
             DispatchQueue.main.async { self.isPairing = false }
@@ -406,12 +141,27 @@ final class ATVBridge: ObservableObject {
 
     func pairFinish(pin: String) async {
         do {
-            _ = try await request("pair_finish", params: ["pin": pin])
+            guard let procedure = pairingProcedure,
+                  let deviceID = pairingDeviceID else {
+                throw BridgeError.message("当前没有进行中的配对流程")
+            }
+            let credentials = try await procedure.finishPairing(pin: pin, displayName: "MacBook Remote")
+            credentialsStore.save(credentials, for: deviceID)
+
+            pairingConnection?.close()
+            pairingProcedure = nil
+            pairingConnection = nil
+            pairingDeviceID = nil
+
             DispatchQueue.main.async {
                 self.pairingAwaitingPin = false
                 self.isPairing = false
             }
         } catch {
+            pairingConnection?.close()
+            pairingProcedure = nil
+            pairingConnection = nil
+            pairingDeviceID = nil
             DispatchQueue.main.async {
                 self.pairingAwaitingPin = false
                 self.isPairing = false
@@ -420,13 +170,10 @@ final class ATVBridge: ObservableObject {
         }
     }
 
+    // MARK: - 连接
+
     func connect(device: ATVDevice) async {
-        DispatchQueue.main.async { self.connectionState = .connecting }
-        do {
-            try await performConnect(identifier: device.identifier)
-        } catch {
-            DispatchQueue.main.async { self.connectionState = .failed(error.localizedDescription) }
-        }
+        await connect(identifier: device.identifier)
     }
 
     func connect(identifier: String) async {
@@ -439,45 +186,132 @@ final class ATVBridge: ObservableObject {
     }
 
     private func performConnect(identifier: String) async throws {
-        guard let result = try await request("connect", params: ["identifier": identifier], timeout: 30) else { return }
-        let info = try Self.decode(ConnectedDeviceInfo.self, from: result)
-        let device = ATVDevice(
-            identifier: info.identifier,
-            name: info.name,
-            address: "",
-            model: info.model,
-            services: []
-        )
+        let discovered = try await resolveDevice(identifier: identifier)
+
+        guard let credentials = credentialsStore.credentials(for: identifier) else {
+            throw BridgeError.message("尚未配对：请先在设置中对该设备执行“配对”。")
+        }
+        guard let companionPort = discovered.companionPort else {
+            throw BridgeError.message("设备不支持 Companion 协议，无法控制")
+        }
+
+        let clientID = String(data: credentials.clientId, encoding: .utf8) ?? ""
+
+        // Companion:控制通道(按键/媒体/电源/应用)。
+        let companionConnection = TCPCompanionConnection(host: discovered.host, port: UInt16(companionPort))
+        let companionSRP = SRPAuthHandler(pairingId: credentials.clientId)
+        let companionProtocol = CompanionProtocol(connection: companionConnection, srp: companionSRP)
+        let companionInfo = CompanionDeviceInfo(name: "MacBook Remote", model: "Mac", identifier: clientID)
+        let companion = CompanionAPI(
+            protocolLayer: companionProtocol, credentials: credentials, deviceInfo: companionInfo)
+        try await companion.connect()
+
+        // MRP:元数据通道(可选,失败不阻断控制)。
+        var mrp: MRPAPI?
+        if let mrpPort = discovered.mrpPort {
+            let mrpConnection = MRPTCPConnection(host: discovered.host, port: UInt16(mrpPort))
+            let mrpSRP = SRPAuthHandler(pairingId: credentials.clientId)
+            let mrpProtocol = MRPProtocol(connection: mrpConnection, srp: mrpSRP)
+            let mrpInfo = MRPDeviceInfo(
+                name: "MacBook Remote", identifier: clientID, osBuild: osBuild, modelName: "Mac")
+            let api = MRPAPI(protocolLayer: mrpProtocol)
+            do {
+                try await api.connect(credentials: credentials, deviceInfo: mrpInfo)
+                mrp = api
+            } catch {
+                api.disconnect()
+            }
+        }
+
+        connectionLock.lock()
+        self.companionAPI = companion
+        self.mrpAPI = mrp
+        connectionLock.unlock()
+
         DispatchQueue.main.async {
-            self.currentDevice = device
+            self.currentDevice = self.appDevice(from: discovered)
             self.connectionState = .connected
             self.defaults.set(identifier, forKey: "lastDeviceIdentifier")
             self.lastError = nil
         }
+        startStatusTimer()
         await pollStatus()
     }
 
     func disconnect() async {
-        _ = try? await request("disconnect", timeout: 10)
+        stopStatusTimer()
+        connectionLock.lock()
+        let companion = companionAPI
+        let mrp = mrpAPI
+        companionAPI = nil
+        mrpAPI = nil
+        connectionLock.unlock()
+
+        try? await companion?.disconnect()
+        mrp?.disconnect()
+
         DispatchQueue.main.async {
             self.connectionState = .disconnected
             self.currentDevice = nil
             self.nowPlaying = nil
+            self.apps = []
             self.defaults.removeObject(forKey: "lastDeviceIdentifier")
         }
     }
 
+    // MARK: - 控制命令
+
     func sendKey(_ key: RemoteKey) async {
+        guard let companion = currentCompanion() else {
+            setError(BridgeError.message("尚未连接到 Apple TV，请先在设置中连接"))
+            return
+        }
         do {
-            _ = try await request("key", params: ["key": key.rawValue], timeout: 10)
+            try await performKey(key, on: companion)
         } catch {
             setError(error)
         }
     }
 
+    private func performKey(_ key: RemoteKey, on api: CompanionAPI) async throws {
+        switch key {
+        case .up: try await api.press(.up)
+        case .down: try await api.press(.down)
+        case .left: try await api.press(.left)
+        case .right: try await api.press(.right)
+        case .select: try await api.press(.select)
+        case .menu: try await api.press(.menu)
+        case .home: try await api.press(.home)
+        case .playPause: try await api.press(.playPause)
+        case .next: _ = try await api.mediaCommand(.nextTrack)
+        case .previous: _ = try await api.mediaCommand(.previousTrack)
+        case .volumeUp: try await api.press(.volumeUp)
+        case .volumeDown: try await api.press(.volumeDown)
+        case .skipForward: try await api.skip(seconds: 10)
+        case .skipBackward: try await api.skip(seconds: -10)
+        case .topMenu: try await api.press(.menu)
+        }
+    }
+
     func power(_ action: String) async {
+        guard let companion = currentCompanion() else {
+            setError(BridgeError.message("尚未连接到 Apple TV，请先在设置中连接"))
+            return
+        }
         do {
-            _ = try await request("power", params: ["action": action], timeout: 15)
+            switch action {
+            case "on":
+                try await companion.turnOn()
+            case "off":
+                try await companion.turnOff()
+            default:
+                let state = try? await companion.fetchAttentionState()
+                if state == .awake || state == .idle {
+                    try await companion.turnOff()
+                } else {
+                    try await companion.turnOn()
+                }
+            }
             await pollStatus()
         } catch {
             setError(error)
@@ -485,17 +319,30 @@ final class ATVBridge: ObservableObject {
     }
 
     func volume(_ action: String) async {
+        guard let companion = currentCompanion() else {
+            setError(BridgeError.message("尚未连接到 Apple TV，请先在设置中连接"))
+            return
+        }
         do {
-            _ = try await request("volume", params: ["action": action], timeout: 10)
+            if action == "up" {
+                try await companion.press(.volumeUp)
+            } else {
+                try await companion.press(.volumeDown)
+            }
         } catch {
             setError(error)
         }
     }
 
     func loadApps() async {
+        guard let companion = currentCompanion() else {
+            setError(BridgeError.message("尚未连接到 Apple TV，请先在设置中连接"))
+            return
+        }
         do {
-            guard let result = try await request("apps", timeout: 15) else { return }
-            let found = try Self.decode([RemoteApp].self, from: result)
+            let list = try await companion.appList()
+            let found = list.map { RemoteApp(identifier: $0.key, name: $0.value) }
+                .sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
             DispatchQueue.main.async { self.apps = found }
         } catch {
             setError(error)
@@ -503,22 +350,44 @@ final class ATVBridge: ObservableObject {
     }
 
     func launchApp(_ identifier: String) async {
+        guard let companion = currentCompanion() else {
+            setError(BridgeError.message("尚未连接到 Apple TV，请先在设置中连接"))
+            return
+        }
         do {
-            _ = try await request("launch", params: ["app": identifier], timeout: 10)
+            try await companion.launchApp(identifier)
         } catch {
             setError(error)
         }
     }
 
+    // MARK: - 状态
+
     func pollStatus() async {
-        guard process != nil else { return }
-        do {
-            guard let result = try await request("status", timeout: 8) else { return }
-            let playing = try Self.decode(NowPlaying.self, from: result)
-            DispatchQueue.main.async { self.nowPlaying = playing }
-        } catch {
-            DispatchQueue.main.async { self.connectionState = .failed(error.localizedDescription) }
+        let mrp = currentMRP()
+        let companion = currentCompanion()
+        guard mrp != nil || companion != nil else { return }
+
+        let np = mrp?.nowPlaying()
+        let artwork = mrp?.artwork()
+
+        var powerState: String?
+        if let companion {
+            powerState = (try? await companion.fetchAttentionState()).map(powerStateString)
         }
+
+        let playing = NowPlaying(
+            title: np?.title,
+            artist: np?.artist,
+            album: np?.album,
+            mediaType: np?.mediaType,
+            deviceState: np.map { playbackStateString($0.playbackState) } ?? nil,
+            position: np?.position,
+            totalTime: np?.duration,
+            artwork: artwork,
+            powerState: powerState
+        )
+        DispatchQueue.main.async { self.nowPlaying = playing }
     }
 
     func autoConnectIfNeeded() {
@@ -526,11 +395,44 @@ final class ATVBridge: ObservableObject {
         Task { await connect(identifier: identifier) }
     }
 
-    private func setError(_ error: Error) {
-        DispatchQueue.main.async { self.lastError = error.localizedDescription }
+    private func powerStateString(_ state: SystemStatus) -> String {
+        switch state {
+        case .awake, .idle: "On"
+        case .asleep, .screensaver: "Off"
+        case .unknown: "Unknown"
+        }
     }
 
-    // MARK: - Status polling
+    private func playbackStateString(_ state: PlaybackState.Enum) -> String? {
+        switch state {
+        case .playing: "Playing"
+        case .paused: "Paused"
+        case .stopped: "Stopped"
+        case .interrupted: "Interrupted"
+        case .seeking: "Seeking"
+        default: nil
+        }
+    }
+
+    // MARK: - 生命周期
+
+    func stop() {
+        discovery.stop()
+        stopStatusTimer()
+        connectionLock.lock()
+        let companion = companionAPI
+        let mrp = mrpAPI
+        companionAPI = nil
+        mrpAPI = nil
+        connectionLock.unlock()
+
+        if companion != nil || mrp != nil {
+            Task {
+                try? await companion?.disconnect()
+                mrp?.disconnect()
+            }
+        }
+    }
 
     private func startStatusTimer() {
         stopStatusTimer()
@@ -544,10 +446,31 @@ final class ATVBridge: ObservableObject {
         statusTimer?.invalidate()
         statusTimer = nil
     }
-}
 
-private struct ConnectedDeviceInfo: Decodable {
-    let identifier: String
-    let name: String
-    let model: String
+    // MARK: - 工具
+
+    private func currentCompanion() -> CompanionAPI? {
+        connectionLock.lock()
+        defer { connectionLock.unlock() }
+        return companionAPI
+    }
+
+    private func currentMRP() -> MRPAPI? {
+        connectionLock.lock()
+        defer { connectionLock.unlock() }
+        return mrpAPI
+    }
+
+    private func setError(_ error: Error) {
+        DispatchQueue.main.async { self.lastError = error.localizedDescription }
+    }
+
+    /// 当前 macOS 系统构建号(如 "23A344"),用于 MRP DeviceInfo。
+    private var osBuild: String {
+        var size = 0
+        sysctlbyname("kern.osversion", nil, &size, nil, 0)
+        var buffer = [CChar](repeating: 0, count: size)
+        sysctlbyname("kern.osversion", &buffer, &size, nil, 0)
+        return String(cString: buffer)
+    }
 }

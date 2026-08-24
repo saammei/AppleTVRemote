@@ -1,7 +1,7 @@
 # Apple TV 遥控器（macOS）
 
-一个 macOS 菜单栏应用，用来在局域网内控制 Apple TV。SwiftUI 界面 + [pyatv](https://github.com/postlund/pyatv) 驱动，
-内置 Python 运行时，下载即用，无需安装任何依赖。
+一个 macOS 菜单栏应用，用来在局域网内控制 Apple TV。SwiftUI 界面 + 原生 Swift 协议栈
+（`AppleTVControl`），不依赖 Python，下载即用。
 
 ## 功能
 
@@ -54,36 +54,29 @@
 ## 架构
 
 ```
-┌─────────────────────────┐        JSON lines         ┌──────────────────────┐
-│  SwiftUI 菜单栏应用      │ ◄──────────────────────►  │  Python bridge       │
-│  RemoteView / Settings  │   stdin/stdout            │  (pyatv)             │
-└─────────────────────────┘                           └──────────┬───────────┘
-                                                                 │ Companion /
-                                                                 │ AirPlay 协议
-                                                                 ▼
-                                                            Apple TV
+┌──────────────────────────┐        ┌─────────────────────────────┐
+│  SwiftUI 菜单栏应用       │  直接调用 │  AppleTVControl (Swift 包)     │
+│  RemoteView / Settings   │ ───────► │  Discovery / Companion / MRP │
+│  ATVBridge               │  进程内    └──────────────┬──────────────┘
+└──────────────────────────┘                          │ Companion / MRP 协议
+                                                      ▼
+                                                    Apple TV
 ```
 
-应用本身不直接实现 Apple TV 协议，而是把按键、配对等操作翻译成 JSON 请求发给
-`AppleTVRemote/Backend/bridge.py`，由 pyatv 完成实际的网络协议。发布包内嵌
-精简过的 Python 运行时（pip/无用标准库已剔除），用户无需安装 Python。
+应用不再启动 Python 子进程。`ATVBridge` 直接调用本地 Swift 包 `AppleTVControl`，
+在进程内完成 mDNS 发现、Companion 配对（SRP + Curve25519）、连接与控制，以及
+MRP 正在播放元数据。发布包体积因此从 ~40MB 降到几 MB。
 
 ## 从源码构建
 
 ```bash
-# 1. 准备后端环境(开发时把 pyatv 装到 App Support,与发布版内嵌运行时互不干扰)
-./scripts/setup.sh
-
-# 2. 构建(命令行)
+# 构建(命令行;首次会自动解析 Swift 包依赖 swift-protobuf / BigInt)
 xcodebuild -project AppleTVRemote.xcodeproj -scheme AppleTVRemote \
   -configuration Debug -derivedDataPath DerivedData build
 
 # 或直接在 Xcode 里 ⌘R 运行
 open AppleTVRemote.xcodeproj
 ```
-
-运行时 Python 的查找顺序:`ATV_BRIDGE_PYTHON` 环境变量 → app 包内
-`Resources/python-<arch>/bin/python3`(发布版)→ `~/Library/Application Support/AppleTVRemote/venv/bin/python3`(开发版)。
 
 想换应用图标:改 `scripts/make_icon.swift` 里的渐变色/符号,运行
 `swift scripts/make_icon.swift` 重新生成。
@@ -95,8 +88,7 @@ git tag v1.1.0
 git push origin v1.1.0
 ```
 
-CI(.github/workflows/release.yml)会自动:构建 arm64 应用 → 内嵌并精简
-Python 运行时(scripts/trim_python.sh)→ 打包 DMG → 发布 GitHub Release。
+CI(.github/workflows/release.yml)会自动:构建 arm64 应用 → 打包 DMG → 发布 GitHub Release。
 
 ## 常见问题
 
@@ -108,15 +100,15 @@ Python 运行时(scripts/trim_python.sh)→ 打包 DMG → 发布 GitHub Release
 
 ### 连接失败 / 配对失败
 
-- 在设置 → 后端 里查看日志，通常有具体原因
+- 连接前确保已在设置里完成「配对」（未配对时连接会提示）
 - 重新配对：先在设置里「断开」，再对同一设备「配对」
 - 如果之前配对过但凭据失效，删掉
-  `~/Library/Application Support/AppleTVRemote/pyatv.json` 后重新配对
+  `~/Library/Application Support/AppleTVRemote/credentials.json` 后重新配对
 
 ### 音量按钮无效
 
-Apple TV 的音量通常由 HDMI-CEC/红外控制接收器完成，pyatv 对部分设备/协议
-不提供音量控制。方向键、确认、菜单、播放暂停等核心按键不受影响。
+Apple TV 的音量通常由 HDMI-CEC/红外控制接收器完成，部分设备/协议不提供音量
+控制。方向键、确认、菜单、播放暂停等核心按键不受影响。
 
 ### 唤醒
 
@@ -126,5 +118,5 @@ Apple TV 处于睡眠时可能无法连接。可以先点「连接」触发唤�
 ## 隐私
 
 配对凭据（相当于这把 Mac 在 Apple TV 上的「钥匙」）只保存在本机
-`~/Library/Application Support/AppleTVRemote/pyatv.json`，不会上传到任何地方。
+`~/Library/Application Support/AppleTVRemote/credentials.json`，不会上传到任何地方。
 应用不联网，不需要网络之外的任何权限。

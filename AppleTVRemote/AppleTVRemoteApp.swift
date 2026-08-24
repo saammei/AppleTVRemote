@@ -4,7 +4,6 @@ import AppKit
 final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         guard isFirstInstance() else { return }
-        ATVBridge.shared?.start()
         ATVBridge.shared?.autoConnectIfNeeded()
     }
 

@@ -1,4 +1,0 @@
-pyatv>=0.18.0
-# 50.x 起不再发布 macOS x86_64 轮子(仅 arm64),48 有 universal2 双架构轮子
-cryptography==48.0.0
-
