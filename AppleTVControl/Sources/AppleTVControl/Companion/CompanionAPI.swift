@@ -84,6 +84,8 @@ public final class CompanionAPI {
     /// 会话 ID(remote_sid << 32 | local_sid),用于 _sessionStop。
     private var sid: UInt64 = 0
     private var subscribedEvents: Set<String> = []
+    /// 文本输入会话 UUID(从 _tiStart 的 _tiD 解析),用于 _tiC 操作。
+    private var textSessionUUID: Data?
 
     public init(
         protocolLayer: CompanionProtocol,
@@ -280,14 +282,49 @@ public final class CompanionAPI {
         _ = try await sendCommand("_launchApp", ["_bundleID": bundleId])
     }
 
-    // MARK: - 文本输入(会话)
+    // MARK: - 文本输入(RTI)
 
-    /// 启动文本输入会话。返回的 _tiD 是 NSKeyedArchiver 数据(Phase 3 后续解析)。
+    /// 启动文本输入会话并解析 _tiD 里的 session UUID。
     private func textInputStart() async throws {
-        _ = try await sendCommand("_tiStart", [:])
+        let response = try await sendCommand("_tiStart", [:])
+        if let content = response["_c"] as? [String: Any],
+           let tiData = content["_tiD"] as? Data {
+            let props = RTITextInput.readArchiveProperties(tiData, paths: [["sessionUUID"]])
+            textSessionUUID = props.first as? Data
+        }
     }
 
     private func textInputStop() async throws {
         _ = try await sendCommand("_tiStop", [:])
+    }
+
+    /// 发送一次文本输入。`clearPreviousInput` 为 true 时先清空现有文本(对应 text_set/text_clear)。
+    public func textInputCommand(_ text: String, clearPreviousInput: Bool = false) async throws {
+        // 重启会话以拿到最新的 _tiD(与 pyatv text_input_command 一致)。
+        try await textInputStop()
+        try await textInputStart()
+        guard let sessionUUID = textSessionUUID else { return }
+
+        if clearPreviousInput {
+            try sendEvent("_tiC", ["_tiV": 1, "_tiD": RTITextInput.clearTextPayload(sessionUUID: sessionUUID)])
+        }
+        if !text.isEmpty {
+            try sendEvent("_tiC", ["_tiV": 1, "_tiD": RTITextInput.inputTextPayload(sessionUUID: sessionUUID, text: text)])
+        }
+    }
+
+    /// 在光标处追加文本(对应 keyboard.text_append)。
+    public func textAppend(_ text: String) async throws {
+        try await textInputCommand(text, clearPreviousInput: false)
+    }
+
+    /// 用文本整体替换输入框内容(对应 keyboard.text_set)。
+    public func textSet(_ text: String) async throws {
+        try await textInputCommand(text, clearPreviousInput: true)
+    }
+
+    /// 清空输入框(对应 keyboard.text_clear)。
+    public func textClear() async throws {
+        try await textInputCommand("", clearPreviousInput: true)
     }
 }

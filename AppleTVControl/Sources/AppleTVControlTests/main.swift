@@ -13,6 +13,7 @@ setvbuf(stdout, nil, _IONBF, 0)
 runDiscoveryTests()
 runCryptoTests()
 runOPACKTests()
+runBinaryPlistTests()
 await runCompanionTests()
 await runCompanionAPITests()
 

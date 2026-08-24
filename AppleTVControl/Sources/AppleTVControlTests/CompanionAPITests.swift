@@ -280,6 +280,52 @@ func runCompanionAPITests() async {
         }
     }
 
+    await runSuiteAsync("文本输入 textSet / textAppend / textClear") {
+        // _tiStart 返回的 _tiD(与 pyatv 一致):sessionUUID = 0x00..0x0F,当前文本 "hello"。
+        let tiData = Data(hex: "62706c6973743030d2010203085424746f7058246f626a65637473d2040506075b73657373696f6e555549445d646f63756d656e74537461746580018002a5090a0b0e1155246e756c6c4f1010000102030405060708090a0b0c0d0e0fd10c0d55646f6353748003d10f105f1012636f6e746578744265666f7265496e70757480045568656c6c6f080d121b202c3a3c3e444a5d6066686b80820000000000000101000000000000001200000000000000000000000000000088")!
+        let mock = AutoOpackConnection()
+        let api = makeAPI(mock)
+        mock.opackContent["_tiStart"] = ["_tiD": tiData]
+
+        try await api.textSet("world")
+
+        // 帧序列:_tiStop, _tiStart, _tiC(清空), _tiC(输入)。
+        expectEqual(mock.sentFrames.count, 4, "textSet 帧数")
+        expectEqual(mock.sentCommand(0)?.identifier, "_tiStop", "首帧 _tiStop")
+        expectEqual(mock.sentCommand(1)?.identifier, "_tiStart", "次帧 _tiStart")
+
+        let clearEvent = mock.sentCommand(2)
+        expectEqual(clearEvent?.identifier, "_tiC", "清空事件命令名")
+        expectEqual(clearEvent?.content["_tiV"] as? Int64, 1, "清空 _tiV")
+        if let clearPayload = clearEvent?.content["_tiD"] as? Data {
+            let p = RTITextInput.readArchiveProperties(clearPayload, paths: [
+                ["textOperations", "textToAssert"],
+            ])
+            expectEqual(p.first as? String, "", "清空 textToAssert 为空串")
+        } else {
+            expect(false, "清空事件缺少 _tiD")
+        }
+
+        let inputEvent = mock.sentCommand(3)
+        expectEqual(inputEvent?.identifier, "_tiC", "输入事件命令名")
+        if let inputPayload = inputEvent?.content["_tiD"] as? Data {
+            let p = RTITextInput.readArchiveProperties(inputPayload, paths: [
+                ["textOperations", "keyboardOutput", "insertionText"],
+            ])
+            expectEqual(p.first as? String, "world", "输入文本")
+        } else {
+            expect(false, "输入事件缺少 _tiD")
+        }
+
+        // textAppend 只发一次 _tiC 输入(不清空)。
+        let mock2 = AutoOpackConnection()
+        let api2 = makeAPI(mock2)
+        mock2.opackContent["_tiStart"] = ["_tiD": tiData]
+        try await api2.textAppend("!")
+        expectEqual(mock2.sentFrames.count, 3, "textAppend 帧数(无清空)")
+        expectEqual(mock2.sentCommand(2)?.identifier, "_tiC", "textAppend 仅输入事件")
+    }
+
     await runSuiteAsync("connect 完整会话") {
         // 真实凭证:ltpk = 设备长期公钥,ltsk = 客户端长期私钥。
         let clientSigning = Curve25519.Signing.PrivateKey()
