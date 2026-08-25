@@ -173,9 +173,16 @@ public enum BinaryPlist {
         let trailerStart = bytes.count - 32
         let offsetSize = Int(bytes[trailerStart + 6])
         let refSize = Int(bytes[trailerStart + 7])
-        let numObjects = Int(readUInt64(bytes, trailerStart + 8))
-        let topObject = Int(readUInt64(bytes, trailerStart + 16))
-        let offsetTableOffset = Int(readUInt64(bytes, trailerStart + 24))
+        // trailer 的 3 个 uint64 字段可能是畸形输入;先取原始值,越界或超出 Int 范围则放弃。
+        guard let numObjectsRaw = readUInt64(bytes, trailerStart + 8),
+              let topObjectRaw = readUInt64(bytes, trailerStart + 16),
+              let offsetTableOffsetRaw = readUInt64(bytes, trailerStart + 24),
+              numObjectsRaw <= UInt64(Int.max),
+              topObjectRaw <= UInt64(Int.max),
+              offsetTableOffsetRaw <= UInt64(Int.max) else { return nil }
+        let numObjects = Int(numObjectsRaw)
+        let topObject = Int(topObjectRaw)
+        let offsetTableOffset = Int(offsetTableOffsetRaw)
 
         guard offsetSize > 0, refSize > 0, numObjects > 0,
               offsetTableOffset + numObjects * offsetSize <= trailerStart else { return nil }
@@ -194,9 +201,10 @@ public enum BinaryPlist {
         ref: Int, bytes: [UInt8], offsets: [Int], refSize: Int, cache: inout [Int: Any]
     ) -> Any {
         if let cached = cache[ref] { return cached }
-        guard ref < offsets.count else { return NSNull() }
+        guard ref >= 0, ref < offsets.count else { return NSNull() }
 
         var pos = offsets[ref]
+        guard pos >= 0, pos < bytes.count else { return NSNull() }
         let token = Int(bytes[pos]); pos += 1
         let tokenH = token & 0xF0
         let tokenL = token & 0x0F
@@ -214,13 +222,18 @@ public enum BinaryPlist {
                 result = readInt(bytes, pos, size); pos += size
             case 0x40:
                 let (size, p) = readSize(tokenL, bytes, pos)
+                guard p >= 0, size >= 0, p + size <= bytes.count else { return NSNull() }
                 result = Data(bytes[p..<(p + size)]); pos = p + size
             case 0x50:
                 let (size, p) = readSize(tokenL, bytes, pos)
+                guard p >= 0, size >= 0, p + size <= bytes.count else { return NSNull() }
                 result = String(bytes: bytes[p..<(p + size)], encoding: .ascii) ?? ""; pos = p + size
             case 0x60:
                 let (size, p) = readSize(tokenL, bytes, pos)
-                result = String(bytes: bytes[p..<(p + size * 2)], encoding: .utf16BigEndian) ?? ""; pos = p + size * 2
+                // size 是 UTF-16 单元数,字节数为 size*2;先防乘法溢出再校验切片范围。
+                let (byteLen, overflow) = size.multipliedReportingOverflow(by: 2)
+                guard !overflow, p >= 0, byteLen >= 0, p + byteLen <= bytes.count else { return NSNull() }
+                result = String(bytes: bytes[p..<(p + byteLen)], encoding: .utf16BigEndian) ?? ""; pos = p + byteLen
             case 0x80:
                 let size = 1 + tokenL
                 result = PlistUID(readInt(bytes, pos, size)); pos += size
@@ -263,20 +276,25 @@ public enum BinaryPlist {
 
     private static func readSize(_ tokenL: Int, _ bytes: [UInt8], _ pos: Int) -> (Int, Int) {
         guard tokenL == 0xF else { return (tokenL, pos) }
+        guard pos >= 0, pos < bytes.count else { return (0, pos) }
         let marker = Int(bytes[pos])
         let size = 1 << (marker & 0x0F)
         return (readInt(bytes, pos + 1, size), pos + 1 + size)
     }
 
     private static func readInt(_ bytes: [UInt8], _ pos: Int, _ size: Int) -> Int {
-        var value = 0
+        // 合法整数对象最多 8 字节;用 UInt64 累积避免 Int 溢出陷阱,超范围返回 0 交由上层 guard。
+        guard pos >= 0, size >= 1, size <= 8, pos + size <= bytes.count else { return 0 }
+        var value: UInt64 = 0
         for i in 0..<size {
-            value = (value << 8) | Int(bytes[pos + i])
+            value = (value << 8) | UInt64(bytes[pos + i])
         }
-        return value
+        guard value <= UInt64(Int.max) else { return 0 }
+        return Int(value)
     }
 
-    private static func readUInt64(_ bytes: [UInt8], _ pos: Int) -> UInt64 {
+    private static func readUInt64(_ bytes: [UInt8], _ pos: Int) -> UInt64? {
+        guard pos >= 0, pos + 8 <= bytes.count else { return nil }
         var value: UInt64 = 0
         for i in 0..<8 {
             value = (value << 8) | UInt64(bytes[pos + i])

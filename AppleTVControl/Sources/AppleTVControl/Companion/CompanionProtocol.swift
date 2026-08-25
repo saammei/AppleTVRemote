@@ -74,7 +74,11 @@ public final class CompanionProtocol: CompanionConnectionListener {
         }
     }
 
+    /// 连接断开回调(由连接层触发,可能来自任意线程)。
+    public var onDisconnect: (() -> Void)?
+
     private var xid: Int
+    private var xidLock = os_unfair_lock()
     private let pending = PendingStore()
     private var isStarted = false
 
@@ -141,8 +145,10 @@ public final class CompanionProtocol: CompanionConnectionListener {
     }
 
     private func nextXid() -> Int {
+        os_unfair_lock_lock(&xidLock)
         let current = xid
         xid += 1
+        os_unfair_lock_unlock(&xidLock)
         return current
     }
 
@@ -180,6 +186,14 @@ public final class CompanionProtocol: CompanionConnectionListener {
         } else {
             handleOpack(dict)
         }
+    }
+
+    public func connectionDidClose(_ connection: CompanionConnection) {
+        // 断开:让所有待响应请求以错误结束(避免挂起),并通知上层。
+        for request in pending.removeAll() {
+            request.resume(throwing: CompanionError.notConnected)
+        }
+        onDisconnect?()
     }
 
     /// 恢复一个待响应请求。响应带 `_em` 字段表示设备报错(pyatv 抛 ProtocolError)。

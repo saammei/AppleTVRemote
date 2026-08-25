@@ -9,6 +9,9 @@
 import Foundation
 
 public enum OPACK {
+    /// 递归解包的最大深度,防止恶意深嵌套 OPACK 耗尽栈空间。
+    private static let maxDepth = 64
+
     // MARK: - 整数 / 浮点小端辅助
 
     private static func uintLE(_ value: UInt64, _ count: Int) -> Data {
@@ -164,7 +167,7 @@ public enum OPACK {
         return unpack(data, objectList: &objectList)
     }
 
-    private static func unpack(_ data: Data, objectList: inout [Any]) -> (value: Any, remaining: Data)? {
+    private static func unpack(_ data: Data, objectList: inout [Any], depth: Int = 0) -> (value: Any, remaining: Data)? {
         // dropFirst 返回的是切片视图,底层索引继承原 Data(非从 0 起),
         // 后续 subdata 会因此错位/越界。此处若为切片则强制复制重置索引。
         let data = data.startIndex == 0 ? data : Data(data)
@@ -234,38 +237,40 @@ public enum OPACK {
             value = data.subdata(in: (1 + byteCount)..<end)
             remaining = data.dropFirst(end)
         case 0xD0...0xDF:
+            guard depth < maxDepth else { return nil }
             let count = Int(first & 0xF)
             var output: [Any] = []
             var ptr = data.dropFirst()
             if count == 0xF {
                 while let p = ptr.first, p != 0x03 {
-                    guard let (v, rest) = unpack(ptr, objectList: &objectList) else { return nil }
+                    guard let (v, rest) = unpack(ptr, objectList: &objectList, depth: depth + 1) else { return nil }
                     output.append(v); ptr = rest
                 }
                 ptr = ptr.dropFirst()
             } else {
                 for _ in 0..<count {
-                    guard let (v, rest) = unpack(ptr, objectList: &objectList) else { return nil }
+                    guard let (v, rest) = unpack(ptr, objectList: &objectList, depth: depth + 1) else { return nil }
                     output.append(v); ptr = rest
                 }
             }
             value = output; remaining = ptr; addToObjectList = false
         case 0xE0...0xEF:
+            guard depth < maxDepth else { return nil }
             let count = Int(first & 0xF)
             var output: [String: Any] = [:]
             var ptr = data.dropFirst()
             if count == 0xF {
                 while let p = ptr.first, p != 0x03 {
-                    guard let (k, rest1) = unpack(ptr, objectList: &objectList),
-                          let (v, rest2) = unpack(rest1, objectList: &objectList) else { return nil }
+                    guard let (k, rest1) = unpack(ptr, objectList: &objectList, depth: depth + 1),
+                          let (v, rest2) = unpack(rest1, objectList: &objectList, depth: depth + 1) else { return nil }
                     if let key = k as? String { output[key] = v }
                     ptr = rest2
                 }
                 ptr = ptr.dropFirst()
             } else {
                 for _ in 0..<count {
-                    guard let (k, rest1) = unpack(ptr, objectList: &objectList),
-                          let (v, rest2) = unpack(rest1, objectList: &objectList) else { return nil }
+                    guard let (k, rest1) = unpack(ptr, objectList: &objectList, depth: depth + 1),
+                          let (v, rest2) = unpack(rest1, objectList: &objectList, depth: depth + 1) else { return nil }
                     if let key = k as? String { output[key] = v }
                     ptr = rest2
                 }

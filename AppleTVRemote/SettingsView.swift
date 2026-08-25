@@ -114,6 +114,11 @@ private struct DeviceSettingsView: View {
                             }
                         }
                         .buttonStyle(.borderedProminent)
+                        Button("取消") {
+                            bridge.pairCancel()
+                            pin = ""
+                            pairingDeviceID = nil
+                        }
                     }
                 } else {
                     Button("配对") {

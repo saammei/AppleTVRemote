@@ -112,7 +112,11 @@ public final class MRPProtocol: MRPConnectionListener {
         }
     }
 
+    /// 连接断开回调(由连接层触发,可能来自任意线程)。
+    public var onDisconnect: (() -> Void)?
+
     private var identifier: UInt64
+    private var identifierLock = os_unfair_lock()
     private let pending = PendingStore()
     private var isStarted = false
 
@@ -210,8 +214,11 @@ public final class MRPProtocol: MRPConnectionListener {
     // MARK: - 收发
 
     private func nextIdentifier() -> String {
+        os_unfair_lock_lock(&identifierLock)
         identifier += 1
-        return String(identifier)
+        let id = String(identifier)
+        os_unfair_lock_unlock(&identifierLock)
+        return id
     }
 
     /// 发送并等待响应。crypto pairing 消息无 identifier,按类型匹配。
@@ -323,5 +330,13 @@ public final class MRPProtocol: MRPConnectionListener {
 
         // 3. 推送事件交给 delegate。
         delegate?.mrpProtocol(self, didReceive: message)
+    }
+
+    public func connectionDidClose(_ connection: MRPConnection) {
+        // 断开:让所有待响应请求以错误结束(避免挂起),并通知上层。
+        for request in pending.removeAll() {
+            request.resume(throwing: CompanionError.notConnected)
+        }
+        onDisconnect?()
     }
 }

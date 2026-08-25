@@ -1,6 +1,7 @@
 import Foundation
 import Combine
 import Darwin
+import Dispatch
 import AppleTVControl
 
 enum BridgeError: LocalizedError {
@@ -48,7 +49,7 @@ final class ATVBridge: ObservableObject {
     private var pairingConnection: TCPCompanionConnection?
     private var pairingDeviceID: String?
 
-    private var statusTimer: Timer?
+    private var statusTimer: DispatchSourceTimer?
 
     init() {
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
@@ -115,6 +116,11 @@ final class ATVBridge: ObservableObject {
     // MARK: - 配对
 
     func pairBegin(device: ATVDevice) async {
+        // 清理上一次可能残留的配对连接(防 TCP/SRP 状态泄漏)。
+        pairingConnection?.close()
+        pairingProcedure = nil
+        pairingConnection = nil
+        pairingDeviceID = nil
         DispatchQueue.main.async { self.isPairing = true }
         do {
             let discovered = try await resolveDevice(identifier: device.identifier)
@@ -170,6 +176,17 @@ final class ATVBridge: ObservableObject {
         }
     }
 
+    func pairCancel() {
+        pairingConnection?.close()
+        pairingConnection = nil
+        pairingProcedure = nil
+        pairingDeviceID = nil
+        DispatchQueue.main.async {
+            self.pairingAwaitingPin = false
+            self.isPairing = false
+        }
+    }
+
     // MARK: - 连接
 
     func connect(device: ATVDevice) async {
@@ -204,6 +221,7 @@ final class ATVBridge: ObservableObject {
         let companionInfo = CompanionDeviceInfo(name: "MacBook Remote", model: "Mac", identifier: clientID)
         let companion = CompanionAPI(
             protocolLayer: companionProtocol, credentials: credentials, deviceInfo: companionInfo)
+        companion.onDisconnect = { [weak self] in self?.handleDisconnect() }
         try await companion.connect()
 
         // MRP:元数据通道(可选,失败不阻断控制)。
@@ -215,6 +233,7 @@ final class ATVBridge: ObservableObject {
             let mrpInfo = MRPDeviceInfo(
                 name: "MacBook Remote", identifier: clientID, osBuild: osBuild, modelName: "Mac")
             let api = MRPAPI(protocolLayer: mrpProtocol)
+            api.onDisconnect = { [weak self] in self?.handleDisconnect() }
             do {
                 try await api.connect(credentials: credentials, deviceInfo: mrpInfo)
                 mrp = api
@@ -247,6 +266,9 @@ final class ATVBridge: ObservableObject {
         mrpAPI = nil
         connectionLock.unlock()
 
+        // 主动断开:先解除 onDisconnect,避免误报"意外断开"。
+        companion?.onDisconnect = nil
+        mrp?.onDisconnect = nil
         try? await companion?.disconnect()
         mrp?.disconnect()
 
@@ -255,6 +277,30 @@ final class ATVBridge: ObservableObject {
             self.currentDevice = nil
             self.nowPlaying = nil
             self.apps = []
+            self.defaults.removeObject(forKey: "lastDeviceIdentifier")
+        }
+    }
+
+    /// 连接意外断开(远端重启/网络切换):清理状态并提示用户。
+    private func handleDisconnect() {
+        stopStatusTimer()
+        connectionLock.lock()
+        let companion = companionAPI
+        let mrp = mrpAPI
+        companionAPI = nil
+        mrpAPI = nil
+        connectionLock.unlock()
+
+        // 连接已断开,置 nil 防后续重复触发。
+        companion?.onDisconnect = nil
+        mrp?.onDisconnect = nil
+
+        DispatchQueue.main.async {
+            self.connectionState = .disconnected
+            self.currentDevice = nil
+            self.nowPlaying = nil
+            self.apps = []
+            self.lastError = "连接已断开，请在设置中重新连接"
             self.defaults.removeObject(forKey: "lastDeviceIdentifier")
         }
     }
@@ -426,6 +472,9 @@ final class ATVBridge: ObservableObject {
         mrpAPI = nil
         connectionLock.unlock()
 
+        // 应用退出时的清理:解除断开回调,避免退出过程中触发 UI 更新。
+        companion?.onDisconnect = nil
+        mrp?.onDisconnect = nil
         if companion != nil || mrp != nil {
             Task {
                 try? await companion?.disconnect()
@@ -436,14 +485,20 @@ final class ATVBridge: ObservableObject {
 
     private func startStatusTimer() {
         stopStatusTimer()
-        statusTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] _ in
+        // 用 DispatchSourceTimer 而非 Timer.scheduledTimer:后者注册在当前线程的 RunLoop,
+        // 后台线程 RunLoop 不主动运行会导致定时器永不触发。
+        let timer = DispatchSource.makeTimerSource(queue: .main)
+        timer.schedule(deadline: .now() + 5, repeating: 5)
+        timer.setEventHandler { [weak self] in
             guard let self else { return }
             Task { await self.pollStatus() }
         }
+        timer.resume()
+        statusTimer = timer
     }
 
     private func stopStatusTimer() {
-        statusTimer?.invalidate()
+        statusTimer?.cancel()
         statusTimer = nil
     }
 

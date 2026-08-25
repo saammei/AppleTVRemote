@@ -55,6 +55,12 @@ public final class MRPAPI: MRPProtocolDelegate {
         protocolLayer.delegate = self
     }
 
+    /// 连接断开回调(转发自协议层,由连接层触发)。
+    public var onDisconnect: (() -> Void)? {
+        get { protocolLayer.onDisconnect }
+        set { protocolLayer.onDisconnect = newValue }
+    }
+
     public func connect(credentials: HapCredentials?, deviceInfo: MRPDeviceInfo) async throws {
         try await protocolLayer.start(credentials: credentials, deviceInfo: deviceInfo)
     }

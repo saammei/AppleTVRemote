@@ -97,6 +97,12 @@ public final class CompanionAPI {
         self.deviceInfo = deviceInfo
     }
 
+    /// 连接断开回调(转发自协议层,由连接层触发)。
+    public var onDisconnect: (() -> Void)? {
+        get { protocolLayer.onDisconnect }
+        set { protocolLayer.onDisconnect = newValue }
+    }
+
     // MARK: - 连接 / 断开
 
     /// 建立加密连接并完成会话初始化(系统信息 / 触控 / 会话 / 文本输入 / 事件订阅)。

@@ -8,6 +8,8 @@ import Foundation
 public protocol CompanionConnectionListener: AnyObject {
     /// 收到一帧。payload 已由连接层解密(若已启用加密)。
     func connection(_ connection: CompanionConnection, didReceive frameType: FrameType, payload: Data)
+    /// 连接已断开(主动 close 或远端断开/错误)。可能被多次调用,实现需幂等。
+    func connectionDidClose(_ connection: CompanionConnection)
 }
 
 public protocol CompanionConnection: AnyObject {

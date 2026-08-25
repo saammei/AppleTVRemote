@@ -62,6 +62,9 @@ public final class CredentialsStore {
                 withIntermediateDirectories: true
             )
             try data.write(to: fileURL, options: .atomic)
+            // 收紧权限:仅当前用户可读写,防止同机其他进程读取长期私钥。
+            try FileManager.default.setAttributes(
+                [.posixPermissions: 0o600], ofItemAtPath: fileURL.path)
             return true
         } catch {
             return false
