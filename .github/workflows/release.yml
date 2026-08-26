@@ -57,9 +57,46 @@ jobs:
           name: AppleTVRemote-${{ env.VERSION }}.dmg
           path: AppleTVRemote-*.dmg
 
+      - name: 生成 Release 描述
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          cat > "$RUNNER_TEMP/release_body.md" <<'EOF'
+          ## 安装
+
+          1. 下载并打开 `AppleTVRemote-<VERSION>.dmg`
+          2. 把 `AppleTVRemote` 拖进「应用程序」
+          3. 首次打开：应用未使用 Apple 开发者签名（免费发布），macOS 会拦截一次，按下面任意一种方式放行（只需一次，之后正常打开）：
+
+             **方式一：通过系统设置放行（推荐，无需终端）**
+             1. 双击图标，弹出「Apple 无法验证…」时点**「好」**
+             2. 打开 **系统设置 → 隐私与安全性**，滚到底部「安全性」区域
+             3. 找到 **AppleTVRemote**，点**「仍要打开」**，确认框里再点**「打开」**
+             4. ⚠️ 如果列表里暂时没看到应用，回「应用程序」**再双击一次**图标，然后重新打开系统设置，选项就会出现
+
+             **方式二：命令行放行**
+
+          ```bash
+          xattr -dr com.apple.quarantine "/Applications/AppleTVRemote.app"
+          ```
+
+          4. 应用没有 Dock 图标，启动后只在右上角菜单栏显示遥控器图标
+
+          ---
+
+          ## 更新内容
+          EOF
+          sed -i '' "s/<VERSION>/$VERSION/g" "$RUNNER_TEMP/release_body.md"
+          # 追加自动生成的 release notes(基于上一 tag 的 commit 差异;失败则只保留安装说明)
+          gh api -X POST "/repos/${GITHUB_REPOSITORY}/releases/generate-notes" \
+            -f tag_name="${GITHUB_REF_NAME}" -f target_commitish="${GITHUB_SHA}" \
+            --jq '.body' > "$RUNNER_TEMP/release_notes.md" 2>/dev/null \
+            && cat "$RUNNER_TEMP/release_notes.md" >> "$RUNNER_TEMP/release_body.md" || true
+        env:
+          GH_TOKEN: ${{ github.token }}
+
       - name: 发布 GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           files: AppleTVRemote-*.dmg
-          generate_release_notes: true
+          body_path: "${{ runner.temp }}/release_body.md"

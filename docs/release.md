@@ -52,7 +52,8 @@ CI 全流程（macos-15 runner，约 8~20 分钟）：
 3. **签名**：`codesign --force --deep --sign -`（ad-hoc）
 4. **打包 DMG**：`hdiutil create ... -format UDZO AppleTVRemote-<VERSION>.dmg`
 5. **发布**：tag 触发时 `softprops/action-gh-release` 自动创建 Release 并上传 DMG；
-   `workflow_dispatch` 手动触发时只上传为 artifact（不发 Release）。
+   Release 正文会自动带上「首次安装」说明（含 Gatekeeper 放行步骤）和基于上一 tag
+   的自动更新日志；`workflow_dispatch` 手动触发时只上传为 artifact（不发 Release）。
 
 ## 三、验证结果
 
