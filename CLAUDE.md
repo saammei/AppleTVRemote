@@ -13,8 +13,8 @@ protocol stack (`AppleTVControl`), **no Python dependency**, release package is 
   internal links in commit messages, tag notes, or docs.
 - **Tell the user before pushing.** Don't `git push` on your own — first explain what will be
   pushed and where, and push only after confirmation.
-- The main development branch is `native-swift`; `main` now contains the native Swift
-  implementation as well (the old Python version lives only in git history).
+- The only branch is `main` (native Swift implementation). The old Python version and the
+  former `native-swift` dev branch live only in git history.
 
 ## Current Status
 
@@ -24,9 +24,8 @@ protocol stack (`AppleTVControl`), **no Python dependency**, release package is 
   are all implemented, tested, and wired into the app. DMG size dropped from ~40MB to ~3.6MB.
 - **Feature scope**: remote buttons + now playing + app launcher + text input. **AirPlay audio is
   not supported.**
-- **Branches**: `native-swift` = main development branch (for now); `main` has been merged to the
-  native Swift version, so both branches now contain native Swift code — the old Python version
-  exists only in git history.
+- **Branches**: single branch `main`. The remote `native-swift` branch was deleted; the old Python
+  version exists only in git history.
 
 ## Architecture & Docs
 
