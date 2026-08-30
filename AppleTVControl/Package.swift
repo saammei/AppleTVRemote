@@ -19,8 +19,13 @@ let package = Package(
             dependencies: [
                 .product(name: "SwiftProtobuf", package: "swift-protobuf"),
                 .product(name: "BigInt", package: "BigInt"),
+                "CDNSSD",
             ]
         ),
+        // C bridge to the system dns_sd.h: NetService.resolve does not dispatch
+        // callbacks on macOS 26, so use DNSServiceResolve instead (callbacks go
+        // through a dispatch queue, no RunLoop dependency).
+        .systemLibrary(name: "CDNSSD"),
         .executableTarget(
             name: "AppleTVControlTests",
             dependencies: ["AppleTVControl"]

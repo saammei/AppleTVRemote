@@ -2,7 +2,7 @@ import Foundation
 import AppleTVControl
 
 func runCredentialsStoreTests() {
-    runSuite("凭证持久化 round-trip") {
+    runSuite("credentials persistence round-trip") {
         let dir = FileManager.default.temporaryDirectory
             .appendingPathComponent("atv-credentials-test-\(UUID().uuidString)")
         let store = CredentialsStore(fileURL: dir.appendingPathComponent("credentials.json"))
@@ -14,17 +14,17 @@ func runCredentialsStoreTests() {
             atvId: Data("atv-id".utf8),
             clientId: Data("client-id".utf8))
 
-        expect(store.credentials(for: "dev-1") == nil, "初始为空")
-        expect(store.save(creds, for: "dev-1"), "保存成功")
+        expect(store.credentials(for: "dev-1") == nil, "initially empty")
+        expect(store.save(creds, for: "dev-1"), "save succeeds")
 
         let loaded = store.credentials(for: "dev-1")
-        expect(loaded == creds, "读取回一致凭证")
+        expect(loaded == creds, "read back matches")
 
-        // 新实例从磁盘读取(验证真实落盘)。
+        // A new instance reads from disk (verifying actual persistence).
         let store2 = CredentialsStore(fileURL: dir.appendingPathComponent("credentials.json"))
-        expect(store2.credentials(for: "dev-1") == creds, "跨实例读取一致")
+        expect(store2.credentials(for: "dev-1") == creds, "cross-instance read matches")
 
-        expect(store2.remove(identifier: "dev-1"), "删除成功")
-        expect(store2.credentials(for: "dev-1") == nil, "删除后为空")
+        expect(store2.remove(identifier: "dev-1"), "remove succeeds")
+        expect(store2.credentials(for: "dev-1") == nil, "empty after removal")
     }
 }

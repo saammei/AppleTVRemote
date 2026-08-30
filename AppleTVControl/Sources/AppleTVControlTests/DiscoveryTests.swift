@@ -1,7 +1,7 @@
 import Foundation
 import AppleTVControl
 
-/// 构造 TXT record 字节(便于测试)。
+/// Builds TXT record bytes (for testing).
 func makeTXTRecord(_ entries: [String: String]) -> Data {
     var data = Data()
     for (key, value) in entries {
@@ -14,28 +14,42 @@ func makeTXTRecord(_ entries: [String: String]) -> Data {
 }
 
 func runDiscoveryTests() {
-    runSuite("TXT record 解析") {
+    runSuite("TXT record parsing") {
         let data = makeTXTRecord([
             "Name": "Living Room",
             "UniqueIdentifier": "abc-123",
             "allowpairing": "yes",
         ])
         let props = parseTXTRecord(data)
-        expectEqual(props["Name"], "Living Room", "Name")
-        expectEqual(props["UniqueIdentifier"], "abc-123", "UniqueIdentifier")
+        // RFC 6763: keys are normalized to lowercase
+        expectEqual(props["name"], "Living Room", "name")
+        expectEqual(props["uniqueidentifier"], "abc-123", "uniqueidentifier")
         expectEqual(props["allowpairing"], "yes", "allowpairing")
+        expect(props["Name"] == nil, "uppercase key absent (normalized)")
     }
 
-    runSuite("服务类型判断") {
-        expectEqual(ServiceKind.from(serviceType: "_mediaremotetv._tcp."), .mrp, "MRP 类型")
-        expectEqual(ServiceKind.from(serviceType: "_companion-link._tcp."), .companion, "Companion 类型")
-        expectEqual(ServiceKind.from(serviceType: "_airplay._tcp."), nil, "未知类型")
+    runSuite("TXT key casing (Apple TV broadcasts mixed-case keys)") {
+        let data = makeTXTRecord([
+            "rpMRtID": "578B0CD2-84C4-4612-9A8A-12A2FD78EF8C",
+            "rpMd": "AppleTV14,1",
+            "rpFl": "0x36782",
+        ])
+        let props = parseTXTRecord(data)
+        expectEqual(props["rpmrtid"], "578B0CD2-84C4-4612-9A8A-12A2FD78EF8C", "rpmrtid lowercase lookup")
+        expectEqual(props["rpmd"], "AppleTV14,1", "rpmd lowercase lookup")
+        expectEqual(props["rpfl"], "0x36782", "rpfl lowercase lookup")
     }
 
-    runSuite("设备聚合") {
+    runSuite("service type classification") {
+        expectEqual(ServiceKind.from(serviceType: "_mediaremotetv._tcp."), .mrp, "MRP type")
+        expectEqual(ServiceKind.from(serviceType: "_companion-link._tcp."), .companion, "Companion type")
+        expectEqual(ServiceKind.from(serviceType: "_airplay._tcp."), nil, "unknown type")
+    }
+
+    runSuite("device aggregation") {
         let mrp = ResolvedService(
             kind: .mrp, name: "Living Room", host: "living-room.local", port: 49152,
-            properties: ["UniqueIdentifier": "abc-123", "Name": "Living Room"]
+            properties: ["uniqueidentifier": "abc-123", "name": "Living Room"]
         )
         let companion = ResolvedService(
             kind: .companion, name: "Living Room", host: "living-room.local", port: 49153,
@@ -47,22 +61,22 @@ func runDiscoveryTests() {
         agg.add(companion)
 
         let device = agg.build()
-        expect(device != nil, "聚合结果非空")
+        expect(device != nil, "aggregation result is non-nil")
         if let device {
             expectEqual(device.identifier, "abc-123", "identifier")
-            expectEqual(device.name, "Living Room", "名称取 MRP 的 Name")
-            expectEqual(device.model, "Apple TV 4K (3代)", "model 由 rpmd 映射")
-            expectEqual(device.mrpPort, 49152, "MRP 端口")
-            expectEqual(device.companionPort, 49153, "Companion 端口")
-            expect(device.isMRPSupported, "支持 MRP")
-            expect(device.isCompanionSupported, "支持 Companion")
+            expectEqual(device.name, "Living Room", "name taken from MRP's Name")
+            expectEqual(device.model, "Apple TV 4K (3rd Generation)", "model mapped from rpmd")
+            expectEqual(device.mrpPort, 49152, "MRP port")
+            expectEqual(device.companionPort, 49153, "Companion port")
+            expect(device.isMRPSupported, "MRP supported")
+            expect(device.isCompanionSupported, "Companion supported")
         }
     }
 
-    runSuite("型号映射") {
-        expectEqual(DeviceModel.lookup("J255AP").rawValue, "Apple TV 4K (3代)", "J255AP")
-        expectEqual(DeviceModel.lookup("J305AP").rawValue, "Apple TV 4K (2代)", "J305AP")
-        expectEqual(DeviceModel.lookup("J105aAP").rawValue, "Apple TV 4K (1代)", "J105aAP")
-        expectEqual(DeviceModel.lookup("不存在").rawValue, "未知设备", "未知型号")
+    runSuite("model mapping") {
+        expectEqual(DeviceModel.lookup("J255AP").rawValue, "Apple TV 4K (3rd Generation)", "J255AP")
+        expectEqual(DeviceModel.lookup("J305AP").rawValue, "Apple TV 4K (2nd Generation)", "J305AP")
+        expectEqual(DeviceModel.lookup("J105aAP").rawValue, "Apple TV 4K (1st Generation)", "J105aAP")
+        expectEqual(DeviceModel.lookup("nonexistent").rawValue, "Unknown Device", "unknown model")
     }
 }

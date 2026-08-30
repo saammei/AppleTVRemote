@@ -1,26 +1,26 @@
-// Apple TV 设备型号映射,对应 pyatv 的 DeviceModel / lookup_model。
-// 数据来自 pyatv/support/device_info.py(逆向得到的静态映射,可安全 port)。
+// Apple TV device model mapping, corresponding to pyatv's DeviceModel / lookup_model.
+// Data from pyatv/support/device_info.py (a static mapping obtained by reverse engineering; safe to port).
 
 public enum DeviceModel: String {
-    case unknown = "未知设备"
-    case gen2 = "Apple TV (2代)"
-    case gen3 = "Apple TV (3代)"
-    case gen4 = "Apple TV HD (4代)"
-    case gen4K = "Apple TV 4K (1代)"
-    case appleTV4KGen2 = "Apple TV 4K (2代)"
-    case appleTV4KGen3 = "Apple TV 4K (3代)"
+    case unknown = "Unknown Device"
+    case gen2 = "Apple TV (2nd Generation)"
+    case gen3 = "Apple TV (3rd Generation)"
+    case gen4 = "Apple TV HD (4th Generation)"
+    case gen4K = "Apple TV 4K (1st Generation)"
+    case appleTV4KGen2 = "Apple TV 4K (2nd Generation)"
+    case appleTV4KGen3 = "Apple TV 4K (3rd Generation)"
     case homePod = "HomePod"
     case homePodMini = "HomePod mini"
-    case homePodGen2 = "HomePod (2代)"
+    case homePodGen2 = "HomePod (2nd Generation)"
 
-    /// 用 mDNS TXT 记录里的 `rpmd`(硬件型号代码)查型号名。
+    /// Looks up the model name from the `rpmd` (hardware model code) in the mDNS TXT record.
     public static func lookup(_ identifier: String) -> DeviceModel {
         if let model = modelList[identifier] { return model }
         if let model = internalNameList[identifier] { return model }
         return .unknown
     }
 
-    /// 用 MRP TXT 里的 `systembuildversion` 查 tvOS 版本号(不完整列表)。
+    /// Looks up the tvOS version from the `systembuildversion` in the MRP TXT record (incomplete list).
     public static func lookupVersion(_ build: String) -> String? {
         versionList[build]
     }

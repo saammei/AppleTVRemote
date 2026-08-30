@@ -1,6 +1,6 @@
 import AppKit
 
-// 生成 AppleTVRemote 应用图标:深色渐变圆角底 + 白色 av.remote 符号
+// Generates the AppleTVRemote app icon: dark gradient rounded background + white av.remote symbol
 let scriptDir = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
 let outDir = scriptDir.deletingLastPathComponent().appendingPathComponent("AppleTVRemote/Assets.xcassets/AppIcon.appiconset").path
 try FileManager.default.createDirectory(atPath: outDir, withIntermediateDirectories: true)

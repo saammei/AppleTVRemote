@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: 计算版本号
+      - name: Compute version
         run: |
           if [[ "${GITHUB_REF_NAME}" == v* ]]; then
             echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
@@ -23,12 +23,12 @@ jobs:
             echo "VERSION=dev" >> "$GITHUB_ENV"
           fi
 
-      - name: 协议栈自测
+      - name: Protocol stack self-test
         run: |
           cd AppleTVControl
           swift run AppleTVControlTests
 
-      - name: 构建应用 (arm64, Release)
+      - name: Build app (arm64, Release)
         run: |
           xcodebuild -project AppleTVRemote.xcodeproj -scheme AppleTVRemote \
             -configuration Release -derivedDataPath DerivedData \
@@ -37,56 +37,56 @@ jobs:
             build
           cp -R DerivedData/Build/Products/Release/AppleTVRemote.app "$RUNNER_TEMP/AppleTVRemote.app"
 
-      - name: 签名 (ad-hoc)
+      - name: Sign (ad-hoc)
         run: codesign --force --deep --sign - "$RUNNER_TEMP/AppleTVRemote.app"
 
-      - name: 打包 DMG
+      - name: Package DMG
         run: |
           mkdir -p "$RUNNER_TEMP/dmg"
           cp -R "$RUNNER_TEMP/AppleTVRemote.app" "$RUNNER_TEMP/dmg/"
           ln -s /Applications "$RUNNER_TEMP/dmg/Applications"
           hdiutil create -volname "AppleTVRemote" -srcfolder "$RUNNER_TEMP/dmg" \
             -ov -format UDZO "AppleTVRemote-${VERSION}.dmg"
-          echo "== DMG 体积 =="
+          echo "== DMG size =="
           ls -lh AppleTVRemote-*.dmg
 
-      - name: 上传构建产物 (手动触发)
+      - name: Upload build artifact (manual trigger)
         if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v4
         with:
           name: AppleTVRemote-${{ env.VERSION }}.dmg
           path: AppleTVRemote-*.dmg
 
-      - name: 生成 Release 描述
+      - name: Generate release description
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           cat > "$RUNNER_TEMP/release_body.md" <<'EOF'
-          ## 安装
+          ## Installation
 
-          1. 下载并打开 `AppleTVRemote-<VERSION>.dmg`
-          2. 把 `AppleTVRemote` 拖进「应用程序」
-          3. 首次打开：应用未使用 Apple 开发者签名（免费发布），macOS 会拦截一次，按下面任意一种方式放行（只需一次，之后正常打开）：
+          1. Download and open `AppleTVRemote-<VERSION>.dmg`
+          2. Drag `AppleTVRemote` into the Applications folder
+          3. First launch: the app is not signed with an Apple Developer certificate (free distribution), so macOS blocks it once. Allow it either way below (only needed once; after that it opens normally):
 
-             **方式一：通过系统设置放行（推荐，无需终端）**
-             1. 双击图标，弹出「Apple 无法验证…」时点**「好」**
-             2. 打开 **系统设置 → 隐私与安全性**，滚到底部「安全性」区域
-             3. 找到 **AppleTVRemote**，点**「仍要打开」**，确认框里再点**「打开」**
-             4. ⚠️ 如果列表里暂时没看到应用，回「应用程序」**再双击一次**图标，然后重新打开系统设置，选项就会出现
+             **Option 1: Allow via System Settings (recommended, no terminal needed)**
+             1. Double-click the icon; when "Apple cannot verify…" appears, click **OK**
+             2. Open **System Settings → Privacy & Security**, scroll to the Security section at the bottom
+             3. Find **AppleTVRemote**, click **Open Anyway**, then click **Open** in the confirmation dialog
+             4. ⚠️ If the app is not listed yet, double-click the icon in the Applications folder **again**, then reopen System Settings and the option will appear
 
-             **方式二：命令行放行**
+             **Option 2: Allow from the command line**
 
           ```bash
           xattr -dr com.apple.quarantine "/Applications/AppleTVRemote.app"
           ```
 
-          4. 应用没有 Dock 图标，启动后只在右上角菜单栏显示遥控器图标
+          4. The app has no Dock icon; after launching, it appears only as a remote icon in the menu bar at the top-right
 
           ---
 
-          ## 更新内容
+          ## What's New
           EOF
           sed -i '' "s/<VERSION>/$VERSION/g" "$RUNNER_TEMP/release_body.md"
-          # 追加自动生成的 release notes(基于上一 tag 的 commit 差异;失败则只保留安装说明)
+          # Append auto-generated release notes (based on commits since the previous tag; on failure, keep only the installation instructions)
           gh api -X POST "/repos/${GITHUB_REPOSITORY}/releases/generate-notes" \
             -f tag_name="${GITHUB_REF_NAME}" -f target_commitish="${GITHUB_SHA}" \
             --jq '.body' > "$RUNNER_TEMP/release_notes.md" 2>/dev/null \
@@ -94,7 +94,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
 
-      - name: 发布 GitHub Release
+      - name: Publish GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:

@@ -1,9 +1,11 @@
-// Companion 连接层:帧类型、连接层加密、帧编解码。
-// 对应 pyatv 的 pyatv/protocols/companion/connection.py。
+// Companion connection layer: frame types, connection-layer encryption, frame encode/decode.
+// Corresponds to pyatv's pyatv/protocols/companion/connection.py.
 //
-// 帧格式:4 字节头 [FrameType(1) | payload_length(3,大端)] + payload。
-// 连接层加密用 Chacha20-Poly1305(12 字节计数器 nonce),AAD 为帧头,16 字节 tag 附加在 payload 后。
-// 与认证层(8 字节 nonce)不同,连接层 nonce 为 out/in 两个独立递增的 12 字节小端计数器。
+// Frame format: 4-byte header [FrameType(1) | payload_length(3, big-endian)] + payload.
+// Connection-layer encryption uses ChaCha20-Poly1305 (12-byte counter nonce); the AAD is the frame
+// header, and the 16-byte tag is appended after the payload.
+// Unlike the authentication layer (8-byte nonce), the connection layer nonce uses two independently
+// incrementing 12-byte little-endian counters (out/in).
 
 import Foundation
 import CryptoKit
@@ -29,8 +31,8 @@ public enum FrameType: UInt8 {
     case familyIdentityUpdate = 34
 }
 
-/// 连接层加密:out/in 两个独立递增的 12 字节小端计数器 nonce。
-/// 计数器的读写用 os_unfair_lock 保护,使发送/接收可跨线程安全调用。
+/// Connection-layer encryption: out/in use two independently incrementing 12-byte little-endian counter nonces.
+/// Counter reads/writes are protected by os_unfair_lock so send/receive can be called safely across threads.
 public final class CompanionCipher {
     private let outKey: Data
     private let inKey: Data
@@ -65,7 +67,7 @@ public enum CompanionFrame {
     public static let headerLength = 4
     public static let authTagLength = 16
 
-    /// 编码一帧。cipher 非空且 payload 非空时加密(payload 后附加 16 字节 tag)。
+    /// Encodes a frame. Encrypts when cipher is non-nil and the payload is non-empty (16-byte tag appended after the payload).
     public static func encode(frameType: FrameType, payload: Data, cipher: CompanionCipher?) throws -> Data {
         var payloadLength = payload.count
         if cipher != nil && payloadLength > 0 {
@@ -83,17 +85,19 @@ public enum CompanionFrame {
         return header + body
     }
 
-    /// 从字节流中提取一帧(不解密,解密由调用方用 cipher 处理)。
-    /// 返回 (frameType, payload(可能仍加密), consumed 字节数);缓冲不足返回 nil。
+    /// Extracts one frame from the byte stream (does not decrypt; decryption is handled by the caller with a cipher).
+    /// Returns (frameType, payload (possibly still encrypted), consumed bytes); returns nil if the buffer is insufficient.
     public static func decode(from buffer: Data) -> (frameType: FrameType, payload: Data, consumed: Int)? {
         guard buffer.count >= headerLength else { return nil }
-        let type = buffer[buffer.startIndex]
-        let length = Int(buffer[buffer.startIndex + 1]) << 16
-            | Int(buffer[buffer.startIndex + 2]) << 8
-            | Int(buffer[buffer.startIndex + 3])
+        let header = buffer.prefix(headerLength)
+        let type = header[header.startIndex]
+        let length = Int(header[header.startIndex + 1]) << 16
+            | Int(header[header.startIndex + 2]) << 8
+            | Int(header[header.startIndex + 3])
         let total = headerLength + length
         guard buffer.count >= total else { return nil }
-        let payload = buffer.subdata(in: headerLength..<total)
+        // Use dropFirst/prefix instead of subdata(in:): slice operations clamp to the bounds themselves and cannot trap.
+        let payload = Data(buffer.dropFirst(headerLength).prefix(length))
         return (FrameType(rawValue: type) ?? .unknown, payload, total)
     }
 }

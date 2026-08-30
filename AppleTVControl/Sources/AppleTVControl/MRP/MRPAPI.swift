@@ -1,27 +1,28 @@
-// MRP 控制层:在协议层之上维护 now-playing 元数据缓存(订阅推送驱动)。
-// 对应 pyatv 的 pyatv/protocols/mrp/metadata.py 的 PlayerStateManager。
+// MRP control layer: maintains a now-playing metadata cache on top of the protocol layer
+// (driven by subscription push).
+// Corresponds to pyatv's PlayerStateManager in pyatv/protocols/mrp/metadata.py.
 //
-// now-playing 元数据来自设备订阅推送(ClientUpdatesConfigMessage 打开 nowPlayingUpdates):
-//   - SetStateMessage.nowPlayingInfo → 标题/艺术家/专辑/时长/已播放时间
-//   - SetStateMessage.playbackState  → 播放状态
-//   - UpdateContentItemMessage      → ContentItem.metadata(更完整的曲目元数据 + mediaType)
-//   - UpdateContentItemArtworkMessage / SetArtworkMessage → 封面 JPEG
-// 与 Companion 不同,这里不主动轮询,`nowPlaying()` 直接返回缓存。
+// now-playing metadata comes from device subscription pushes (ClientUpdatesConfigMessage enables nowPlayingUpdates):
+//   - SetStateMessage.nowPlayingInfo → title/artist/album/duration/elapsed time
+//   - SetStateMessage.playbackState  → playback state
+//   - UpdateContentItemMessage      → ContentItem.metadata (fuller track metadata + mediaType)
+//   - UpdateContentItemArtworkMessage / SetArtworkMessage → cover JPEG
+// Unlike Companion, this layer does not poll; `nowPlaying()` returns the cache directly.
 
 import Foundation
 import os
 
-/// 一条 now-playing 元数据快照。
+/// A now-playing metadata snapshot.
 public struct MRPNowPlaying {
     public let title: String?
     public let artist: String?
     public let album: String?
-    /// 已播放秒数。
+    /// Elapsed time in seconds.
     public let position: Double?
-    /// 总时长秒数。
+    /// Total duration in seconds.
     public let duration: Double?
     public let playbackState: PlaybackState.Enum
-    /// 媒体类型字符串(Music / Podcast / AudioBook / iTunesU / Video / Audio / Unknown)。
+    /// Media type string (Music / Podcast / AudioBook / iTunesU / Video / Audio / Unknown).
     public let mediaType: String?
 
     public init(
@@ -45,9 +46,9 @@ public final class MRPAPI: MRPProtocolDelegate {
     private var lock = os_unfair_lock()
     private var setState: SetStateMessage?
     private var contentItems: [ContentItem] = []
-    /// 内容标识 -> JPEG 封面(来自 UpdateContentItemArtworkMessage)。
+    /// Content identifier -> JPEG artwork (from UpdateContentItemArtworkMessage).
     private var artworkByID: [String: Data] = [:]
-    /// 最新封面(来自 SetArtworkMessage)。
+    /// Latest artwork (from SetArtworkMessage).
     private var jpegData: Data?
 
     public init(protocolLayer: MRPProtocol) {
@@ -55,7 +56,7 @@ public final class MRPAPI: MRPProtocolDelegate {
         protocolLayer.delegate = self
     }
 
-    /// 连接断开回调(转发自协议层,由连接层触发)。
+    /// Disconnect callback (forwarded from the protocol layer, triggered by the connection layer).
     public var onDisconnect: (() -> Void)? {
         get { protocolLayer.onDisconnect }
         set { protocolLayer.onDisconnect = newValue }
@@ -91,9 +92,9 @@ public final class MRPAPI: MRPProtocolDelegate {
         }
     }
 
-    // MARK: - 查询
+    // MARK: - Queries
 
-    /// 返回缓存的 now-playing 元数据(未收到任何推送时为默认空值)。
+    /// Returns the cached now-playing metadata (defaults to empty values when no push has been received).
     public func nowPlaying() -> MRPNowPlaying {
         withLock {
             let info = setState?.nowPlayingInfo
@@ -113,7 +114,7 @@ public final class MRPAPI: MRPProtocolDelegate {
         }
     }
 
-    /// 返回缓存的封面 JPEG(优先按内容标识匹配,其次 SetArtworkMessage 数据)。
+    /// Returns the cached cover JPEG (prefers matching by content identifier, then SetArtworkMessage data).
     public func artwork() -> Data? {
         withLock {
             if let id = contentItems.first?.identifier, let data = artworkByID[id], !data.isEmpty {
@@ -122,12 +123,12 @@ public final class MRPAPI: MRPProtocolDelegate {
             if let jpegData, !jpegData.isEmpty {
                 return jpegData
             }
-            // 任意一张封面兜底。
+            // Fall back to any available artwork.
             return artworkByID.values.first(where: { !$0.isEmpty })
         }
     }
 
-    /// 从 ContentItemMetadata 映射为媒体类型字符串(与 pyatv 的 MediaType 一致)。
+    /// Maps ContentItemMetadata to a media type string (same as pyatv's MediaType).
     private static func mediaTypeString(_ meta: ContentItemMetadata?) -> String? {
         guard let meta else { return nil }
         switch meta.mediaSubType {
@@ -144,7 +145,7 @@ public final class MRPAPI: MRPProtocolDelegate {
         }
     }
 
-    // MARK: - 工具
+    // MARK: - Utilities
 
     private func withLock<T>(_ body: () -> T) -> T {
         os_unfair_lock_lock(&lock)
@@ -154,11 +155,11 @@ public final class MRPAPI: MRPProtocolDelegate {
 }
 
 private extension String {
-    /// 空串视为 nil。
+    /// Treats an empty string as nil.
     var nonEmpty: String? { isEmpty ? nil : self }
 }
 
 private extension Double {
-    /// 非正视为 nil。
+    /// Treats a non-positive value as nil.
     var positive: Double? { self > 0 ? self : nil }
 }

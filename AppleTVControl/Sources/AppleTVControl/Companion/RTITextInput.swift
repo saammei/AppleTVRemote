@@ -1,15 +1,16 @@
-// Companion 文本输入:RTI(Remote Text Input)的 NSKeyedArchiver payload 构建与解析。
-// 对应 pyatv 的 protocols/companion/plist_payloads/rti_text_operations.py 与
-// keyed_archiver.py。设备端(Apple TV)返回 _tiStart 的 _tiD 为 keyed archive,
-// 其中 sessionUUID 直接以字节存在 $objects[1],当前文本在 documentState.docSt.contextBeforeInput。
+// Companion text input: building and parsing RTI (Remote Text Input) NSKeyedArchiver payloads.
+// Corresponds to pyatv's protocols/companion/plist_payloads/rti_text_operations.py and
+// keyed_archiver.py. The _tiD returned by the device (Apple TV) for _tiStart is a keyed archive
+// where sessionUUID is stored directly as bytes in $objects[1], and the current text lives in
+// documentState.docSt.contextBeforeInput.
 //
-// 发送文本时用 _tiC 事件,payload 为固定结构的 RTITextOperations keyed archive。
+// Text is sent via the _tiC event, whose payload is an RTITextOperations keyed archive with a fixed structure.
 
 import Foundation
 
 public enum RTITextInput {
-    /// 按 pyatv 的 read_archive_properties 逐路径解析 keyed archive,
-    /// 返回每条路径最终解析到的值(引用失败时为 nil)。
+    /// Resolves a keyed archive along each path, like pyatv's read_archive_properties,
+    /// returning the final value resolved for each path (nil if a reference fails).
     public static func readArchiveProperties(_ archive: Data, paths: [[String]]) -> [Any?] {
         guard let root = BinaryPlist.decode(archive) as? [String: Any],
               let objects = root["$objects"] as? [Any],
@@ -33,7 +34,7 @@ public enum RTITextInput {
         }
     }
 
-    /// 构建 RTITextOperations「输入文本」payload(_tiC 的 _tiD)。
+    /// Builds the RTITextOperations "input text" payload (_tiD of _tiC).
     public static func inputTextPayload(sessionUUID: Data, text: String) -> Data {
         let objects: [Any] = [
             "$null",
@@ -72,7 +73,7 @@ public enum RTITextInput {
         ])
     }
 
-    /// 构建 RTITextOperations「清空文本」payload(_tiC 的 _tiD)。
+    /// Builds the RTITextOperations "clear text" payload (_tiD of _tiC).
     public static func clearTextPayload(sessionUUID: Data) -> Data {
         let objects: [Any] = [
             "$null",

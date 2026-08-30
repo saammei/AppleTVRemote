@@ -7,7 +7,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         ATVBridge.shared?.autoConnectIfNeeded()
     }
 
-    /// 检测是否已有本应用实例在运行；若有则激活旧实例并退出，避免菜单栏出现两个图标。
+    /// Detects whether another instance of this app is already running; if so, activates
+    /// the existing instance and exits, preventing two icons in the menu bar.
     private func isFirstInstance() -> Bool {
         guard let bundleID = Bundle.main.bundleIdentifier else { return true }
         let running = NSRunningApplication.runningApplications(withBundleIdentifier: bundleID)
@@ -32,7 +33,7 @@ struct AppleTVRemoteApp: App {
             RemoteView()
                 .environmentObject(bridge)
         } label: {
-            Label("Apple TV 遥控器", systemImage: "av.remote")
+            Label("Apple TV Remote", systemImage: "av.remote")
         }
         .menuBarExtraStyle(.window)
 

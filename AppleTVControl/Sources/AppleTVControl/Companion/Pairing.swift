@@ -1,9 +1,9 @@
-// Companion 配对流程:Pair-Setup(首次配对)与 Pair-Verify(凭证恢复)。
-// 对应 pyatv 的 pyatv/protocols/companion/auth.py。
+// Companion pairing flow: Pair-Setup (first-time pairing) and Pair-Verify (credential recovery).
+// Corresponds to pyatv's pyatv/protocols/companion/auth.py.
 //
-// 二者都在 SRPAuthHandler 之上编排消息流,消息结构为 OPACK:
-//   Pair-Setup: {"_pd": <TLV 字节>, "_pwTy": 1}
-//   Pair-Verify: {"_pd": <TLV 字节>, "_auTy": 4}
+// Both orchestrate message flows on top of SRPAuthHandler, with OPACK message structure:
+//   Pair-Setup: {"_pd": <TLV bytes>, "_pwTy": 1}
+//   Pair-Verify: {"_pd": <TLV bytes>, "_auTy": 4}
 
 import Foundation
 
@@ -13,20 +13,20 @@ enum PairingKeys {
     static let authType = "_auTy"
 }
 
-/// 从配对消息中取出 _pd 字节并解码 TLV8;设备报错则抛出。
+/// Extracts the _pd bytes from a pairing message and decodes TLV8; throws if the device reported an error.
 func pairingTLV(from message: [String: Any]) throws -> [UInt8: Data] {
     guard let pd = message[PairingKeys.pairingData] as? Data else {
-        throw CompanionError.protocolError("配对消息缺少 _pd 字段")
+        throw CompanionError.protocolError("Pairing message is missing the _pd field")
     }
     let tlv = TLV8.decode(pd)
     if let err = tlv[TLV8Tag.error.rawValue] {
         let text = String(data: err, encoding: .utf8) ?? "<binary>"
-        throw CompanionError.authenticationFailed("设备返回错误: \(text)")
+        throw CompanionError.authenticationFailed("Device returned an error: \(text)")
     }
     return tlv
 }
 
-/// 首次配对:SRP-6a 交换并交换长期凭证。
+/// First-time pairing: SRP-6a exchange and long-term credential exchange.
 public final class CompanionPairSetupProcedure {
     private let protocolLayer: CompanionProtocol
     private let srp: SRPAuthHandler
@@ -38,8 +38,8 @@ public final class CompanionPairSetupProcedure {
         self.srp = srp
     }
 
-    /// 发起配对(M1/M2):生成密钥,拿到设备的 salt 与公钥。
-    /// 可传入固定 seed(各 32 字节)用于确定性测试;nil 则随机生成。
+    /// Initiates pairing (M1/M2): generates keys and obtains the device's salt and public key.
+    /// Fixed seeds (32 bytes each) can be passed in for deterministic testing; nil means random generation.
     public func startPairing(
         authPrivateSeed: Data? = nil, verifyPrivateSeed: Data? = nil
     ) async throws {
@@ -59,7 +59,7 @@ public final class CompanionPairSetupProcedure {
         atvPubKey = tlv[TLV8Tag.publicKey.rawValue]
     }
 
-    /// 完成配对(M3-M6),返回长期凭证。
+    /// Completes pairing (M3-M6) and returns the long-term credentials.
     public func finishPairing(pin: String, displayName: String? = nil) async throws -> HapCredentials {
         guard let atvPubKey, let atvSalt else {
             throw CompanionError.notConnected
@@ -77,7 +77,7 @@ public final class CompanionPairSetupProcedure {
             ]),
             PairingKeys.pairingType: 1])
 
-        _ = try pairingTLV(from: resp3)  // 设备 M4 含 proof,pyatv 未校验(与上游一致)。
+        _ = try pairingTLV(from: resp3)  // the device's M4 carries proof; pyatv does not verify it (matching upstream).
 
         let encryptedData = try srp.step3(name: displayName)
         let resp5 = try await protocolLayer.exchangeAuth(
@@ -96,7 +96,7 @@ public final class CompanionPairSetupProcedure {
     }
 }
 
-/// 凭证恢复:Curve25519 + Ed25519 验证并派生新加密密钥。
+/// Credential recovery: Curve25519 + Ed25519 verification and derivation of new encryption keys.
 public final class CompanionPairVerifyProcedure {
     private let protocolLayer: CompanionProtocol
     private let srp: SRPAuthHandler
@@ -108,7 +108,7 @@ public final class CompanionPairVerifyProcedure {
         self.credentials = credentials
     }
 
-    /// 用凭证验证设备(M1-M4)。
+    /// Verifies the device with the credentials (M1-M4).
     @discardableResult
     public func verifyCredentials() async throws -> Bool {
         let (_, publicKey) = try srp.initialize()
@@ -140,7 +140,7 @@ public final class CompanionPairVerifyProcedure {
         return true
     }
 
-    /// 派生输出/输入加密密钥。
+    /// Derives the output/input encryption keys.
     public func encryptionKeys(
         salt: String, outputInfo: String, inputInfo: String
     ) throws -> (outputKey: Data, inputKey: Data) {

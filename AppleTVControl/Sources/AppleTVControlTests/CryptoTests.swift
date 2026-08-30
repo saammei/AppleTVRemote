@@ -2,12 +2,13 @@ import Foundation
 import CryptoKit
 import AppleTVControl
 
-/// 加密层测试。所有向量来自 pyatv 依赖库(srptools / cryptography)的确定性输出,
-/// 用于验证 Swift 实现与 Python 实现逐字节一致。
+/// Encryption layer tests. All vectors are deterministic outputs from pyatv's dependency
+/// libraries (srptools / cryptography), verifying the Swift implementation matches
+/// Python byte-for-byte.
 
 func runCryptoTests() {
-    runSuite("SRP-6a 配对向量") {
-        // 输入与 pyatv 测试脚本完全一致(固定 client private 与 salt,避免随机性)
+    runSuite("SRP-6a pairing vectors") {
+        // Inputs match the pyatv test script exactly (fixed client private and salt to avoid randomness)
         let clientPrivate = Data(hex: "0f" + String(repeating: "11", count: 31))!
         let serverPublic = Data(hex: "d0" + String(repeating: "ab", count: 383))!
         let salt = Data(hex: "cafe12345678")!
@@ -16,7 +17,7 @@ func runCryptoTests() {
             username: "Pair-Setup", password: "1234",
             clientPrivateBytes: clientPrivate, serverPublicBytes: serverPublic, salt: salt
         ) else {
-            expect(false, "SRP process 返回 nil(服务器公钥非法)")
+            expect(false, "SRP process returned nil (invalid server public key)")
             return
         }
 
@@ -30,30 +31,30 @@ func runCryptoTests() {
             "fa93fbd783f9f2e132c4c348e62ca8719c26e04af5337fd61e29df1f70150ef9" +
             "8856632463fd2348e757301070ab823d88456c273fd8ba5a70f58a527b412d2e")!
 
-        expectHexEqual([UInt8](result.sessionKey), [UInt8](expectedK), "K (会话密钥)")
-        expectHexEqual([UInt8](result.proof), [UInt8](expectedM), "M (证明)")
-        expectHexEqual([UInt8](result.proofHash), [UInt8](expectedM2), "M2 (证明哈希)")
+        expectHexEqual([UInt8](result.sessionKey), [UInt8](expectedK), "K (session key)")
+        expectHexEqual([UInt8](result.proof), [UInt8](expectedM), "M (proof)")
+        expectHexEqual([UInt8](result.proofHash), [UInt8](expectedM2), "M2 (proof hash)")
     }
 
-    runSuite("TLV8 编解码") {
-        // 单条记录
+    runSuite("TLV8 encoding/decoding") {
+        // Single record
         let single = TLV8.encode([(10, Data("123".utf8))])
-        expectHexEqual([UInt8](single), [UInt8](Data(hex: "0a03313233")!), "单条编码")
+        expectHexEqual([UInt8](single), [UInt8](Data(hex: "0a03313233")!), "single-record encoding")
 
-        // 两条记录(顺序敏感)
+        // Two records (order-sensitive)
         let double = TLV8.encode([(1, Data("111".utf8)), (4, Data("222".utf8))])
-        expectHexEqual([UInt8](double), [UInt8](Data(hex: "01033131310403323232")!), "两条编码")
+        expectHexEqual([UInt8](double), [UInt8](Data(hex: "01033131310403323232")!), "two-record encoding")
 
-        // 超过 255 字节拆分
+        // Splitting values over 255 bytes
         let largeValue = Data(repeating: 0x31, count: 256)
         let large = TLV8.encode([(2, largeValue)])
         let expectedLarge = Data(hex: "02ff")! + Data(repeating: 0x31, count: 255) + Data(hex: "020131")!
-        expectHexEqual([UInt8](large), [UInt8](expectedLarge), "大 value 拆分编码")
+        expectHexEqual([UInt8](large), [UInt8](expectedLarge), "large value split encoding")
 
-        // 解码合并
+        // Decoding merges chunks
         let decoded = TLV8.decode(large)
-        expectEqual(decoded[2], largeValue, "大 value 解码合并")
-        expectEqual(TLV8.decode(single)[10], Data("123".utf8), "单条解码")
+        expectEqual(decoded[2], largeValue, "large value merged after decode")
+        expectEqual(TLV8.decode(single)[10], Data("123".utf8), "single-record decode")
     }
 
     runSuite("ChaCha20-Poly1305 (RFC 8439)") {
@@ -73,11 +74,11 @@ func runCryptoTests() {
 
         do {
             let sealed = try ChaCha20Poly1305.seal(plaintext, key: key, nonce: nonce, aad: aad)
-            expectHexEqual([UInt8](sealed), [UInt8](expected), "加密结果")
+            expectHexEqual([UInt8](sealed), [UInt8](expected), "encryption result")
             let opened = try ChaCha20Poly1305.open(sealed, key: key, nonce: nonce, aad: aad)
-            expectEqual(opened, plaintext, "解密往返")
+            expectEqual(opened, plaintext, "decryption round-trip")
         } catch {
-            expect(false, "ChaCha20 异常: \(error)")
+            expect(false, "ChaCha20 error: \(error)")
         }
     }
 
@@ -91,9 +92,9 @@ func runCryptoTests() {
         expectHexEqual(
             [UInt8](k1),
             [UInt8](Data(hex: "01966e9fca1aaebb848ccef03d3d74d68b0f0bb95e7f48f4a94365dc01b5a873")!),
-            "非空 salt")
+            "non-empty salt")
 
-        // 空 salt(对应 pyatv 的 SRP_SALT = "")
+        // Empty salt (corresponds to pyatv's SRP_SALT = "")
         let k2 = HKDF.sha512(
             ikm: ikm,
             salt: Data(),
@@ -101,10 +102,10 @@ func runCryptoTests() {
         expectHexEqual(
             [UInt8](k2),
             [UInt8](Data(hex: "603941a1b8866024490d0aa3b116332f4bab8783d7592cbf80e83c64beb321a6")!),
-            "空 salt")
+            "empty salt")
     }
 
-    runSuite("凭证序列化") {
+    runSuite("credentials serialization") {
         let creds = HapCredentials(
             ltpk: Data(hex: "aabbccdd")!,
             ltsk: Data(hex: "11223344")!,
@@ -114,12 +115,12 @@ func runCryptoTests() {
         expectEqual(str, "aabbccdd:11223344:deadbeef:cafebabe", "detailString")
 
         let parsed = HapCredentials.parse(str)
-        expectEqual(parsed, creds, "parse 往返")
-        expectEqual(HapCredentials.parse("bad"), nil, "非法输入返回 nil")
+        expectEqual(parsed, creds, "parse round-trip")
+        expectEqual(HapCredentials.parse("bad"), nil, "invalid input returns nil")
     }
 
-    runSuite("Curve25519 跨语言向量") {
-        // 向量来自 cryptography 库的确定性输出(固定 seed),验证 CryptoKit 与 Python 逐字节一致。
+    runSuite("Curve25519 cross-language vectors") {
+        // Vectors are deterministic outputs from the cryptography library (fixed seeds), verifying CryptoKit matches Python byte-for-byte.
 
         // X25519:seed 0x11*32 / 0x22*32
         let clientSeed = Data(repeating: 0x11, count: 32)
@@ -130,11 +131,11 @@ func runCryptoTests() {
             expectHexEqual(
                 [UInt8](ck.publicKey.rawRepresentation),
                 [UInt8](Data(hex: "7b4e909bbe7ffe44c465a220037d608ee35897d31ef972f07f74892cb0f73f13")!),
-                "X25519 客户端公钥")
+                "X25519 client public key")
             expectHexEqual(
                 [UInt8](sk.publicKey.rawRepresentation),
                 [UInt8](Data(hex: "0faa684ed28867b97f4a6a2dee5df8ce974e76b7018e3f22a1c4cf2678570f20")!),
-                "X25519 服务器公钥")
+                "X25519 server public key")
             let shared = try ck.sharedSecretFromKeyAgreement(with: sk.publicKey)
             let sharedBytes = shared.withUnsafeBytes { Data($0) }
             expectHexEqual(
@@ -142,12 +143,13 @@ func runCryptoTests() {
                 [UInt8](Data(hex: "9e004098efc091d4ec2663b4e9f5cfd4d7064571690b4bea97ab146ab9f35056")!),
                 "X25519 shared secret")
         } catch {
-            expect(false, "X25519 异常: \(error)")
+            expect(false, "X25519 error: \(error)")
         }
 
-        // Ed25519:seed 0x33*32。CryptoKit 的 Ed25519 签名 nonce 派生与 RFC 8032
-        // 不同(但都是合法签名,已交叉验证互通),因此签名不做逐字节一致断言,
-        // 改为验证跨库可验证性:cryptography 的签名能被 CryptoKit 验证。
+        // Ed25519: seed 0x33*32. CryptoKit's Ed25519 signature nonce derivation differs from
+        // RFC 8032 (both are valid signatures, cross-verified interoperable), so signatures are
+        // not asserted byte-for-byte; instead we verify cross-library verifiability: cryptography's
+        // signature is validated by CryptoKit.
         let edSeed = Data(repeating: 0x33, count: 32)
         do {
             let edk = try Curve25519.Signing.PrivateKey(rawRepresentation: edSeed)
@@ -155,25 +157,25 @@ func runCryptoTests() {
             expectHexEqual(
                 [UInt8](edPub.rawRepresentation),
                 [UInt8](Data(hex: "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce")!),
-                "Ed25519 公钥")
+                "Ed25519 public key")
             let data = Data((0..<32).map { UInt8($0) })
 
-            // cryptography 对同一 seed/data 的签名(标准 RFC 8032),CryptoKit 应能验证。
+            // cryptography's signature for the same seed/data (standard RFC 8032); CryptoKit should validate it.
             let pySig = Data(hex: "ed9c7cad9f617fc07d4d376123504f1112f0c664d72a12567d50fec5ed6299323a08355ba178b30f28502cb5f94d920de3c81820899845008a13b9a753b93909")!
-            expect(edPub.isValidSignature(pySig, for: data), "cryptography 签名被 CryptoKit 验证")
+            expect(edPub.isValidSignature(pySig, for: data), "cryptography signature validated by CryptoKit")
 
-            // CryptoKit 自身签名自验 round-trip。
+            // CryptoKit's own signature self-validation round-trip.
             let selfSig = try edk.signature(for: data)
-            expect(edPub.isValidSignature(selfSig, for: data), "CryptoKit 签名自验")
+            expect(edPub.isValidSignature(selfSig, for: data), "CryptoKit signature self-validation")
         } catch {
-            expect(false, "Ed25519 异常: \(error)")
+            expect(false, "Ed25519 error: \(error)")
         }
     }
 
-    runSuite("Pair-Verify 端到端") {
-        // 测试数据由 Python(cryptography)模拟 Apple TV 服务器端生成:
-        // 客户端 X25519 seed 0x11*32,服务器 seed 0x22*32,服务器 Ed25519 ltpk seed 0x44*32,
-        // 客户端 ltsk seed 0x33*32。PV-Msg02 为服务器加密的 {Identifier, Signature}。
+    runSuite("Pair-Verify end-to-end") {
+        // Test data was generated by Python (cryptography) simulating the Apple TV server side:
+        // client X25519 seed 0x11*32, server seed 0x22*32, server Ed25519 ltpk seed 0x44*32,
+        // client ltsk seed 0x33*32. PV-Msg02 is the server-encrypted {Identifier, Signature}.
         let clientSeed = Data(repeating: 0x11, count: 32)
         let clientLtskSeed = Data(repeating: 0x33, count: 32)
         let clientId = Data(hex: "31323334353637382d313233342d313233342d313233342d313233343536373839616263")!
@@ -187,10 +189,10 @@ func runCryptoTests() {
             try handler.initialize(verifyPrivateSeed: clientSeed)
             let creds = HapCredentials(ltpk: atvLtpkPub, ltsk: clientLtskSeed, atvId: atvId, clientId: clientId)
 
-            // verify1 成功即说明:PV-Msg02 解密正确、identifier 匹配、设备签名验证通过。
+            // verify1 succeeding means: PV-Msg02 decrypts correctly, the identifier matches, and the device signature validates.
             let pvMsg03 = try handler.verify1(credentials: creds, sessionPubKey: serverPub, encrypted: pvMsg02)
 
-            // 独立计算 session_key,解密 PV-Msg03 验证其结构。
+            // Independently compute the session key and decrypt PV-Msg03 to verify its structure.
             let ck = try Curve25519.KeyAgreement.PrivateKey(rawRepresentation: clientSeed)
             let spub = try Curve25519.KeyAgreement.PublicKey(rawRepresentation: serverPub)
             let shared = try ck.sharedSecretFromKeyAgreement(with: spub)
@@ -206,7 +208,7 @@ func runCryptoTests() {
             let tlv = TLV8.decode(decrypted)
             expectEqual(tlv[TLV8Tag.identifier.rawValue], clientId, "PV-Msg03 identifier == client_id")
 
-            // 验证 PV-Msg03 的签名:device_info = client_pub + client_id + server_pub。
+            // Verify PV-Msg03's signature: device_info = client_pub + client_id + server_pub.
             let clientPub = ck.publicKey.rawRepresentation
             var deviceInfo = Data()
             deviceInfo.append(clientPub)
@@ -215,9 +217,9 @@ func runCryptoTests() {
             let ltsk = try Curve25519.Signing.PrivateKey(rawRepresentation: clientLtskSeed)
             expect(
                 ltsk.publicKey.isValidSignature(tlv[TLV8Tag.signature.rawValue]!, for: deviceInfo),
-                "PV-Msg03 签名验证")
+                "PV-Msg03 signature validation")
         } catch {
-            expect(false, "Pair-Verify 异常: \(error)")
+            expect(false, "Pair-Verify error: \(error)")
         }
     }
 }

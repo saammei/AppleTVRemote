@@ -1,36 +1,37 @@
-// MRP 协议层:握手 + 请求/响应派发。
-// 对应 pyatv 的 pyatv/protocols/mrp/protocol.py。
+// MRP protocol layer: handshake + request/response dispatch.
+// Corresponds to pyatv's pyatv/protocols/mrp/protocol.py.
 //
-// 握手序列(start):
-//   1. DeviceInfoMessage(必须首条,否则设备不响应)
-//   2. 加密:若带凭证则执行 crypto pairing(Pair-Verify,复用 SRPAuthHandler)
-//   3. SetConnectionStateMessage(connected,fire-and-forget)
-//   4. ClientUpdatesConfigMessage(订阅 now-playing / artwork 等推送)
+// Handshake sequence (start):
+//   1. DeviceInfoMessage (must be first, otherwise the device does not respond)
+//   2. Encryption: if credentials are present, run crypto pairing (Pair-Verify, reusing SRPAuthHandler)
+//   3. SetConnectionStateMessage (connected, fire-and-forget)
+//   4. ClientUpdatesConfigMessage (subscribe to now-playing / artwork pushes, etc.)
 //   5. GetKeyboardSessionMessage
 //
-// 请求/响应:普通消息按 identifier(字符串)匹配;crypto pairing 无 identifier,
-// 按类型(.cryptoPairingMessage)匹配。未匹配的入站消息(推送)交给 delegate。
+// Request/response: regular messages match by identifier (string); crypto pairing has no identifier,
+// so it matches by type (.cryptoPairingMessage). Inbound messages that match nothing (pushes) are
+// handed to the delegate.
 
 import Foundation
 import SwiftProtobuf
 import os
 
-/// MRP 密钥派生常量(pyatv protocol.py)。
+/// MRP key derivation constants (pyatv protocol.py).
 enum MRPKeyInfo {
     static let salt = "MediaRemote-Salt"
     static let outputInfo = "MediaRemote-Write-Encryption-Key"
     static let inputInfo = "MediaRemote-Read-Encryption-Key"
 }
 
-/// 客户端(本机)标识信息,用于 DeviceInfoMessage。
+/// Client (this device) identity information, used for DeviceInfoMessage.
 public struct MRPDeviceInfo {
-    /// 控制器名称(如 "MacBook Remote")。
+    /// Controller name (e.g. "MacBook Remote").
     public let name: String
-    /// 稳定标识(配对 client_id / 随机 UUID),作为 uniqueIdentifier。
+    /// Stable identifier (pairing client_id / random UUID), used as uniqueIdentifier.
     public let identifier: String
-    /// 系统版本(如 "23A344")。
+    /// System build version (e.g. "23A344").
     public let osBuild: String
-    /// 型号(如 "Mac")。
+    /// Model name (e.g. "Mac").
     public let modelName: String
 
     public init(name: String, identifier: String, osBuild: String, modelName: String) {
@@ -42,12 +43,13 @@ public struct MRPDeviceInfo {
 }
 
 public protocol MRPProtocolDelegate: AnyObject {
-    /// 收到一条推送/未匹配消息(如 SetStateMessage / UpdateContentItemMessage)。
+    /// Received a push/unmatched message (e.g. SetStateMessage / UpdateContentItemMessage).
     func mrpProtocol(_ protocol: MRPProtocol, didReceive message: ProtocolMessageMessage)
 }
 
-/// 所有 MRP protobuf 扩展的组合 map,用于解析带扩展字段的 ProtocolMessage。
-/// 缺少任一扩展,对应的入站消息会落入 unknownFields,类型化访问器返回默认值。
+/// Combined map of all MRP protobuf extensions, used to parse ProtocolMessage with extension fields.
+/// If any extension is missing, the corresponding inbound message falls into unknownFields and the
+/// typed accessors return default values.
 public let mrpExtensions = SwiftProtobuf.SimpleExtensionMap(
     DeviceInfoMessage_Extensions,
     CryptoPairingMessage_Extensions,
@@ -71,7 +73,7 @@ public final class MRPProtocol: MRPConnectionListener {
     public let srp: SRPAuthHandler
     public weak var delegate: MRPProtocolDelegate?
 
-    /// 请求派发键:普通消息按 identifier,配对按类型(无 identifier)。
+    /// Request dispatch key: regular messages by identifier, pairing by type (no identifier).
     private enum RequestKey: Hashable {
         case identifier(String)
         case pairing
@@ -112,7 +114,7 @@ public final class MRPProtocol: MRPConnectionListener {
         }
     }
 
-    /// 连接断开回调(由连接层触发,可能来自任意线程)。
+    /// Disconnect callback (triggered by the connection layer, may come from any thread).
     public var onDisconnect: (() -> Void)?
 
     private var identifier: UInt64
@@ -127,29 +129,30 @@ public final class MRPProtocol: MRPConnectionListener {
         connection.listener = self
     }
 
-    // MARK: - 生命周期
+    // MARK: - Lifecycle
 
-    /// 建立连接并完成握手。带凭证时执行 crypto pairing 并启用加密。
+    /// Establishes the connection and completes the handshake. Runs crypto pairing and enables
+    /// encryption when credentials are present.
     public func start(credentials: HapCredentials?, deviceInfo: MRPDeviceInfo) async throws {
         guard !isStarted else { return }
         isStarted = true
         try await connection.connect()
 
-        // 1. DeviceInfoMessage(必须首条)。
+        // 1. DeviceInfoMessage (must be first).
         _ = try await sendAndReceive(
             makeMessage(.deviceInfoMessage, deviceInfo: buildDeviceInfoMessage(deviceInfo)))
 
-        // 2. 加密。
+        // 2. Encryption.
         if let credentials {
             try await pairAndEnableEncryption(credentials: credentials)
         }
 
-        // 3. SetConnectionState(connected)。
+        // 3. SetConnectionState (connected).
         var setConnection = SetConnectionStateMessage()
         setConnection.state = .connected
         try await send(makeMessage(.setConnectionStateMessage, setConnectionState: setConnection))
 
-        // 4. ClientUpdatesConfig(订阅 now-playing / artwork 推送)。
+        // 4. ClientUpdatesConfig (subscribe to now-playing / artwork pushes).
         var config = ClientUpdatesConfigMessage()
         config.artworkUpdates = true
         config.nowPlayingUpdates = true
@@ -159,7 +162,7 @@ public final class MRPProtocol: MRPConnectionListener {
         _ = try await sendAndReceive(
             makeMessage(.clientUpdatesConfigMessage, clientUpdatesConfig: config))
 
-        // 5. GetKeyboardSession。
+        // 5. GetKeyboardSession.
         _ = try await sendAndReceive(makeMessage(.getKeyboardSessionMessage))
     }
 
@@ -170,7 +173,7 @@ public final class MRPProtocol: MRPConnectionListener {
         connection.close()
     }
 
-    // MARK: - 消息构造
+    // MARK: - Message construction
 
     private func buildDeviceInfoMessage(_ info: MRPDeviceInfo) -> DeviceInfoMessage {
         var msg = DeviceInfoMessage()
@@ -194,7 +197,7 @@ public final class MRPProtocol: MRPConnectionListener {
         return msg
     }
 
-    /// 打包一个内层消息为 ProtocolMessage(type + 扩展字段)。
+    /// Wraps an inner message as a ProtocolMessage (type + extension fields).
     private func makeMessage(
         _ type: ProtocolMessageMessage.TypeEnum,
         deviceInfo: DeviceInfoMessage? = nil,
@@ -211,7 +214,7 @@ public final class MRPProtocol: MRPConnectionListener {
         return msg
     }
 
-    // MARK: - 收发
+    // MARK: - Send/receive
 
     private func nextIdentifier() -> String {
         os_unfair_lock_lock(&identifierLock)
@@ -221,7 +224,7 @@ public final class MRPProtocol: MRPConnectionListener {
         return id
     }
 
-    /// 发送并等待响应。crypto pairing 消息无 identifier,按类型匹配。
+    /// Sends and waits for the response. Crypto pairing messages have no identifier, so they are matched by type.
     @discardableResult
     private func sendAndReceive(
         _ message: ProtocolMessageMessage,
@@ -255,17 +258,17 @@ public final class MRPProtocol: MRPConnectionListener {
         }
     }
 
-    /// 发送一条消息,不等待响应。
+    /// Sends a message without waiting for a response.
     private func send(_ message: ProtocolMessageMessage) async throws {
         try connection.send(try message.serializedData())
     }
 
-    // MARK: - crypto pairing
+    // MARK: - Crypto pairing
 
     private func pairAndEnableEncryption(credentials: HapCredentials) async throws {
         let (_, publicKey) = try srp.initialize()
 
-        // 1. 发送客户端公钥(seqNo=1),设备回服务端公钥 + 加密数据(seqNo=2)。
+        // 1. Send the client public key (seqNo=1); the device replies with its server public key + encrypted data (seqNo=2).
         var m1 = CryptoPairingMessage()
         m1.pairingData = TLV8.encode([
             (TLV8Tag.seqNo.rawValue, Data([0x01])),
@@ -279,7 +282,7 @@ public final class MRPProtocol: MRPConnectionListener {
             throw CompanionError.invalidResponse
         }
 
-        // 2. verify1:验证设备并签名客户端信息,发送 seqNo=3。
+        // 2. verify1: verify the device and sign the client information, send seqNo=3.
         let encryptedData = try srp.verify1(
             credentials: credentials, sessionPubKey: serverPubKey, encrypted: encrypted)
         var m3 = CryptoPairingMessage()
@@ -290,7 +293,7 @@ public final class MRPProtocol: MRPConnectionListener {
         _ = try await sendAndReceive(
             makeMessage(.cryptoPairingMessage, cryptoPairing: m3), matchPairing: true)
 
-        // 3. 派生输出/输入加密密钥并启用。
+        // 3. Derive the output/input encryption keys and enable them.
         let keys = try srp.verify2(
             salt: MRPKeyInfo.salt,
             outputInfo: MRPKeyInfo.outputInfo,
@@ -302,7 +305,7 @@ public final class MRPProtocol: MRPConnectionListener {
         let tlv = TLV8.decode(message.cryptoPairingMessage.pairingData)
         if let err = tlv[TLV8Tag.error.rawValue] {
             let text = String(data: err, encoding: .utf8) ?? "<binary>"
-            throw CompanionError.authenticationFailed("设备返回错误: \(text)")
+            throw CompanionError.authenticationFailed("Device returned an error: \(text)")
         }
         return tlv
     }
@@ -313,7 +316,7 @@ public final class MRPProtocol: MRPConnectionListener {
         guard let message = try? ProtocolMessageMessage(
             serializedData: data, extensions: mrpExtensions) else { return }
 
-        // 1. 配对响应(无 identifier,按类型匹配)。
+        // 1. Pairing response (no identifier, matched by type).
         if message.type == .cryptoPairingMessage {
             if let request = pending.remove(.pairing) {
                 request.resume(returning: message)
@@ -321,19 +324,19 @@ public final class MRPProtocol: MRPConnectionListener {
             }
         }
 
-        // 2. 按 identifier 匹配的响应。
+        // 2. Response matched by identifier.
         let id = message.identifier
         if !id.isEmpty, let request = pending.remove(.identifier(id)) {
             request.resume(returning: message)
             return
         }
 
-        // 3. 推送事件交给 delegate。
+        // 3. Push events are handed to the delegate.
         delegate?.mrpProtocol(self, didReceive: message)
     }
 
     public func connectionDidClose(_ connection: MRPConnection) {
-        // 断开:让所有待响应请求以错误结束(避免挂起),并通知上层。
+        // On disconnect: fail all pending requests with an error (to avoid hanging) and notify the upper layer.
         for request in pending.removeAll() {
             request.resume(throwing: CompanionError.notConnected)
         }

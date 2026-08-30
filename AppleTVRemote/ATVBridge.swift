@@ -2,6 +2,7 @@ import Foundation
 import Combine
 import Darwin
 import Dispatch
+import os
 import AppleTVControl
 
 enum BridgeError: LocalizedError {
@@ -14,10 +15,11 @@ enum BridgeError: LocalizedError {
     }
 }
 
-/// 应用与原生 AppleTVControl 协议栈之间的桥接层。
+/// Bridge between the app and the native AppleTVControl protocol stack.
 ///
-/// 替代原先内嵌 Python + pyatv 的方案:直接在进程内完成设备发现、
-/// 配对、连接(Companion 控制 + MRP 元数据)与控制命令,不再启动子进程。
+/// Replaces the previously embedded Python + pyatv approach: device discovery,
+/// pairing, connection (Companion control + MRP metadata) and control commands
+/// all run in-process, without spawning child processes.
 final class ATVBridge: ObservableObject {
     static weak var shared: ATVBridge?
 
@@ -30,26 +32,42 @@ final class ATVBridge: ObservableObject {
     @Published private(set) var isScanning = false
     @Published private(set) var isPairing = false
     @Published var lastError: String?
+    /// Scan-level errors (e.g. local network permission denied), shown separately from connect/pair errors.
+    @Published private(set) var scanError: String?
+    /// Whether local network permission was denied by the system (the user must enable it manually in System Settings).
+    @Published private(set) var localNetworkDenied = false
 
     private let defaults = UserDefaults.standard
     private let credentialsStore: CredentialsStore
+    private let logger = Logger(subsystem: "com.meishaoming.AppleTVRemote", category: "bridge")
 
-    // 发现
+    // Discovery
     private let discovery = DeviceDiscovery()
     private let discoveryLock = NSLock()
     private var discoveredDevices: [String: DiscoveredDevice] = [:]
 
-    // 连接
+    // Connection
     private let connectionLock = NSLock()
     private var companionAPI: CompanionAPI?
     private var mrpAPI: MRPAPI?
 
-    // 配对
+    // Pairing
     private var pairingProcedure: CompanionPairSetupProcedure?
     private var pairingConnection: TCPCompanionConnection?
     private var pairingDeviceID: String?
 
     private var statusTimer: DispatchSourceTimer?
+
+    /// When the app list was last requested. Some firmware ignores FetchLaunchableApplicationsEvent,
+    /// so the request only ends in a timeout; after a failure, throttle for 60 seconds to avoid
+    /// repeating a doomed request every time the panel opens.
+    /// Only accessed on the UI call path (loadApps); a race merely sends one extra request, harmless.
+    private var lastAppsLoadAttempt = Date.distantPast
+    /// Power poll interval: stays at 5 seconds on success; on failure (firmware ignores the
+    /// command) backs off exponentially up to 60 seconds, avoiding a doomed timeout request
+    /// every 5 seconds. As above, races are harmless.
+    private var powerPollInterval: TimeInterval = 5
+    private var lastPowerPoll = Date.distantPast
 
     init() {
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
@@ -59,11 +77,28 @@ final class ATVBridge: ObservableObject {
         discovery.onDevicesUpdated = { [weak self] devices in
             self?.handleDevicesUpdated(devices)
         }
+        discovery.onSearchError = { [weak self] error in
+            self?.handleSearchError(error)
+        }
 
         ATVBridge.shared = self
     }
 
-    // MARK: - 设备发现
+    // MARK: - Device Discovery
+
+    private func handleSearchError(_ error: DiscoveryError) {
+        let message: String
+        switch error {
+        case .localNetworkDenied:
+            message = "Local network permission denied: allow this app in System Settings → Privacy & Security → Local Network, then scan again."
+        case .searchFailed(let code):
+            message = "Scan failed (error code \(code)). Check your network and try again."
+        }
+        DispatchQueue.main.async {
+            self.localNetworkDenied = (error == .localNetworkDenied)
+            self.scanError = message
+        }
+    }
 
     private func handleDevicesUpdated(_ discovered: [DiscoveredDevice]) {
         discoveryLock.lock()
@@ -71,6 +106,9 @@ final class ATVBridge: ObservableObject {
         discoveryLock.unlock()
 
         let appDevices = discovered.map(appDevice(from:))
+        let names = appDevices.map { $0.name }
+        Logger(subsystem: "com.meishaoming.AppleTVRemote", category: "discovery")
+            .debug("Publishing device list \(names, privacy: .public)")
         DispatchQueue.main.async { self.devices = appDevices }
     }
 
@@ -88,21 +126,34 @@ final class ATVBridge: ObservableObject {
     }
 
     func scanDevices() async {
-        DispatchQueue.main.async { self.isScanning = true }
+        DispatchQueue.main.async {
+            self.isScanning = true
+            self.scanError = nil
+            self.localNetworkDenied = false
+        }
         discovery.start()
-        try? await Task.sleep(nanoseconds: 6_000_000_000)
+        // 15-second window: leaves time for the first-time Local Network permission prompt;
+        // after the user grants access, discovery keeps reporting results, so post-approval
+        // results are not lost like they would be with a short window.
+        try? await Task.sleep(nanoseconds: 15_000_000_000)
         discovery.stop()
         DispatchQueue.main.async { self.isScanning = false }
     }
 
-    /// 拿到某台设备的完整信息(host/端口)。缓存未命中时先扫描一次。
+    /// Resolves full device info (host/ports). Scans once first if the cache misses.
     private func resolveDevice(identifier: String) async throws -> DiscoveredDevice {
         if let cached = cachedDevice(identifier) { return cached }
         discovery.start()
         try? await Task.sleep(nanoseconds: 5_000_000_000)
         discovery.stop()
         guard let found = cachedDevice(identifier) else {
-            throw BridgeError.message("找不到设备 \(identifier)，请先在设置中扫描并连接")
+            // The legacy (Python) version stored MAC-form identifiers, while the new
+            // version uses rpmrtid UUIDs; the two are incompatible. Clear the old value
+            // so "device not found" is not reported on every launch.
+            if defaults.string(forKey: "lastDeviceIdentifier") == identifier {
+                defaults.removeObject(forKey: "lastDeviceIdentifier")
+            }
+            throw BridgeError.message("Device \(identifier) not found. Scan and connect from Settings first")
         }
         return found
     }
@@ -113,19 +164,20 @@ final class ATVBridge: ObservableObject {
         return discoveredDevices[identifier]
     }
 
-    // MARK: - 配对
+    // MARK: - Pairing
 
     func pairBegin(device: ATVDevice) async {
-        // 清理上一次可能残留的配对连接(防 TCP/SRP 状态泄漏)。
+        // Clean up any leftover pairing connection from a previous attempt (prevents TCP/SRP state leaks).
         pairingConnection?.close()
         pairingProcedure = nil
         pairingConnection = nil
         pairingDeviceID = nil
         DispatchQueue.main.async { self.isPairing = true }
+        logger.debug("Starting pairing \(device.name, privacy: .public)")
         do {
             let discovered = try await resolveDevice(identifier: device.identifier)
             guard let port = discovered.companionPort else {
-                throw BridgeError.message("设备不支持 Companion 协议，无法配对")
+                throw BridgeError.message("This device does not support the Companion protocol, so it cannot be paired")
             }
 
             let connection = TCPCompanionConnection(host: discovered.host, port: UInt16(port))
@@ -133,13 +185,23 @@ final class ATVBridge: ObservableObject {
             let protocolLayer = CompanionProtocol(connection: connection, srp: srp)
             let procedure = CompanionPairSetupProcedure(protocolLayer, srp)
 
+            // The TCP connection must be established before sending pairing frames;
+            // start(credentials: nil) only connects, without Pair-Verify.
+            try await protocolLayer.start(credentials: nil)
+            logger.debug("Pairing: TCP connected, sending Pair-Setup M1")
             try await procedure.startPairing()
 
             pairingProcedure = procedure
             pairingConnection = connection
             pairingDeviceID = discovered.identifier
+            logger.debug("Pairing: device returned salt/public key, waiting for PIN")
             DispatchQueue.main.async { self.pairingAwaitingPin = true }
+        } catch CompanionError.timeout {
+            logger.error("Pairing: connection timed out (the TV may be in standby)")
+            DispatchQueue.main.async { self.isPairing = false }
+            setError(BridgeError.message("Timed out connecting to the Apple TV: make sure it is awake and on the same local network, then retry pairing."))
         } catch {
+            logger.error("Pairing failed: \(String(describing: error), privacy: .public)")
             DispatchQueue.main.async { self.isPairing = false }
             setError(error)
         }
@@ -149,7 +211,7 @@ final class ATVBridge: ObservableObject {
         do {
             guard let procedure = pairingProcedure,
                   let deviceID = pairingDeviceID else {
-                throw BridgeError.message("当前没有进行中的配对流程")
+                throw BridgeError.message("No pairing flow is currently in progress")
             }
             let credentials = try await procedure.finishPairing(pin: pin, displayName: "MacBook Remote")
             credentialsStore.save(credentials, for: deviceID)
@@ -187,7 +249,7 @@ final class ATVBridge: ObservableObject {
         }
     }
 
-    // MARK: - 连接
+    // MARK: - Connection
 
     func connect(device: ATVDevice) async {
         await connect(identifier: device.identifier)
@@ -206,15 +268,15 @@ final class ATVBridge: ObservableObject {
         let discovered = try await resolveDevice(identifier: identifier)
 
         guard let credentials = credentialsStore.credentials(for: identifier) else {
-            throw BridgeError.message("尚未配对：请先在设置中对该设备执行“配对”。")
+            throw BridgeError.message("Not paired yet: run Pair for this device in Settings first.")
         }
         guard let companionPort = discovered.companionPort else {
-            throw BridgeError.message("设备不支持 Companion 协议，无法控制")
+            throw BridgeError.message("This device does not support the Companion protocol and cannot be controlled")
         }
 
         let clientID = String(data: credentials.clientId, encoding: .utf8) ?? ""
 
-        // Companion:控制通道(按键/媒体/电源/应用)。
+        // Companion: control channel (keys/media/power/apps).
         let companionConnection = TCPCompanionConnection(host: discovered.host, port: UInt16(companionPort))
         let companionSRP = SRPAuthHandler(pairingId: credentials.clientId)
         let companionProtocol = CompanionProtocol(connection: companionConnection, srp: companionSRP)
@@ -224,7 +286,7 @@ final class ATVBridge: ObservableObject {
         companion.onDisconnect = { [weak self] in self?.handleDisconnect() }
         try await companion.connect()
 
-        // MRP:元数据通道(可选,失败不阻断控制)。
+        // MRP: metadata channel (optional; failure does not block control).
         var mrp: MRPAPI?
         if let mrpPort = discovered.mrpPort {
             let mrpConnection = MRPTCPConnection(host: discovered.host, port: UInt16(mrpPort))
@@ -266,7 +328,7 @@ final class ATVBridge: ObservableObject {
         mrpAPI = nil
         connectionLock.unlock()
 
-        // 主动断开:先解除 onDisconnect,避免误报"意外断开"。
+        // Intentional disconnect: detach onDisconnect first so "unexpected disconnect" is not reported.
         companion?.onDisconnect = nil
         mrp?.onDisconnect = nil
         try? await companion?.disconnect()
@@ -281,7 +343,7 @@ final class ATVBridge: ObservableObject {
         }
     }
 
-    /// 连接意外断开(远端重启/网络切换):清理状态并提示用户。
+    /// Connection dropped unexpectedly (remote reboot/network change): clean up state and notify the user.
     private func handleDisconnect() {
         stopStatusTimer()
         connectionLock.lock()
@@ -291,7 +353,7 @@ final class ATVBridge: ObservableObject {
         mrpAPI = nil
         connectionLock.unlock()
 
-        // 连接已断开,置 nil 防后续重复触发。
+        // The connection is already down; nil them out to prevent repeated triggers.
         companion?.onDisconnect = nil
         mrp?.onDisconnect = nil
 
@@ -300,20 +362,22 @@ final class ATVBridge: ObservableObject {
             self.currentDevice = nil
             self.nowPlaying = nil
             self.apps = []
-            self.lastError = "连接已断开，请在设置中重新连接"
+            self.lastError = "Connection lost. Reconnect from Settings"
             self.defaults.removeObject(forKey: "lastDeviceIdentifier")
         }
     }
 
-    // MARK: - 控制命令
+    // MARK: - Control Commands
 
     func sendKey(_ key: RemoteKey) async {
         guard let companion = currentCompanion() else {
-            setError(BridgeError.message("尚未连接到 Apple TV，请先在设置中连接"))
+            setError(BridgeError.message("Not connected to an Apple TV. Connect from Settings first"))
             return
         }
         do {
             try await performKey(key, on: companion)
+            // A successful command means the connection is fine; clear the previous transient error.
+            DispatchQueue.main.async { self.lastError = nil }
         } catch {
             setError(error)
         }
@@ -341,7 +405,7 @@ final class ATVBridge: ObservableObject {
 
     func power(_ action: String) async {
         guard let companion = currentCompanion() else {
-            setError(BridgeError.message("尚未连接到 Apple TV，请先在设置中连接"))
+            setError(BridgeError.message("Not connected to an Apple TV. Connect from Settings first"))
             return
         }
         do {
@@ -359,6 +423,8 @@ final class ATVBridge: ObservableObject {
                 }
             }
             await pollStatus()
+            // A successful command means the connection is fine; clear the previous transient error.
+            DispatchQueue.main.async { self.lastError = nil }
         } catch {
             setError(error)
         }
@@ -366,7 +432,7 @@ final class ATVBridge: ObservableObject {
 
     func volume(_ action: String) async {
         guard let companion = currentCompanion() else {
-            setError(BridgeError.message("尚未连接到 Apple TV，请先在设置中连接"))
+            setError(BridgeError.message("Not connected to an Apple TV. Connect from Settings first"))
             return
         }
         do {
@@ -375,6 +441,7 @@ final class ATVBridge: ObservableObject {
             } else {
                 try await companion.press(.volumeDown)
             }
+            DispatchQueue.main.async { self.lastError = nil }
         } catch {
             setError(error)
         }
@@ -382,22 +449,29 @@ final class ATVBridge: ObservableObject {
 
     func loadApps() async {
         guard let companion = currentCompanion() else {
-            setError(BridgeError.message("尚未连接到 Apple TV，请先在设置中连接"))
+            setError(BridgeError.message("Not connected to an Apple TV. Connect from Settings first"))
             return
         }
+        // Throttle after failure: some firmware ignores FetchLaunchableApplicationsEvent,
+        // so the request only ends in a timeout; retrying repeatedly is pointless.
+        guard Date().timeIntervalSince(lastAppsLoadAttempt) >= 60 else { return }
+        lastAppsLoadAttempt = Date()
         do {
             let list = try await companion.appList()
             let found = list.map { RemoteApp(identifier: $0.key, name: $0.value) }
                 .sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
             DispatchQueue.main.async { self.apps = found }
         } catch {
-            setError(error)
+            // An unavailable app list does not affect core remote features (keys/media/power);
+            // handle it silently rather than showing "device response timed out" and making
+            // the user think the connection is broken.
+            logger.error("Failed to fetch app list: \(String(describing: error), privacy: .public)")
         }
     }
 
     func launchApp(_ identifier: String) async {
         guard let companion = currentCompanion() else {
-            setError(BridgeError.message("尚未连接到 Apple TV，请先在设置中连接"))
+            setError(BridgeError.message("Not connected to an Apple TV. Connect from Settings first"))
             return
         }
         do {
@@ -407,7 +481,7 @@ final class ATVBridge: ObservableObject {
         }
     }
 
-    // MARK: - 状态
+    // MARK: - Status
 
     func pollStatus() async {
         let mrp = currentMRP()
@@ -418,8 +492,16 @@ final class ATVBridge: ObservableObject {
         let artwork = mrp?.artwork()
 
         var powerState: String?
-        if let companion {
-            powerState = (try? await companion.fetchAttentionState()).map(powerStateString)
+        if let companion, Date().timeIntervalSince(lastPowerPoll) >= powerPollInterval {
+            lastPowerPoll = Date()
+            do {
+                let state = try await companion.fetchAttentionState()
+                powerState = powerStateString(state)
+                powerPollInterval = 5
+            } catch {
+                // When firmware ignores the command, the request only ends in a timeout; back off exponentially to reduce polling frequency.
+                powerPollInterval = min(powerPollInterval * 2, 60)
+            }
         }
 
         let playing = NowPlaying(
@@ -460,7 +542,7 @@ final class ATVBridge: ObservableObject {
         }
     }
 
-    // MARK: - 生命周期
+    // MARK: - Lifecycle
 
     func stop() {
         discovery.stop()
@@ -472,7 +554,7 @@ final class ATVBridge: ObservableObject {
         mrpAPI = nil
         connectionLock.unlock()
 
-        // 应用退出时的清理:解除断开回调,避免退出过程中触发 UI 更新。
+        // Cleanup on app exit: detach disconnect callbacks so UI updates are not triggered during shutdown.
         companion?.onDisconnect = nil
         mrp?.onDisconnect = nil
         if companion != nil || mrp != nil {
@@ -485,8 +567,9 @@ final class ATVBridge: ObservableObject {
 
     private func startStatusTimer() {
         stopStatusTimer()
-        // 用 DispatchSourceTimer 而非 Timer.scheduledTimer:后者注册在当前线程的 RunLoop,
-        // 后台线程 RunLoop 不主动运行会导致定时器永不触发。
+        // Use DispatchSourceTimer instead of Timer.scheduledTimer: the latter is registered
+        // on the current thread's RunLoop, and a background thread's RunLoop does not run on
+        // its own, so the timer would never fire.
         let timer = DispatchSource.makeTimerSource(queue: .main)
         timer.schedule(deadline: .now() + 5, repeating: 5)
         timer.setEventHandler { [weak self] in
@@ -502,7 +585,7 @@ final class ATVBridge: ObservableObject {
         statusTimer = nil
     }
 
-    // MARK: - 工具
+    // MARK: - Helpers
 
     private func currentCompanion() -> CompanionAPI? {
         connectionLock.lock()
@@ -520,7 +603,7 @@ final class ATVBridge: ObservableObject {
         DispatchQueue.main.async { self.lastError = error.localizedDescription }
     }
 
-    /// 当前 macOS 系统构建号(如 "23A344"),用于 MRP DeviceInfo。
+    /// The current macOS system build number (e.g. "23A344"), used in MRP DeviceInfo.
     private var osBuild: String {
         var size = 0
         sysctlbyname("kern.osversion", nil, &size, nil, 0)

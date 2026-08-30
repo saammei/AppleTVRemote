@@ -1,14 +1,16 @@
-// 连接层抽象:上层(协议层/配对流程)不关心具体传输(TCP / 测试 mock)。
-// 对应 pyatv 的 pyatv/protocols/companion/connection.py 的 CompanionConnection 接口。
+// Connection-layer abstraction: upper layers (protocol layer / pairing flow) do not care about
+// the concrete transport (TCP / test mock).
+// Corresponds to the CompanionConnection interface in pyatv's pyatv/protocols/companion/connection.py.
 //
-// 具体 TCP 实现(NWConnection)在 Phase 3 接入;本抽象让配对流程可脱离网络做端到端测试。
+// The concrete TCP implementation (NWConnection) is wired up in Phase 3; this abstraction lets the
+// pairing flow be tested end-to-end without a network.
 
 import Foundation
 
 public protocol CompanionConnectionListener: AnyObject {
-    /// 收到一帧。payload 已由连接层解密(若已启用加密)。
+    /// Received one frame. The payload has already been decrypted by the connection layer (if encryption is enabled).
     func connection(_ connection: CompanionConnection, didReceive frameType: FrameType, payload: Data)
-    /// 连接已断开(主动 close 或远端断开/错误)。可能被多次调用,实现需幂等。
+    /// The connection has closed (explicit close, or remote disconnect/error). May be called multiple times; implementations must be idempotent.
     func connectionDidClose(_ connection: CompanionConnection)
 }
 
@@ -16,16 +18,16 @@ public protocol CompanionConnection: AnyObject {
     var isConnected: Bool { get }
     var listener: CompanionConnectionListener? { get set }
 
-    /// 建立连接(异步,完成后可收发)。
+    /// Establishes the connection (asynchronous; send/receive work once complete).
     func connect() async throws
 
-    /// 关闭连接。
+    /// Closes the connection.
     func close()
 
-    /// 发送一帧。帧体由连接层负责打包/加密。
+    /// Sends a frame. Framing/encryption of the body is handled by the connection layer.
     func send(_ frameType: FrameType, payload: Data) throws
 
-    /// 启用连接层加密(输出/输入两把独立密钥,各带独立计数器)。
+    /// Enables connection-layer encryption (two independent keys for output/input, each with its own counter).
     func enableEncryption(outputKey: Data, inputKey: Data)
 }
 
@@ -35,4 +37,16 @@ public enum CompanionError: Error {
     case invalidResponse
     case protocolError(String)
     case authenticationFailed(String)
+}
+
+extension CompanionError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .notConnected: return "Device is not connected"
+        case .timeout: return "Device response timed out"
+        case .invalidResponse: return "The device returned an unparseable response"
+        case .protocolError(let text): return "The device returned an error: \(text)"
+        case .authenticationFailed(let text): return "Authentication failed: \(text)"
+        }
+    }
 }

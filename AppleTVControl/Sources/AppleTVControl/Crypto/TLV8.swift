@@ -1,12 +1,13 @@
-// TLV8 编解码:HomeKit 配对使用的二进制格式。
-// 对应 pyatv 的 pyatv/auth/hap_tlv8.py。
+// TLV8 encode/decode: the binary format used by HomeKit pairing.
+// Corresponds to pyatv's pyatv/auth/hap_tlv8.py.
 //
-// 每条记录 = <1 字节 tag><1 字节长度><value>。value 超过 255 字节时,
-// 拆成多条相同 tag 的记录,解码时再合并回一个连续 buffer。
+// Each record = <1 byte tag><1 byte length><value>. When value exceeds 255 bytes,
+// it is split into multiple records with the same tag, which are merged back into
+// one contiguous buffer when decoding.
 
 import Foundation
 
-/// TLV8 标签值(HAP 规范)。
+/// TLV8 tag values (HAP specification).
 public enum TLV8Tag: UInt8 {
     case method = 0x00
     case identifier = 0x01
@@ -22,7 +23,7 @@ public enum TLV8Tag: UInt8 {
 }
 
 public enum TLV8 {
-    /// 编码为 TLV8 字节。entries 保持顺序(与 pyatv 的 dict 插入顺序一致)。
+    /// Encodes into TLV8 bytes. entries preserve order (same as pyatv's dict insertion order).
     public static func encode(_ entries: [(UInt8, Data)]) -> Data {
         var result = Data()
         for (tag, value) in entries {
@@ -38,7 +39,7 @@ public enum TLV8 {
         return result
     }
 
-    /// 解码 TLV8 字节。相同 tag 的多条记录合并为一个 value。
+    /// Decodes TLV8 bytes. Multiple records with the same tag are merged into one value.
     public static func decode(_ data: Data) -> [UInt8: Data] {
         var result: [UInt8: Data] = [:]
         let bytes = [UInt8](data)

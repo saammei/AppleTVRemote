@@ -1,22 +1,23 @@
-// MRP 元数据层测试:Variant 编解码、MRPCipher、protobuf 扩展序列化、
-// 完整握手(DeviceInfo → crypto pairing → SetConnectionState → ClientUpdatesConfig
-// → GetKeyboardSession),以及 now-playing 元数据缓存与封面缓存(推送驱动)。
+// MRP metadata layer tests: Variant encoding/decoding, MRPCipher, protobuf extension serialization,
+// full handshake (DeviceInfo → crypto pairing → SetConnectionState → ClientUpdatesConfig
+// → GetKeyboardSession), and the now-playing metadata cache plus artwork cache (push-driven).
 //
-// 用内存 mock 连接替代 TCP:mock 解析发送的 protobuf 帧,按脚本回放响应;
-// crypto pairing 由 MrpPairVerifyServer 扮演设备端完成真实加密交换。
+// An in-memory mock connection replaces TCP: the mock parses sent protobuf frames and replays
+// scripted responses; crypto pairing is handled by MrpPairVerifyServer playing the device side
+// for a real encrypted exchange.
 
 import Foundation
 import CryptoKit
 import AppleTVControl
 
-/// 内存 mock 连接:解析发送的 ProtocolMessage,按 responseHandler 脚本回放;
-/// 非配对响应自动回显 identifier,保证 sendAndReceive 匹配。
+/// In-memory mock connection: parses sent ProtocolMessages and replays scripted responses
+/// via responseHandler; non-pairing responses echo the identifier so sendAndReceive matches.
 final class AutoMRPConnection: MRPConnection {
     var isConnected = false
     weak var listener: MRPConnectionListener?
     private(set) var sentMessages: [ProtocolMessageMessage] = []
 
-    /// 脚本化响应:请求消息 -> 响应消息(nil 表示不响应)。
+    /// Scripted response: request message -> response message (nil means no response).
     var responseHandler: ((ProtocolMessageMessage) -> ProtocolMessageMessage?)?
 
     func connect() async throws { isConnected = true }
@@ -29,7 +30,7 @@ final class AutoMRPConnection: MRPConnection {
         }
         sentMessages.append(msg)
         guard var response = responseHandler?(msg) else { return }
-        // 非配对消息回显 identifier,保证 sendAndReceive 匹配(配对消息无 identifier)。
+        // Non-pairing messages echo the identifier so sendAndReceive matches (pairing messages have no identifier).
         if response.type != .cryptoPairingMessage && response.identifier.isEmpty {
             response.identifier = msg.identifier
         }
@@ -37,7 +38,7 @@ final class AutoMRPConnection: MRPConnection {
     }
 }
 
-/// 扮演设备的 MRP crypto pairing 服务端(protobuf 包裹的 Pair-Verify)。
+/// Plays the device-side MRP crypto pairing server (Pair-Verify wrapped in protobuf).
 final class MrpPairVerifyServer {
     private let serverSigning: Curve25519.Signing.PrivateKey
     private let credentials: HapCredentials
@@ -111,7 +112,7 @@ final class MrpPairVerifyServer {
 }
 
 func runMRPTests() async {
-    runSuite("Variant 编解码") {
+    runSuite("Variant encoding/decoding") {
         let cases: [(Int, [UInt8])] = [
             (0, [0x00]),
             (1, [0x01]),
@@ -125,10 +126,10 @@ func runMRPTests() async {
         }
         for value in [0, 1, 127, 128, 300, 16384, 1_000_000, Int(Int32.max)] {
             guard let (decoded, remaining) = Variant.decode(Variant.encode(value)) else {
-                expect(false, "Variant.decode(\(value)) 返回 nil"); continue
+                expect(false, "Variant.decode(\(value)) returned nil"); continue
             }
             expectEqual(decoded, value, "Variant round-trip \(value)")
-            expectEqual(remaining.count, 0, "Variant round-trip 无剩余 \(value)")
+            expectEqual(remaining.count, 0, "Variant round-trip no remainder \(value)")
         }
     }
 
@@ -139,19 +140,19 @@ func runMRPTests() async {
         expectHexEqual(
             [UInt8](ChaCha20Poly1305.nonceCounter8(0)),
             [UInt8](repeating: 0, count: 12),
-            "counter 0 nonce 全零")
+            "counter 0 nonce all zeros")
         expectHexEqual(
             [UInt8](ChaCha20Poly1305.nonceCounter8(1)),
             [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
-            "counter 1 nonce(4 零字节 + 8 字节小端)")
+            "counter 1 nonce (4 zero bytes + 8-byte little-endian)")
 
         let plaintext = Data("hello mrp".utf8)
         let encrypted = try! cipher.encrypt(plaintext)
-        expect(encrypted != plaintext, "密文不同于明文")
+        expect(encrypted != plaintext, "ciphertext differs from plaintext")
         expectEqual(try! cipher.decrypt(encrypted), plaintext, "MRPCipher round-trip")
     }
 
-    runSuite("MRP protobuf 扩展序列化") {
+    runSuite("MRP protobuf extension serialization") {
         var device = DeviceInfoMessage()
         device.uniqueIdentifier = "abc-123"
         device.name = "Test Remote"
@@ -173,17 +174,17 @@ func runMRPTests() async {
         expectEqual(parsed.deviceInfoMessage.deviceClass, .mac, "deviceInfo deviceClass")
     }
 
-    await runSuiteAsync("now-playing 元数据缓存") {
+    await runSuiteAsync("now-playing metadata cache") {
         let mock = AutoMRPConnection()
         let srp = SRPAuthHandler(pairingId: Data("client-id".utf8))
         let proto = MRPProtocol(connection: mock, srp: srp)
         let api = MRPAPI(protocolLayer: proto)
 
-        // SetStateMessage:播放状态 + now-playing info。
+        // SetStateMessage: playback state + now-playing info.
         var info = NowPlayingInfo()
-        info.title = "测试歌曲"
-        info.artist = "某歌手"
-        info.album = "某专辑"
+        info.title = "Test Song"
+        info.artist = "Some Artist"
+        info.album = "Some Album"
         info.duration = 240.0
         info.elapsedTime = 30.0
         var setState = SetStateMessage()
@@ -195,11 +196,11 @@ func runMRPTests() async {
         msg.setStateMessage = setState
         api.mrpProtocol(proto, didReceive: msg)
 
-        // ContentItem:更完整曲目元数据(mediaType / mediaSubType)。
+        // ContentItem: more complete track metadata (mediaType / mediaSubType).
         var meta = ContentItemMetadata()
-        meta.title = "完整标题"
-        meta.trackArtistName = "完整艺术家"
-        meta.albumName = "完整专辑"
+        meta.title = "Full Title"
+        meta.trackArtistName = "Full Artist"
+        meta.albumName = "Full Album"
         meta.duration = 200.0
         meta.mediaType = .audio
         meta.mediaSubType = .music
@@ -214,24 +215,24 @@ func runMRPTests() async {
         api.mrpProtocol(proto, didReceive: updateMsg)
 
         let np = api.nowPlaying()
-        expectEqual(np.title, "完整标题", "title 优先取 ContentItem")
-        expectEqual(np.artist, "完整艺术家", "artist 取 ContentItem")
-        expectEqual(np.album, "完整专辑", "album 取 ContentItem")
-        expectEqual(np.duration, 200.0, "duration 取 ContentItem")
-        expectEqual(np.position, 30.0, "position 取 NowPlayingInfo.elapsedTime")
+        expectEqual(np.title, "Full Title", "title prefers ContentItem")
+        expectEqual(np.artist, "Full Artist", "artist from ContentItem")
+        expectEqual(np.album, "Full Album", "album from ContentItem")
+        expectEqual(np.duration, 200.0, "duration from ContentItem")
+        expectEqual(np.position, 30.0, "position from NowPlayingInfo.elapsedTime")
         expectEqual(np.playbackState, .playing, "playbackState")
-        expectEqual(np.mediaType, "Music", "mediaType 映射为 Music")
+        expectEqual(np.mediaType, "Music", "mediaType maps to Music")
     }
 
-    await runSuiteAsync("now-playing 缺 ContentItem 时回退 NowPlayingInfo") {
+    await runSuiteAsync("now-playing falls back to NowPlayingInfo without ContentItem") {
         let mock = AutoMRPConnection()
         let srp = SRPAuthHandler(pairingId: Data("client-id".utf8))
         let proto = MRPProtocol(connection: mock, srp: srp)
         let api = MRPAPI(protocolLayer: proto)
 
         var info = NowPlayingInfo()
-        info.title = "仅标题"
-        info.artist = "仅艺术家"
+        info.title = "Title Only"
+        info.artist = "Artist Only"
         var setState = SetStateMessage()
         setState.nowPlayingInfo = info
         setState.playbackState = .paused
@@ -242,19 +243,19 @@ func runMRPTests() async {
         api.mrpProtocol(proto, didReceive: msg)
 
         let np = api.nowPlaying()
-        expectEqual(np.title, "仅标题", "回退 title")
-        expectEqual(np.artist, "仅艺术家", "回退 artist")
-        expectEqual(np.mediaType, nil, "无 ContentItem 时 mediaType 为 nil")
+        expectEqual(np.title, "Title Only", "fallback title")
+        expectEqual(np.artist, "Artist Only", "fallback artist")
+        expectEqual(np.mediaType, nil, "mediaType is nil without ContentItem")
         expectEqual(np.playbackState, .paused, "paused")
     }
 
-    await runSuiteAsync("artwork 封面缓存") {
+    await runSuiteAsync("artwork cache") {
         let mock = AutoMRPConnection()
         let srp = SRPAuthHandler(pairingId: Data("client-id".utf8))
         let proto = MRPProtocol(connection: mock, srp: srp)
         let api = MRPAPI(protocolLayer: proto)
 
-        // 先喂 content item(建立 identifier 关联)。
+        // Feed a content item first (establishing the identifier association).
         var item = ContentItem()
         item.identifier = "content-1"
         var update = UpdateContentItemMessage()
@@ -264,7 +265,7 @@ func runMRPTests() async {
         updateMsg.updateContentItemMessage = update
         api.mrpProtocol(proto, didReceive: updateMsg)
 
-        // 再喂 artwork(按 identifier 匹配)。
+        // Then feed artwork (matched by identifier).
         var artworkItem = ContentItem()
         artworkItem.identifier = "content-1"
         artworkItem.artworkData = Data("jpeg-1".utf8)
@@ -275,9 +276,9 @@ func runMRPTests() async {
         artworkMsg.updateContentItemArtworkMessage = artworkUpdate
         api.mrpProtocol(proto, didReceive: artworkMsg)
 
-        expectEqual(api.artwork(), Data("jpeg-1".utf8), "artwork 按 identifier 匹配")
+        expectEqual(api.artwork(), Data("jpeg-1".utf8), "artwork matched by identifier")
 
-        // SetArtworkMessage 作为兜底。
+        // SetArtworkMessage as fallback.
         var setArtwork = SetArtworkMessage()
         setArtwork.jpegData = Data("jpeg-2".utf8)
         var setArtworkMsg = ProtocolMessageMessage()
@@ -285,10 +286,10 @@ func runMRPTests() async {
         setArtworkMsg.setArtworkMessage = setArtwork
         api.mrpProtocol(proto, didReceive: setArtworkMsg)
 
-        expectEqual(api.artwork(), Data("jpeg-1".utf8), "identifier 匹配优先于 SetArtwork")
+        expectEqual(api.artwork(), Data("jpeg-1".utf8), "identifier match takes precedence over SetArtwork")
     }
 
-    await runSuiteAsync("MRP 完整握手") {
+    await runSuiteAsync("MRP full handshake") {
         let clientSigning = Curve25519.Signing.PrivateKey()
         let serverSigning = Curve25519.Signing.PrivateKey()
         let clientId = Data("client-id-1234".utf8)
@@ -334,17 +335,17 @@ func runMRPTests() async {
 
         try await api.connect(credentials: creds, deviceInfo: deviceInfo)
 
-        // 序列:deviceInfo, cryptoPairing M1, cryptoPairing M3, setConnectionState, clientUpdatesConfig, getKeyboardSession。
-        expectEqual(mock.sentMessages.count, 6, "握手消息数")
-        expectEqual(mock.sentMessages[0].type, .deviceInfoMessage, "首条 deviceInfo")
-        expectEqual(mock.sentMessages[1].type, .cryptoPairingMessage, "次条 crypto pairing M1")
-        expectEqual(mock.sentMessages[2].type, .cryptoPairingMessage, "第三条 crypto pairing M3")
+        // Sequence: deviceInfo, cryptoPairing M1, cryptoPairing M3, setConnectionState, clientUpdatesConfig, getKeyboardSession.
+        expectEqual(mock.sentMessages.count, 6, "handshake message count")
+        expectEqual(mock.sentMessages[0].type, .deviceInfoMessage, "first deviceInfo")
+        expectEqual(mock.sentMessages[1].type, .cryptoPairingMessage, "second crypto pairing M1")
+        expectEqual(mock.sentMessages[2].type, .cryptoPairingMessage, "third crypto pairing M3")
         expectEqual(mock.sentMessages[3].type, .setConnectionStateMessage, "setConnectionState")
         expectEqual(mock.sentMessages[4].type, .clientUpdatesConfigMessage, "clientUpdatesConfig")
         expectEqual(mock.sentMessages[5].type, .getKeyboardSessionMessage, "getKeyboardSession")
 
         expectEqual(mock.sentMessages[0].deviceInfoMessage.uniqueIdentifier, "test-device-id", "deviceInfo identifier")
-        expectEqual(mock.sentMessages[3].setConnectionStateMessage.state, .connected, "连接状态 connected")
-        expectEqual(mock.sentMessages[4].clientUpdatesConfigMessage.nowPlayingUpdates, true, "订阅 now-playing 更新")
+        expectEqual(mock.sentMessages[3].setConnectionStateMessage.state, .connected, "connection state connected")
+        expectEqual(mock.sentMessages[4].clientUpdatesConfigMessage.nowPlayingUpdates, true, "subscribes to now-playing updates")
     }
 }

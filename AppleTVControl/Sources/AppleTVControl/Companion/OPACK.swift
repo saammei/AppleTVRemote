@@ -1,18 +1,20 @@
-// OPACK 二进制序列化格式,对应 pyatv 的 pyatv/support/opack.py。
+// OPACK binary serialization format, corresponding to pyatv's pyatv/support/opack.py.
 //
-// Companion 协议的配对消息与控制消息都用 OPACK 编码(连接层帧的 payload)。
-// 支持类型:null / bool / int / double / string / data / uuid / array / dict,
-// 以及 pack 时的对象引用去重(重复字节串压缩为引用)。
+// Both pairing messages and control messages of the Companion protocol are OPACK-encoded
+// (as the payload of connection-layer frames).
+// Supported types: null / bool / int / double / string / data / uuid / array / dict,
+// plus object-reference deduplication when packing (repeated byte strings compressed into references).
 //
-// 简化:unpack 的整数统一为 Int64,不保留原始编码字节数(不用于 re-pack)。
+// Simplification: unpacked integers are uniformly Int64; the original encoded byte count is not
+// preserved (not used for re-packing).
 
 import Foundation
 
 public enum OPACK {
-    /// 递归解包的最大深度,防止恶意深嵌套 OPACK 耗尽栈空间。
+    /// Maximum recursion depth for unpacking, preventing maliciously deep nesting from exhausting the stack.
     private static let maxDepth = 64
 
-    // MARK: - 整数 / 浮点小端辅助
+    // MARK: - Integer / float little-endian helpers
 
     private static func uintLE(_ value: UInt64, _ count: Int) -> Data {
         var data = Data(capacity: count)
@@ -35,7 +37,7 @@ public enum OPACK {
         return value
     }
 
-    // MARK: - pack
+    // MARK: - Pack
 
     public static func pack(_ value: Any) -> Data {
         var objectList: [Data] = []
@@ -67,10 +69,10 @@ public enum OPACK {
         } else if let dict = value as? [String: Any] {
             packed = packDict(dict, objectList: &objectList)
         } else {
-            fatalError("OPACK 不支持的打包类型: \(type(of: value))")
+            fatalError("OPACK does not support packing type: \(type(of: value))")
         }
 
-        // 对象引用去重:重复的字节串压缩为引用。
+        // Object-reference deduplication: repeated byte strings are compressed into references.
         if let idx = objectList.firstIndex(of: packed) {
             if idx < 0x21 {
                 return Data([UInt8(0xA0 + idx)])
@@ -90,7 +92,7 @@ public enum OPACK {
     }
 
     private static func packInt(_ value: Int64) -> Data {
-        precondition(value >= 0, "OPACK 不支持负整数")
+        precondition(value >= 0, "OPACK does not support negative integers")
         if value < 0x28 {
             return Data([UInt8(value + 8)])
         } else if value <= 0xFF {
@@ -160,7 +162,7 @@ public enum OPACK {
         return packed
     }
 
-    // MARK: - unpack
+    // MARK: - Unpack
 
     public static func unpack(_ data: Data) -> (value: Any, remaining: Data)? {
         var objectList: [Any] = []
@@ -168,8 +170,9 @@ public enum OPACK {
     }
 
     private static func unpack(_ data: Data, objectList: inout [Any], depth: Int = 0) -> (value: Any, remaining: Data)? {
-        // dropFirst 返回的是切片视图,底层索引继承原 Data(非从 0 起),
-        // 后续 subdata 会因此错位/越界。此处若为切片则强制复制重置索引。
+        // dropFirst returns a slice view whose underlying indices are inherited from the original
+        // Data (not starting at 0), which would misalign or overrun subsequent subdata calls.
+        // Force a copy to reset the indices when the input is a slice.
         let data = data.startIndex == 0 ? data : Data(data)
         guard let first = data.first else { return nil }
         var value: Any
@@ -301,7 +304,7 @@ public enum OPACK {
     }
 
     private static func contains(_ list: [Any], _ value: Any) -> Bool {
-        // Data / String 需要按值比较,其余用 isEqual。
+        // Data / String need value comparison; everything else uses isEqual.
         if let valueData = value as? Data {
             return list.contains { ($0 as? Data) == valueData }
         }

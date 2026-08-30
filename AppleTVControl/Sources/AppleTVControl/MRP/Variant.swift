@@ -1,15 +1,15 @@
-// LEB128 变长整数编解码,用于 MRP 消息的长度前缀。
-// 对应 pyatv 的 pyatv/support/variant.py(标准 protobuf varint 编码,小端 7 位一组)。
+// LEB128 variable-length integer encode/decode, used for MRP message length prefixes.
+// Corresponds to pyatv's pyatv/support/variant.py (standard protobuf varint encoding, little-endian 7 bits per group).
 //
-// write_variant:每字节低 7 位为数据,最高位为续位;递归 number >> 7。
-// read_variant:result |= (byte & 0x7F) << (7 * cnt),遇最高位为 0 的字节结束。
+// write_variant: low 7 bits of each byte carry data, the high bit is the continuation bit; recurses on number >> 7.
+// read_variant: result |= (byte & 0x7F) << (7 * cnt), ends at the first byte whose high bit is 0.
 
 import Foundation
 
 public enum Variant {
-    /// 编码为非负变长整数。
+    /// Encodes a non-negative variable-length integer.
     public static func encode(_ value: Int) -> Data {
-        precondition(value >= 0, "Variant 不支持负数")
+        precondition(value >= 0, "Variant does not support negative numbers")
         var number = value
         var result = Data()
         while number >= 0x80 {
@@ -20,13 +20,13 @@ public enum Variant {
         return result
     }
 
-    /// 从 data 读出一个变长整数,返回 (值, 剩余字节);数据不足/溢出返回 nil。
+    /// Reads one variable-length integer from data, returning (value, remaining bytes); returns nil for insufficient data/overflow.
     public static func decode(_ data: Data) -> (value: Int, remaining: Data)? {
         let bytes = [UInt8](data)
         var result = 0
         var cnt = 0
         for (i, byte) in bytes.enumerated() {
-            // 最多 10 字节(64 位 varint 上限),超出视为非法。
+            // At most 10 bytes (the 64-bit varint limit); anything beyond is treated as invalid.
             if cnt >= 10 { return nil }
             result |= Int(byte & 0x7F) << (7 * cnt)
             cnt += 1

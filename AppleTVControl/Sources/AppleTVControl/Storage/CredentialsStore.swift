@@ -1,10 +1,10 @@
-// 凭证持久化:按设备 identifier 保存 HapCredentials 到本地 JSON 文件。
-// 对应 pyatv 的 FileStorage(pyatv.json)——配对一次后,后续连接用保存的凭证做
-// Pair-Verify,无需再次输入 PIN。
+// Credential persistence: saves HapCredentials to a local JSON file keyed by device identifier.
+// Corresponds to pyatv's FileStorage (pyatv.json) — after pairing once, subsequent connections
+// use the saved credentials for Pair-Verify without re-entering the PIN.
 //
-// 存储格式(JSON):
+// Storage format (JSON):
 //   { "<identifier>": "<detailString>" }
-// detailString 即 HapCredentials 的 "ltpk:ltsk:atv_id:client_id"(各字段 hex)。
+// detailString is HapCredentials' "ltpk:ltsk:atv_id:client_id" (each field hex).
 
 import Foundation
 
@@ -15,7 +15,7 @@ public final class CredentialsStore {
         self.fileURL = fileURL
     }
 
-    /// 读取全部已保存凭证,返回 identifier -> credentials。
+    /// Loads all saved credentials, returning identifier -> credentials.
     public func load() -> [String: HapCredentials] {
         guard let data = try? Data(contentsOf: fileURL),
               let json = try? JSONSerialization.jsonObject(with: data) as? [String: String] else {
@@ -30,12 +30,12 @@ public final class CredentialsStore {
         return result
     }
 
-    /// 读取指定设备的凭证。
+    /// Loads the credentials for the specified device.
     public func credentials(for identifier: String) -> HapCredentials? {
         load()[identifier]
     }
 
-    /// 保存某设备的凭证(覆盖已有)。
+    /// Saves the credentials for a device (overwrites any existing entry).
     @discardableResult
     public func save(_ credentials: HapCredentials, for identifier: String) -> Bool {
         var all = load()
@@ -43,7 +43,7 @@ public final class CredentialsStore {
         return write(all)
     }
 
-    /// 删除某设备的凭证。
+    /// Removes the credentials for a device.
     @discardableResult
     public func remove(identifier: String) -> Bool {
         var all = load()
@@ -62,7 +62,8 @@ public final class CredentialsStore {
                 withIntermediateDirectories: true
             )
             try data.write(to: fileURL, options: .atomic)
-            // 收紧权限:仅当前用户可读写,防止同机其他进程读取长期私钥。
+            // Tighten permissions: only the current user can read/write, preventing other
+            // processes on the same machine from reading the long-term private key.
             try FileManager.default.setAttributes(
                 [.posixPermissions: 0o600], ofItemAtPath: fileURL.path)
             return true

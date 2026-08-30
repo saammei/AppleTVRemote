@@ -1,11 +1,12 @@
-// Companion 连接层的 TCP 传输实现,基于 Network.framework 的 NWConnection。
-// 对应 pyatv 的 pyatv/protocols/companion/connection.py 的 asyncio 实现。
+// TCP transport implementation for the Companion connection layer, based on Network.framework's NWConnection.
+// Corresponds to the asyncio implementation in pyatv's pyatv/protocols/companion/connection.py.
 //
-// 职责:
-//   - 建立/关闭 TCP 连接(NWConnection)
-//   - 字节流缓冲 → 拆帧(CompanionFrame)
-//   - 启用加密后,对入帧解密、出帧加密(CompanionCipher,12 字节计数器 nonce)
-//   - 把完整帧回调给 listener(即 CompanionProtocol)
+// Responsibilities:
+//   - Establish/close the TCP connection (NWConnection)
+//   - Buffer the byte stream and split it into frames (CompanionFrame)
+//   - Once encryption is enabled, decrypt inbound frames and encrypt outbound frames
+//     (CompanionCipher, 12-byte counter nonce)
+//   - Call complete frames back to the listener (i.e. CompanionProtocol)
 
 import Foundation
 import Network
@@ -22,14 +23,16 @@ public final class TCPCompanionConnection: CompanionConnection {
     private let host: String
     private let port: UInt16
     private let queue = DispatchQueue(label: "atv.companion.tcp")
+    private let logger = Logger(subsystem: "com.meishaoming.AppleTVRemote", category: "companion.tcp")
 
     private var connection: NWConnection?
-    /// 保护 state / connectContinuation / didNotifyClose(跨线程访问)。
+    /// Protects state / connectContinuation / didNotifyClose (accessed across threads).
     private var stateLock = os_unfair_lock()
     private var state: NWConnection.State = .setup
     private var cipher: CompanionCipher?
     private var buffer = Data()
     private var connectContinuation: CheckedContinuation<Void, Error>?
+    private var connectTimeoutWorkItem: DispatchWorkItem?
     private var didNotifyClose = false
 
     public init(host: String, port: UInt16) {
@@ -41,9 +44,14 @@ public final class TCPCompanionConnection: CompanionConnection {
         connection?.cancel()
     }
 
-    // MARK: - 生命周期
+    // MARK: - Lifecycle
 
+    /// Connection entry point satisfying the CompanionConnection protocol (default 10-second timeout).
     public func connect() async throws {
+        try await connect(timeout: 10)
+    }
+
+    public func connect(timeout: TimeInterval) async throws {
         os_unfair_lock_lock(&stateLock)
         let current = state
         os_unfair_lock_unlock(&stateLock)
@@ -66,6 +74,20 @@ public final class TCPCompanionConnection: CompanionConnection {
                 self?.handleState(newState)
             }
             conn.start(queue: queue)
+
+            // Timeout fallback: for unreachable hosts (e.g. an Apple TV in standby), NWConnection
+            // stays in .waiting without reporting an error, so we must time out ourselves,
+            // otherwise the caller hangs forever.
+            let workItem = DispatchWorkItem { [weak self] in
+                guard let self else { return }
+                let pending = self.consumeConnectContinuation().0
+                if let pending {
+                    self.connection?.cancel()
+                    pending.resume(throwing: CompanionError.timeout)
+                }
+            }
+            connectTimeoutWorkItem = workItem
+            queue.asyncAfter(deadline: .now() + timeout, execute: workItem)
         }
     }
 
@@ -78,7 +100,7 @@ public final class TCPCompanionConnection: CompanionConnection {
         notifyClose()
     }
 
-    /// 通知 listener 连接已断开(幂等,只通知一次)。
+    /// Notifies the listener that the connection closed (idempotent, notified only once).
     private func notifyClose() {
         os_unfair_lock_lock(&stateLock)
         guard !didNotifyClose else {
@@ -93,28 +115,48 @@ public final class TCPCompanionConnection: CompanionConnection {
     private func handleState(_ newState: NWConnection.State) {
         os_unfair_lock_lock(&stateLock)
         state = newState
-        let continuation = connectContinuation
-        connectContinuation = nil
         os_unfair_lock_unlock(&stateLock)
 
         switch newState {
         case .ready:
+            let (continuation, timeoutItem) = consumeConnectContinuation()
+            timeoutItem?.cancel()
             continuation?.resume(returning: ())
             startReceive()
         case .failed(let error):
+            let (continuation, timeoutItem) = consumeConnectContinuation()
+            timeoutItem?.cancel()
             continuation?.resume(throwing: error)
             notifyClose()
         case .cancelled:
+            // If cancelled via the timeout path, connectContinuation has already been consumed,
+            // so it will not be resumed again here.
+            let (continuation, timeoutItem) = consumeConnectContinuation()
+            timeoutItem?.cancel()
             continuation?.resume(throwing: CompanionError.notConnected)
             notifyClose()
         case .setup, .preparing, .waiting:
+            // Intermediate states do not consume the continuation: .waiting is left to the timeout fallback.
             break
         @unknown default:
             break
         }
     }
 
-    // MARK: - 发送
+    /// Takes (and clears) the pending-connect continuation and timeout task. Only a terminal state
+    /// or the timeout task consumes them; whoever comes first wins, later callers get nil,
+    /// guaranteeing exactly one resume.
+    private func consumeConnectContinuation() -> (CheckedContinuation<Void, Error>?, DispatchWorkItem?) {
+        os_unfair_lock_lock(&stateLock)
+        let continuation = connectContinuation
+        connectContinuation = nil
+        let timeoutItem = connectTimeoutWorkItem
+        connectTimeoutWorkItem = nil
+        os_unfair_lock_unlock(&stateLock)
+        return (continuation, timeoutItem)
+    }
+
+    // MARK: - Sending
 
     public func send(_ frameType: FrameType, payload: Data) throws {
         os_unfair_lock_lock(&stateLock)
@@ -131,7 +173,7 @@ public final class TCPCompanionConnection: CompanionConnection {
         cipher = CompanionCipher(outKey: outputKey, inKey: inputKey)
     }
 
-    // MARK: - 接收
+    // MARK: - Receiving
 
     private func startReceive() {
         receiveNext()
@@ -141,7 +183,7 @@ public final class TCPCompanionConnection: CompanionConnection {
         guard let connection, state == .ready else { return }
         connection.receive(minimumIncompleteLength: 1, maximumLength: 65536) { [weak self] data, _, isComplete, error in
             guard let self else { return }
-            // receive 的 completion 在 start(queue:) 指定的队列上回调。
+            // receive's completion is called back on the queue given to start(queue:).
             if let data, !data.isEmpty {
                 self.buffer.append(data)
                 self.parseFrames()
@@ -154,10 +196,13 @@ public final class TCPCompanionConnection: CompanionConnection {
         }
     }
 
-    /// 从缓冲里尽量多地拆出完整帧,解密后交给 listener。
+    /// Extracts as many complete frames as possible from the buffer and hands them to the listener after decryption.
     private func parseFrames() {
         while buffer.count >= CompanionFrame.headerLength {
             let header = Data(buffer.prefix(CompanionFrame.headerLength))
+            let bufLen = buffer.count
+            let headHex = (buffer.prefix(8) as NSData).description
+            logger.debug("parseFrames buffer=\(bufLen, privacy: .public) header=\(headHex, privacy: .public)")
             guard let frame = CompanionFrame.decode(from: buffer) else { return }
 
             var payload = frame.payload
@@ -167,7 +212,8 @@ public final class TCPCompanionConnection: CompanionConnection {
                 do {
                     payload = try cipher.decrypt(payload, aad: header)
                 } catch {
-                    // AEAD 认证失败(篡改/密钥错/重放):nonce 已超前,连接不可恢复,必须断开。
+                    // AEAD authentication failed (tampering / wrong key / replay): the nonce has already
+                    // advanced, the connection is unrecoverable, so it must be closed.
                     close()
                     return
                 }

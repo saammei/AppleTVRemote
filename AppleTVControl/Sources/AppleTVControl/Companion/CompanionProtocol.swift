@@ -1,9 +1,10 @@
-// Companion 协议层:在连接层之上实现请求/响应的配对(按 XID 或帧类型派发)。
-// 对应 pyatv 的 pyatv/protocols/companion/protocol.py。
+// Companion protocol layer: implements request/response dispatch on top of the connection layer
+// (by XID or frame type).
+// Corresponds to pyatv's pyatv/protocols/companion/protocol.py.
 //
-// - exchangeAuth:认证帧(PS_*/PV_*),响应按帧类型派发(配对是串行的,无 XID)。
-// - exchangeOpack:普通 OPACK 消息,响应按 _x(XID)派发。
-// - 事件(_t == 1)经 delegate 上报,用于 Phase 3 的状态/apps 推送。
+// - exchangeAuth: authentication frames (PS_*/PV_*), responses dispatched by frame type (pairing is serial, no XID).
+// - exchangeOpack: regular OPACK messages, responses dispatched by _x (XID).
+// - Events (_t == 1) are reported through the delegate, used for Phase 3 status/apps pushes.
 
 import Foundation
 import os
@@ -12,14 +13,14 @@ public protocol CompanionProtocolDelegate: AnyObject {
     func companionProtocol(_ protocol: CompanionProtocol, didReceiveEvent name: String, content: [String: Any])
 }
 
-/// 消息类型(OPACK 的 _t 字段)。
+/// Message type (the _t field of OPACK).
 public enum CompanionMessageType: Int64 {
     case event = 1
     case request = 2
     case response = 3
 }
 
-/// 派生加密密钥所用的常量(pyatv protocol.py)。
+/// Constants used to derive the encryption keys (pyatv protocol.py).
 enum CompanionKeyInfo {
     static let salt = ""
     static let outputInfo = "ClientEncrypt-main"
@@ -31,13 +32,13 @@ public final class CompanionProtocol: CompanionConnectionListener {
     public let srp: SRPAuthHandler
     public weak var delegate: CompanionProtocolDelegate?
 
-    /// 请求派发键:认证帧按帧类型,普通 OPACK 按 XID。
+    /// Request dispatch key: auth frames by frame type, regular OPACK by XID.
     private enum RequestId: Hashable {
         case auth(FrameType)
         case opack(Int)
     }
 
-    /// 单个待响应请求。由 store 的原子 remove 保证 continuation 恰好 resume 一次。
+    /// A single pending request. The store's atomic remove guarantees the continuation is resumed exactly once.
     private final class PendingRequest: @unchecked Sendable {
         private let continuation: CheckedContinuation<[String: Any], Error>
         init(_ continuation: CheckedContinuation<[String: Any], Error>) {
@@ -47,7 +48,7 @@ public final class CompanionProtocol: CompanionConnectionListener {
         func resume(throwing error: Error) { continuation.resume(throwing: error) }
     }
 
-    /// 待响应请求存储。os_unfair_lock 保护(临界区极短,无递归)。
+    /// Pending-request store, protected by os_unfair_lock (critical sections are very short, no recursion).
     private final class PendingStore: @unchecked Sendable {
         private var pending: [RequestId: PendingRequest] = [:]
         private var lock = os_unfair_lock()
@@ -74,7 +75,7 @@ public final class CompanionProtocol: CompanionConnectionListener {
         }
     }
 
-    /// 连接断开回调(由连接层触发,可能来自任意线程)。
+    /// Disconnect callback (triggered by the connection layer, may come from any thread).
     public var onDisconnect: (() -> Void)?
 
     private var xid: Int
@@ -89,9 +90,9 @@ public final class CompanionProtocol: CompanionConnectionListener {
         connection.listener = self
     }
 
-    // MARK: - 生命周期
+    // MARK: - Lifecycle
 
-    /// 连接设备;若带凭证则执行 Pair-Verify 并启用连接层加密。
+    /// Connects to the device; if credentials are present, runs Pair-Verify and enables connection-layer encryption.
     public func start(credentials: HapCredentials?) async throws {
         guard !isStarted else { return }
         isStarted = true
@@ -114,9 +115,9 @@ public final class CompanionProtocol: CompanionConnectionListener {
         connection.close()
     }
 
-    // MARK: - 请求/响应
+    // MARK: - Request/response
 
-    /// 认证帧交换。*_Start 帧的响应以 *_Next 到达,故按 *_Next 派发。
+    /// Authentication frame exchange. Responses to *_Start frames arrive as *_Next, so dispatch by *_Next.
     public func exchangeAuth(_ frameType: FrameType, _ data: [String: Any], timeout: TimeInterval = 5) async throws -> [String: Any] {
         let identifier: FrameType
         switch frameType {
@@ -127,7 +128,7 @@ public final class CompanionProtocol: CompanionConnectionListener {
         return try await exchangeGeneric(frameType, data, identifier: .auth(identifier), timeout: timeout)
     }
 
-    /// 普通 OPACK 消息交换(带 XID)。
+    /// Regular OPACK message exchange (with XID).
     public func exchangeOpack(_ frameType: FrameType, _ data: [String: Any], timeout: TimeInterval = 5) async throws -> [String: Any] {
         var data = data
         let currentXid = nextXid()
@@ -135,7 +136,7 @@ public final class CompanionProtocol: CompanionConnectionListener {
         return try await exchangeGeneric(frameType, data, identifier: .opack(currentXid), timeout: timeout)
     }
 
-    /// 发送 OPACK 消息(不等待响应)。自动补齐 _x。
+    /// Sends an OPACK message (no response awaited). Fills in _x automatically.
     public func sendOpack(_ frameType: FrameType, _ data: [String: Any]) throws {
         var data = data
         if data["_x"] == nil {
@@ -157,7 +158,7 @@ public final class CompanionProtocol: CompanionConnectionListener {
     ) async throws -> [String: Any] {
         try await withCheckedThrowingContinuation { continuation in
             let request = PendingRequest(continuation)
-            // 先注册再发送,确保响应到达前占位已就绪。
+            // Register before sending, so the placeholder is ready before the response arrives.
             pending.set(identifier, request)
 
             do {
@@ -167,7 +168,7 @@ public final class CompanionProtocol: CompanionConnectionListener {
                 return
             }
 
-            // 超时兜底:到点未响应则移除并报超时。
+            // Timeout fallback: if no response arrives in time, remove and report a timeout.
             Task {
                 try? await Task.sleep(nanoseconds: UInt64(timeout * 1_000_000_000))
                 pending.remove(identifier)?.resume(throwing: CompanionError.timeout)
@@ -189,14 +190,14 @@ public final class CompanionProtocol: CompanionConnectionListener {
     }
 
     public func connectionDidClose(_ connection: CompanionConnection) {
-        // 断开:让所有待响应请求以错误结束(避免挂起),并通知上层。
+        // On disconnect: fail all pending requests with an error (to avoid hanging) and notify the upper layer.
         for request in pending.removeAll() {
             request.resume(throwing: CompanionError.notConnected)
         }
         onDisconnect?()
     }
 
-    /// 恢复一个待响应请求。响应带 `_em` 字段表示设备报错(pyatv 抛 ProtocolError)。
+    /// Resumes a pending request. A response carrying the `_em` field means the device reported an error (pyatv throws ProtocolError).
     private func resume(_ request: PendingRequest?, with dict: [String: Any]) {
         guard let request else { return }
         if let errorMessage = dict["_em"] {
@@ -213,7 +214,7 @@ public final class CompanionProtocol: CompanionConnectionListener {
 
         switch messageType {
         case .event:
-            // 事件:上报 delegate。
+            // Events: report to the delegate.
             if let name = data["_i"] as? String, let content = data["_c"] as? [String: Any] {
                 delegate?.companionProtocol(self, didReceiveEvent: name, content: content)
             }
@@ -221,7 +222,7 @@ public final class CompanionProtocol: CompanionConnectionListener {
             guard let responseXid = data["_x"] as? Int64 else { return }
             resume(pending.remove(.opack(Int(responseXid))), with: data)
         case .request:
-            // 设备发起的请求(如按键查询),Phase 3 再处理。
+            // Requests initiated by the device (e.g. key queries); handled in Phase 3.
             break
         }
     }

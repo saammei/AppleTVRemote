@@ -2,7 +2,7 @@ import Foundation
 import CryptoKit
 import AppleTVControl
 
-/// 内存 mock 连接:捕获客户端发送的帧,并按脚本回放服务器响应。
+/// In-memory mock connection: captures frames sent by the client and replays scripted server responses.
 final class MockCompanionConnection: CompanionConnection {
     var isConnected = false
     weak var listener: CompanionConnectionListener?
@@ -27,7 +27,7 @@ final class MockCompanionConnection: CompanionConnection {
     }
 }
 
-/// 解包 sent payload(OPACK),提取 _pd 字段并解码 TLV。
+/// Unpacks the sent payload (OPACK), extracts the _pd field, and decodes TLV.
 func sentTLV(_ payload: Data) -> [UInt8: Data]? {
     guard let (value, _) = OPACK.unpack(payload),
           let dict = value as? [String: Any],
@@ -36,58 +36,58 @@ func sentTLV(_ payload: Data) -> [UInt8: Data]? {
 }
 
 func runCompanionTests() async {
-    runSuite("连接层帧编解码") {
-        // 无加密:header 长度字段 3 字节大端。
+    runSuite("connection-layer frame encoding/decoding") {
+        // Unencrypted: header length field is 3-byte big-endian.
         let payload = Data([0x01, 0x02, 0x03])
         let frame = try! CompanionFrame.encode(frameType: .uOpack, payload: payload, cipher: nil)
-        expectHexEqual([UInt8](frame), [UInt8](Data(hex: "07000003")! + payload), "无加密帧")
+        expectHexEqual([UInt8](frame), [UInt8](Data(hex: "07000003")! + payload), "unencrypted frame")
 
-        // 解码回原始值。
+        // Decode back to the original values.
         guard let (ft, decoded, consumed) = CompanionFrame.decode(from: frame) else {
-            expect(false, "decode 返回 nil"); return
+            expect(false, "decode returned nil"); return
         }
-        expectEqual(ft, .uOpack, "decode 帧类型")
+        expectEqual(ft, .uOpack, "decode frame type")
         expectEqual(decoded, payload, "decode payload")
         expectEqual(consumed, 7, "decode consumed")
 
-        // 缓冲不足返回 nil。
-        expectEqual(CompanionFrame.decode(from: Data([0x07, 0x00])) == nil, true, "缓冲不足返回 nil")
+        // Insufficient buffer returns nil.
+        expectEqual(CompanionFrame.decode(from: Data([0x07, 0x00])) == nil, true, "insufficient buffer returns nil")
     }
 
-    runSuite("连接层加密 round-trip") {
-        // 两端:发送方的 outKey == 接收方的 inKey,反之亦然。
+    runSuite("connection-layer encryption round-trip") {
+        // Both ends: sender's outKey == receiver's inKey, and vice versa.
         let keyA = Data(repeating: 0x01, count: 32)
         let keyB = Data(repeating: 0x02, count: 32)
         let client = CompanionCipher(outKey: keyA, inKey: keyB)
         let server = CompanionCipher(outKey: keyB, inKey: keyA)
 
-        // client 加密 → server 解密(counter 从 0 独立递增)。
+        // Client encrypts → server decrypts (counters increment independently from 0).
         let msg1 = Data("hello world".utf8)
         let frame1 = try! CompanionFrame.encode(frameType: .pOpack, payload: msg1, cipher: client)
         guard let (ft1, body1, _) = CompanionFrame.decode(from: frame1) else {
-            expect(false, "加密帧 decode 失败"); return
+            expect(false, "encrypted frame decode failed"); return
         }
-        expectEqual(ft1, .pOpack, "加密帧类型")
-        expectEqual(body1.count, msg1.count + 16, "加密帧长度含 tag")
+        expectEqual(ft1, .pOpack, "encrypted frame type")
+        expectEqual(body1.count, msg1.count + 16, "encrypted frame length includes tag")
         let header1 = frame1.prefix(4)
         let decrypted1 = try! server.decrypt(body1, aad: Data(header1))
-        expectEqual(decrypted1, msg1, "加密 round-trip")
+        expectEqual(decrypted1, msg1, "encrypted round-trip")
 
-        // 第二条消息:nonce 递增,仍能正确解密。
+        // Second message: nonce increments, still decrypts correctly.
         let msg2 = Data("second".utf8)
         let frame2 = try! CompanionFrame.encode(frameType: .pOpack, payload: msg2, cipher: client)
         let (_, body2, _) = CompanionFrame.decode(from: frame2)!
         let header2 = frame2.prefix(4)
         let decrypted2 = try! server.decrypt(body2, aad: Data(header2))
-        expectEqual(decrypted2, msg2, "第二条加密 round-trip")
+        expectEqual(decrypted2, msg2, "second encrypted round-trip")
 
-        // 空 payload 不加密(与 pyatv 一致)。
+        // Empty payload is not encrypted (consistent with pyatv).
         let emptyFrame = try! CompanionFrame.encode(frameType: .noOp, payload: Data(), cipher: client)
-        expectEqual(emptyFrame, Data(hex: "01000000")!, "空 payload 帧")
+        expectEqual(emptyFrame, Data(hex: "01000000")!, "empty payload frame")
     }
 
-    await runSuiteAsync("Pair-Setup 端到端") {
-        // 固定输入与 Python 生成器(/tmp/gen_ps_transcript.py)一致。
+    await runSuiteAsync("Pair-Setup end-to-end") {
+        // Fixed inputs match the Python generator (/tmp/gen_ps_transcript.py).
         let clientSeed = Data(repeating: 0x11, count: 32)
         let verifySeed = Data(repeating: 0x22, count: 32)
         let clientId = Data(hex: "31323334353637382d313233342d313233342d313233342d313233343536373839616263")!
@@ -106,7 +106,7 @@ func runCompanionTests() async {
         let proto = CompanionProtocol(connection: mock, srp: srp)
         let setup = CompanionPairSetupProcedure(proto, srp)
 
-        // 脚本化服务器响应:M2(salt+B)、M4(proof)、M6(encryptedData)。
+        // Scripted server responses: M2 (salt+B), M4 (proof), M6 (encryptedData).
         mock.enqueue(.psNext, OPACK.pack([
             "_pd": TLV8.encode([
                 (TLV8Tag.salt.rawValue, salt),
@@ -131,43 +131,44 @@ func runCompanionTests() async {
 
         try await setup.startPairing(authPrivateSeed: clientSeed, verifyPrivateSeed: verifySeed)
 
-        // M1(PS_Start):method=0x00, seqNo=0x01。
-        expectEqual(mock.sentFrames.count, 1, "M1 发送后 sent 数")
-        expectEqual(mock.sentFrames[0].0, .psStart, "M1 帧类型")
+        // M1 (PS_Start): method=0x00, seqNo=0x01.
+        expectEqual(mock.sentFrames.count, 1, "sent count after M1")
+        expectEqual(mock.sentFrames[0].0, .psStart, "M1 frame type")
         if let tlv1 = sentTLV(mock.sentFrames[0].1) {
             expectEqual(tlv1[TLV8Tag.method.rawValue], Data([0x00]), "M1 method")
             expectEqual(tlv1[TLV8Tag.seqNo.rawValue], Data([0x01]), "M1 seqNo")
         } else {
-            expect(false, "M1 _pd 解析失败")
+            expect(false, "M1 _pd parse failed")
         }
 
         let creds = try await setup.finishPairing(pin: "1234")
 
-        // M3(PS_Next):seqNo=0x03, publicKey=A, proof=M(与 Python 逐字节一致)。
-        expectEqual(mock.sentFrames.count, 3, "完成配对后 sent 数")
-        expectEqual(mock.sentFrames[1].0, .psNext, "M3 帧类型")
+        // M3 (PS_Next): seqNo=0x03, publicKey=A, proof=M (byte-identical to Python).
+        expectEqual(mock.sentFrames.count, 3, "sent count after pairing completes")
+        expectEqual(mock.sentFrames[1].0, .psNext, "M3 frame type")
         if let tlv3 = sentTLV(mock.sentFrames[1].1) {
             expectEqual(tlv3[TLV8Tag.seqNo.rawValue], Data([0x03]), "M3 seqNo")
             expectHexEqual([UInt8](tlv3[TLV8Tag.publicKey.rawValue] ?? Data()), [UInt8](clientA), "M3 publicKey == A")
             expectHexEqual([UInt8](tlv3[TLV8Tag.proof.rawValue] ?? Data()), [UInt8](clientM), "M3 proof == M")
         } else {
-            expect(false, "M3 _pd 解析失败")
+            expect(false, "M3 _pd parse failed")
         }
 
-        // M5(PS_Next):seqNo=0x05, encryptedData 解密后含 identifier/publicKey/有效签名。
-        expectEqual(mock.sentFrames[2].0, .psNext, "M5 帧类型")
+        // M5 (PS_Next): seqNo=0x05, decrypted encryptedData contains identifier/publicKey/a valid signature.
+        expectEqual(mock.sentFrames[2].0, .psNext, "M5 frame type")
         guard let tlv5 = sentTLV(mock.sentFrames[2].1),
               let m5Encrypted = tlv5[TLV8Tag.encryptedData.rawValue] else {
-            expect(false, "M5 _pd/encryptedData 解析失败"); return
+            expect(false, "M5 _pd/encryptedData parse failed"); return
         }
         expectEqual(tlv5[TLV8Tag.seqNo.rawValue], Data([0x05]), "M5 seqNo")
 
-        // 独立计算 SRP 会话密钥,解密 M5 验证其内容(不逐字节比对,因 Ed25519 签名 nonce 派生不同)。
+        // Independently compute the SRP session key and decrypt M5 to verify its contents
+        // (no byte-for-byte comparison, since Ed25519 signature nonce derivation differs).
         guard let srpResult = SRP6a.process(
             username: "Pair-Setup", password: "1234",
             clientPrivateBytes: clientSeed, serverPublicBytes: serverB, salt: salt
         ) else {
-            expect(false, "SRP6a 独立计算失败"); return
+            expect(false, "independent SRP6a computation failed"); return
         }
         let sessionKey = HKDF.sha512(
             ikm: srpResult.sessionKey,
@@ -190,15 +191,15 @@ func runCompanionTests() async {
         deviceInfo.append(authPublic)
         let edPub = try Curve25519.Signing.PublicKey(rawRepresentation: authPublic)
         if let sig = m5TLV[TLV8Tag.signature.rawValue] {
-            expect(edPub.isValidSignature(sig, for: deviceInfo), "M5 签名验证")
+            expect(edPub.isValidSignature(sig, for: deviceInfo), "M5 signature validation")
         } else {
-            expect(false, "M5 缺少 signature")
+            expect(false, "M5 missing signature")
         }
 
-        // 凭证与 Python 生成器一致。
-        expectHexEqual([UInt8](creds.ltpk), [UInt8](atvLtpk), "凭证 ltpk")
-        expectHexEqual([UInt8](creds.ltsk), [UInt8](clientSeed), "凭证 ltsk == client seed")
-        expectHexEqual([UInt8](creds.atvId), [UInt8](atvId), "凭证 atvId")
-        expectHexEqual([UInt8](creds.clientId), [UInt8](clientId), "凭证 clientId")
+        // Credentials match the Python generator.
+        expectHexEqual([UInt8](creds.ltpk), [UInt8](atvLtpk), "credentials ltpk")
+        expectHexEqual([UInt8](creds.ltsk), [UInt8](clientSeed), "credentials ltsk == client seed")
+        expectHexEqual([UInt8](creds.atvId), [UInt8](atvId), "credentials atvId")
+        expectHexEqual([UInt8](creds.clientId), [UInt8](clientId), "credentials clientId")
     }
 }

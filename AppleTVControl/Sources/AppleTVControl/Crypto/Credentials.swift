@@ -1,16 +1,17 @@
-// HAP 配对凭证。对应 pyatv 的 HapCredentials。
-// 配对完成后,这四项信息用于后续 Pair-Verify 重新建立加密会话。
+// HAP pairing credentials. Corresponds to pyatv's HapCredentials.
+// After pairing completes, these four values are used by subsequent Pair-Verify
+// to re-establish an encrypted session.
 
 import Foundation
 
 public struct HapCredentials: Equatable {
-    /// Apple TV 的长期公钥(Ed25519,32 字节)。
+    /// Apple TV's long-term public key (Ed25519, 32 bytes).
     public let ltpk: Data
-    /// 本机(控制器)的长期私钥(Ed25519 seed,32 字节)。
+    /// This device's (controller) long-term private key (Ed25519 seed, 32 bytes).
     public let ltsk: Data
-    /// Apple TV 的配对标识。
+    /// Apple TV's pairing identifier.
     public let atvId: Data
-    /// 本机(控制器)的配对标识(client_id)。
+    /// This device's (controller) pairing identifier (client_id).
     public let clientId: Data
 
     public init(ltpk: Data, ltsk: Data, atvId: Data, clientId: Data) {
@@ -20,13 +21,13 @@ public struct HapCredentials: Equatable {
         self.clientId = clientId
     }
 
-    /// 序列化为 "ltpk:ltsk:atv_id:client_id"(各字段 hex),与 pyatv 的 str 一致。
-    /// 用于持久化到文件或设置。
+    /// Serializes to "ltpk:ltsk:atv_id:client_id" (each field hex), matching pyatv's str.
+    /// Used for persistence to a file or settings.
     public var detailString: String {
         [ltpk, ltsk, atvId, clientId].map { $0.hex }.joined(separator: ":")
     }
 
-    /// 从 detailString 解析。
+    /// Parses from a detailString.
     public static func parse(_ string: String) -> HapCredentials? {
         let parts = string.split(separator: ":").map(String.init)
         guard parts.count == 4,

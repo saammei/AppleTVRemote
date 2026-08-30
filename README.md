@@ -1,134 +1,140 @@
-# Apple TV 遥控器（macOS）
+# Apple TV Remote (macOS)
 
-一个 macOS 菜单栏应用，用来在局域网内控制 Apple TV。SwiftUI 界面 + 原生 Swift 协议栈
-（`AppleTVControl`），不依赖 Python，下载即用。
+A macOS menu bar app for controlling Apple TV on the local network. SwiftUI UI + native Swift
+protocol stack (`AppleTVControl`), no Python dependency, download and run.
 
-## 功能
+## Features
 
-- 自动发现局域网中的 Apple TV（mDNS 扫描）
-- 首次配对（Apple TV 屏幕显示 4 位 PIN 码），凭据保存在本机
-- 遥控：方向键、确认、返回、主屏幕、播放/暂停、上一首/下一首、音量、电源、快进/快退
-- 应用启动器（从 Apple TV 已安装应用列表启动）
-- 正在播放信息（标题、艺术家、封面、进度）
-- 启动后自动重连上次连接的电视
-- 面板打开时直接用 Mac 键盘控制
+- Auto-discover Apple TVs on the local network (mDNS scan)
+- First-time pairing (Apple TV shows a 4-digit PIN on screen), credentials stored locally
+- Remote control: directional keys, select, back, home, play/pause, previous/next track, volume,
+  power, fast-forward/rewind
+- App launcher (launch apps from the list of installed apps on the Apple TV)
+- Now playing info (title, artist, artwork, progress)
+- Auto-reconnect to the last connected TV on launch
+- Use your Mac keyboard to control when the panel is open
 
-## 安装
+## Installation
 
-需要 Apple Silicon 芯片的 Mac(M1 及更新;Intel 机型暂不支持)。
+Requires an Apple Silicon Mac (M1 or newer; Intel models are not supported yet).
 
-1. 到 [Releases](../../releases/latest) 下载最新版 `AppleTVRemote-*.dmg`
-2. 打开 DMG，把 `AppleTVRemote` 拖进「应用程序」
-3. 首次打开：应用没有使用 Apple 开发者签名（免费发布），macOS 会拦截一次，
-   放行后下次就能正常打开。任选一种方式：
+1. Download the latest `AppleTVRemote-*.dmg` from [Releases](../../releases/latest)
+2. Open the DMG and drag `AppleTVRemote` into Applications
+3. First launch: the app is not signed with an Apple Developer identity (distributed free), so
+   macOS blocks it once; after you approve it, it will open normally from then on. Pick one of
+   these two ways:
 
-   **方式一：通过系统设置放行（推荐，无需终端）**
+   **Option 1: Approve via System Settings (recommended, no terminal needed)**
 
-   1. 双击图标。如果弹出「Apple 无法验证 AppleTVRemote 是否包含可能危害 Mac
-      安全或泄漏隐私的恶意软件」，点 **「好」**
-   2. 打开 **系统设置 → 隐私与安全性**，往下滚到底部的「安全性」区域
-   3. 找到列表中的 **AppleTVRemote**，点右侧的 **「仍要打开」**
-   4. 在弹出的确认框里再点一次 **「打开」**，即可正常使用
+   1. Double-click the icon. If a dialog says Apple can't verify AppleTVRemote is free of
+      malware that could harm your Mac or leak your privacy, click **OK**
+   2. Open **System Settings → Privacy & Security**, scroll down to the Security section
+   3. Find **AppleTVRemote** in the list and click **Open Anyway** on the right
+   4. Click **Open** once more in the confirmation dialog — the app now works normally
 
-   > ⚠️ 如果在第 2 步的列表里暂时没看到 AppleTVRemote，是正常现象——回到
-   > 「应用程序」里**再双击一次**图标，然后重新打开系统设置，选项就会出现。
+   > ⚠️ If you don't see AppleTVRemote in the list at step 2, that's normal — go back to
+   > Applications and **double-click the icon again**, then reopen System Settings and the option
+   > will appear.
 
-   **方式二：命令行放行**
+   **Option 2: Approve from the command line**
 
    ```bash
    xattr -dr com.apple.quarantine "/Applications/AppleTVRemote.app"
    ```
 
-4. 应用没有 Dock 图标，只在右上角菜单栏显示一个遥控器图标
+4. The app has no Dock icon; it only shows a remote icon in the menu bar at the top-right
 
-## 首次使用
+## First Use
 
-1. 点菜单栏遥控器图标 → 右上角齿轮（设置）
-2. 点「扫描设备」，选中你的 Apple TV
-3. 点「配对」，Apple TV 屏幕上会显示 4 位 PIN 码，输入后确认
-4. 点「连接」。之后每次启动应用会自动重连
+1. Click the menu bar remote icon → the gear icon (Settings) in the top-right
+2. Click "Scan for Devices", then select your Apple TV
+3. Click "Pair" — the Apple TV shows a 4-digit PIN on screen; enter it and confirm
+4. Click "Connect". On subsequent launches the app auto-reconnects.
 
-> 首次扫描时 macOS 会询问「查找并连接到本地网络上的设备」，请点**允许**；
-> 如果没弹窗，去 系统设置 → 隐私与安全性 → 本地网络 里手动勾选本应用。
+> On the first scan, macOS asks to find and connect to devices on your local network — click
+> **Allow**. If no dialog appears, go to System Settings → Privacy & Security → Local Network and
+> enable this app manually.
 
-## 键盘控制（面板打开时）
+## Keyboard Control (While the Panel Is Open)
 
-| 按键 | 功能 |
+| Key | Function |
 |---|---|
-| ↑ ↓ ← → | 方向键 |
-| 回车 | 确认 |
-| Esc | 返回 |
-| 空格 | 播放 / 暂停 |
-| ⌘↑ / ⌘↓ | 音量加 / 减 |
-| ⌘→ / ⌘← | 下一首 / 上一首 |
-| ⌥→ / ⌥← | 快进 / 快退 10 秒 |
+| ↑ ↓ ← → | Directional keys |
+| Enter | Select |
+| Esc | Back |
+| Space | Play / Pause |
+| ⌘↑ / ⌘↓ | Volume up / down |
+| ⌘→ / ⌘← | Next / Previous track |
+| ⌥→ / ⌥← | Fast-forward / Rewind 10 s |
 
-## 架构
+## Architecture
 
 ```
-┌──────────────────────────┐        ┌─────────────────────────────┐
-│  SwiftUI 菜单栏应用       │  直接调用 │  AppleTVControl (Swift 包)     │
-│  RemoteView / Settings   │ ───────► │  Discovery / Companion / MRP │
-│  ATVBridge               │  进程内    └──────────────┬──────────────┘
-└──────────────────────────┘                          │ Companion / MRP 协议
-                                                      ▼
-                                                    Apple TV
+┌────────────────────────────┐           ┌──────────────────────────────┐
+│  SwiftUI Menu Bar App      │  direct   │  AppleTVControl (Swift pkg)  │
+│  RemoteView / Settings     │ ────────► │  Discovery / Companion / MRP │
+│  ATVBridge                 │ in-process └──────────────┬─────────────────┘
+└────────────────────────────┘           │ Companion / MRP protocol
+                                                         ▼
+                                                     Apple TV
 ```
 
-应用不再启动 Python 子进程。`ATVBridge` 直接调用本地 Swift 包 `AppleTVControl`，
-在进程内完成 mDNS 发现、Companion 配对（SRP + Curve25519）、连接与控制，以及
-MRP 正在播放元数据。发布包体积因此从 ~40MB 降到几 MB。
+The app no longer spawns a Python subprocess. `ATVBridge` directly calls the local Swift package
+`AppleTVControl`, doing mDNS discovery, Companion pairing (SRP + Curve25519), connection and
+control, and MRP now-playing metadata all in-process. That is why the release package dropped
+from ~40MB to a few MB.
 
-## 从源码构建
+## Build from Source
 
 ```bash
-# 构建(命令行;首次会自动解析 Swift 包依赖 swift-protobuf / BigInt)
+# Build from the command line (resolves Swift package deps swift-protobuf / BigInt on first build)
 xcodebuild -project AppleTVRemote.xcodeproj -scheme AppleTVRemote \
   -configuration Debug -derivedDataPath DerivedData build
 
-# 或直接在 Xcode 里 ⌘R 运行
+# Or just run with ⌘R in Xcode
 open AppleTVRemote.xcodeproj
 ```
 
-想换应用图标:改 `scripts/make_icon.swift` 里的渐变色/符号,运行
-`swift scripts/make_icon.swift` 重新生成。
+To change the app icon: edit the gradient colors/symbols in `scripts/make_icon.swift`, then run
+`swift scripts/make_icon.swift` to regenerate.
 
-## 发布新版本
+## Release a New Version
 
 ```bash
 git tag v1.1.0
 git push origin v1.1.0
 ```
 
-CI(.github/workflows/release.yml)会自动:构建 arm64 应用 → 打包 DMG → 发布 GitHub Release。
+CI (`.github/workflows/release.yml`) automatically: builds the arm64 app → packages the DMG →
+publishes a GitHub Release.
 
-## 常见问题
+## FAQ
 
-### 扫描不到 Apple TV
+### Can't Find the Apple TV
 
-- 确认 Mac 和 Apple TV 在同一个局域网（同一路由器/VLAN）
-- 确认系统已允许本应用访问本地网络(见「首次使用」)
-- 公司网络或访客网络可能禁止 mDNS 组播
+- Make sure the Mac and Apple TV are on the same local network (same router/VLAN)
+- Make sure this app is allowed to access the local network in System Settings (see First Use)
+- Corporate or guest networks may block mDNS multicast
 
-### 连接失败 / 配对失败
+### Connection / Pairing Fails
 
-- 连接前确保已在设置里完成「配对」（未配对时连接会提示）
-- 重新配对：先在设置里「断开」，再对同一设备「配对」
-- 如果之前配对过但凭据失效，删掉
-  `~/Library/Application Support/AppleTVRemote/credentials.json` 后重新配对
+- Make sure you've paired in Settings before connecting (connecting while unpaired shows a prompt)
+- To re-pair: Disconnect in Settings first, then Pair the same device again
+- If credentials from a previous pairing are stale, delete
+  `~/Library/Application Support/AppleTVRemote/credentials.json` and pair again
 
-### 音量按钮无效
+### Volume Buttons Don't Work
 
-Apple TV 的音量通常由 HDMI-CEC/红外控制接收器完成，部分设备/协议不提供音量
-控制。方向键、确认、菜单、播放暂停等核心按键不受影响。
+Apple TV volume is usually handled by the HDMI-CEC/IR receiver; some devices/protocols don't
+provide volume control. Core buttons — directional keys, select, menu, play/pause — are unaffected.
 
-### 唤醒
+### Wake-Up
 
-Apple TV 处于睡眠时可能无法连接。可以先点「连接」触发唤醒（Companion 协议会
-尝试唤醒），或在设置里再次扫描后连接。
+An Apple TV that's asleep may refuse connections. Try clicking Connect first to trigger a wake
+(the Companion protocol attempts one), or scan again in Settings and connect.
 
-## 隐私
+## Privacy
 
-配对凭据（相当于这把 Mac 在 Apple TV 上的「钥匙」）只保存在本机
-`~/Library/Application Support/AppleTVRemote/credentials.json`，不会上传到任何地方。
-应用不联网，不需要网络之外的任何权限。
+Pairing credentials (the equivalent of this Mac's key on your Apple TV) are stored only locally in
+`~/Library/Application Support/AppleTVRemote/credentials.json` and never uploaded anywhere. The
+app doesn't phone home and needs no permissions beyond the local network.

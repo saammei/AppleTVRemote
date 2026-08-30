@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 
 struct SettingsView: View {
     @EnvironmentObject private var bridge: ATVBridge
@@ -7,7 +8,7 @@ struct SettingsView: View {
         TabView {
             DeviceSettingsView()
                 .environmentObject(bridge)
-                .tabItem { Label("设备", systemImage: "tv") }
+                .tabItem { Label("Devices", systemImage: "tv") }
         }
         .frame(width: 580, height: 480)
     }
@@ -22,22 +23,22 @@ private struct DeviceSettingsView: View {
         VStack(alignment: .leading, spacing: 14) {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Apple TV 遥控器")
+                    Text("Apple TV Remote")
                         .font(.title2.bold())
                     Text(bridge.connectionState == .connected
-                         ? "已连接：\(bridge.currentDevice?.name ?? "")"
-                         : "在局域网中扫描并配对你的 Apple TV")
+                         ? "Connected: \(bridge.currentDevice?.name ?? "")"
+                         : "Scan and pair your Apple TV on the local network")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
                 Spacer()
-                Button("扫描设备") {
+                Button("Scan") {
                     Task { await bridge.scanDevices() }
                 }
                 .disabled(bridge.isScanning)
 
                 if bridge.currentDevice != nil {
-                    Button("断开") {
+                    Button("Disconnect") {
                         Task { await bridge.disconnect() }
                     }
                 }
@@ -46,7 +47,7 @@ private struct DeviceSettingsView: View {
             if bridge.isScanning {
                 HStack(spacing: 8) {
                     ProgressView().controlSize(.small)
-                    Text("正在扫描局域网…").font(.caption)
+                    Text("Scanning local network…").font(.caption)
                 }
             }
 
@@ -57,12 +58,31 @@ private struct DeviceSettingsView: View {
                     .textSelection(.enabled)
             }
 
+            if let scanError = bridge.scanError {
+                Text(scanError)
+                    .font(.caption)
+                    .foregroundStyle(.red)
+                    .textSelection(.enabled)
+            }
+
             if bridge.devices.isEmpty {
-                ContentUnavailableView(
-                    "未发现 Apple TV",
-                    systemImage: "tv.slash",
-                    description: Text("确认 Apple TV 已开机并在同一局域网，然后点击“扫描设备”。\n若仍找不到，请检查 系统设置 → 隐私与安全性 → 本地网络 是否已允许本应用。")
-                )
+                VStack(spacing: 14) {
+                    ContentUnavailableView(
+                        "No Apple TV found",
+                        systemImage: "tv.slash",
+                        description: Text(bridge.localNetworkDenied
+                             ? "This app does not have Local Network permission, so it cannot scan the network."
+                             : "Make sure the Apple TV is on and on the same local network, then click Scan.")
+                    )
+                    // On macOS 15+, if the user previously denied Local Network permission,
+                    // the system will not prompt again; users must be guided to enable it
+                    // manually in System Settings.
+                    Button {
+                        openLocalNetworkSettings()
+                    } label: {
+                        Label("Open Local Network Settings", systemImage: "lock.shield")
+                    }
+                }
                 .frame(maxHeight: .infinity)
             } else {
                 List(bridge.devices) { device in
@@ -71,7 +91,7 @@ private struct DeviceSettingsView: View {
                 .listStyle(.inset)
             }
 
-            Text("配对说明：点击“配对”后，Apple TV 屏幕会显示 4 位 PIN 码，在这里输入即可。之后不需要再次配对。")
+            Text("Pairing: click Pair, then enter the 4-digit PIN shown on your Apple TV screen. Pairing is only needed once.")
                 .font(.caption2)
                 .foregroundStyle(.secondary)
         }
@@ -81,6 +101,13 @@ private struct DeviceSettingsView: View {
                 Task { await bridge.scanDevices() }
             }
         }
+    }
+
+    /// Opens the Privacy & Security → Local Network settings pane (macOS 15+).
+    private func openLocalNetworkSettings() {
+        guard let url = URL(string: "x-apple.systempreferences:com.apple.LocalNetwork-Settings.extension")
+        else { return }
+        NSWorkspace.shared.open(url)
     }
 
     private func deviceRow(_ device: ATVDevice) -> some View {
@@ -97,16 +124,16 @@ private struct DeviceSettingsView: View {
             }
             Spacer()
             if bridge.currentDevice?.identifier == device.identifier {
-                Label("已连接", systemImage: "checkmark.circle.fill")
+                Label("Connected", systemImage: "checkmark.circle.fill")
                     .font(.caption)
                     .foregroundStyle(.green)
             } else {
                 if pairingDeviceID == device.identifier && bridge.pairingAwaitingPin {
                     HStack {
-                        TextField("PIN 码", text: $pin)
+                        TextField("PIN", text: $pin)
                             .textFieldStyle(.roundedBorder)
                             .frame(width: 90)
-                        Button("确认") {
+                        Button("Confirm") {
                             Task {
                                 await bridge.pairFinish(pin: pin)
                                 pin = ""
@@ -114,19 +141,19 @@ private struct DeviceSettingsView: View {
                             }
                         }
                         .buttonStyle(.borderedProminent)
-                        Button("取消") {
+                        Button("Cancel") {
                             bridge.pairCancel()
                             pin = ""
                             pairingDeviceID = nil
                         }
                     }
                 } else {
-                    Button("配对") {
+                    Button("Pair") {
                         pairingDeviceID = device.identifier
                         Task { await bridge.pairBegin(device: device) }
                     }
                     .disabled(bridge.isPairing)
-                    Button("连接") {
+                    Button("Connect") {
                         Task { await bridge.connect(device: device) }
                     }
                     .disabled(bridge.isPairing)

@@ -24,11 +24,11 @@ struct RemoteView: View {
             }
             Divider()
             HStack {
-                Text("首次使用：打开设置 → 扫描 → 配对\n键盘：方向键移动 · 回车确认 · Esc 返回\n空格播放/暂停 · ⌘↑↓音量 · ⌘←→切歌 · ⌥←→快进退")
+                Text("First use: open Settings → Scan → Pair\nKeyboard: arrows to move · Return to select · Esc for back\nSpace play/pause · ⌘↑↓ volume · ⌘←→ track · ⌥←→ skip")
                     .font(.caption2)
                     .foregroundStyle(.secondary)
                 Spacer()
-                Button("退出") {
+                Button("Quit") {
                     bridge.stop()
                     NSApplication.shared.terminate(nil)
                 }
@@ -37,13 +37,21 @@ struct RemoteView: View {
                 .padding(.horizontal, 10)
                 .padding(.vertical, 4)
                 .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: 6))
-                .help("退出应用")
+                .help("Quit the app")
             }
         }
         .padding(16)
         .frame(width: 330)
         .onAppear {
-            // 面板打开期间挂载键盘监听；关闭时自动移除，不影响其他窗口。
+            // A MenuBarExtra(.window) panel does not activate the app by default and
+            // cannot reliably become the key window, so keyboard events (arrows/Return)
+            // would not be delivered to this app. Activate the app explicitly when the
+            // panel opens and make the panel the key window.
+            // Note: macOS 14+ ignores the ignoringOtherApps parameter; use the no-argument version.
+            NSApp.activate()
+            makePanelKey()
+
+            // Install the keyboard monitor while the panel is open; it is removed automatically on close, without affecting other windows.
             keyMonitor = PanelKeyMonitor { key in
                 guard bridge.connectionState == .connected else { return }
                 flashPressed(key)
@@ -64,7 +72,7 @@ struct RemoteView: View {
                 .fill(statusColor)
                 .frame(width: 9, height: 9)
             VStack(alignment: .leading, spacing: 1) {
-                Text(bridge.currentDevice?.name ?? "未连接 Apple TV")
+                Text(bridge.currentDevice?.name ?? "Not connected")
                     .font(.headline)
                     .lineLimit(1)
                 Text(statusText)
@@ -79,13 +87,31 @@ struct RemoteView: View {
                 Image(systemName: "gearshape")
             }
             .buttonStyle(PressScaleButtonStyle())
-            .help("显示/隐藏设置")
+            .help("Show/hide settings")
         }
     }
 
-    /// 设置窗口开关：点一下显示并置顶，再点一下隐藏。
-    /// openSettings 在 MenuBarExtra(LSUIElement)应用里不会自动把窗口带到最前，
-    /// 需要手动激活应用并 makeKeyAndOrderFront。
+    /// Makes the menu bar panel the key window. The panel may not be visible yet when it
+    /// first opens; retry with a delay if not found, up to 5 times (~0.5 s).
+    private func makePanelKey(attempt: Int = 0) {
+        DispatchQueue.main.async {
+            guard let panel = NSApp.windows.first(where: {
+                $0.isKind(of: NSPanel.self) && $0.isVisible
+            }) as? NSPanel else {
+                guard attempt < 5 else { return }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.makePanelKey(attempt: attempt + 1)
+                }
+                return
+            }
+            panel.becomesKeyOnlyIfNeeded = false
+            panel.makeKey()
+        }
+    }
+
+    /// Toggles the Settings window: click once to show and bring to front, click again to hide.
+    /// In a MenuBarExtra (LSUIElement) app, openSettings does not automatically bring the
+    /// window to the front, so the app must be activated and makeKeyAndOrderFront called manually.
     private func toggleSettings() {
         if let window = settingsWindow() {
             if window.isVisible {
@@ -96,7 +122,7 @@ struct RemoteView: View {
             }
         } else {
             openSettings()
-            // openSettings 异步创建窗口，等一拍再置顶
+            // openSettings creates the window asynchronously; wait one beat before bringing it to front
             DispatchQueue.main.async {
                 NSApp.activate(ignoringOtherApps: true)
                 self.settingsWindow()?.makeKeyAndOrderFront(nil)
@@ -104,7 +130,7 @@ struct RemoteView: View {
         }
     }
 
-    /// 设置窗口是标准 NSWindow；菜单栏弹窗是 NSPanel，排除之。
+    /// The Settings window is a standard NSWindow; the menu bar popover is an NSPanel, so exclude panels.
     private func settingsWindow() -> NSWindow? {
         NSApp.windows.first { !$0.isKind(of: NSPanel.self) && $0.canBecomeKey }
     }
@@ -122,13 +148,13 @@ struct RemoteView: View {
         switch bridge.connectionState {
         case .connected:
             let power = bridge.nowPlaying?.powerState.map { " · \($0)" } ?? ""
-            return "已连接\(power)"
+            return "Connected\(power)"
         case .connecting:
-            return "连接中…"
+            return "Connecting…"
         case .failed(let message):
             return message
         case .disconnected:
-            return "未连接"
+            return "Not connected"
         }
     }
 
@@ -192,22 +218,22 @@ struct RemoteView: View {
 
     private var actionRow: some View {
         HStack(spacing: 8) {
-            keyButton(.menu, label: "菜单")
-            iconButton("house.fill", key: .home, help: "主屏幕", action: { Task { await bridge.sendKey(.home) } })
-            iconButton("backward.end.fill", key: .previous, help: "上一个", action: { Task { await bridge.sendKey(.previous) } })
-            iconButton("playpause.fill", key: .playPause, help: "播放/暂停", action: { Task { await bridge.sendKey(.playPause) } })
-            iconButton("forward.end.fill", key: .next, help: "下一个", action: { Task { await bridge.sendKey(.next) } })
+            keyButton(.menu, label: "Menu")
+            iconButton("house.fill", key: .home, help: "Home", action: { Task { await bridge.sendKey(.home) } })
+            iconButton("backward.end.fill", key: .previous, help: "Previous", action: { Task { await bridge.sendKey(.previous) } })
+            iconButton("playpause.fill", key: .playPause, help: "Play/Pause", action: { Task { await bridge.sendKey(.playPause) } })
+            iconButton("forward.end.fill", key: .next, help: "Next", action: { Task { await bridge.sendKey(.next) } })
         }
     }
 
     private var volumeAndUtilityRow: some View {
         HStack(spacing: 8) {
-            iconButton("speaker.minus.fill", key: .volumeDown, help: "音量减", action: { Task { await bridge.volume("down") } })
-            iconButton("speaker.plus.fill", key: .volumeUp, help: "音量加", action: { Task { await bridge.volume("up") } })
+            iconButton("speaker.minus.fill", key: .volumeDown, help: "Volume Down", action: { Task { await bridge.volume("down") } })
+            iconButton("speaker.plus.fill", key: .volumeUp, help: "Volume Up", action: { Task { await bridge.volume("up") } })
 
             Menu {
                 if bridge.apps.isEmpty {
-                    Text("无应用列表（连接后自动加载）")
+                    Text("No app list (loads after connecting)")
                 }
                 ForEach(bridge.apps) { app in
                     Button(app.name) {
@@ -222,7 +248,7 @@ struct RemoteView: View {
             .menuStyle(.borderlessButton)
             .menuIndicator(.hidden)
             .fixedSize()
-            .help("启动应用")
+            .help("Launch App")
 
             Button {
                 let state = bridge.nowPlaying?.powerState
@@ -233,11 +259,11 @@ struct RemoteView: View {
             }
             .buttonStyle(PressScaleButtonStyle())
             .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: 8))
-            .help("电源")
+            .help("Power")
         }
     }
 
-    /// 键盘按键时短暂高亮并缩小对应按钮，提供视觉反馈。
+    /// Briefly highlights and shrinks the corresponding button while a key is pressed, for visual feedback.
     private func flashPressed(_ key: RemoteKey) {
         pressedKey = key
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.18) {
@@ -299,8 +325,9 @@ struct RemoteView: View {
     }
 }
 
-/// 在面板打开期间监听键盘事件（方向键 / 回车 / Esc），映射为 Apple TV 遥控按键。
-/// 事件被消费（返回 nil），避免焦点系统或默认 Esc 关闭行为干扰。
+/// Listens for keyboard events (arrows / Return / Esc) while the panel is open and maps
+/// them to Apple TV remote keys. Events are consumed (returning nil) so the focus system
+/// or the default Esc-close behavior does not interfere.
 final class PanelKeyMonitor {
     private var token: Any?
     private let onKey: (RemoteKey) -> Void
@@ -319,40 +346,44 @@ final class PanelKeyMonitor {
         }
     }
 
-    /// 返回 true 表示事件已被消费。
+    /// Returns true if the event was consumed.
     private func handle(_ event: NSEvent) -> Bool {
-        // 仅当焦点在菜单栏弹窗(类为 NSPanel)时拦截；设置窗口里的输入框不受影响。
-        guard NSApp.keyWindow?.isKind(of: NSPanel.self) == true,
-              // 忽略自动重复：桥接后端请求会排队，按住不放会造成按键堆积、松手后还在动。
-              !event.isARepeat
-        else { return false }
+        // Only intercept when focus is not in the Settings window (a standard NSWindow).
+        // Even if the MenuBarExtra panel cannot become the key window (keyWindow is nil),
+        // keyboard events should still be treated as panel-scene; let them through only when
+        // the Settings window is key, so controls like the PIN text field are not disturbed.
+        if let keyWindow = NSApp.keyWindow, !keyWindow.isKind(of: NSPanel.self) {
+            return false
+        }
+        // Ignore auto-repeat: bridge requests are queued, so holding a key down would pile up presses that keep firing after release.
+        guard !event.isARepeat else { return false }
 
         let flags = event.modifierFlags
         let key: RemoteKey?
 
         if flags.intersection([.command, .control, .option]).isEmpty {
             key = switch event.keyCode {
-            case 49: .playPause        // 空格 = 播放/暂停
+            case 49: .playPause        // space = play/pause
             case 123: .left
             case 124: .right
             case 125: .down
             case 126: .up
-            case 36, 76: .select       // 回车 / 小键盘回车
-            case 53: .menu             // Esc = 返回
+            case 36, 76: .select       // Return / numeric keypad Return
+            case 53: .menu             // Esc = back
             default: nil
             }
         } else if flags.contains(.command), flags.intersection([.control, .option]).isEmpty {
             key = switch event.keyCode {
-            case 123: .previous        // ⌘← = 上一首
-            case 124: .next            // ⌘→ = 下一首
-            case 125: .volumeDown      // ⌘↓ = 音量减
-            case 126: .volumeUp        // ⌘↑ = 音量加
+            case 123: .previous        // ⌘← = previous track
+            case 124: .next            // ⌘→ = next track
+            case 125: .volumeDown      // ⌘↓ = volume down
+            case 126: .volumeUp        // ⌘↑ = volume up
             default: nil
             }
         } else if flags.contains(.option), flags.intersection([.command, .control]).isEmpty {
             key = switch event.keyCode {
-            case 123: .skipBackward    // ⌥← = 快退 10 秒
-            case 124: .skipForward     // ⌥→ = 快进 10 秒
+            case 123: .skipBackward    // ⌥← = skip back 10 s
+            case 124: .skipForward     // ⌥→ = skip forward 10 s
             default: nil
             }
         } else {
@@ -365,7 +396,7 @@ final class PanelKeyMonitor {
     }
 }
 
-/// 按下时轻微缩小的按钮样式，让鼠标点击也有按压反馈。
+/// A button style that scales down slightly when pressed, so mouse clicks also get press feedback.
 struct PressScaleButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label

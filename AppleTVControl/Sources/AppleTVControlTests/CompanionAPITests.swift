@@ -1,27 +1,29 @@
-// CompanionAPI 控制层测试:在加密通道之上验证按键/媒体/电源/应用/订阅命令的
-// 消息结构与响应解析,以及 connect() 的完整会话初始化序列(含 Pair-Verify)。
+// CompanionAPI control-layer tests: verify message structure and response parsing for
+// button/media/power/app/subscription commands over the encrypted channel, plus the full
+// session initialization sequence of connect() (including Pair-Verify).
 //
-// 用内存 mock 连接(不加密)替代 TCP:mock 解析发送帧里的 _x/_i,按脚本回放响应。
-// 认证帧(Pair-Verify)由 PairVerifyServer 扮演设备端完成真实加密交换。
+// An in-memory mock connection (unencrypted) replaces TCP: the mock parses _x/_i in sent
+// frames and replays scripted responses. Auth frames (Pair-Verify) are handled by
+// PairVerifyServer playing the device side for a real encrypted exchange.
 
 import Foundation
 import CryptoKit
 import AppleTVControl
 
-/// 内存 mock 连接:OPACK 命令按 _i 回放 _c(缺省回空 _c),支持 _em 报错;
-/// 认证帧(PV_*)交给 authHandler(PairVerifyServer)。
+/// In-memory mock connection: OPACK commands replay _c keyed by _i (defaulting to an empty _c),
+/// and support _em errors; auth frames (PV_*) are delegated to authHandler (PairVerifyServer).
 final class AutoOpackConnection: CompanionConnection {
     var isConnected = false
     weak var listener: CompanionConnectionListener?
     private(set) var sentFrames: [(FrameType, Data)] = []
 
-    /// 命令响应内容: _i -> _c。
+    /// Command response content: _i -> _c.
     var opackContent: [String: [String: Any]] = [:]
-    /// 命令报错: _i -> 错误信息(回 _em)。
+    /// Command errors: _i -> error message (returned as _em).
     var opackErrors: [String: String] = [:]
-    /// 认证帧处理器(connect 测试用,扮演设备端)。
+    /// Auth frame handler (for connect tests, plays the device side).
     var authHandler: ((FrameType, Data) -> (FrameType, Data)?)?
-    /// 收到的 _interest 事件(fire-and-forget,不回)。
+    /// Received _interest events (fire-and-forget, no reply).
     private(set) var interestEvents: [[String: Any]] = []
 
     func connect() async throws { isConnected = true }
@@ -42,7 +44,7 @@ final class AutoOpackConnection: CompanionConnection {
               let dict = value as? [String: Any] else { return }
 
         let identifier = dict["_i"] as? String
-        // _interest 是事件,不等待响应。
+        // _interest is an event; no response is expected.
         if identifier == "_interest" {
             interestEvents.append(dict)
             return
@@ -65,7 +67,7 @@ final class AutoOpackConnection: CompanionConnection {
         }
     }
 
-    /// 解包第 index 帧,返回 (_i, _c, _t)。
+    /// Unpacks frame at index, returning (_i, _c, _t).
     func sentCommand(_ index: Int) -> (identifier: String, content: [String: Any], type: Int64)? {
         guard index < sentFrames.count,
               let (value, _) = OPACK.unpack(sentFrames[index].1),
@@ -75,9 +77,9 @@ final class AutoOpackConnection: CompanionConnection {
     }
 }
 
-/// 扮演设备的 Pair-Verify 服务端:与客户端(CompanionAPI.connect)完成真实加密交换。
+/// Plays the device-side Pair-Verify server: completes a real encrypted exchange with the client (CompanionAPI.connect).
 final class PairVerifyServer {
-    private let serverSigning: Curve25519.Signing.PrivateKey  // 设备长期签名密钥(ltpk)
+    private let serverSigning: Curve25519.Signing.PrivateKey  // device long-term signing key (ltpk)
     private let credentials: HapCredentials
     private var verifyPrivate: Curve25519.KeyAgreement.PrivateKey?
     private var sessionKey: Data?
@@ -137,7 +139,8 @@ final class PairVerifyServer {
     }
 
     private func handleM3() -> (FrameType, Data)? {
-        // 客户端 M3 已由客户端 verify1 加密;此处仅回空确认(客户端不校验该响应体)。
+        // The client's M3 is already encrypted by the client's verify1; here we just return an
+        // empty confirmation (the client doesn't validate this response body).
         return (.pvNext, OPACK.pack([:]))
     }
 }
@@ -158,110 +161,110 @@ func makeAPI(_ mock: AutoOpackConnection) -> CompanionAPI {
 }
 
 func runCompanionAPITests() async {
-    await runSuiteAsync("按键 press") {
+    await runSuiteAsync("button press") {
         let mock = AutoOpackConnection()
         let api = makeAPI(mock)
 
         try await api.press(.up)
 
-        expectEqual(mock.sentFrames.count, 2, "press 发送 2 帧")
+        expectEqual(mock.sentFrames.count, 2, "press sends 2 frames")
         let down = mock.sentCommand(0)
-        expectEqual(down?.identifier, "_hidC", "按下帧命令名")
-        expectEqual(down?.content["_hBtS"] as? Int64, 1, "按下 _hBtS")
-        expectEqual(down?.content["_hidC"] as? Int64, HidCommand.up.rawValue, "按下 _hidC")
+        expectEqual(down?.identifier, "_hidC", "press frame command name")
+        expectEqual(down?.content["_hBtS"] as? Int64, 1, "press _hBtS")
+        expectEqual(down?.content["_hidC"] as? Int64, HidCommand.up.rawValue, "press _hidC")
         let up = mock.sentCommand(1)
-        expectEqual(up?.identifier, "_hidC", "抬起帧命令名")
-        expectEqual(up?.content["_hBtS"] as? Int64, 2, "抬起 _hBtS")
-        expectEqual(up?.content["_hidC"] as? Int64, HidCommand.up.rawValue, "抬起 _hidC")
+        expectEqual(up?.identifier, "_hidC", "release frame command name")
+        expectEqual(up?.content["_hBtS"] as? Int64, 2, "release _hBtS")
+        expectEqual(up?.content["_hidC"] as? Int64, HidCommand.up.rawValue, "release _hidC")
     }
 
-    await runSuiteAsync("媒体命令") {
+    await runSuiteAsync("media commands") {
         let mock = AutoOpackConnection()
         let api = makeAPI(mock)
 
         _ = try await api.mediaCommand(.play)
-        expectEqual(mock.sentCommand(0)?.identifier, "_mcc", "播放命令名")
-        expectEqual(mock.sentCommand(0)?.content["_mcc"] as? Int64, MediaControlCommand.play.rawValue, "播放 _mcc")
+        expectEqual(mock.sentCommand(0)?.identifier, "_mcc", "play command name")
+        expectEqual(mock.sentCommand(0)?.content["_mcc"] as? Int64, MediaControlCommand.play.rawValue, "play _mcc")
     }
 
-    await runSuiteAsync("音量 / 快进") {
+    await runSuiteAsync("volume / skip forward") {
         let mock = AutoOpackConnection()
         let api = makeAPI(mock)
 
         try await api.setVolume(0.5)
-        expectEqual(mock.sentCommand(0)?.content["_mcc"] as? Int64, MediaControlCommand.setVolume.rawValue, "音量 _mcc")
-        expectEqual(mock.sentCommand(0)?.content["_vol"] as? Double, 0.5, "音量 _vol")
+        expectEqual(mock.sentCommand(0)?.content["_mcc"] as? Int64, MediaControlCommand.setVolume.rawValue, "volume _mcc")
+        expectEqual(mock.sentCommand(0)?.content["_vol"] as? Double, 0.5, "volume _vol")
 
         try await api.skip(seconds: 10)
-        expectEqual(mock.sentCommand(1)?.content["_mcc"] as? Int64, MediaControlCommand.skipBy.rawValue, "快进 _mcc")
-        expectEqual(mock.sentCommand(1)?.content["_skpS"] as? Double, 10, "快进 _skpS")
+        expectEqual(mock.sentCommand(1)?.content["_mcc"] as? Int64, MediaControlCommand.skipBy.rawValue, "skip forward _mcc")
+        expectEqual(mock.sentCommand(1)?.content["_skpS"] as? Double, 10, "skip forward _skpS")
     }
 
-    await runSuiteAsync("电源") {
+    await runSuiteAsync("power") {
         let mock = AutoOpackConnection()
         let api = makeAPI(mock)
 
         try await api.turnOn()
-        expectEqual(mock.sentCommand(0)?.content["_hidC"] as? Int64, HidCommand.wake.rawValue, "唤醒按键")
+        expectEqual(mock.sentCommand(0)?.content["_hidC"] as? Int64, HidCommand.wake.rawValue, "wake button")
         try await api.turnOff()
-        expectEqual(mock.sentCommand(1)?.content["_hidC"] as? Int64, HidCommand.sleep.rawValue, "睡眠按键")
+        expectEqual(mock.sentCommand(1)?.content["_hidC"] as? Int64, HidCommand.sleep.rawValue, "sleep button")
     }
 
-    await runSuiteAsync("应用列表") {
+    await runSuiteAsync("app list") {
         let mock = AutoOpackConnection()
         let api = makeAPI(mock)
         mock.opackContent["FetchLaunchableApplicationsEvent"] = [
-            "com.apple.TVApp": "电视",
-            "com.apple.Arcade": "街机",
+            "com.apple.TVApp": "TV",
+            "com.apple.Arcade": "Arcade",
         ]
 
         let apps = try await api.appList()
 
-        expectEqual(mock.sentCommand(0)?.identifier, "FetchLaunchableApplicationsEvent", "应用列表命令名")
-        expectEqual(apps["com.apple.TVApp"], "电视", "应用 1")
-        expectEqual(apps["com.apple.Arcade"], "街机", "应用 2")
+        expectEqual(mock.sentCommand(0)?.identifier, "FetchLaunchableApplicationsEvent", "app list command name")
+        expectEqual(apps["com.apple.TVApp"], "TV", "app 1")
+        expectEqual(apps["com.apple.Arcade"], "Arcade", "app 2")
     }
 
-    await runSuiteAsync("启动应用") {
+    await runSuiteAsync("launch app") {
         let mock = AutoOpackConnection()
         let api = makeAPI(mock)
 
         try await api.launchApp("com.apple.TVApp")
 
-        expectEqual(mock.sentCommand(0)?.identifier, "_launchApp", "启动命令名")
-        expectEqual(mock.sentCommand(0)?.content["_bundleID"] as? String, "com.apple.TVApp", "启动 bundleID")
+        expectEqual(mock.sentCommand(0)?.identifier, "_launchApp", "launch command name")
+        expectEqual(mock.sentCommand(0)?.content["_bundleID"] as? String, "com.apple.TVApp", "launch bundleID")
     }
 
-    await runSuiteAsync("查询系统状态") {
+    await runSuiteAsync("fetch system state") {
         let mock = AutoOpackConnection()
         let api = makeAPI(mock)
         mock.opackContent["FetchAttentionState"] = ["state": Int64(SystemStatus.awake.rawValue)]
 
         let state = try await api.fetchAttentionState()
 
-        expectEqual(mock.sentCommand(0)?.identifier, "FetchAttentionState", "状态命令名")
-        expectEqual(state, .awake, "状态值")
+        expectEqual(mock.sentCommand(0)?.identifier, "FetchAttentionState", "state command name")
+        expectEqual(state, .awake, "state value")
     }
 
-    await runSuiteAsync("事件订阅 / 取消") {
+    await runSuiteAsync("event subscribe / unsubscribe") {
         let mock = AutoOpackConnection()
         let api = makeAPI(mock)
 
         try api.subscribeEvent("_iMC")
         try api.unsubscribeEvent("_iMC")
 
-        expectEqual(mock.interestEvents.count, 2, "订阅事件数")
+        expectEqual(mock.interestEvents.count, 2, "subscription event count")
         let ev0 = mock.interestEvents[0]
-        expectEqual(ev0["_t"] as? Int64, CompanionMessageType.event.rawValue, "订阅为事件帧")
-        expectEqual((ev0["_c"] as? [String: Any])?["_regEvents"] as? [String], ["_iMC"], "订阅 _regEvents")
+        expectEqual(ev0["_t"] as? Int64, CompanionMessageType.event.rawValue, "subscription is an event frame")
+        expectEqual((ev0["_c"] as? [String: Any])?["_regEvents"] as? [String], ["_iMC"], "subscribe _regEvents")
         let ev1 = mock.interestEvents[1]
-        expectEqual((ev1["_c"] as? [String: Any])?["_deregEvents"] as? [String], ["_iMC"], "取消 _deregEvents")
+        expectEqual((ev1["_c"] as? [String: Any])?["_deregEvents"] as? [String], ["_iMC"], "unsubscribe _deregEvents")
     }
 
-    await runSuiteAsync("命令报错 _em") {
+    await runSuiteAsync("command error _em") {
         let mock = AutoOpackConnection()
         let api = makeAPI(mock)
-        mock.opackErrors["_hidC"] = "按键失败"
+        mock.opackErrors["_hidC"] = "button press failed"
 
         var thrown: CompanionError?
         do {
@@ -271,17 +274,17 @@ func runCompanionAPITests() async {
         } catch {}
 
         guard let thrown else {
-            expect(false, "未抛出 CompanionError"); return
+            expect(false, "no CompanionError thrown"); return
         }
         if case .protocolError(let text) = thrown {
-            expectEqual(text, "按键失败", "报错文本")
+            expectEqual(text, "button press failed", "error text")
         } else {
-            expect(false, "错误类型不是 protocolError")
+            expect(false, "error type is not protocolError")
         }
     }
 
-    await runSuiteAsync("文本输入 textSet / textAppend / textClear") {
-        // _tiStart 返回的 _tiD(与 pyatv 一致):sessionUUID = 0x00..0x0F,当前文本 "hello"。
+    await runSuiteAsync("text input textSet / textAppend / textClear") {
+        // _tiD returned by _tiStart (consistent with pyatv): sessionUUID = 0x00..0x0F, current text "hello".
         let tiData = Data(hex: "62706c6973743030d2010203085424746f7058246f626a65637473d2040506075b73657373696f6e555549445d646f63756d656e74537461746580018002a5090a0b0e1155246e756c6c4f1010000102030405060708090a0b0c0d0e0fd10c0d55646f6353748003d10f105f1012636f6e746578744265666f7265496e70757480045568656c6c6f080d121b202c3a3c3e444a5d6066686b80820000000000000101000000000000001200000000000000000000000000000088")!
         let mock = AutoOpackConnection()
         let api = makeAPI(mock)
@@ -289,45 +292,45 @@ func runCompanionAPITests() async {
 
         try await api.textSet("world")
 
-        // 帧序列:_tiStop, _tiStart, _tiC(清空), _tiC(输入)。
-        expectEqual(mock.sentFrames.count, 4, "textSet 帧数")
-        expectEqual(mock.sentCommand(0)?.identifier, "_tiStop", "首帧 _tiStop")
-        expectEqual(mock.sentCommand(1)?.identifier, "_tiStart", "次帧 _tiStart")
+        // Frame sequence: _tiStop, _tiStart, _tiC (clear), _tiC (input).
+        expectEqual(mock.sentFrames.count, 4, "textSet frame count")
+        expectEqual(mock.sentCommand(0)?.identifier, "_tiStop", "first frame _tiStop")
+        expectEqual(mock.sentCommand(1)?.identifier, "_tiStart", "second frame _tiStart")
 
         let clearEvent = mock.sentCommand(2)
-        expectEqual(clearEvent?.identifier, "_tiC", "清空事件命令名")
-        expectEqual(clearEvent?.content["_tiV"] as? Int64, 1, "清空 _tiV")
+        expectEqual(clearEvent?.identifier, "_tiC", "clear event command name")
+        expectEqual(clearEvent?.content["_tiV"] as? Int64, 1, "clear _tiV")
         if let clearPayload = clearEvent?.content["_tiD"] as? Data {
             let p = RTITextInput.readArchiveProperties(clearPayload, paths: [
                 ["textOperations", "textToAssert"],
             ])
-            expectEqual(p.first as? String, "", "清空 textToAssert 为空串")
+            expectEqual(p.first as? String, "", "clear textToAssert is empty")
         } else {
-            expect(false, "清空事件缺少 _tiD")
+            expect(false, "clear event missing _tiD")
         }
 
         let inputEvent = mock.sentCommand(3)
-        expectEqual(inputEvent?.identifier, "_tiC", "输入事件命令名")
+        expectEqual(inputEvent?.identifier, "_tiC", "input event command name")
         if let inputPayload = inputEvent?.content["_tiD"] as? Data {
             let p = RTITextInput.readArchiveProperties(inputPayload, paths: [
                 ["textOperations", "keyboardOutput", "insertionText"],
             ])
-            expectEqual(p.first as? String, "world", "输入文本")
+            expectEqual(p.first as? String, "world", "input text")
         } else {
-            expect(false, "输入事件缺少 _tiD")
+            expect(false, "input event missing _tiD")
         }
 
-        // textAppend 只发一次 _tiC 输入(不清空)。
+        // textAppend sends only one _tiC input (no clear).
         let mock2 = AutoOpackConnection()
         let api2 = makeAPI(mock2)
         mock2.opackContent["_tiStart"] = ["_tiD": tiData]
         try await api2.textAppend("!")
-        expectEqual(mock2.sentFrames.count, 3, "textAppend 帧数(无清空)")
-        expectEqual(mock2.sentCommand(2)?.identifier, "_tiC", "textAppend 仅输入事件")
+        expectEqual(mock2.sentFrames.count, 3, "textAppend frame count (no clear)")
+        expectEqual(mock2.sentCommand(2)?.identifier, "_tiC", "textAppend only sends input event")
     }
 
-    await runSuiteAsync("connect 完整会话") {
-        // 真实凭证:ltpk = 设备长期公钥,ltsk = 客户端长期私钥。
+    await runSuiteAsync("connect full session") {
+        // Real credentials: ltpk = device long-term public key, ltsk = client long-term private key.
         let clientSigning = Curve25519.Signing.PrivateKey()
         let serverSigning = Curve25519.Signing.PrivateKey()
         let clientId = Data("client-id-1234".utf8)
@@ -350,29 +353,29 @@ func runCompanionAPITests() async {
 
         try await api.connect()
 
-        // 帧序列: pvStart, pvNext, _systemInfo, _touchStart, _sessionStart, TVRCSessionStart, _tiStart, _interest。
-        expectEqual(mock.sentFrames.count, 8, "connect 帧数")
-        expectEqual(mock.sentFrames[0].0, .pvStart, "首帧 pvStart")
-        expectEqual(mock.sentFrames[1].0, .pvNext, "次帧 pvNext")
+        // Frame sequence: pvStart, pvNext, _systemInfo, _touchStart, _sessionStart, TVRCSessionStart, _tiStart, _interest.
+        expectEqual(mock.sentFrames.count, 8, "connect frame count")
+        expectEqual(mock.sentFrames[0].0, .pvStart, "first frame pvStart")
+        expectEqual(mock.sentFrames[1].0, .pvNext, "second frame pvNext")
 
         let sysInfo = mock.sentCommand(2)
-        expectEqual(sysInfo?.identifier, "_systemInfo", "_systemInfo 命令名")
+        expectEqual(sysInfo?.identifier, "_systemInfo", "_systemInfo command name")
         expectEqual(sysInfo?.content["_sv"] as? String, "170.18", "_systemInfo _sv")
         expectEqual(sysInfo?.content["_i"] as? String, deviceInfo.identifier, "_systemInfo _i")
         expectEqual(sysInfo?.content["_idsID"] as? String, "client-id-1234", "_systemInfo _idsID")
 
-        expectEqual(mock.sentCommand(3)?.identifier, "_touchStart", "_touchStart 命令名")
+        expectEqual(mock.sentCommand(3)?.identifier, "_touchStart", "_touchStart command name")
 
         let session = mock.sentCommand(4)
-        expectEqual(session?.identifier, "_sessionStart", "_sessionStart 命令名")
+        expectEqual(session?.identifier, "_sessionStart", "_sessionStart command name")
         expectEqual(session?.content["_srvT"] as? String, "com.apple.tvremoteservices", "_sessionStart _srvT")
-        expect(session?.content["_sid"] is Int64, "_sessionStart 含 _sid")
+        expect(session?.content["_sid"] is Int64, "_sessionStart includes _sid")
 
-        expectEqual(mock.sentCommand(5)?.identifier, "TVRCSessionStart", "TVRCSessionStart 命令名")
-        expectEqual(mock.sentCommand(6)?.identifier, "_tiStart", "_tiStart 命令名")
+        expectEqual(mock.sentCommand(5)?.identifier, "TVRCSessionStart", "TVRCSessionStart command name")
+        expectEqual(mock.sentCommand(6)?.identifier, "_tiStart", "_tiStart command name")
 
-        expectEqual(mock.sentFrames[7].0, .eOpack, "订阅帧类型")
-        expectEqual(mock.interestEvents.count, 1, "订阅事件数")
-        expectEqual((mock.interestEvents[0]["_c"] as? [String: Any])?["_regEvents"] as? [String], ["_iMC"], "订阅 _iMC")
+        expectEqual(mock.sentFrames[7].0, .eOpack, "subscription frame type")
+        expectEqual(mock.interestEvents.count, 1, "subscription event count")
+        expectEqual((mock.interestEvents[0]["_c"] as? [String: Any])?["_regEvents"] as? [String], ["_iMC"], "subscribe _iMC")
     }
 }

@@ -1,15 +1,16 @@
-// Companion 控制层:在加密通道之上实现按键/媒体/电源/应用/文本等命令。
-// 对应 pyatv 的 pyatv/protocols/companion/api.py 的 CompanionAPI。
+// Companion control layer: implements key press/media/power/apps/text commands on top of the
+// encrypted channel.
+// Corresponds to pyatv's CompanionAPI in pyatv/protocols/companion/api.py.
 //
-// 命令消息结构(OPACK):
-//   {"_i": <命令名字符串>, "_t": <2=请求/1=事件/3=响应>, "_c": <命令内容>}
-// 经 exchange_opack(FrameType.E_OPACK) 发送并等待 _x 匹配的响应。
+// Command message structure (OPACK):
+//   {"_i": <command name string>, "_t": <2=request/1=event/3=response>, "_c": <command content>}
+// Sent via exchange_opack (FrameType.E_OPACK), waiting for a response matching _x.
 
 import Foundation
 
-// MARK: - 命令常量
+// MARK: - Command constants
 
-/// HID 按键命令值(对应 pyatv api.py 的 HidCommand)。
+/// HID key press command values (corresponding to HidCommand in pyatv api.py).
 public enum HidCommand: Int64 {
     case up = 1
     case down = 2
@@ -32,7 +33,7 @@ public enum HidCommand: Int64 {
     case pageDown = 19
 }
 
-/// 媒体控制命令值(对应 pyatv api.py 的 MediaControlCommand)。
+/// Media control command values (corresponding to MediaControlCommand in pyatv api.py).
 public enum MediaControlCommand: Int64 {
     case play = 1
     case pause = 2
@@ -49,7 +50,7 @@ public enum MediaControlCommand: Int64 {
     case setCaptionSettings = 13
 }
 
-/// 设备系统状态(对应 pyatv api.py 的 SystemStatus)。
+/// Device system status (corresponding to SystemStatus in pyatv api.py).
 public enum SystemStatus: Int64 {
     case unknown = 0
     case asleep = 1
@@ -58,13 +59,13 @@ public enum SystemStatus: Int64 {
     case idle = 4
 }
 
-/// 控制器(本机)的标识信息,用于 system_info 命令。
+/// Identity information for the controller (this device), used by the system_info command.
 public struct CompanionDeviceInfo {
-    /// 控制器名称(如 "MacBook Remote")。
+    /// Controller name (e.g. "MacBook Remote").
     public let name: String
-    /// 控制器型号(如 "Mac")。
+    /// Controller model (e.g. "Mac").
     public let model: String
-    /// 稳定标识(远程 profile id / device id,小写无分隔符)。用于 system_info 的 _i / _pubID。
+    /// Stable identifier (remote profile id / device id, lowercase without separators). Used for system_info's _i / _pubID.
     public let identifier: String
 
     public init(name: String, model: String, identifier: String) {
@@ -81,10 +82,10 @@ public final class CompanionAPI {
     private let credentials: HapCredentials
     private let deviceInfo: CompanionDeviceInfo
 
-    /// 会话 ID(remote_sid << 32 | local_sid),用于 _sessionStop。
+    /// Session ID (remote_sid << 32 | local_sid), used for _sessionStop.
     private var sid: UInt64 = 0
     private var subscribedEvents: Set<String> = []
-    /// 文本输入会话 UUID(从 _tiStart 的 _tiD 解析),用于 _tiC 操作。
+    /// Text input session UUID (parsed from _tiStart's _tiD), used for _tiC operations.
     private var textSessionUUID: Data?
 
     public init(
@@ -97,24 +98,25 @@ public final class CompanionAPI {
         self.deviceInfo = deviceInfo
     }
 
-    /// 连接断开回调(转发自协议层,由连接层触发)。
+    /// Disconnect callback (forwarded from the protocol layer, triggered by the connection layer).
     public var onDisconnect: (() -> Void)? {
         get { protocolLayer.onDisconnect }
         set { protocolLayer.onDisconnect = newValue }
     }
 
-    // MARK: - 连接 / 断开
+    // MARK: - Connect / disconnect
 
-    /// 建立加密连接并完成会话初始化(系统信息 / 触控 / 会话 / 文本输入 / 事件订阅)。
+    /// Establishes the encrypted connection and completes session initialization
+    /// (system info / touch / session / text input / event subscription).
     public func connect() async throws {
         try await protocolLayer.start(credentials: credentials)
 
         try await systemInfo()
         try await touchStart()
         try await sessionStart()
-        try? await tvRCSessionStart()          // 旧设备可能不支持,忽略
-        try? await textInputStart()            // 文本输入会话(connect 阶段不要求成功)
-        try? subscribeEvent("_iMC")            // 媒体控制标志事件
+        try? await tvRCSessionStart()          // older devices may not support it; ignore
+        try? await textInputStart()            // text input session (not required to succeed at connect time)
+        try? subscribeEvent("_iMC")            // media control flag events
     }
 
     public func disconnect() async throws {
@@ -125,7 +127,7 @@ public final class CompanionAPI {
         protocolLayer.stop()
     }
 
-    // MARK: - 底层命令收发
+    // MARK: - Low-level command send/receive
 
     private func sendCommand(
         _ identifier: String,
@@ -139,29 +141,29 @@ public final class CompanionAPI {
     }
 
     private func sendEvent(_ identifier: String, _ content: [String: Any]) throws {
-        // 事件不等待响应(pyatv 用 send_opack,不 exchange)。
+        // Events do not wait for a response (pyatv uses send_opack, not exchange).
         try protocolLayer.sendOpack(
             .eOpack,
             ["_i": identifier, "_t": CompanionMessageType.event.rawValue, "_c": content]
         )
     }
 
-    /// 命令响应必须带 _c,否则视为协议错误(对应 pyatv 的检查)。
+    /// Command responses must carry _c, otherwise it is treated as a protocol error (matching pyatv's check).
     private func content(of response: [String: Any]) throws -> [String: Any] {
         guard let content = response["_c"] as? [String: Any] else {
-            throw CompanionError.protocolError("命令响应缺少 _c 字段")
+            throw CompanionError.protocolError("Command response is missing the _c field")
         }
         return content
     }
 
-    // MARK: - 会话命令
+    // MARK: - Session commands
 
     private func systemInfo() async throws {
         _ = try await sendCommand("_systemInfo", [
             "_bf": 0,
             "_cf": 512,
             "_clFl": 128,
-            // 非空 _i 让设备继续推送电源(TVSystemStatus)事件。
+            // A non-empty _i makes the device keep pushing power (TVSystemStatus) events.
             "_i": deviceInfo.identifier,
             "_idsID": String(data: credentials.clientId, encoding: .utf8) ?? "",
             "_pubID": deviceInfo.identifier,
@@ -185,7 +187,7 @@ public final class CompanionAPI {
         ])
         let content = try content(of: response)
         guard let remoteSid = content["_sid"] as? Int64 else {
-            throw CompanionError.protocolError("_sessionStart 响应缺少 _sid")
+            throw CompanionError.protocolError("_sessionStart response is missing _sid")
         }
         sid = (UInt64(remoteSid) << 32) | UInt64(localSid)
     }
@@ -201,7 +203,7 @@ public final class CompanionAPI {
         _ = try await sendCommand("TVRCSessionStart", ["ProtocolVersionKey": "1.2"])
     }
 
-    // MARK: - 事件订阅
+    // MARK: - Event subscription
 
     public func subscribeEvent(_ event: String) throws {
         guard !subscribedEvents.contains(event) else { return }
@@ -215,22 +217,22 @@ public final class CompanionAPI {
         subscribedEvents.remove(event)
     }
 
-    // MARK: - 按键(HID)
+    // MARK: - Key press (HID)
 
-    /// 发送一次 HID 按下/抬起。`down` 为 true 表示按下,false 表示抬起。
+    /// Sends one HID press/release. `down` true means pressed, false means released.
     public func hidCommand(down: Bool, command: HidCommand) async throws {
         _ = try await sendCommand("_hidC", [
             "_hBtS": down ? 1 : 2, "_hidC": command.rawValue,
         ])
     }
 
-    /// 单击(按下后立即抬起),对应 pyatv 的 SingleTap。
+    /// Single tap (press then release immediately), corresponding to pyatv's SingleTap.
     public func press(_ command: HidCommand) async throws {
         try await hidCommand(down: true, command: command)
         try await hidCommand(down: false, command: command)
     }
 
-    // MARK: - 媒体控制
+    // MARK: - Media control
 
     public func mediaCommand(
         _ command: MediaControlCommand, args: [String: Any] = [:]
@@ -240,24 +242,24 @@ public final class CompanionAPI {
         return try await sendCommand("_mcc", content)
     }
 
-    /// 设置音量(0.0-1.0)。
+    /// Sets the volume (0.0-1.0).
     public func setVolume(_ level: Double) async throws {
         _ = try await mediaCommand(.setVolume, args: ["_vol": level])
     }
 
-    /// 快进/快退 `seconds` 秒(正数前进,负数后退)。
+    /// Fast forwards/rewinds by `seconds` seconds (positive forwards, negative backwards).
     public func skip(seconds: Double) async throws {
         _ = try await mediaCommand(.skipBy, args: ["_skpS": seconds])
     }
 
-    // MARK: - 电源
+    // MARK: - Power
 
-    /// 查询设备当前系统状态。
+    /// Queries the device's current system status.
     public func fetchAttentionState() async throws -> SystemStatus {
         let response = try await sendCommand("FetchAttentionState", [:])
         let content = try content(of: response)
         guard let state = content["state"] as? Int64 else {
-            throw CompanionError.protocolError("FetchAttentionState 响应缺少 state")
+            throw CompanionError.protocolError("FetchAttentionState response is missing state")
         }
         return SystemStatus(rawValue: state) ?? .unknown
     }
@@ -270,9 +272,9 @@ public final class CompanionAPI {
         try await hidCommand(down: false, command: .sleep)
     }
 
-    // MARK: - 应用
+    // MARK: - Apps
 
-    /// 获取可启动应用列表,返回 [bundle_id: name]。
+    /// Gets the list of launchable apps, returning [bundle_id: name].
     public func appList() async throws -> [String: String] {
         let response = try await sendCommand("FetchLaunchableApplicationsEvent", [:])
         let content = try content(of: response)
@@ -283,14 +285,14 @@ public final class CompanionAPI {
         return result
     }
 
-    /// 启动应用(bundle ID)。
+    /// Launches an app (bundle ID).
     public func launchApp(_ bundleId: String) async throws {
         _ = try await sendCommand("_launchApp", ["_bundleID": bundleId])
     }
 
-    // MARK: - 文本输入(RTI)
+    // MARK: - Text input (RTI)
 
-    /// 启动文本输入会话并解析 _tiD 里的 session UUID。
+    /// Starts a text input session and parses the session UUID from _tiD.
     private func textInputStart() async throws {
         let response = try await sendCommand("_tiStart", [:])
         if let content = response["_c"] as? [String: Any],
@@ -304,9 +306,9 @@ public final class CompanionAPI {
         _ = try await sendCommand("_tiStop", [:])
     }
 
-    /// 发送一次文本输入。`clearPreviousInput` 为 true 时先清空现有文本(对应 text_set/text_clear)。
+    /// Sends one text input. When `clearPreviousInput` is true, clears the existing text first (corresponds to text_set/text_clear).
     public func textInputCommand(_ text: String, clearPreviousInput: Bool = false) async throws {
-        // 重启会话以拿到最新的 _tiD(与 pyatv text_input_command 一致)。
+        // Restart the session to get the latest _tiD (same as pyatv's text_input_command).
         try await textInputStop()
         try await textInputStart()
         guard let sessionUUID = textSessionUUID else { return }
@@ -319,17 +321,17 @@ public final class CompanionAPI {
         }
     }
 
-    /// 在光标处追加文本(对应 keyboard.text_append)。
+    /// Appends text at the cursor (corresponds to keyboard.text_append).
     public func textAppend(_ text: String) async throws {
         try await textInputCommand(text, clearPreviousInput: false)
     }
 
-    /// 用文本整体替换输入框内容(对应 keyboard.text_set)。
+    /// Replaces the input field's content entirely with the given text (corresponds to keyboard.text_set).
     public func textSet(_ text: String) async throws {
         try await textInputCommand(text, clearPreviousInput: true)
     }
 
-    /// 清空输入框(对应 keyboard.text_clear)。
+    /// Clears the input field (corresponds to keyboard.text_clear).
     public func textClear() async throws {
         try await textInputCommand("", clearPreviousInput: true)
     }

@@ -1,18 +1,19 @@
-// MRP 连接层:抽象接口 + TCP 传输(NWConnection)+ 8 字节 nonce 加密。
-// 对应 pyatv 的 pyatv/protocols/mrp/connection.py。
+// MRP connection layer: abstract interface + TCP transport (NWConnection) + 8-byte nonce encryption.
+// Corresponds to pyatv's pyatv/protocols/mrp/connection.py.
 //
-// 帧格式:varint 长度前缀(LEB128)+ protobuf 序列化消息(加密后为 ciphertext+16 字节 tag)。
-// 加密用 ChaCha20-Poly1305,nonce 为 12 字节 = 4 零字节 + 8 字节小端计数器
-// (对应 pyatv 的 Chacha20Cipher8byteNonce,与 Companion 的 12 字节计数器 nonce 不同)。
+// Frame format: varint length prefix (LEB128) + protobuf-serialized message
+// (ciphertext + 16-byte tag once encrypted).
+// Encryption uses ChaCha20-Poly1305 with a 12-byte nonce = 4 zero bytes + 8-byte little-endian counter
+// (corresponds to pyatv's Chacha20Cipher8byteNonce, different from Companion's 12-byte counter nonce).
 
 import Foundation
 import Network
 import os
 
 public protocol MRPConnectionListener: AnyObject {
-    /// 收到一条完整消息(已解密)。data 为 protobuf 序列化字节。
+    /// Received one complete message (already decrypted). data is the protobuf-serialized bytes.
     func connection(_ connection: MRPConnection, didReceive data: Data)
-    /// 连接已断开(主动 close 或远端断开/错误)。可能被多次调用,实现需幂等。
+    /// The connection has closed (explicit close, or remote disconnect/error). May be called multiple times; implementations must be idempotent.
     func connectionDidClose(_ connection: MRPConnection)
 }
 
@@ -23,14 +24,14 @@ public protocol MRPConnection: AnyObject {
     func connect() async throws
     func close()
 
-    /// 发送一条消息(帧打包与加密由连接层负责)。
+    /// Sends a message (framing and encryption are handled by the connection layer).
     func send(_ data: Data) throws
 
-    /// 启用连接层加密(输出/输入两把独立密钥,各带独立计数器)。
+    /// Enables connection-layer encryption (two independent keys for output/input, each with its own counter).
     func enableEncryption(outputKey: Data, inputKey: Data)
 }
 
-/// MRP 连接层加密:out/in 两个独立递增的 12 字节 nonce(4 零字节 + 8 字节小端计数器)。
+/// MRP connection-layer encryption: out/in use two independently incrementing 12-byte nonces (4 zero bytes + 8-byte little-endian counter).
 public final class MRPCipher {
     private let outKey: Data
     private let inKey: Data
@@ -61,7 +62,7 @@ public final class MRPCipher {
     }
 }
 
-/// MRP 的 TCP 传输实现,基于 Network.framework 的 NWConnection。
+/// MRP TCP transport implementation, based on Network.framework's NWConnection.
 public final class MRPTCPConnection: MRPConnection {
     public var isConnected: Bool {
         os_unfair_lock_lock(&stateLock)
@@ -75,7 +76,7 @@ public final class MRPTCPConnection: MRPConnection {
     private let queue = DispatchQueue(label: "atv.mrp.tcp")
 
     private var connection: NWConnection?
-    /// 保护 state / connectContinuation / didNotifyClose(跨线程访问)。
+    /// Protects state / connectContinuation / didNotifyClose (accessed across threads).
     private var stateLock = os_unfair_lock()
     private var state: NWConnection.State = .setup
     private var cipher: MRPCipher?
@@ -92,7 +93,7 @@ public final class MRPTCPConnection: MRPConnection {
         connection?.cancel()
     }
 
-    // MARK: - 生命周期
+    // MARK: - Lifecycle
 
     public func connect() async throws {
         os_unfair_lock_lock(&stateLock)
@@ -129,7 +130,7 @@ public final class MRPTCPConnection: MRPConnection {
         notifyClose()
     }
 
-    /// 通知 listener 连接已断开(幂等,只通知一次)。
+    /// Notifies the listener that the connection closed (idempotent, notified only once).
     private func notifyClose() {
         os_unfair_lock_lock(&stateLock)
         guard !didNotifyClose else {
@@ -165,7 +166,7 @@ public final class MRPTCPConnection: MRPConnection {
         }
     }
 
-    // MARK: - 发送
+    // MARK: - Sending
 
     public func send(_ data: Data) throws {
         os_unfair_lock_lock(&stateLock)
@@ -186,7 +187,7 @@ public final class MRPTCPConnection: MRPConnection {
         cipher = MRPCipher(outKey: outputKey, inKey: inputKey)
     }
 
-    // MARK: - 接收
+    // MARK: - Receiving
 
     private func startReceive() {
         receiveNext()
@@ -208,11 +209,11 @@ public final class MRPTCPConnection: MRPConnection {
         }
     }
 
-    /// 从缓冲里尽量多地拆出完整消息,解密后交给 listener。
+    /// Extracts as many complete messages as possible from the buffer and hands them to the listener after decryption.
     private func parseMessages() {
         while true {
             guard let (length, remaining) = Variant.decode(buffer) else { return }
-            guard remaining.count >= length else { return }  // 整条消息未到齐
+            guard remaining.count >= length else { return }  // complete message not yet received
             var payload = Data(remaining.prefix(length))
             buffer = Data(remaining.dropFirst(length))
 
@@ -220,7 +221,8 @@ public final class MRPTCPConnection: MRPConnection {
                 do {
                     payload = try cipher.decrypt(payload)
                 } catch {
-                    // AEAD 认证失败:nonce 已超前,断开连接避免永久失步。
+                    // AEAD authentication failed: the nonce has already advanced; close the
+                    // connection to avoid getting permanently out of sync.
                     close()
                     return
                 }

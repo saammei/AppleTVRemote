@@ -1,15 +1,16 @@
-// SRP-6a 客户端实现(RFC 5054,3072 位素数群)。
-// 对应 pyatv 的 pyatv/auth/hap_srp.py + srptools。
+// SRP-6a client implementation (RFC 5054, 3072-bit prime group).
+// Corresponds to pyatv's pyatv/auth/hap_srp.py + srptools.
 //
-// HAP 的 Pair-Setup 使用 SRP:username = "Pair-Setup",password = PIN,hash = SHA512。
-// 全部计算用 BigUInt(无符号大整数),语义严格对齐 Python 的 pow/%(负数取模后计算)。
+// HAP's Pair-Setup uses SRP: username = "Pair-Setup", password = PIN, hash = SHA512.
+// All calculations use BigUInt (unsigned big integers), with semantics strictly aligned
+// to Python's pow/% (negative bases are reduced before computing).
 
 import Foundation
 import CryptoKit
 import BigInt
 
 public enum SRP6a {
-    /// RFC 5054 附录 A 的 3072 位素数。
+    /// 3072-bit prime from RFC 5054 Appendix A.
     static let primeHex = """
 FFFFFFFFFFFFFFFFC90FDAA22168C234C4C6628B80DC1CD129024E088A67CC74
 020BBEA63B139B22514A08798E3404DDEF9519B3CD3A431B302B0A6DF25F1437
@@ -27,23 +28,23 @@ D87602733EC86A64521F2B18177B200CBBE117577A615D6C770988C0BAD946E2
 
     static let prime: BigUInt = BigUInt(primeHex, radix: 16)!
     static let generator: BigUInt = BigUInt(5)
-    /// prime 的字节长度(3072 / 8)。
+    /// Byte length of the prime (3072 / 8).
     static let primeByteCount = 384
 
-    // MARK: - 基础工具
+    // MARK: - Basic utilities
 
     static func sha512(_ data: Data) -> Data {
         let digest = SHA512.hash(data: data)
         return digest.withUnsafeBytes { Data($0) }
     }
 
-    /// 整数 → 最小字节数大端。对应 srptools 的 int_to_bytes(0 → 单字节 0x00)。
+    /// Integer → minimal big-endian bytes. Corresponds to srptools' int_to_bytes (0 → single byte 0x00).
     static func intToBytes(_ value: BigUInt) -> Data {
         if value.isZero { return Data([0]) }
         return value.serialize()
     }
 
-    /// 整数 → 固定 prime 字节长度(左补零)。对应 srptools 的 pad。
+    /// Integer → fixed prime byte length (left-padded with zeros). Corresponds to srptools' pad.
     static func pad(_ value: BigUInt) -> Data {
         let bytes = intToBytes(value)
         let paddingCount = primeByteCount - bytes.count
@@ -52,21 +53,21 @@ D87602733EC86A64521F2B18177B200CBBE117577A615D6C770988C0BAD946E2
         return padded
     }
 
-    /// 拼接多个 Data 后做 SHA512,返回整数。对应 srptools 的 hash(as_bytes=False)。
+    /// Concatenates multiple Data chunks then applies SHA512, returning an integer. Corresponds to srptools' hash(as_bytes=False).
     static func hInt(_ chunks: [Data]) -> BigUInt {
         var data = Data()
         for chunk in chunks { data.append(chunk) }
         return BigUInt(sha512(data))
     }
 
-    /// 拼接多个 Data 后做 SHA512,返回字节。对应 srptools 的 hash(as_bytes=True)。
+    /// Concatenates multiple Data chunks then applies SHA512, returning bytes. Corresponds to srptools' hash(as_bytes=True).
     static func hBytes(_ chunks: [Data]) -> Data {
         var data = Data()
         for chunk in chunks { data.append(chunk) }
         return sha512(data)
     }
 
-    // MARK: - SRP 计算
+    // MARK: - SRP computation
 
     /// x = H(salt | H(username ":" password))
     static func computeX(username: String, password: String, salt: Data) -> BigUInt {
@@ -94,7 +95,7 @@ D87602733EC86A64521F2B18177B200CBBE117577A615D6C770988C0BAD946E2
         serverPublic: BigUInt, multiplier: BigUInt, verifier: BigUInt,
         clientPrivate: BigUInt, commonSecret: BigUInt, x: BigUInt
     ) -> BigUInt {
-        // base = (B - k*v) mod N(非负,对齐 Python 对负 base 的 pow 语义)
+        // base = (B - k*v) mod N (non-negative, aligned with Python's pow semantics for a negative base)
         let base = (BigInt(serverPublic) - BigInt(multiplier) * BigInt(verifier))
             .modulus(BigInt(prime)).magnitude
         let exponent = clientPrivate + commonSecret * x
@@ -130,9 +131,9 @@ D87602733EC86A64521F2B18177B200CBBE117577A615D6C770988C0BAD946E2
         hBytes([intToBytes(clientPublic), proof, sessionKey])
     }
 
-    /// 完整客户端 process:输入服务器公钥 B 和 salt,
-    /// 输出 (clientPublic A 的最小字节数, sessionKey K, proof M, proofHash M2)。
-    /// B % N == 0 视为非法(对应 srptools 的安全检查),返回 nil。
+    /// Full client process: takes the server public key B and salt as input,
+    /// outputs (minimal-bytes clientPublic A, sessionKey K, proof M, proofHash M2).
+    /// B % N == 0 is treated as invalid (corresponds to srptools' security check) and returns nil.
     public static func process(
         username: String, password: String, clientPrivateBytes: Data,
         serverPublicBytes: Data, salt: Data

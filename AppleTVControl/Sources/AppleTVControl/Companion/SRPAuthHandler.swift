@@ -1,8 +1,9 @@
-// SRP 认证处理器:配对(Pair-Setup)与验证(Pair-Verify)的加密逻辑。
-// 对应 pyatv 的 pyatv/auth/hap_srp.py 的 SRPAuthHandler。
+// SRP authentication handler: the cryptographic logic for pairing (Pair-Setup) and verification (Pair-Verify).
+// Corresponds to SRPAuthHandler in pyatv's pyatv/auth/hap_srp.py.
 //
-// Pair-Setup 建立长期凭证(Ed25519 签名密钥 + SRP),Pair-Verify 用已有凭证
-// 派生会话密钥(X25519 + HKDF)。两者都复用本文件的密钥生成与加解密。
+// Pair-Setup establishes long-term credentials (Ed25519 signing key + SRP); Pair-Verify derives
+// session keys from existing credentials (X25519 + HKDF). Both reuse this file's key generation
+// and encryption/decryption.
 
 import Foundation
 import CryptoKit
@@ -15,37 +16,38 @@ public enum SRPError: Error, Equatable {
 }
 
 public final class SRPAuthHandler {
-    /// 客户端配对标识(UUID 字符串,36 字节)。Pair-Setup 时作为新 client_id。
+    /// Client pairing identifier (UUID string, 36 bytes). Used as the new client_id during Pair-Setup.
     public let pairingId: Data
 
-    // Pair-Setup 密钥(Ed25519 签名)
+    // Pair-Setup keys (Ed25519 signing)
     private var signingKey: Curve25519.Signing.PrivateKey?
     private var authPrivate: Data?
     private var authPublic: Data?
 
-    // Pair-Verify 密钥(X25519)
+    // Pair-Verify keys (X25519)
     private var verifyPrivate: Curve25519.KeyAgreement.PrivateKey?
     private var publicBytes: Data?
 
-    // 中间状态
+    // Intermediate state
     private var pin: String?
-    private var srpSessionKey: Data?   // SRP K(64 字节)
-    private var sharedSecret: Data?    // X25519 shared secret(32 字节)
-    private var sessionKey: Data?      // Pair-Setup 加密密钥(32 字节)
+    private var srpSessionKey: Data?   // SRP K (64 bytes)
+    private var sharedSecret: Data?    // X25519 shared secret (32 bytes)
+    private var sessionKey: Data?      // Pair-Setup encryption key (32 bytes)
 
     public init(pairingId: Data? = nil) {
         if let pairingId {
             self.pairingId = pairingId
         } else {
-            // pyatv 用 str(uuid.uuid4()),小写 36 字节。
+            // pyatv uses str(uuid.uuid4()), a 36-byte lowercase string.
             self.pairingId = Data(UUID().uuidString.lowercased().utf8)
         }
     }
 
-    // MARK: - 密钥生成
+    // MARK: - Key generation
 
-    /// 生成 Ed25519 签名密钥 + X25519 密钥。返回 (authPublic, publicBytes)。
-    /// 传入固定 seed(各 32 字节)用于确定性测试或凭证恢复;nil 则随机生成。
+    /// Generates the Ed25519 signing key + X25519 key. Returns (authPublic, publicBytes).
+    /// Fixed seeds (32 bytes each) can be passed in for deterministic testing or credential recovery;
+    /// nil means random generation.
     @discardableResult
     public func initialize(
         authPrivateSeed: Data? = nil,
@@ -74,14 +76,14 @@ public final class SRPAuthHandler {
         return (authPub, verifyPub)
     }
 
-    // MARK: - Pair-Setup(SRP)
+    // MARK: - Pair-Setup (SRP)
 
-    /// step1:记录 PIN(实际 SRP 计算在 step2)。
+    /// step1: records the PIN (the actual SRP computation happens in step2).
     public func step1(pin: String) {
         self.pin = pin
     }
 
-    /// step2:计算客户端公钥 A 与证明 M。返回 (A 的最小字节数, M)。
+    /// step2: computes the client public key A and proof M. Returns (A's minimal bytes, M).
     public func step2(atvPubKey: Data, atvSalt: Data) throws -> (pubKey: Data, proof: Data) {
         guard let authPrivate, let pin else { throw SRPError.notInitialized }
         guard let result = SRP6a.process(
@@ -95,7 +97,7 @@ public final class SRPAuthHandler {
         return (result.clientPublic, result.proof)
     }
 
-    /// step3:构造并加密控制器信息(标识 + 公钥 + 签名)。返回密文(PS-Msg05)。
+    /// step3: builds and encrypts the controller info (identifier + public key + signature). Returns the ciphertext (PS-Msg05).
     public func step3(name: String? = nil) throws -> Data {
         guard let signingKey, let authPublic, let srpSessionKey else {
             throw SRPError.notInitialized
@@ -132,7 +134,7 @@ public final class SRPAuthHandler {
         return try ChaCha20Poly1305.seal(tlv, key: sessionKey, nonce: nonce, aad: Data())
     }
 
-    /// step4:解密设备信息(PS-Msg06),得到长期凭证。
+    /// step4: decrypts the device info (PS-Msg06) and obtains the long-term credentials.
     public func step4(encryptedData: Data) throws -> HapCredentials {
         guard let sessionKey, let authPrivate else { throw SRPError.notInitialized }
 
@@ -144,7 +146,7 @@ public final class SRPAuthHandler {
               let atvPubKey = tlv[TLV8Tag.publicKey.rawValue] else {
             throw SRPError.invalidResponse
         }
-        // pyatv 在此未验证设备签名(TODO),保持同样行为。
+        // pyatv does not verify the device signature here (TODO); keep the same behavior.
 
         return HapCredentials(
             ltpk: atvPubKey, ltsk: authPrivate,
@@ -153,7 +155,7 @@ public final class SRPAuthHandler {
 
     // MARK: - Pair-Verify
 
-    /// verify1:用凭证验证设备并签名控制器信息。返回密文(PV-Msg03)。
+    /// verify1: verifies the device with the credentials and signs the controller info. Returns the ciphertext (PV-Msg03).
     public func verify1(
         credentials: HapCredentials, sessionPubKey: Data, encrypted: Data
     ) throws -> Data {
@@ -182,7 +184,7 @@ public final class SRPAuthHandler {
             throw SRPError.authenticationFailed("incorrect device response")
         }
 
-        // 验证设备签名:info = sessionPubKey + identifier + publicBytes
+        // Verify the device signature: info = sessionPubKey + identifier + publicBytes
         var info = Data()
         info.append(sessionPubKey)
         info.append(identifier)
@@ -192,7 +194,7 @@ public final class SRPAuthHandler {
             throw SRPError.authenticationFailed("signature error")
         }
 
-        // 签名控制器信息:device_info = publicBytes + clientId + sessionPubKey
+        // Sign the controller info: device_info = publicBytes + clientId + sessionPubKey
         var deviceInfo = Data()
         deviceInfo.append(publicBytes)
         deviceInfo.append(credentials.clientId)
@@ -208,7 +210,7 @@ public final class SRPAuthHandler {
         return try ChaCha20Poly1305.seal(responseTLV, key: sessionKey, nonce: nonce3, aad: Data())
     }
 
-    /// verify2:派生输出/输入加密密钥。
+    /// verify2: derives the output/input encryption keys.
     public func verify2(salt: String, outputInfo: String, inputInfo: String) throws -> (outputKey: Data, inputKey: Data) {
         guard let sharedSecret else { throw SRPError.notInitialized }
         let outputKey = HKDF.sha512(

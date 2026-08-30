@@ -1,14 +1,14 @@
-// Data 与十六进制字符串互转。用于凭证持久化与日志。
+// Conversion between Data and hex strings. Used for credential persistence and logging.
 
 import Foundation
 
 extension Data {
-    /// 小写十六进制字符串。
+    /// Lowercase hex string.
     public var hex: String {
         map { String(format: "%02x", $0) }.joined()
     }
 
-    /// 从十六进制字符串解析(忽略空白与大小写)。奇数长度或非法字符返回 nil。
+    /// Parses from a hex string (ignores whitespace and case). Returns nil for odd length or invalid characters.
     public init?(hex: String) {
         let cleaned = hex.filter { !$0.isWhitespace }
         guard cleaned.count % 2 == 0 else { return nil }

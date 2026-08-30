@@ -1,6 +1,6 @@
-// 轻量测试辅助,替代 XCTest。
-// 原因:CommandLineTools 环境没有 XCTest.framework,`swift test` 不可用,
-// 因此用可执行 target + 断言在 `swift run AppleTVControlTests` 下跑测试。
+// Lightweight test support, replacing XCTest.
+// Reason: the CommandLineTools environment has no XCTest.framework and `swift test`
+// is unavailable, so tests run in an executable target with assertions via `swift run AppleTVControlTests`.
 
 import Foundation
 
@@ -45,7 +45,7 @@ func hex(_ data: Data) -> String {
     hex([UInt8](data))
 }
 
-/// 测试套件入口按名称汇总到此处,便于在 main 中统一调用。
+/// Test suite entry point that groups results by name so main can call them uniformly.
 func runSuite(_ name: String, _ body: () -> Void) {
     print("— \(name)")
     let before = testFailures.count
@@ -54,14 +54,14 @@ func runSuite(_ name: String, _ body: () -> Void) {
     print("  \(delta == 0 ? "✅" : "❌") \(name): \(delta) failure(s)")
 }
 
-/// 异步测试套件(用于需要 await 的配对/连接流程)。
+/// Async test suite (for pairing/connection flows that need await).
 func runSuiteAsync(_ name: String, _ body: () async throws -> Void) async {
     print("— \(name)")
     let before = testFailures.count
     do {
         try await body()
     } catch {
-        record("\(name) 抛异常: \(error)", file: #file, line: #line)
+        record("\(name) threw: \(error)", file: #file, line: #line)
     }
     let delta = testFailures.count - before
     print("  \(delta == 0 ? "✅" : "❌") \(name): \(delta) failure(s)")

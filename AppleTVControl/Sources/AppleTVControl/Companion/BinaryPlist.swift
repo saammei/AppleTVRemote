@@ -1,23 +1,23 @@
-// 最小二进制 plist(bplist00)编解码,支持 NSKeyedArchiver 所需的 UID 引用。
-// 用于 Companion 文本输入:解析 _tiD 里的 sessionUUID/当前文本,并构建 _tiC 的
-// RTITextOperations payload。对应 pyatv 用 plistlib 处理的部分。
+// Minimal binary plist (bplist00) encode/decode with support for the UID references NSKeyedArchiver needs.
+// Used for Companion text input: parsing the sessionUUID/current text in _tiD and building the
+// RTITextOperations payload for _tiC. Corresponds to the part pyatv handles with plistlib.
 //
-// 类型子集:null / bool / int / data / ascii & utf-16 string / UID / array / dict。
-// 与 plistlib 兼容:
-//   - UID 字节数 = 1 + (marker & 0x0F)(0x80=1 字节, 0x83=4 字节, 0x87=8 字节)
-//   - 数组/字典元素以 ref_size 字节大端无符号整数作引用
-//   - 长度/计数 >= 15 时,后跟一个整数对象(0x10..0x13)
+// Type subset: null / bool / int / data / ascii & utf-16 string / UID / array / dict.
+// plistlib-compatible:
+//   - UID byte count = 1 + (marker & 0x0F) (0x80=1 byte, 0x83=4 bytes, 0x87=8 bytes)
+//   - Array/dict elements are references as ref_size-byte big-endian unsigned integers
+//   - When length/count >= 15, an integer object (0x10..0x13) follows
 
 import Foundation
 
-/// NSKeyedArchiver 的 UID 引用。
+/// NSKeyedArchiver's UID reference.
 public struct PlistUID: Hashable {
     public let value: Int
     public init(_ value: Int) { self.value = value }
 }
 
 public enum BinaryPlist {
-    // MARK: - 编码
+    // MARK: - Encoding
 
     public static func encode(_ root: [String: Any]) -> Data {
         var objects: [Any] = []
@@ -43,7 +43,7 @@ public enum BinaryPlist {
             if let arr = value as? [Any] {
                 return "[" + arr.map { contentKey($0) }.joined(separator: ",") + "]"
             }
-            fatalError("BinaryPlist 不支持的打包类型: \(type(of: value))")
+            fatalError("BinaryPlist does not support packing type: \(type(of: value))")
         }
 
         func add(_ value: Any) {
@@ -53,8 +53,8 @@ public enum BinaryPlist {
             objects.append(value)
             if let dict = value as? [String: Any] {
                 let keys = dict.keys.sorted()
-                for key in keys { add(key) }          // 先所有 key
-                for key in keys { add(dict[key]!) }   // 再所有 value
+                for key in keys { add(key) }          // all keys first
+                for key in keys { add(dict[key]!) }   // then all values
             } else if let arr = value as? [Any] {
                 for e in arr { add(e) }
             }
@@ -64,7 +64,7 @@ public enum BinaryPlist {
         let numObjects = objects.count
         let refSize = countToSize(numObjects)
 
-        // 8 字节魔数头 "bplist00";之后所有偏移都是相对文件起点的绝对偏移。
+        // 8-byte magic header "bplist00"; afterwards all offsets are absolute, relative to the file start.
         var body = Data("bplist00".utf8)
         var offsets: [Int] = []
         for obj in objects {
@@ -78,7 +78,7 @@ public enum BinaryPlist {
             body.append(intBytes(off, count: offsetSize))
         }
 
-        // 32 字节 trailer:5 空 + sortVersion(1) + offsetSize(1) + refSize(1) + 3×uint64。
+        // 32-byte trailer: 5 unused + sortVersion(1) + offsetSize(1) + refSize(1) + 3×uint64.
         var trailer = Data(repeating: 0, count: 5)
         trailer.append(0x00)
         trailer.append(UInt8(offsetSize))
@@ -107,7 +107,7 @@ public enum BinaryPlist {
             }
         }
         if let u = value as? PlistUID {
-            // 只写 1 字节 UID(0x80),payload 里的 UID 均 < 256。
+            // Only 1-byte UIDs are written (0x80); all UIDs in the payload are < 256.
             return Data([0x80, UInt8(u.value)])
         }
         if let arr = value as? [Any] {
@@ -122,18 +122,18 @@ public enum BinaryPlist {
             for k in keys { d.append(intBytes(refOf(dict[k]!), count: refSize)) }
             return d
         }
-        fatalError("BinaryPlist 不支持的打包类型: \(type(of: value))")
+        fatalError("BinaryPlist does not support packing type: \(type(of: value))")
     }
 
     private static func serializeInt(_ value: Int64) -> Data {
-        precondition(value >= 0, "BinaryPlist 不支持负整数")
+        precondition(value >= 0, "BinaryPlist does not support negative integers")
         if value < 0x100 { return Data([0x10, UInt8(value)]) }
         if value < 0x1_0000 { return Data([0x11]) + intBytes(Int(value), count: 2) }
         if value < 0x1_0000_0000 { return Data([0x12]) + intBytes(Int(value), count: 4) }
         return Data([0x13]) + intBytes(Int(value), count: 8)
     }
 
-    /// 标记 + 长度;长度 >= 15 时用 0xF + 整数对象。
+    /// Marker + length; when length >= 15, uses 0xF followed by an integer object.
     private static func serializeSized(_ token: UInt8, _ count: Int) -> Data {
         if count < 15 { return Data([token | UInt8(count)]) }
         return Data([token | 0x0F]) + serializeInt(Int64(count))
@@ -162,9 +162,9 @@ public enum BinaryPlist {
         return d
     }
 
-    // MARK: - 解码
+    // MARK: - Decoding
 
-    /// 解码 bplist,返回根对象(通常是 [String: Any],UID 引用以 PlistUID 表示)。
+    /// Decodes a bplist and returns the root object (usually [String: Any]; UID references as PlistUID).
     public static func decode(_ data: Data) -> Any? {
         let bytes = [UInt8](data)
         guard bytes.count >= 40, bytes.prefix(8) == [0x62, 0x70, 0x6c, 0x69, 0x73, 0x74, 0x30, 0x30] else {
@@ -173,7 +173,8 @@ public enum BinaryPlist {
         let trailerStart = bytes.count - 32
         let offsetSize = Int(bytes[trailerStart + 6])
         let refSize = Int(bytes[trailerStart + 7])
-        // trailer 的 3 个 uint64 字段可能是畸形输入;先取原始值,越界或超出 Int 范围则放弃。
+        // The trailer's 3 uint64 fields may be malformed input; read the raw values first and
+        // bail out if they are out of bounds or exceed Int range.
         guard let numObjectsRaw = readUInt64(bytes, trailerStart + 8),
               let topObjectRaw = readUInt64(bytes, trailerStart + 16),
               let offsetTableOffsetRaw = readUInt64(bytes, trailerStart + 24),
@@ -230,7 +231,8 @@ public enum BinaryPlist {
                 result = String(bytes: bytes[p..<(p + size)], encoding: .ascii) ?? ""; pos = p + size
             case 0x60:
                 let (size, p) = readSize(tokenL, bytes, pos)
-                // size 是 UTF-16 单元数,字节数为 size*2;先防乘法溢出再校验切片范围。
+                // size is a count of UTF-16 units, so the byte count is size*2; guard against
+                // multiplication overflow before validating the slice range.
                 let (byteLen, overflow) = size.multipliedReportingOverflow(by: 2)
                 guard !overflow, p >= 0, byteLen >= 0, p + byteLen <= bytes.count else { return NSNull() }
                 result = String(bytes: bytes[p..<(p + byteLen)], encoding: .utf16BigEndian) ?? ""; pos = p + byteLen
@@ -283,7 +285,8 @@ public enum BinaryPlist {
     }
 
     private static func readInt(_ bytes: [UInt8], _ pos: Int, _ size: Int) -> Int {
-        // 合法整数对象最多 8 字节;用 UInt64 累积避免 Int 溢出陷阱,超范围返回 0 交由上层 guard。
+        // Valid integer objects are at most 8 bytes; accumulate in UInt64 to avoid Int overflow
+        // traps, returning 0 for out-of-range values so the caller's guard handles it.
         guard pos >= 0, size >= 1, size <= 8, pos + size <= bytes.count else { return 0 }
         var value: UInt64 = 0
         for i in 0..<size {
